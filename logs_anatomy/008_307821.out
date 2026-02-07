@@ -1,0 +1,3 @@
+Processing 008 on mind-0-15
+Warning, Jacobian not within prescribed range. Prescription is 0.01 -- 100 and obtained range is 0.00652238 -- 4.92626
+WARNING:: Flipping Left/Right orientation (as det < 0)

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
-03_register_mirror.py - Stage ROIs, Split Bilateral, and Warp to Native
+03_register_mirror.py - Stage ROIs, Mirror Brain (patients), Register to MNI, Warp ROIs
+  - Controls: standard FLIRT on actual brain
+  - Patients: hemisphere-aware mirroring, FLIRT on mirror
+  - FLIRT-only (dof 12) both directions, matching hemispace pipeline
 Usage:
   python 03_register_mirror.py          # Process ALL subjects
   python 03_register_mirror.py --sub 022 # Process ONLY subject 022
@@ -10,201 +13,237 @@ import glob
 import subprocess
 import shutil
 import argparse
-import sys
-from sym_pt_params import (processed_dir, roi_dir, roi_source_lib, 
-                           mni_brain, mni_2mm, skip_subs, get_sessions)
+import numpy as np
+import nibabel as nib
+from sym_pt_params import (processed_dir, raw_dir, roi_dir, roi_source_lib,
+                           mni_brain, skip_subs,
+                           is_patient, get_sessions, get_sub_info)
 
-def run_command(cmd):
-    """Run shell command and print output"""
-    print(f"RUNNING: {cmd}")
-    try:
-        subprocess.run(cmd, shell=True, check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"ERROR executing: {cmd}")
-        raise e
+
+def run_cmd(cmd):
+    print(f"  CMD: {cmd}")
+    subprocess.run(cmd, shell=True, check=True)
+
+
+# ── ROI Staging ──────────────────────────────────────────────────────────────
 
 def stage_rois():
-    """
-    1. Copy relevant ROIs from the external library (long_pt) to the scratch folder.
-    2. Split any massive bilateral masks (Ventral/Dorsal) into L/R.
-    """
+    """Copy ROIs from source library and split bilateral masks."""
     print(f"\n--- Staging ROIs from {roi_source_lib} ---")
     os.makedirs(roi_dir, exist_ok=True)
-    
-    # Keywords to look for in the source library
-    keywords = ['FFA', 'PPA', 'LOC', 'OFA', 'RSC', 'OPA', 'TOS', 'PFS', 'LO', 
-                'ventral_visual', 'dorsal_visual']
-    
-    # 1. Search and Copy
-    found_count = 0
-    for root, dirs, files in os.walk(roi_source_lib):
+
+    kw = ['FFA', 'PPA', 'LOC', 'OFA', 'RSC', 'OPA', 'TOS', 'PFS', 'LO',
+          'ventral_visual', 'dorsal_visual']
+
+    n = 0
+    for root, _, files in os.walk(roi_source_lib):
         for f in files:
-            if f.endswith('.nii.gz') and any(k in f for k in keywords):
-                src = os.path.join(root, f)
+            if f.endswith('.nii.gz') and any(k in f for k in kw):
                 dst = os.path.join(roi_dir, f)
-                
-                # Copy if not already there
                 if not os.path.exists(dst):
-                    print(f"  Copying {f}...")
-                    shutil.copy2(src, dst)
-                    found_count += 1
-    
-    if found_count == 0 and not os.listdir(roi_dir):
-        print("WARNING: No ROIs found! Check your roi_source_lib path.")
-        return
+                    shutil.copy2(os.path.join(root, f), dst)
+                    n += 1
+    print(f"  Copied {n} new ROI files")
 
-    # 2. Split Bilateral Masks
-    print("  Checking for Bilateral Masks to Split...")
-    to_split = {
-        'ventral_visual_cortex.nii.gz': ['lVentral.nii.gz', 'rVentral.nii.gz'],
-        'dorsal_visual_cortex.nii.gz': ['lDorsal.nii.gz', 'rDorsal.nii.gz']
+    splits = {
+        'ventral_visual_cortex.nii.gz': ('lVentral.nii.gz', 'rVentral.nii.gz'),
+        'dorsal_visual_cortex.nii.gz':  ('lDorsal.nii.gz',  'rDorsal.nii.gz'),
     }
+    for src_name, (l_name, r_name) in splits.items():
+        src = f"{roi_dir}/{src_name}"
+        if not os.path.exists(src):
+            continue
+        for name, roi_args in [(r_name, "0 91 0 -1 0 -1 0 1"),
+                                (l_name, "91 -1 0 -1 0 -1 0 1")]:
+            out = f"{roi_dir}/{name}"
+            if not os.path.exists(out):
+                print(f"  Splitting {src_name} -> {name}")
+                run_cmd(f"fslmaths {src} -roi {roi_args} {out}")
 
-    for source, (l_name, r_name) in to_split.items():
-        source_path = f"{roi_dir}/{source}"
-        l_path = f"{roi_dir}/{l_name}"
-        r_path = f"{roi_dir}/{r_name}"
 
-        if os.path.exists(source_path):
-            # Split Right (0 to 91 in X)
-            if not os.path.exists(r_path):
-                print(f"    Splitting {source} -> Right Hemi...")
-                run_command(f"fslmaths {source_path} -roi 0 91 0 -1 0 -1 0 1 {r_path}")
+# ── Mirror Brain (patients only) ────────────────────────────────────────────
 
-            # Split Left (91 to end in X)
-            if not os.path.exists(l_path):
-                print(f"    Splitting {source} -> Left Hemi...")
-                run_command(f"fslmaths {source_path} -roi 91 -1 0 -1 0 -1 0 1 {l_path}")
+def create_mirror_brain(brain_file, mask_file, mirror_file, intact_hemi):
+    """
+    Hemisphere-aware mirroring for hemispherectomy patients.
+    Copies intact hemisphere to fill the resected side.
+    """
+    if os.path.exists(mirror_file):
+        print("  Mirror brain already exists")
+        return True
 
-def create_mirror_brain(anat_brain):
-    """Create a mirrored brain to help registration for lesion patients."""
-    output_base = anat_brain.replace('_brain.nii.gz', '_mirror')
-    
-    if not os.path.exists(f"{output_base}.nii.gz"):
-        # 1. Flip
-        run_command(f"fslswapdim {anat_brain} -x y z {output_base}_flipped")
-        # 2. Register flipped to original
-        run_command(f"flirt -in {output_base}_flipped -ref {anat_brain} "
-                    f"-out {output_base}_registered -omat {output_base}.mat -dof 6")
-        # 3. Average
-        run_command(f"fslmaths {anat_brain} -add {output_base}_registered "
-                    f"-div 2 {output_base}")
-    
-    return f"{output_base}.nii.gz"
+    print(f"  Creating mirror brain (intact hemi: {intact_hemi})")
+
+    img = nib.load(brain_file)
+    mask = nib.load(mask_file)
+    data = img.get_fdata().copy()
+    affine = img.affine
+
+    mid_x = data.shape[0] // 2
+    flipped = np.flip(data, axis=0)
+
+    if intact_hemi.lower() == 'left':
+        data[mid_x:, :, :] = flipped[mid_x:, :, :]
+    else:
+        data[:mid_x, :, :] = flipped[:mid_x, :, :]
+
+    nib.save(nib.Nifti1Image(data, affine), mirror_file)
+    print("  Mirror brain created")
+    return True
+
+
+# ── Registration (FLIRT only, both directions) ───────────────────────────────
+
+def register_to_mni(sub, anat_dir, t1_brain, pt, intact_hemi):
+    """
+    FLIRT registration (dof 12).
+    - Patients: compute anat2stand.mat from mirror brain
+    - Controls: compute anat2stand.mat from actual brain
+    - Separate FLIRT call for mni2anat.mat (inverse direction)
+    """
+    mask_file = f"{anat_dir}/T1w_brain_mask.nii.gz"
+    mirror_file = f"{anat_dir}/T1w_brain_mirrored.nii.gz"
+    anat2stand = f"{anat_dir}/anat2stand.mat"
+    mni2anat = f"{anat_dir}/mni2anat.mat"
+    stand_brain = f"{anat_dir}/T1w_brain_stand.nii.gz"
+
+    # Patient mirroring
+    if pt:
+        if not os.path.exists(mask_file):
+            print("  ERROR: No brain mask — BET needs -m flag")
+            return False
+        if not create_mirror_brain(t1_brain, mask_file, mirror_file, intact_hemi):
+            return False
+
+    flirt_input = mirror_file if pt else t1_brain
+
+    # Forward: native -> MNI
+    if not os.path.exists(anat2stand):
+        print(f"  FLIRT: {'mirror' if pt else 'brain'} -> MNI")
+        run_cmd(f"flirt -in {flirt_input} -ref {mni_brain} "
+                f"-omat {anat2stand} -bins 256 -cost corratio "
+                f"-searchrx -90 90 -searchry -90 90 -searchrz -90 90 -dof 12")
+
+    # Apply to original brain
+    if not os.path.exists(stand_brain):
+        print("  Applying transform to original brain...")
+        run_cmd(f"flirt -in {t1_brain} -ref {mni_brain} "
+                f"-out {stand_brain} -applyxfm -init {anat2stand} -interp trilinear")
+
+    # Inverse: MNI -> native
+    if not os.path.exists(mni2anat):
+        print("  FLIRT: MNI -> native")
+        run_cmd(f"flirt -in {mni_brain} -ref {flirt_input} "
+                f"-omat {mni2anat} -bins 256 -cost corratio "
+                f"-searchrx -90 90 -searchry -90 90 -searchrz -90 90 -dof 12")
+
+    return True
+
+
+# ── Warp ROIs to Native ─────────────────────────────────────────────────────
+
+def warp_rois(t1_brain, anat_dir, roi_out_dir):
+    """Apply mni2anat.mat to bring MNI ROIs into native space, then binarize."""
+    os.makedirs(roi_out_dir, exist_ok=True)
+    mni2anat = f"{anat_dir}/mni2anat.mat"
+    skip_names = {'ventral_visual_cortex', 'dorsal_visual_cortex'}
+
+    for roi in glob.glob(f"{roi_dir}/*.nii.gz"):
+        name = os.path.basename(roi).replace('.nii.gz', '')
+        if name in skip_names:
+            continue
+        out = f"{roi_out_dir}/{name}.nii.gz"
+        if not os.path.exists(out):
+            print(f"  Warping {name}...")
+            run_cmd(f"flirt -in {roi} -ref {t1_brain} "
+                    f"-out {out} -applyxfm -init {mni2anat} -interp trilinear")
+            run_cmd(f"fslmaths {out} -bin {out}")
+
+
+# ── Subject Processing ───────────────────────────────────────────────────────
 
 def process_subject(sub, ses):
-    print(f"\nProcessing {sub} Session {ses}...")
-    
-    base_dir = f"{processed_dir}/sub-{sub}/ses-{ses:02d}"
-    anat_dir = f"{base_dir}/anat"
-    roi_out_dir = f"{base_dir}/derivatives/rois"
-    
+    pt = is_patient(sub)
+    info = get_sub_info(sub, ses)
+    intact_hemi = info.get('intact_hemi', '')
+
+    print(f"\n{'='*60}")
+    print(f"  sub-{sub}  ses-{ses:02d}  ({'PATIENT' if pt else 'CONTROL'})")
+    if pt:
+        print(f"  intact_hemi: {intact_hemi}")
+    print(f"{'='*60}")
+
+    base = f"{processed_dir}/sub-{sub}/ses-{ses:02d}"
+    anat_dir = f"{base}/anat"
+    roi_out = f"{base}/derivatives/rois"
     os.makedirs(anat_dir, exist_ok=True)
-    os.makedirs(roi_out_dir, exist_ok=True)
-    
-    # PATHS
+
     t1_head = f"{anat_dir}/T1w.nii.gz"
     t1_brain = f"{anat_dir}/T1w_brain.nii.gz"
-    
-    # 1. Locate/Copy T1
+
+    # Locate T1
     if not os.path.exists(t1_head):
-        from sym_pt_params import raw_dir
         patterns = [
             f"{raw_dir}/sub-{sub}/ses-{ses:02d}/anat/*T1w.nii.gz",
-            f"{raw_dir}/sub-{sub}/anat/*T1w.nii.gz"
+            f"{raw_dir}/sub-{sub}/anat/*T1w.nii.gz",
         ]
         found = []
         for p in patterns:
             found = glob.glob(p)
-            if found: break
-            
+            if found:
+                break
         if found:
             print(f"  Copying T1 from {found[0]}")
             shutil.copyfile(found[0], t1_head)
         else:
-            print(f"  WARNING: No T1 found for {sub} ses-{ses}")
+            print(f"  WARNING: No T1 found — skipping")
             return
 
-    # 2. Skull Strip
+    # Skull strip
     if not os.path.exists(t1_brain):
-        print("  Skull stripping...")
-        run_command(f"bet {t1_head} {t1_brain} -R -f 0.5 -g 0")
+        print("  Skull stripping (BET -R -B -m)...")
+        run_cmd(f"bet {t1_head} {t1_brain} -R -B -m")
 
-    # 3. Create Mirror Brain
-    mirror_brain = create_mirror_brain(t1_brain)
-    
-    # 4. Register Mirror -> MNI (Calculate Warp)
-    mni_tfm = f"{anat_dir}/native_to_mni"
-    
-    if not os.path.exists(f"{mni_tfm}_warp.nii.gz"):
-        print("  Calculating MNI Transforms (FLIRT + FNIRT)...")
-        run_command(f"flirt -in {mirror_brain} -ref {mni_brain} "
-                    f"-out {mni_tfm}_linear -omat {mni_tfm}.mat")
-        run_command(f"fnirt --in={t1_head} --aff={mni_tfm}.mat --cout={mni_tfm}_warp "
-                    f"--config=T1_2_MNI152_2mm --ref={mni_2mm}")
-        
-    # 5. Inverse Warp (MNI -> Native)
-    mni_to_native_warp = f"{anat_dir}/mni_to_native_warp.nii.gz"
-    if not os.path.exists(mni_to_native_warp):
-        print("  Inverting Warp Field...")
-        run_command(f"invwarp --ref={t1_brain} --warp={mni_tfm}_warp "
-                    f"--out={mni_to_native_warp}")
+    # Register + warp ROIs
+    if register_to_mni(sub, anat_dir, t1_brain, pt, intact_hemi):
+        warp_rois(t1_brain, anat_dir, roi_out)
 
-    # 6. Warp ROIs
-    # We iterate through the STAGING folder (where we put the split files)
-    source_rois = glob.glob(f"{roi_dir}/*.nii.gz")
-    
-    for roi in source_rois:
-        roi_name = os.path.basename(roi).replace('.nii.gz', '')
-        
-        # Don't warp the massive bilateral files, only the split ones
-        if roi_name in ['ventral_visual_cortex', 'dorsal_visual_cortex']:
-            continue
-            
-        out_roi = f"{roi_out_dir}/{roi_name}.nii.gz"
-        
-        if not os.path.exists(out_roi):
-            print(f"  Warping {roi_name}...")
-            run_command(f"applywarp --ref={t1_brain} --in={roi} --warp={mni_to_native_warp} "
-                        f"--out={out_roi} --interp=nn")
+
+# ── Main ─────────────────────────────────────────────────────────────────────
 
 def main():
-    # 1. Parse Arguments
     parser = argparse.ArgumentParser(description="Anatomy & ROI Setup")
     parser.add_argument('--sub', type=str, help="Run only this subject (e.g., 022)")
     args = parser.parse_args()
 
-    # 2. Stage ROIs (This is fast and should always run to ensure Split happens)
     stage_rois()
-    
-    # 3. Determine Subject List
+
     if args.sub:
-        # User requested specific subject
         sub_clean = args.sub.replace('sub-', '')
         subs = [f'sub-{sub_clean}']
-        print(f"--- RUNNING SINGLE SUBJECT MODE: {sub_clean} ---")
+        print(f"--- SINGLE SUBJECT: {sub_clean} ---")
     else:
-        # Default: Run everyone found in processed_dir
-        subs = sorted([d for d in os.listdir(processed_dir) if d.startswith('sub-')])
-        print(f"--- RUNNING BATCH MODE: {len(subs)} subjects ---")
+        subs = sorted(d for d in os.listdir(processed_dir) if d.startswith('sub-'))
+        print(f"--- BATCH: {len(subs)} subjects ---")
 
-    # 4. Loop
     for sub_dir in subs:
         sub = sub_dir.replace('sub-', '')
         if sub in skip_subs:
-            print(f"Skipping {sub} (in skip list)")
+            print(f"Skipping {sub} (skip list)")
             continue
-            
+
         sessions = get_sessions(f"sub-{sub}")
         if not sessions:
-            print(f"No sessions found for {sub}")
+            print(f"No sessions for {sub}")
             continue
 
         for ses in sessions:
             try:
                 process_subject(sub, ses)
             except Exception as e:
-                print(f"FAILED on {sub} ses-{ses}: {e}")
+                print(f"FAILED: sub-{sub} ses-{ses:02d}: {e}")
+                continue
+
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,6 @@
 """
-sym_pt_params.py - Configuration for clean anatomical & ROI pipeline
+sym_pt_params.py - Configuration for sym_pt pipeline
+Uses unified long-format CSV: one row per subject-session.
 """
 import os
 import glob
@@ -8,23 +9,13 @@ import pandas as pd
 # =============================================================================
 # 1. DIRECTORIES
 # =============================================================================
-# Raw Data (Lab Standard)
 raw_dir = '/lab_data/behrmannlab/hemi/Raw'
-
-# Processed Data (Scratch Folder)
 processed_dir = '/user_data/csimmon2/sym_pt'
-
-# Code Repository (Git)
 git_dir = '/user_data/csimmon2/git_repos/sym_pt'
+csv_file = f'{git_dir}/sub_info_unified.csv'
 
-# Subject Info CSV
-csv_file = f'{git_dir}/sub_info.csv'
-
-# --- ROI Configuration ---
-# SOURCE: Where the clean MNI parcels live (Read-Only from your old repo)
+# ROI paths
 roi_source_lib = '/user_data/csimmon2/git_repos/long_pt/roiParcels'
-
-# DESTINATION: Where we stage/split/warp them (Inside Scratch)
 roi_dir = f'{processed_dir}/rois'
 
 # =============================================================================
@@ -33,79 +24,104 @@ roi_dir = f'{processed_dir}/rois'
 task = 'loc'
 conditions = ['Face', 'House', 'Object', 'Word', 'Scramble']
 
-# Note: fd_threshold is REMOVED to rely on FSL FEAT's internal motion correction
-
 # =============================================================================
 # 3. ANATOMY / TEMPLATES
 # =============================================================================
 mni_brain = '/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain.nii.gz'
-mni_2mm = '/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm.nii.gz'
 
 # =============================================================================
 # 4. SUBJECT CONFIGURATION
 # =============================================================================
-# Subjects to completely ignore
-skip_subs = ['004', '007', '021', '108']
+skip_subs = ['108']
 
-# Session offsets (if session 1 is missing/bad, start at 2)
-session_start = {'010': 2, '018': 2, '068': 2}
+# Note: session_start offsets (sub-010, sub-018, sub-068) are no longer needed.
+# The unified CSV has explicit session numbers per row.
 
 # =============================================================================
 # 5. HELPER FUNCTIONS
 # =============================================================================
-def get_sessions(sub, df=None):
-    """
-    Get session numbers for a subject based on the CSV info.
-    Checks 'age_1' through 'age_5' to count valid sessions.
-    """
-    if df is None:
-        if not os.path.exists(csv_file):
-            print(f"ERROR: CSV file not found at {csv_file}")
-            return []
-        df = pd.read_csv(csv_file)
-    
+_df_cache = None
+
+def _load_csv():
+    """Load and cache the unified subject info CSV."""
+    global _df_cache
+    if _df_cache is not None:
+        return _df_cache
+    if not os.path.exists(csv_file):
+        print(f"ERROR: CSV not found at {csv_file}")
+        return pd.DataFrame()
+    _df_cache = pd.read_csv(csv_file)
+    # Normalize sub column (strip 'sub-' prefix for matching)
+    _df_cache['sub_clean'] = _df_cache['sub'].str.replace('sub-', '', regex=False)
+    # Extract session number from 'ses-XX'
+    _df_cache['ses_num'] = _df_cache['ses'].str.replace('ses-', '', regex=False).astype(int)
+    return _df_cache
+
+
+def is_patient(sub):
+    """Check if subject is a patient based on group column."""
     sub_clean = sub.replace('sub-', '')
-    
-    # Filter for the specific subject
-    row = df[df['sub'].astype(str).str.contains(sub_clean)]
+    df = _load_csv()
+    if df.empty:
+        return False
+    row = df[df['sub_clean'] == sub_clean]
     if row.empty:
-        # print(f"Warning: Subject {sub} not found in CSV.")
+        return False
+    return row.iloc[0]['group'] == 'patient'
+
+
+def get_sessions(sub, df=None):
+    """Get list of session numbers for a subject."""
+    if df is None:
+        df = _load_csv()
+    if df.empty:
         return []
-    
-    row = row.iloc[0]
-    
-    # Count sessions based on filled 'age' columns
-    valid_sessions = 0
-    for i in range(1, 6):
-        col = f'age_{i}'
-        if col in row and pd.notna(row[col]) and str(row[col]).strip() != '':
-            valid_sessions += 1
-    
-    # Determine start session
-    start = session_start.get(sub_clean, 1)
-    
-    # Return list of sessions (e.g., [1, 2, 3] or [2, 3])
-    return list(range(start, start + valid_sessions))
+
+    sub_clean = sub.replace('sub-', '')
+    rows = df[df['sub_clean'] == sub_clean]
+
+    return sorted(rows['ses_num'].tolist())
 
 
 def get_runs(sub, ses):
-    """
-    Get run numbers for subject/session by looking at the Raw directory.
-    Returns a sorted list of integers (e.g., [1, 2, 3]).
-    """
+    """Get run numbers for subject/session from Raw directory."""
     sub_clean = sub.replace('sub-', '')
     func_dir = f'{raw_dir}/sub-{sub_clean}/ses-{ses:02d}/func'
-    
-    # Find all loc task runs
+
     files = glob.glob(f'{func_dir}/*task-{task}_run-*_bold.nii.gz')
-    
+
     runs = []
     for f in files:
         try:
-            # Assumes BIDS format: ...run-01_bold.nii.gz
             run_str = f.split('run-')[1].split('_')[0]
             runs.append(int(run_str))
         except (IndexError, ValueError):
             continue
-            
+
     return sorted(runs)
+
+
+def get_sub_info(sub, ses=None):
+    """Get full info dict for a subject (optionally at a specific session)."""
+    sub_clean = sub.replace('sub-', '')
+    df = _load_csv()
+    if df.empty:
+        return {}
+
+    rows = df[df['sub_clean'] == sub_clean]
+    if ses is not None:
+        rows = rows[rows['ses_num'] == ses]
+
+    if rows.empty:
+        return {}
+
+    row = rows.iloc[0]
+    return {
+        'sub': row['sub'],
+        'group': row['group'],
+        'sex': row['sex'],
+        'surgery_side': row.get('surgery_side', ''),
+        'intact_hemi': row.get('intact_hemi', ''),
+        'code': row.get('code', ''),
+        'age': row.get('age', None),
+    }
