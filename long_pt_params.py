@@ -1,271 +1,148 @@
-#!/usr/bin/env python3
 """
 long_pt_params.py - Centralized configuration for longitudinal patient analysis
-
-Usage:
-    from long_pt_params import PARAMS
-    # or
-    from long_pt_params import *
+Following Ayzenberg lab conventions
 """
-
-from pathlib import Path
-
-# =============================================================================
-# DIRECTORY STRUCTURE
-# =============================================================================
-PATHS = {
-    'raw': Path('/lab_data/behrmannlab/hemi/Raw'),
-    'processed': Path('/user_data/csimmon2/long_pt'),
-    'git_repo': Path('/user_data/csimmon2/git_repos/long_pt'),
-    'mni_brain': Path('/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain.nii.gz'),
-    'mni_2mm': Path('/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm.nii.gz'),
-}
-PATHS['csv'] = PATHS['git_repo'] / 'long_pt_sub_info.csv'
+import numpy as np
 
 # =============================================================================
-# TASK CONFIGURATION
+# DIRECTORIES
 # =============================================================================
-TASK = 'loc'
-TR = 2.0  # seconds
-BLOCK_DURATION = 16.0  # seconds
+raw_dir = '/lab_data/behrmannlab/hemi/Raw'
+processed_dir = '/user_data/csimmon2/long_pt'
+git_dir = '/user_data/csimmon2/git_repos/long_pt'
+csv_file = f'{git_dir}/long_pt_sub_info.csv'
+
+mni_brain = '/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain.nii.gz'
+mni_2mm = '/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm.nii.gz'
 
 # =============================================================================
-# CONDITIONS & CONTRASTS
+# TASK PARAMETERS
 # =============================================================================
-CONDITIONS = ['Face', 'House', 'Object', 'Word', 'Scramble']
-
-# Identity contrasts for RSA (raw condition estimates vs implicit baseline)
-# These are what you need for proper RSA
-COPE_MAP_IDENTITY = {
-    'face': 15,
-    'house': 16,
-    'object': 17,
-    'word': 18,
-    'scramble': 19
-}
-
-# Category > Scramble contrasts for ROI definition
-COPE_MAP_ROI = {
-    'face': 10,    # Face > Scramble
-    'house': 11,   # House > Scramble
-    'object': 3,   # Object > Scramble
-    'word': 12     # Word > Scramble
-}
-
-# Category > All Others contrasts (Liu 2018 style ROI definition)
-COPE_MAP_SELECTIVE = {
-    'face': 6,     # Face > mean(others)
-    'house': 7,    # House > mean(others)
-    'object': 8,   # Object > mean(others)
-    'word': 9      # Word > mean(others)
-}
+task = 'loc'
+tr = 2.0
+block_duration = 16.0
 
 # =============================================================================
-# RSA CONFIGURATION
+# CONDITIONS
 # =============================================================================
-RSA_CONFIG = {
-    'cope_map': COPE_MAP_IDENTITY,  # Use raw condition estimates
-    'roi_cope_map': COPE_MAP_SELECTIVE,  # Liu 2018 style for ROI definition
-    'roi_threshold_percentile': 90,  # Top 10% of voxels
-    'roi_threshold_type': 'percentile',  # 'percentile' or 'zscore'
-    'sphere_radius_mm': 6,
-    'dissimilarity_metric': 'correlation',  # 1 - Pearson r
-    'categories': ['face', 'house', 'object', 'word'],  # Exclude scramble for RDM
-}
+conditions = ['Face', 'House', 'Object', 'Word', 'Scramble']
+categories = ['face', 'house', 'object', 'word']  # RSA categories (no scramble)
+n_conditions = len(conditions)
 
 # =============================================================================
-# SUBJECT CONFIGURATION
+# COPE MAPS
 # =============================================================================
-# Subjects to exclude from processing
-EXCLUDE_SUBS = ['sub-004', 'sub-007', 'sub-021', 'sub-108']
-
-# Subjects with non-standard session numbering
-SESSION_START = {
-    'sub-010': 2,
-    'sub-018': 2,
-    'sub-068': 2
-}
-
-# =============================================================================
-# FSL FIRST-LEVEL CONTRAST DEFINITIONS
-# =============================================================================
-# For reference when creating/updating FSF files
 # EVs: 1=Face, 2=House, 3=Object, 4=Word, 5=Scramble
 
-CONTRAST_DEFINITIONS = {
-    # Existing differential contrasts (keep for backward compatibility)
-    1:  {'name': 'Face',           'weights': [1, 0, -1, 0, 0]},      # Face > Object
-    2:  {'name': 'House',          'weights': [0, 1, -1, 0, 0]},      # House > Object
-    3:  {'name': 'Object',         'weights': [0, 0, 1, 0, -1]},      # Object > Scramble
-    4:  {'name': 'Word',           'weights': [0, 0, -1, 1, 0]},      # Word > Object
-    5:  {'name': 'Scramble',       'weights': [-0.25, -0.25, -0.25, -0.25, 1]},
-    6:  {'name': 'Face-all',       'weights': [4, -1, -1, -1, -1]},   # Face > others
-    7:  {'name': 'House-all',      'weights': [-1, 4, -1, -1, -1]},   # House > others
-    8:  {'name': 'Object-all',     'weights': [-1, -1, 4, -1, -1]},   # Object > others
-    9:  {'name': 'Word-all',       'weights': [-1, -1, -1, 4, -1]},   # Word > others
-    10: {'name': 'Face-scramble',  'weights': [1, 0, 0, 0, -1]},      # Face > Scramble
-    11: {'name': 'House-scramble', 'weights': [0, 1, 0, 0, -1]},      # House > Scramble
-    12: {'name': 'Word-scramble',  'weights': [0, 0, 0, 1, -1]},      # Word > Scramble
-    13: {'name': 'Face-Word',      'weights': [1, 0, 0, -1, 0]},      # Face > Word
-    14: {'name': 'Object-House',   'weights': [0, -1, 1, 0, 0]},      # Object > House
-    
-    # NEW: Identity contrasts for RSA (raw condition estimates)
-    15: {'name': 'Face_raw',       'weights': [1, 0, 0, 0, 0]},
-    16: {'name': 'House_raw',      'weights': [0, 1, 0, 0, 0]},
-    17: {'name': 'Object_raw',     'weights': [0, 0, 1, 0, 0]},
-    18: {'name': 'Word_raw',       'weights': [0, 0, 0, 1, 0]},
-    19: {'name': 'Scramble_raw',   'weights': [0, 0, 0, 0, 1]},
+# Identity contrasts for RSA (per Kriegeskorte 2008, Liu 2025)
+cope_identity = {
+    'face': 15, 'house': 16, 'object': 17, 'word': 18, 'scramble': 19
+}
+
+# Category > All Others for ROI definition (Liu 2025)
+cope_selective = {
+    'face': 6, 'house': 7, 'object': 8, 'word': 9
+}
+
+# Category > Scramble (alternative ROI definition)
+cope_scramble = {
+    'face': 10, 'house': 11, 'object': 3, 'word': 12
 }
 
 # =============================================================================
-# MOTION/CONFOUND THRESHOLDS
+# RSA PARAMETERS (Liu 2025)
 # =============================================================================
-MOTION_CONFIG = {
-    'fd_threshold': 0.5,  # mm, for spike detection
-    'dvars_threshold': None,  # not currently used
-    'exclude_if_spikes_pct': 20,  # exclude run if >20% volumes are spikes
+roi_threshold = 90  # percentile (top 10%)
+roi_threshold_type = 'percentile'
+sphere_radius = 6  # mm
+dissimilarity = 'correlation'
+
+# =============================================================================
+# SUBJECTS
+# =============================================================================
+skip_subs = ['004', '007', '021', '108']
+
+session_start = {'010': 2, '018': 2, '068': 2}
+
+# =============================================================================
+# MOTION
+# =============================================================================
+fd_threshold = 0.5
+spike_pct_exclude = 20
+
+# =============================================================================
+# CONTRAST WEIGHTS (for FSF)
+# =============================================================================
+contrast_weights = {
+    1:  [1, 0, -1, 0, 0],           # Face > Object
+    2:  [0, 1, -1, 0, 0],           # House > Object
+    3:  [0, 0, 1, 0, -1],           # Object > Scramble
+    4:  [0, 0, -1, 1, 0],           # Word > Object
+    5:  [-0.25, -0.25, -0.25, -0.25, 1],
+    6:  [4, -1, -1, -1, -1],        # Face > all
+    7:  [-1, 4, -1, -1, -1],        # House > all
+    8:  [-1, -1, 4, -1, -1],        # Object > all
+    9:  [-1, -1, -1, 4, -1],        # Word > all
+    10: [1, 0, 0, 0, -1],           # Face > Scramble
+    11: [0, 1, 0, 0, -1],           # House > Scramble
+    12: [0, 0, 0, 1, -1],           # Word > Scramble
+    13: [1, 0, 0, -1, 0],           # Face > Word
+    14: [0, -1, 1, 0, 0],           # Object > House
+    # Identity contrasts for RSA
+    15: [1, 0, 0, 0, 0],            # Face_raw
+    16: [0, 1, 0, 0, 0],            # House_raw
+    17: [0, 0, 1, 0, 0],            # Object_raw
+    18: [0, 0, 0, 1, 0],            # Word_raw
+    19: [0, 0, 0, 0, 1],            # Scramble_raw
+}
+
+contrast_names = {
+    1: 'Face', 2: 'House', 3: 'Object', 4: 'Word', 5: 'Scramble',
+    6: 'Face-all', 7: 'House-all', 8: 'Object-all', 9: 'Word-all',
+    10: 'Face-scramble', 11: 'House-scramble', 12: 'Word-scramble',
+    13: 'Face-Word', 14: 'Object-House',
+    15: 'Face_raw', 16: 'House_raw', 17: 'Object_raw', 
+    18: 'Word_raw', 19: 'Scramble_raw'
 }
 
 # =============================================================================
-# HELPER FUNCTIONS
+# HELPERS
 # =============================================================================
-def get_subject_sessions(subject_id: str, csv_df=None) -> list:
-    """Get session numbers for a subject based on CSV data"""
+def get_sessions(sub, df=None):
+    """Get session numbers for subject"""
     import pandas as pd
+    if df is None:
+        df = pd.read_csv(csv_file)
     
-    if csv_df is None:
-        csv_df = pd.read_csv(PATHS['csv'])
-    
-    # Normalize subject_id format
-    if not subject_id.startswith('sub-'):
-        subject_id = f'sub-{subject_id}'
-    
-    row = csv_df[csv_df['sub'] == subject_id]
+    sub_clean = sub.replace('sub-', '')
+    row = df[df['sub'].str.contains(sub_clean)]
     if row.empty:
         return []
     
     row = row.iloc[0]
-    
-    # Count non-empty age columns
-    age_cols = ['age_1', 'age_2', 'age_3', 'age_4', 'age_5']
-    session_count = sum(1 for col in age_cols 
-                        if pd.notna(row[col]) and str(row[col]).strip() != '')
-    
-    # Get starting session
-    start_ses = SESSION_START.get(subject_id, 1)
-    
-    return list(range(start_ses, start_ses + session_count))
+    n = sum(1 for c in ['age_1','age_2','age_3','age_4','age_5'] 
+            if pd.notna(row[c]) and str(row[c]).strip())
+    start = session_start.get(sub_clean, 1)
+    return list(range(start, start + n))
 
 
-def get_subject_info(subject_id: str, csv_df=None) -> dict:
-    """Get all info for a subject from CSV"""
-    import pandas as pd
-    
-    if csv_df is None:
-        csv_df = pd.read_csv(PATHS['csv'])
-    
-    if not subject_id.startswith('sub-'):
-        subject_id = f'sub-{subject_id}'
-    
-    row = csv_df[csv_df['sub'] == subject_id]
-    if row.empty:
-        return None
-    
-    row = row.iloc[0]
-    
-    return {
-        'subject_id': subject_id,
-        'is_patient': row['patient'] == 1,
-        'intact_hemi': row['intact_hemi'],
-        'sessions': get_subject_sessions(subject_id, csv_df),
-        'dob': row.get('dob', None),
-    }
-
-
-def get_runs_for_session(subject_id: str, session: int) -> list:
-    """Auto-detect runs from filesystem"""
+def get_runs(sub, ses):
+    """Get run numbers for subject/session"""
     import glob
-    
-    if not subject_id.startswith('sub-'):
-        subject_id = f'sub-{subject_id}'
-    
-    func_dir = PATHS['raw'] / subject_id / f'ses-{session:02d}' / 'func'
-    
-    if not func_dir.exists():
-        return []
-    
-    bold_files = glob.glob(
-        str(func_dir / f'{subject_id}_ses-{session:02d}_task-{TASK}_run-*_bold.nii.gz')
-    )
-    
-    runs = []
-    for f in bold_files:
-        run_str = f.split('run-')[1].split('_')[0]
-        runs.append(int(run_str))
-    
-    return sorted(runs)
+    sub_clean = sub.replace('sub-', '')
+    func = f'{raw_dir}/sub-{sub_clean}/ses-{ses:02d}/func'
+    files = glob.glob(f'{func}/*task-{task}_run-*_bold.nii.gz')
+    return sorted([int(f.split('run-')[1].split('_')[0]) for f in files])
 
 
-def get_feat_dir(subject_id: str, session: int, run: int) -> Path:
-    """Get path to FEAT output directory"""
-    if not subject_id.startswith('sub-'):
-        subject_id = f'sub-{subject_id}'
-    
-    return (PATHS['processed'] / subject_id / f'ses-{session:02d}' / 
-            'derivatives' / 'fsl' / TASK / f'run-{run:02d}' / '1stLevel.feat')
+def get_feat_dir(sub, ses, run):
+    """Get FEAT directory path"""
+    sub_clean = sub.replace('sub-', '')
+    return f'{processed_dir}/sub-{sub_clean}/ses-{ses:02d}/derivatives/fsl/{task}/run-{run:02d}/1stLevel.feat'
 
 
-def get_cope_path(subject_id: str, session: int, run: int, cope_num: int, 
-                  space: str = 'native') -> Path:
-    """Get path to a specific cope file
-    
-    Args:
-        space: 'native' for run space, 'standard' for MNI space
-    """
-    feat_dir = get_feat_dir(subject_id, session, run)
-    
-    if space == 'standard':
-        return feat_dir / 'reg_standard' / 'stats' / f'cope{cope_num}.nii.gz'
-    else:
-        return feat_dir / 'stats' / f'cope{cope_num}.nii.gz'
-
-
-# =============================================================================
-# CONVENIENCE EXPORTS
-# =============================================================================
-PARAMS = {
-    'paths': PATHS,
-    'task': TASK,
-    'tr': TR,
-    'conditions': CONDITIONS,
-    'cope_identity': COPE_MAP_IDENTITY,
-    'cope_roi': COPE_MAP_ROI,
-    'cope_selective': COPE_MAP_SELECTIVE,
-    'contrasts': CONTRAST_DEFINITIONS,
-    'rsa': RSA_CONFIG,
-    'motion': MOTION_CONFIG,
-    'exclude_subs': EXCLUDE_SUBS,
-    'session_start': SESSION_START,
-}
-
-if __name__ == '__main__':
-    # Print configuration summary
-    print("long_pt_params.py - Configuration Summary")
-    print("=" * 50)
-    print(f"\nPaths:")
-    for name, path in PATHS.items():
-        print(f"  {name}: {path}")
-    
-    print(f"\nTask: {TASK}")
-    print(f"Conditions: {CONDITIONS}")
-    
-    print(f"\nIdentity contrasts for RSA:")
-    for cat, cope in COPE_MAP_IDENTITY.items():
-        print(f"  {cat}: cope{cope}")
-    
-    print(f"\nROI definition contrasts (Category > Scramble):")
-    for cat, cope in COPE_MAP_ROI.items():
-        print(f"  {cat}: cope{cope}")
-    
-    print(f"\nExcluded subjects: {EXCLUDE_SUBS}")
-    print(f"Special session starts: {SESSION_START}")
+def get_cope(sub, ses, run, cope, space='standard'):
+    """Get cope file path"""
+    feat = get_feat_dir(sub, ses, run)
+    subdir = 'reg_standard/stats' if space == 'standard' else 'stats'
+    return f'{feat}/{subdir}/cope{cope}.nii.gz'
