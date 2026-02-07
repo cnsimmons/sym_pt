@@ -12,7 +12,7 @@ import pandas as pd
 raw_dir = '/lab_data/behrmannlab/hemi/Raw'
 processed_dir = '/user_data/csimmon2/sym_pt'
 git_dir = '/user_data/csimmon2/git_repos/sym_pt'
-csv_file = f'{git_dir}/sub_info_unified.csv'
+csv_file = f'{git_dir}/sub_info.csv'
 
 # ROI paths
 roi_source_lib = '/user_data/csimmon2/git_repos/long_pt/roiParcels'

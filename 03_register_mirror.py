@@ -130,12 +130,10 @@ def register_to_mni(sub, anat_dir, t1_brain, pt, intact_hemi):
         run_cmd(f"flirt -in {t1_brain} -ref {mni_brain} "
                 f"-out {stand_brain} -applyxfm -init {anat2stand} -interp trilinear")
 
-    # Inverse: MNI -> native
+    # Inverse: invert anat2stand.mat
     if not os.path.exists(mni2anat):
-        print("  FLIRT: MNI -> native")
-        run_cmd(f"flirt -in {mni_brain} -ref {flirt_input} "
-                f"-omat {mni2anat} -bins 256 -cost corratio "
-                f"-searchrx -90 90 -searchry -90 90 -searchrz -90 90 -dof 12")
+        print("  Inverting anat2stand.mat...")
+        run_cmd(f"convert_xfm -omat {mni2anat} -inverse {anat2stand}")
 
     return True
 

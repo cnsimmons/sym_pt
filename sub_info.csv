@@ -2,11 +2,9 @@ sub,ses,age,sex,surgery_side,intact_hemi,group,code
 sub-004,ses-01,7.81,Male,right,left,patient,UD
 sub-004,ses-02,8.37,Male,right,left,patient,UD
 sub-004,ses-03,8.83,Male,right,left,patient,UD
-sub-004,ses-04,10.83,Male,right,left,patient,UD
 sub-004,ses-05,13.08,Male,right,left,patient,UD
 sub-004,ses-07,14.42,Male,right,left,patient,UD
 sub-007,ses-01,14.70,Male,left,right,patient,OT
-sub-007,ses-02,17.61,Male,left,right,patient,OT
 sub-007,ses-03,18.43,Male,left,right,patient,OT
 sub-007,ses-05,21.44,Male,left,right,patient,OT
 sub-008,ses-01,14.78,Female,right,left,patient,
@@ -51,9 +49,6 @@ sub-091,ses-01,37.26,Male,right,left,patient,SI
 sub-092,ses-01,19.78,Female,left,right,patient,FO
 sub-108,ses-01,16.05,Female,left,right,patient,
 sub-108,ses-02,18.00,Female,left,right,patient,
-sub-hemispace1004,ses-01,16.11,Female,right,left,patient,BI
-sub-hemispace1006,ses-01,11.54,Male,left,right,patient,KN
-sub-hemispace1007,ses-01,18.71,Female,right,left,patient,BN
 sub-018,ses-02,12.90,Male,control,control,control,
 sub-018,ses-03,15.40,Male,control,control,control,
 sub-022,ses-01,11.50,Male,control,control,control,
@@ -88,4 +83,3 @@ sub-094,ses-01,14.64,Female,control,control,control,
 sub-095,ses-01,38.54,Male,control,control,control,
 sub-096,ses-01,27.87,Female,control,control,control,
 sub-097,ses-01,19.84,Female,control,control,control,
-sub-107,ses-01,16.37,Female,control,control,control,
