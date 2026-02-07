@@ -4,7 +4,7 @@
 """
 import os
 import pandas as pd
-from long_pt_params import raw_dir, processed_dir, csv_file, task, skip_subs, get_sessions, get_runs
+from sym_pt_params import raw_dir, processed_dir, csv_file, task, skip_subs, get_sessions, get_runs
 
 
 def setup_subject(sub, sessions):
