@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """
-03_setup_anatomy.py - Stage ROIs from Library, Split Bilateral, and Warp to Native
+03_register_mirror.py - Stage ROIs, Split Bilateral, and Warp to Native
+Usage:
+  python 03_register_mirror.py          # Process ALL subjects
+  python 03_register_mirror.py --sub 022 # Process ONLY subject 022
 """
 import os
 import glob
 import subprocess
 import shutil
+import argparse
+import sys
 from sym_pt_params import (processed_dir, roi_dir, roi_source_lib, 
                            mni_brain, mni_2mm, skip_subs, get_sessions)
 
@@ -164,16 +169,37 @@ def process_subject(sub, ses):
                         f"--out={out_roi} --interp=nn")
 
 def main():
-    # 1. Prepare the ROIs (Copy from Long_PT -> Scratch & Split)
+    # 1. Parse Arguments
+    parser = argparse.ArgumentParser(description="Anatomy & ROI Setup")
+    parser.add_argument('--sub', type=str, help="Run only this subject (e.g., 022)")
+    args = parser.parse_args()
+
+    # 2. Stage ROIs (This is fast and should always run to ensure Split happens)
     stage_rois()
     
-    # 2. Process Subjects
-    subs = sorted([d for d in os.listdir(processed_dir) if d.startswith('sub-')])
+    # 3. Determine Subject List
+    if args.sub:
+        # User requested specific subject
+        sub_clean = args.sub.replace('sub-', '')
+        subs = [f'sub-{sub_clean}']
+        print(f"--- RUNNING SINGLE SUBJECT MODE: {sub_clean} ---")
+    else:
+        # Default: Run everyone found in processed_dir
+        subs = sorted([d for d in os.listdir(processed_dir) if d.startswith('sub-')])
+        print(f"--- RUNNING BATCH MODE: {len(subs)} subjects ---")
+
+    # 4. Loop
     for sub_dir in subs:
         sub = sub_dir.replace('sub-', '')
-        if sub in skip_subs: continue
+        if sub in skip_subs:
+            print(f"Skipping {sub} (in skip list)")
+            continue
             
         sessions = get_sessions(f"sub-{sub}")
+        if not sessions:
+            print(f"No sessions found for {sub}")
+            continue
+
         for ses in sessions:
             try:
                 process_subject(sub, ses)
