@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-03_setup_anatomy.py - Preprocess anatomy, Split Bilateral ROIs, and Warp to Native
+03_setup_anatomy.py - Stage ROIs from Library, Split Bilateral, and Warp to Native
 """
 import os
 import glob
 import subprocess
 import shutil
-from sym_pt_params import (processed_dir, roi_dir, mni_brain, mni_2mm, 
-                           skip_subs, get_sessions)
+from sym_pt_params import (processed_dir, roi_dir, roi_source_lib, 
+                           mni_brain, mni_2mm, skip_subs, get_sessions)
 
 def run_command(cmd):
     """Run shell command and print output"""
@@ -16,18 +16,40 @@ def run_command(cmd):
         subprocess.run(cmd, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"ERROR executing: {cmd}")
-        # Don't crash the whole script, just raise to catch in main
         raise e
 
-def split_bilateral_masks():
+def stage_rois():
     """
-    Check for massive bilateral masks (Ventral/Dorsal) and split them 
-    into Left/Right MNI files before processing.
-    Assumes 1mm MNI (182x218x182). Midline is 91.
+    1. Copy relevant ROIs from the external library (long_pt) to the scratch folder.
+    2. Split any massive bilateral masks (Ventral/Dorsal) into L/R.
     """
-    print("\n--- Checking for Bilateral Masks to Split ---")
+    print(f"\n--- Staging ROIs from {roi_source_lib} ---")
+    os.makedirs(roi_dir, exist_ok=True)
     
-    # Map: 'SourceFile' -> ['LeftName', 'RightName']
+    # Keywords to look for in the source library
+    keywords = ['FFA', 'PPA', 'LOC', 'OFA', 'RSC', 'OPA', 'TOS', 'PFS', 'LO', 
+                'ventral_visual', 'dorsal_visual']
+    
+    # 1. Search and Copy
+    found_count = 0
+    for root, dirs, files in os.walk(roi_source_lib):
+        for f in files:
+            if f.endswith('.nii.gz') and any(k in f for k in keywords):
+                src = os.path.join(root, f)
+                dst = os.path.join(roi_dir, f)
+                
+                # Copy if not already there
+                if not os.path.exists(dst):
+                    print(f"  Copying {f}...")
+                    shutil.copy2(src, dst)
+                    found_count += 1
+    
+    if found_count == 0 and not os.listdir(roi_dir):
+        print("WARNING: No ROIs found! Check your roi_source_lib path.")
+        return
+
+    # 2. Split Bilateral Masks
+    print("  Checking for Bilateral Masks to Split...")
     to_split = {
         'ventral_visual_cortex.nii.gz': ['lVentral.nii.gz', 'rVentral.nii.gz'],
         'dorsal_visual_cortex.nii.gz': ['lDorsal.nii.gz', 'rDorsal.nii.gz']
@@ -41,14 +63,12 @@ def split_bilateral_masks():
         if os.path.exists(source_path):
             # Split Right (0 to 91 in X)
             if not os.path.exists(r_path):
-                print(f"  Splitting {source} -> {r_name}...")
-                # fslmaths -roi <xmin> <xsize> <ymin> <ysize> <zmin> <zsize> <tmin> <tsize>
-                # MNI X-dim is 182. Right is 0-91.
+                print(f"    Splitting {source} -> Right Hemi...")
                 run_command(f"fslmaths {source_path} -roi 0 91 0 -1 0 -1 0 1 {r_path}")
 
             # Split Left (91 to end in X)
             if not os.path.exists(l_path):
-                print(f"  Splitting {source} -> {l_name}...")
+                print(f"    Splitting {source} -> Left Hemi...")
                 run_command(f"fslmaths {source_path} -roi 91 -1 0 -1 0 -1 0 1 {l_path}")
 
 def create_mirror_brain(anat_brain):
@@ -56,14 +76,12 @@ def create_mirror_brain(anat_brain):
     output_base = anat_brain.replace('_brain.nii.gz', '_mirror')
     
     if not os.path.exists(f"{output_base}.nii.gz"):
-        # 1. Flip (x-axis)
+        # 1. Flip
         run_command(f"fslswapdim {anat_brain} -x y z {output_base}_flipped")
-        
-        # 2. Register flipped to original (rigid body) 
+        # 2. Register flipped to original
         run_command(f"flirt -in {output_base}_flipped -ref {anat_brain} "
                     f"-out {output_base}_registered -omat {output_base}.mat -dof 6")
-        
-        # 3. Average (Original + Mirrored) / 2
+        # 3. Average
         run_command(f"fslmaths {anat_brain} -add {output_base}_registered "
                     f"-div 2 {output_base}")
     
@@ -83,13 +101,12 @@ def process_subject(sub, ses):
     t1_head = f"{anat_dir}/T1w.nii.gz"
     t1_brain = f"{anat_dir}/T1w_brain.nii.gz"
     
-    # 1. Find/Copy T1
+    # 1. Locate/Copy T1
     if not os.path.exists(t1_head):
         from sym_pt_params import raw_dir
-        # Try multiple BIDS patterns
         patterns = [
             f"{raw_dir}/sub-{sub}/ses-{ses:02d}/anat/*T1w.nii.gz",
-            f"{raw_dir}/sub-{sub}/anat/*T1w.nii.gz" # If single anat for multiple sessions
+            f"{raw_dir}/sub-{sub}/anat/*T1w.nii.gz"
         ]
         found = []
         for p in patterns:
@@ -111,33 +128,31 @@ def process_subject(sub, ses):
     # 3. Create Mirror Brain
     mirror_brain = create_mirror_brain(t1_brain)
     
-    # 4. Register Mirror -> MNI
+    # 4. Register Mirror -> MNI (Calculate Warp)
     mni_tfm = f"{anat_dir}/native_to_mni"
     
     if not os.path.exists(f"{mni_tfm}_warp.nii.gz"):
-        print("  Registration (FLIRT + FNIRT)...")
-        # FLIRT (Linear)
+        print("  Calculating MNI Transforms (FLIRT + FNIRT)...")
         run_command(f"flirt -in {mirror_brain} -ref {mni_brain} "
                     f"-out {mni_tfm}_linear -omat {mni_tfm}.mat")
-        # FNIRT (Non-linear) - Heavy lifting
         run_command(f"fnirt --in={t1_head} --aff={mni_tfm}.mat --cout={mni_tfm}_warp "
                     f"--config=T1_2_MNI152_2mm --ref={mni_2mm}")
         
     # 5. Inverse Warp (MNI -> Native)
     mni_to_native_warp = f"{anat_dir}/mni_to_native_warp.nii.gz"
     if not os.path.exists(mni_to_native_warp):
-        print("  Creating Inverse Warp...")
+        print("  Inverting Warp Field...")
         run_command(f"invwarp --ref={t1_brain} --warp={mni_tfm}_warp "
                     f"--out={mni_to_native_warp}")
 
-    # 6. Warp ROIs (MNI -> Native)
-    # We warp everything in roi_dir (including our newly split ventral/dorsal masks)
+    # 6. Warp ROIs
+    # We iterate through the STAGING folder (where we put the split files)
     source_rois = glob.glob(f"{roi_dir}/*.nii.gz")
     
     for roi in source_rois:
         roi_name = os.path.basename(roi).replace('.nii.gz', '')
         
-        # SKIP the original massive bilateral files, only warp the split ones
+        # Don't warp the massive bilateral files, only the split ones
         if roi_name in ['ventral_visual_cortex', 'dorsal_visual_cortex']:
             continue
             
@@ -149,10 +164,10 @@ def process_subject(sub, ses):
                         f"--out={out_roi} --interp=nn")
 
 def main():
-    # Step 0: Ensure masks are split before we start looping subjects
-    split_bilateral_masks()
+    # 1. Prepare the ROIs (Copy from Long_PT -> Scratch & Split)
+    stage_rois()
     
-    # Iterate subjects
+    # 2. Process Subjects
     subs = sorted([d for d in os.listdir(processed_dir) if d.startswith('sub-')])
     for sub_dir in subs:
         sub = sub_dir.replace('sub-', '')
