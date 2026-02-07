@@ -18,7 +18,7 @@ processed_dir = '/user_data/csimmon2/sym_pt'
 git_dir = '/user_data/csimmon2/git_repos/sym_pt'
 
 # 4. CSV File (Subject Info)
-csv_file = f'{git_dir}/long_pt_sub_info.csv'
+csv_file = f'{git_dir}/sub_info.csv'
 
 # 5. ROI Directory (Inside Processed)
 roi_dir = f'{processed_dir}/rois'
