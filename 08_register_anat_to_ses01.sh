@@ -3,8 +3,6 @@
 # 08_register_anat_to_ses01.sh - Create inter-session anat registration matrices
 # For each subject with multiple sessions, registers later session anats
 # to the first session's anat using FLIRT (dof 6, rigid body)
-#
-# Usage: bash 07_intersession_reg.sh
 
 dataDir='/user_data/csimmon2/sym_pt'
 CSV_FILE='/user_data/csimmon2/git_repos/sym_pt/sub_info.csv'
