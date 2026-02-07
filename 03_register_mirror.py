@@ -1,157 +1,166 @@
 #!/usr/bin/env python3
 """
-04_setup_anatomy.py - Skull strip, mirror, register to MNI, and pull back ROIs
-Adapted from Ayzenberg 'register_mirror.py'
+03_setup_anatomy.py - Preprocess anatomy and warp MNI ROIs to Native Space
 """
 import os
+import glob
 import subprocess
-import numpy as np
-import nibabel as nib
-import pandas as pd
-from nilearn import image
-from sym_pt_params import raw_dir, processed_dir, csv_file, task, skip_subs, get_sessions, get_runs
+import shutil
+# Import from your config file
+from sym_pt_params import (processed_dir, roi_dir, mni_brain, mni_2mm, 
+                           skip_subs, get_sessions)
 
-# =============================================================================
-# CONFIG: ROI PATHS
-# Update these paths to match where your standard MNI parcels are stored
-# =============================================================================
-MNI_ROIS = {
-    'ventral_visual': '/user_data/vayzenbe/GitHub_Repos/fmri/roiParcels/ventral_visual_cortex.nii.gz',
-    'dorsal_visual': '/user_data/vayzenbe/GitHub_Repos/fmri/roiParcels/dorsal_visual_cortex.nii.gz'
-}
-
-def skull_strip(sub, ses):
-    """Skull strip anatomical using BET"""
-    sub_clean = sub.replace('sub-', '')
-    ses_str = f'{ses:02d}'
-    
-    anat_file = f'{raw_dir}/sub-{sub_clean}/ses-{ses_str}/anat/sub-{sub_clean}_ses-{ses_str}_T1w.nii.gz'
-    out_dir = f'{processed_dir}/sub-{sub_clean}/ses-{ses_str}/anat'
-    brain_file = f'{out_dir}/sub-{sub_clean}_ses-{ses_str}_T1w_brain.nii.gz'
-    
-    if not os.path.exists(anat_file):
-        print(f'    ERROR: {anat_file} not found')
-        return False
-    
-    os.makedirs(out_dir, exist_ok=True)
-    
-    if os.path.exists(brain_file):
-        print(f'    Skull strip: exists')
-        return True
-    
-    print(f'    Skull stripping...')
-    cmd = ['bet', anat_file, brain_file, '-R', '-B', '-m']
+def run_command(cmd):
+    """Run shell command and print output/errors"""
+    print(f"RUNNING: {cmd}")
     try:
-        subprocess.run(cmd, check=True, capture_output=True)
-        return True
-    except subprocess.CalledProcessError:
-        print(f'    Skull strip: FAILED')
-        return False
+        subprocess.run(cmd, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"ERROR executing: {cmd}")
+        raise e
 
-def create_mirror(sub, ses, intact_hemi):
-    """Create mirrored brain for hemispherectomy patients"""
-    sub_clean = sub.replace('sub-', '')
-    ses_str = f'{ses:02d}'
+def create_mirror_brain(anat_brain, anat_head):
+    """
+    Create a mirrored brain to help registration for lesion patients.
+    Flipping the healthy hemisphere to cover the lesion.
+    """
+    output_base = anat_brain.replace('_brain.nii.gz', '_mirror')
     
-    anat_dir = f'{processed_dir}/sub-{sub_clean}/ses-{ses_str}/anat'
-    brain_file = f'{anat_dir}/sub-{sub_clean}_ses-{ses_str}_T1w_brain.nii.gz'
-    mask_file = f'{anat_dir}/sub-{sub_clean}_ses-{ses_str}_T1w_brain_mask.nii.gz'
-    mirror_file = f'{anat_dir}/sub-{sub_clean}_ses-{ses_str}_T1w_brain_mirrored.nii.gz'
+    # 1. Flip the brain (x-axis)
+    # Note: fslswapdim output doesn't need extension if provided in filename
+    if not os.path.exists(f"{output_base}_flipped.nii.gz"):
+        run_command(f"fslswapdim {anat_brain} -x y z {output_base}_flipped")
     
-    if not os.path.exists(brain_file): return False
-    if os.path.exists(mirror_file):
-        print(f'    Mirror: exists')
-        return True
+    # 2. Register flipped to original (rigid body, 6 DOF) 
+    # This handles slight head tilt so the mirror matches perfectly
+    if not os.path.exists(f"{output_base}_registered.nii.gz"):
+        run_command(f"flirt -in {output_base}_flipped -ref {anat_brain} "
+                    f"-out {output_base}_registered -omat {output_base}.mat -dof 6")
     
-    try:
-        print(f'    Creating mirror brain...')
-        anat_img = image.load_img(brain_file)
-        anat_data = anat_img.get_fdata()
-        mask_data = image.load_img(mask_file).get_fdata()
+    # 3. Average them (chimeric brain)
+    # (Original + Mirrored) / 2
+    if not os.path.exists(f"{output_base}.nii.gz"):
+        run_command(f"fslmaths {anat_brain} -add {output_base}_registered "
+                    f"-div 2 {output_base}")
+    
+    return f"{output_base}.nii.gz"
+
+def process_subject(sub, ses):
+    """Run anatomical preprocessing for one session"""
+    print(f"\nProcessing {sub} Session {ses}...")
+    
+    # Define directories
+    base_dir = f"{processed_dir}/sub-{sub}/ses-{ses:02d}"
+    anat_dir = f"{base_dir}/anat"
+    roi_out_dir = f"{base_dir}/derivatives/rois"
+    
+    # Ensure directories exist
+    os.makedirs(anat_dir, exist_ok=True)
+    os.makedirs(roi_out_dir, exist_ok=True)
+    
+    # PATHS
+    t1_head = f"{anat_dir}/T1w.nii.gz"
+    t1_brain = f"{anat_dir}/T1w_brain.nii.gz"
+    
+    # 1. Locate Raw Anatomy
+    # If T1 doesn't exist in our processed folder, find it in RAW and copy it.
+    if not os.path.exists(t1_head):
+        # Search pattern for BIDS T1w
+        # This looks in: /lab_data/.../sub-XX/ses-XX/anat/*T1w.nii.gz
+        # We need to import raw_dir from params to be safe, or hardcode the search
+        from sym_pt_params import raw_dir
+        raw_t1_search = f"{raw_dir}/sub-{sub}/ses-{ses:02d}/anat/*T1w.nii.gz"
+        found_t1s = glob.glob(raw_t1_search)
         
-        mid_x = anat_data.shape[0] // 2
-        anat_flip = anat_data[::-1, :, :]
-        anat_mirror = anat_data.copy()
-        
-        # Ayzenberg logic: Replace missing hemi with flipped intact hemi
-        if intact_hemi.lower() == 'left':
-            anat_mirror[mid_x:, :, :] = anat_flip[mid_x:, :, :] # Fill Right with Left
+        if found_t1s:
+            print(f"  Copying T1 from {found_t1s[0]}")
+            shutil.copyfile(found_t1s[0], t1_head)
         else:
-            anat_mirror[:mid_x, :, :] = anat_flip[:mid_x, :, :] # Fill Left with Right
-            
-        nib.save(nib.Nifti1Image(anat_mirror, anat_img.affine), mirror_file)
-        return True
-    except Exception as e:
-        print(f'    Mirror FAILED: {e}')
-        return False
+            print(f"  WARNING: No T1 found for {sub} ses-{ses} in {raw_t1_search}")
+            return # Skip this session if no anatomy
 
-def register_and_pullback_rois(sub, ses, is_patient):
-    """Register to MNI and warp standard ROIs back to Native Space"""
-    sub_clean = sub.replace('sub-', '')
-    ses_str = f'{ses:02d}'
-    
-    anat_dir = f'{processed_dir}/sub-{sub_clean}/ses-{ses_str}/anat'
-    roi_dir = f'{processed_dir}/sub-{sub_clean}/ses-{ses_str}/rois'
-    
-    brain_file = f'{anat_dir}/sub-{sub_clean}_ses-{ses_str}_T1w_brain.nii.gz'
-    mirror_file = f'{anat_dir}/sub-{sub_clean}_ses-{ses_str}_T1w_brain_mirrored.nii.gz'
-    
-    # Files for registration
-    reg_input = mirror_file if is_patient and os.path.exists(mirror_file) else brain_file
-    mat_anat2std = f'{anat_dir}/anat2stand.mat'
-    mat_std2anat = f'{anat_dir}/mni2anat.mat'
-    
-    if not os.path.exists(reg_input): return False
-    
-    # 1. Register Anat -> MNI
-    if not os.path.exists(mat_anat2std):
-        print("    Registering to MNI...")
-        cmd = ['flirt', '-in', reg_input, '-ref', mni_brain, '-omat', mat_anat2std, 
-               '-bins', '256', '-cost', 'corratio', '-dof', '12']
-        subprocess.run(cmd, check=True)
-        
-        # Create Inverse (MNI -> Anat)
-        subprocess.run(['convert_xfm', '-omat', mat_std2anat, '-inverse', mat_anat2std], check=True)
+    # 2. Skull Strip (BET)
+    if not os.path.exists(t1_brain):
+        print("  Skull stripping...")
+        # -R = robust, -f 0.5 = standard fractional intensity
+        run_command(f"bet {t1_head} {t1_brain} -R -f 0.5 -g 0")
 
-    # 2. Warp ROIs MNI -> Anat
-    os.makedirs(roi_dir, exist_ok=True)
-    for roi_name, roi_path in MNI_ROIS.items():
-        out_roi = f'{roi_dir}/{roi_name}.nii.gz'
+    # 3. Create Mirror Brain
+    print("  Creating Mirror Brain...")
+    mirror_brain = create_mirror_brain(t1_brain, t1_head)
+    
+    # 4. Register Mirror -> MNI
+    # This creates the transform we need to bring ROIs *back* to the patient
+    mni_tfm = f"{anat_dir}/native_to_mni"
+    
+    # Step 4a: Linear Registration (FLIRT)
+    if not os.path.exists(f"{mni_tfm}.mat"):
+        print("  Running FLIRT (Linear Registration)...")
+        run_command(f"flirt -in {mirror_brain} -ref {mni_brain} "
+                    f"-out {mni_tfm}_linear -omat {mni_tfm}.mat")
+    
+    # Step 4b: Non-Linear Registration (FNIRT) - THE SLOW PART
+    if not os.path.exists(f"{mni_tfm}_warp.nii.gz"):
+        print("  Running FNIRT (Non-Linear Registration)...")
+        # Note: We use the *head* (T1w) for FNIRT, guided by the linear transform of the *mirror brain*
+        run_command(f"fnirt --in={t1_head} --aff={mni_tfm}.mat --cout={mni_tfm}_warp "
+                    f"--config=T1_2_MNI152_2mm --ref={mni_2mm}")
         
-        if not os.path.exists(roi_path):
-            print(f"    SKIP ROI: {roi_name} (Source file missing)")
-            continue
-            
+    # 5. Create Inverse Warp (MNI -> Native)
+    mni_to_native_warp = f"{anat_dir}/mni_to_native_warp.nii.gz"
+    if not os.path.exists(mni_to_native_warp):
+        print("  Creating Inverse Warp...")
+        run_command(f"invwarp --ref={t1_brain} --warp={mni_tfm}_warp "
+                    f"--out={mni_to_native_warp}")
+
+    # 6. Warp ROIs (MNI -> Native)
+    # This takes every .nii.gz file in your central ROI folder and warps it to this patient
+    source_rois = glob.glob(f"{roi_dir}/*.nii.gz")
+    
+    if not source_rois:
+        print(f"  WARNING: No source ROIs found in {roi_dir}. Skipping ROI warping.")
+        return
+
+    for roi in source_rois:
+        roi_name = os.path.basename(roi).replace('.nii.gz', '')
+        out_roi = f"{roi_out_dir}/{roi_name}.nii.gz"
+        
         if not os.path.exists(out_roi):
-            print(f"    Warping ROI: {roi_name}")
-            # Apply Inverse Transform (MNI -> Native)
-            cmd = ['flirt', '-in', roi_path, '-ref', brain_file, '-out', out_roi,
-                   '-applyxfm', '-init', mat_std2anat, '-interp', 'nearestneighbour']
-            subprocess.run(cmd, check=True)
-            
-            # Binarize
-            subprocess.run(['fslmaths', out_roi, '-bin', out_roi], check=True)
-
-    return True
+            print(f"  Warping ROI: {roi_name}...")
+            # inter=nn (Nearest Neighbor) keeps the ROI binary (0 or 1), no fuzzy edges
+            run_command(f"applywarp --ref={t1_brain} --in={roi} --warp={mni_to_native_warp} "
+                        f"--out={out_roi} --interp=nn")
 
 def main():
-    print('Processing anatomy and ROIs...')
-    df = pd.read_csv(csv_file)
+    print("Starting Anatomy Setup...")
     
-    for _, row in df.iterrows():
-        sub = row['sub'].replace('sub-', '')
-        if sub in skip_subs: continue
-        
-        is_patient = row['patient'] == 1
-        intact_hemi = row['intact_hemi']
-        sessions = get_sessions(sub, df)
-        
-        print(f'\nsub-{sub}')
-        for ses in sessions:
-            skull_strip(sub, ses)
-            if is_patient:
-                create_mirror(sub, ses, intact_hemi)
-            register_and_pullback_rois(sub, ses, is_patient)
+    # Get list of subjects from processed directory
+    # Only process subjects that have folders there
+    subs = sorted([d for d in os.listdir(processed_dir) if d.startswith('sub-')])
+    
+    if not subs:
+        print(f"No subject directories found in {processed_dir}. Did you run 01_organize.py?")
+        return
 
-if __name__ == '__main__':
+    for sub_dir in subs:
+        sub = sub_dir.replace('sub-', '')
+        
+        if sub in skip_subs:
+            print(f"Skipping {sub} (in skip list)")
+            continue
+            
+        sessions = get_sessions(f"sub-{sub}")
+        if not sessions:
+            print(f"No sessions found for {sub} in CSV.")
+            continue
+
+        for ses in sessions:
+            try:
+                process_subject(sub, ses)
+            except Exception as e:
+                print(f"FAILED on {sub} ses-{ses}: {e}")
+                # We continue to the next subject instead of crashing entirely
+                continue
+
+if __name__ == "__main__":
     main()
