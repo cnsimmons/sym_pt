@@ -4,7 +4,7 @@
 """
 import os
 import pandas as pd
-from sym_pt_params import raw_dir, processed_dir, csv_file, task, skip_subs, get_sessions, get_runs
+from sym_pt_params import raw_dir, processed_dir, csv_file, task, skip_subs, get_sessions, get_runs, conditions
 
 
 def convert_run(sub, ses, run):
