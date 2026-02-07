@@ -9,7 +9,7 @@ import numpy as np
 import nibabel as nib
 import pandas as pd
 from nilearn import image
-from long_pt_params import raw_dir, processed_dir, csv_file, mni_brain, skip_subs, get_sessions
+from sym_pt_params import raw_dir, processed_dir, csv_file, task, skip_subs, get_sessions, get_runs
 
 # =============================================================================
 # CONFIG: ROI PATHS
