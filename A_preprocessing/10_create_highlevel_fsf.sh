@@ -106,6 +106,12 @@ while IFS=',' read -r sub ses rest; do
             echo "set fmri(evg${n}.1) 1" >> "$fsf_file"
         fi
     done
+    
+    for ((j=${#runs[@]}+1; j<=20; j++)); do
+        sed -i "/set feat_files($j) /d" "$fsf_file"
+        sed -i "/set fmri(groupmem.$j) /d" "$fsf_file"
+        sed -i "/set fmri(evg${j}.1) /d" "$fsf_file"
+    done
 
     echo "  Created: $fsf_file"
 
