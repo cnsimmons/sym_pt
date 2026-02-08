@@ -1,0 +1,23 @@
+ERROR: Unable to locate a modulefile for 'fsl/6.0.4'
+/var/spool/slurmd/job308794/slurm_script: line 24: /opt/fsl/6.0.4/etc/fslconf/fsl.sh: No such file or directory
+Processing sub-072 ses-02
+Reference: ses-01 anat
+Found runs: ['01', '02', '03']
+
+  sub-072 loc run-01
+    Creating combined matrix: func -> ses-01
+    Running: flirt -in /user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data.nii.gz -ref /user_data/csimmon2/sym_pt/sub-072/ses-01/anat/T1w_brain.nii.gz -out /user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz -applyxfm -init /user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-01/1stLevel.feat/reg/func2ses01.mat -interp trilinear
+    ERROR: Command '['flirt', '-in', '/user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data.nii.gz', '-ref', '/user_data/csimmon2/sym_pt/sub-072/ses-01/anat/T1w_brain.nii.gz', '-out', '/user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-01/1stLevel.feat/filtered_func_data_reg.nii.gz', '-applyxfm', '-init', '/user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-01/1stLevel.feat/reg/func2ses01.mat', '-interp', 'trilinear']' died with <Signals.SIGKILL: 9>.
+
+  sub-072 loc run-02
+    Creating combined matrix: func -> ses-01
+    Running: flirt -in /user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data.nii.gz -ref /user_data/csimmon2/sym_pt/sub-072/ses-01/anat/T1w_brain.nii.gz -out /user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz -applyxfm -init /user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-02/1stLevel.feat/reg/func2ses01.mat -interp trilinear
+    ERROR: Command '['flirt', '-in', '/user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data.nii.gz', '-ref', '/user_data/csimmon2/sym_pt/sub-072/ses-01/anat/T1w_brain.nii.gz', '-out', '/user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-02/1stLevel.feat/filtered_func_data_reg.nii.gz', '-applyxfm', '-init', '/user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-02/1stLevel.feat/reg/func2ses01.mat', '-interp', 'trilinear']' died with <Signals.SIGKILL: 9>.
+
+  sub-072 loc run-03
+    Creating combined matrix: func -> ses-01
+    Running: flirt -in /user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data.nii.gz -ref /user_data/csimmon2/sym_pt/sub-072/ses-01/anat/T1w_brain.nii.gz -out /user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz -applyxfm -init /user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-03/1stLevel.feat/reg/func2ses01.mat -interp trilinear
+    ERROR: Command '['flirt', '-in', '/user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data.nii.gz', '-ref', '/user_data/csimmon2/sym_pt/sub-072/ses-01/anat/T1w_brain.nii.gz', '-out', '/user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-03/1stLevel.feat/filtered_func_data_reg.nii.gz', '-applyxfm', '-init', '/user_data/csimmon2/sym_pt/sub-072/ses-02/derivatives/fsl/loc/run-03/1stLevel.feat/reg/func2ses01.mat', '-interp', 'trilinear']' died with <Signals.SIGKILL: 9>.
+
+Finished sub-072 ses-02
+slurmstepd: error: Detected 3 oom-kill event(s) in StepId=308794.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.
