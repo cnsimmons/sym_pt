@@ -114,6 +114,7 @@ create_fsf() {
     # Structural = first session's T1w_brain (serves as "standard" in FEAT)
     local structImage="$dataDir/sub-${sub}/ses-${first_ses}/anat/T1w_brain.nii.gz"
     sed -i "s|set highres_files(1) \".*\"|set highres_files(1) \"$structImage\"|g" "$fsfFile"
+    sed -i "s|set fmri(regstandard) \".*\"|set fmri(regstandard) \"${structImage%.nii.gz}\"|g" "$fsfFile"
 
     # Output directory
     sed -i "s|set fmri(outputdir) \".*\"|set fmri(outputdir) \"$outputDir/1stLevel\"|g" "$fsfFile"

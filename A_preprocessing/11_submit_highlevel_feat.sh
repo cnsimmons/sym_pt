@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# 13_submit_highlevel_feat.sh - Submit HighLevel FEAT jobs with throttling
+# 11_submit_highlevel_feat.sh - Submit HighLevel FEAT jobs with throttling
 # Usage: bash 11_submit_highlevel_feat.sh
 #
 

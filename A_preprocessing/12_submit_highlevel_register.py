@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Submit registration jobs for HighLevel outputs to ses-01 space
+12_submit_highlevel_register.py - Submit registration jobs for HighLevel outputs to ses-01 space
 
-to run: python 14_submit_register_highlevel.py
+to run: python 12_submit_highlevel_register.py
 to monitor: squeue -u $USER
 """
 
@@ -82,6 +82,12 @@ for sub_num in subjects:
     
     for ses_num in sessions:
         ses = f'{ses_num:02d}'
+        
+        # Check that HighLevel FEAT completed
+        gfeat_dir = f'{processed_dir}/{sub}/ses-{ses}/derivatives/fsl/loc/HighLevel.gfeat'
+        if not os.path.exists(f'{gfeat_dir}/cope1.feat/stats/cope1.nii.gz'):
+            print(f'  SKIP {sub} ses-{ses}: HighLevel not complete')
+            continue
         
         # Wait for queue space
         while get_running_jobs() >= 12:
