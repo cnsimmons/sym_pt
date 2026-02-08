@@ -9,6 +9,7 @@ Usage: python 12_register_highlevel.py sub-004 01
 import subprocess
 import os
 import sys
+sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt')
 from sym_pt_params import processed_dir, get_sessions
 
 sub = sys.argv[1]

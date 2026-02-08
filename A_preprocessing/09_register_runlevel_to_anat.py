@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 09_register_zstats.py - Register run-level zstat and cope files to ses-01 anat
-Applies example_func2standard.mat (func -> ses-01 anat)
+For ses-01: applies example_func2highres.mat directly
+For ses-02+: concatenates example_func2highres.mat + anat2ses01.mat
 
 Usage: python 09_register_zstats.py sub-004 01
 """
@@ -9,6 +10,7 @@ import subprocess
 import os
 import sys
 from glob import glob
+sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt')
 from sym_pt_params import processed_dir, get_sessions
 
 sub = sys.argv[1]   # e.g., 'sub-004'
@@ -42,13 +44,28 @@ print(f"Found runs: {runs}")
 for run in runs:
     print(f"\n  Run {run}:")
     run_dir = f'{task_dir}/run-{run}/1stLevel.feat'
-    xfm_mat = f'{run_dir}/reg/example_func2standard.mat'
+    func2highres = f'{run_dir}/reg/example_func2highres.mat'
     reg_stats_dir = f'{run_dir}/reg_standard/stats'
     os.makedirs(reg_stats_dir, exist_ok=True)
 
-    if not os.path.exists(xfm_mat):
-        print(f"    SKIP: example_func2standard.mat missing")
+    if not os.path.exists(func2highres):
+        print(f"    SKIP: example_func2highres.mat missing")
         continue
+
+    # Determine transform matrix
+    if ses == first_ses:
+        xfm_mat = func2highres
+    else:
+        anat2ses01 = f'{processed_dir}/sub-{sub_clean}/ses-{ses}/anat/anat2ses{first_ses}.mat'
+        if not os.path.exists(anat2ses01):
+            print(f"    SKIP: anat2ses{first_ses}.mat missing - run script 08 first")
+            continue
+        xfm_mat = f'{run_dir}/reg/func2ses{first_ses}.mat'
+        if not os.path.exists(xfm_mat):
+            concat_cmd = (f'convert_xfm -omat {xfm_mat} '
+                          f'-concat {anat2ses01} {func2highres}')
+            print(f"    Creating combined matrix: func -> ses-{first_ses}")
+            subprocess.run(concat_cmd.split(), check=True)
 
     for z in zstats:
         for prefix in ['zstat', 'cope']:
