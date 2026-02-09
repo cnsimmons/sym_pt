@@ -3,6 +3,8 @@
 02_convert_timing.py - Convert BIDS events to FSL 3-column timing files
 """
 import os
+import sys
+sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt')
 import pandas as pd
 from sym_pt_params import raw_dir, processed_dir, task, skip_subs, conditions, get_sessions, get_runs, _load_csv
 
@@ -12,28 +14,29 @@ def convert_run(sub, ses, run):
     ses_str = f'{ses:02d}'
     run_str = f'{run:02d}'
 
-    # Input events file
     events_file = f'{raw_dir}/sub-{sub}/ses-{ses_str}/func/sub-{sub}_ses-{ses_str}_task-{task}_run-{run_str}_events.tsv'
-
-    # Special case: sub-007 ses-03
-    if sub == '007' and ses == 3:
-        events_file = f'{processed_dir}/sub-{sub}/ses-{ses_str}/func/sub-{sub}_ses-{ses_str}_task-{task}_run-{run_str}_events.tsv'
 
     if not os.path.exists(events_file):
         print(f'    SKIP: {events_file} not found')
         return 0
 
-    # Output directory
     timing_dir = f'{processed_dir}/sub-{sub}/ses-{ses_str}/timing'
     os.makedirs(timing_dir, exist_ok=True)
 
-    # Read events
     events = pd.read_csv(events_file, sep='\t')
 
-    # Create timing file for each condition
+    # Handle different column names (most use block_type, some use trial_type)
+    if 'block_type' in events.columns:
+        type_col = 'block_type'
+    elif 'trial_type' in events.columns:
+        type_col = 'trial_type'
+    else:
+        print(f'    SKIP: no block_type or trial_type column found')
+        return 0
+
     count = 0
     for cond in conditions:
-        cond_events = events[events['block_type'] == cond]
+        cond_events = events[events[type_col] == cond]
 
         if len(cond_events) == 0:
             continue

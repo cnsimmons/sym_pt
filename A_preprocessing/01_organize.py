@@ -3,6 +3,8 @@
 01_organize.py - Setup directory structure for sym_pt
 """
 import os
+import sys
+sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt')
 from sym_pt_params import processed_dir, task, skip_subs, get_sessions, get_runs, _load_csv
 
 
