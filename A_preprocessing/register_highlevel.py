@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-14_register_highlevel.py - Register HighLevel outputs to ses-01 space
+register_highlevel.py - Register HighLevel outputs to ses-01 space
 For first session: creates symlinks (already in correct space)
 For later sessions: applies anat2ses01.mat
 
-Usage: python 14_register_highlevel.py sub-004 01
+Usage: python register_highlevel.py sub-004 01
 """
 import subprocess
 import os
