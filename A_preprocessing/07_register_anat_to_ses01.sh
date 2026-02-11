@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# 08_register_anat_to_ses01.sh - Create inter-session anat registration matrices
+# 07_register_anat_to_ses01.sh - Create inter-session anat registration matrices
 # For each subject with multiple sessions, registers later session anats
 # to the first session's anat using FLIRT (dof 6, rigid body)
 
