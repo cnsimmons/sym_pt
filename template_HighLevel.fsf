@@ -266,7 +266,7 @@ set fmri(regstandard_nonlinear_warpres) 10
 set fmri(paradigm_hp) 100
 
 # Number of lower-level copes feeding into higher-level analysis
-set fmri(ncopeinputs) 14
+set fmri(ncopeinputs) 19
 
 # Use lower-level cope 1 for higher-level analysis
 set fmri(copeinput.1) 1
@@ -419,3 +419,9 @@ set fmri(init_standard) ""
 
 # For full FEAT analysis: overwrite existing .feat output dir?
 set fmri(overwrite_yn) 0
+
+set fmri(copeinput.15) 1
+set fmri(copeinput.16) 1
+set fmri(copeinput.17) 1
+set fmri(copeinput.18) 1
+set fmri(copeinput.19) 1

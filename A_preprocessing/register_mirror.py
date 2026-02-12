@@ -9,6 +9,8 @@ Usage:
   python register_mirror.py --sub 022 # Process ONLY subject 022
 """
 import os
+import sys
+sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt')
 import glob
 import subprocess
 import shutil
