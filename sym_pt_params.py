@@ -59,7 +59,6 @@ def _load_csv():
 
 
 def is_patient(sub):
-    """Check if subject is a patient based on group column."""
     sub_clean = sub.replace('sub-', '')
     df = _load_csv()
     if df.empty:
@@ -67,7 +66,7 @@ def is_patient(sub):
     row = df[df['sub_clean'] == sub_clean]
     if row.empty:
         return False
-    return row.iloc[0]['group'] == 'patient'
+    return row.iloc[0]['group'] in ('OTC', 'nonOTC')
 
 
 def get_sessions(sub, df=None):
