@@ -7,7 +7,7 @@
 DATA_DIR="/user_data/csimmon2/sym_pt"
 REPO_DIR="/user_data/csimmon2/git_repos/sym_pt"
 LOG_DIR="$REPO_DIR/logs_highlevel"
-MAX_RUNNING=12
+MAX_RUNNING=20
 POLL_INTERVAL=60
 
 mkdir -p "$LOG_DIR"
