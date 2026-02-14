@@ -1,29 +1,42 @@
 #!/bin/bash
-# submit_anatomy.sh
+# submit_anatomy.sh - Submit anatomy jobs with throttling
 # Usage: bash submit_anatomy.sh
 
 # 1. Define Paths
 REPO_DIR="/user_data/csimmon2/git_repos/sym_pt"
 PROCESSED_DIR="/user_data/csimmon2/sym_pt"
 LOG_DIR="$REPO_DIR/logs_anatomy"
+MAX_RUNNING=12
+POLL_INTERVAL=60  # seconds between queue checks
 
 # 2. Setup Logs
 mkdir -p $LOG_DIR
 echo "Logs will be saved to: $LOG_DIR"
+echo "Max concurrent jobs: $MAX_RUNNING"
+echo ""
 
 # 3. Find subjects
-# We look for folders like 'sub-022' in the processed directory
 cd $PROCESSED_DIR
 SUBJECTS=$(ls -d sub-*)
 
-# 4. Loop and Submit
+submitted=0
+
+# 4. Loop and Submit with throttling
 for SUB_DIR in $SUBJECTS; do
-    # Extract ID (e.g., "sub-022" -> "022")
     SUB_ID=${SUB_DIR#sub-}
-    
+
+    # Throttle: wait until running jobs drop below limit
+    while true; do
+        n_running=$(squeue -u $USER -h | grep -c "anat_")
+        if [ "$n_running" -lt "$MAX_RUNNING" ]; then
+            break
+        fi
+        echo "  Waiting... ($n_running/$MAX_RUNNING jobs running)"
+        sleep $POLL_INTERVAL
+    done
+
     echo "Submitting job for $SUB_ID..."
-    
-    # The HEREDOC below creates the job script on the fly
+
     sbatch <<EOT
 #!/bin/bash
 #SBATCH --job-name=anat_${SUB_ID}
@@ -45,4 +58,11 @@ echo "Processing $SUB_ID on \$(hostname)"
 python $REPO_DIR/register_mirror.py --sub $SUB_ID
 EOT
 
+    ((submitted++))
+    echo "[$submitted] Submitted: anat_${SUB_ID}"
+
 done
+
+echo ""
+echo "Done! Submitted $submitted jobs."
+echo "Monitor with: squeue -u \$USER"

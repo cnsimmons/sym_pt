@@ -32,7 +32,7 @@ sub-072,ses-01,18.70,Male,right,left,nonOTC,
 sub-072,ses-02,20.00,Male,right,left,nonOTC,
 sub-073,ses-01,10.30,Female,right,left,nonOTC,
 sub-073,ses-02,10.90,Female,right,left,nonOTC,
-sub-074,ses-01,13.05,Female,right,left,nonOTC,JD
+sub-074,ses-01,13.05,Female,right,left,OTC,JD
 sub-075,ses-01,11.58,Female,right,left,OTC,ED
 sub-076,ses-01,16.07,Male,right,left,OTC,JH
 sub-077,ses-01,7.80,Female,right,left,OTC,KI
