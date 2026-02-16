@@ -90,20 +90,27 @@ def calc_motion(par_file):
 def calc_tsnr(func_path, mask_path):
     """
     Compute tSNR = mean(timeseries) / std(timeseries) within a mask.
+    Resamples mask to functional resolution to handle dimension mismatch.
     Returns mean tSNR across voxels in the mask.
     """
-    func_img = nib.load(func_path)
-    func_data = func_img.get_fdata()
+    from nilearn.image import resample_to_img, load_img, binarize_img
 
-    mask_img = nib.load(mask_path)
-    mask_data = mask_img.get_fdata() > 0
-
-    n_voxels = int(mask_data.sum())
-    if n_voxels == 0 or func_data.ndim != 4:
+    func_img = load_img(func_path)
+    if func_img.ndim != 4:
         return np.nan
 
-    # Extract timeseries: (n_voxels, n_timepoints)
-    masked_ts = func_data[mask_data, :]
+    mask_img = load_img(mask_path)
+
+    # Resample mask to functional data resolution (nearest neighbor)
+    mask_resampled = resample_to_img(mask_img, func_img,
+                                      interpolation='nearest')
+    mask_data = mask_resampled.get_fdata() > 0
+
+    if mask_data.sum() == 0:
+        return np.nan
+
+    func_data = func_img.get_fdata()
+    masked_ts = func_data[mask_data, :]  # (n_voxels, n_timepoints)
 
     with np.errstate(divide='ignore', invalid='ignore'):
         voxel_tsnr = np.mean(masked_ts, axis=1) / np.std(masked_ts, axis=1)
