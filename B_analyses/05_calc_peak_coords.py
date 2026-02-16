@@ -2,6 +2,8 @@
 """
 05_calc_peak_coords.py - Peak coordinate analysis for anatomical location
 
+BE SURE TO LOAD FSL BEFORE RUNNING THIS SCRIPT (for img2imgcoord)
+
 Following Ayzenberg et al. (2023):
   1. For each subject × category, find peak voxel within searchmask
   2. Convert native-space peak to MNI coordinates using anat2stand.mat

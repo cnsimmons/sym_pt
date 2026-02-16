@@ -2,6 +2,8 @@
 """
 04_calc_confounds.py - Compute tSNR and motion metrics for paper reporting
 
+this can take a while
+
 Following Ayzenberg et al. (2023):
   - Motion: mean absolute rotation (deg) and translation (mm) from MCFLIRT
   - tSNR: mean(timeseries) / std(timeseries) within each searchmask
@@ -20,6 +22,26 @@ Outputs:
 Usage:
   python 04_calc_confounds.py              # All subjects
   python 04_calc_confounds.py --sub 004    # Single subject
+  
+
+optional slurm:
+sbatch <<EOT
+#!/bin/bash
+#SBATCH --job-name=confounds
+#SBATCH --output=slurm_out/confounds_%j.out
+#SBATCH --mem=16G
+#SBATCH --time=04:00:00
+#SBATCH -p cpu
+#SBATCH --cpus-per-task=1
+
+module load fsl/6.0.3
+export FSLDIR=/opt/fsl/6.0.3
+. ${FSLDIR}/etc/fslconf/fsl.sh
+export PATH=${FSLDIR}/bin:${PATH}
+
+python B_analyses/04_calc_confounds.py
+EOT
+  
 """
 import os
 import sys
