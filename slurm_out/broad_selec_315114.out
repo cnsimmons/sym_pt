@@ -1,0 +1,614 @@
+============================================================
+CALCULATE SELECTIVITY SUMMARY VALUES
+============================================================
+Threshold: z > 2.3
+Categories: ['face', 'house', 'object', 'word']
+COPEs: {'face': 1, 'house': 2, 'object': 3, 'word': 4}
+Mask type: BROAD ventral/dorsal
+NOTE: Patients = intact hemi only, pre-surgical excluded
+
+Processing 50 subjects
+
+=== sub-004 ses-01 ===
+  Group: OTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-004 ses-02 ===
+  Group: OTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-004 ses-03 ===
+  Group: OTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-004 ses-05 ===
+  Group: OTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-004 ses-06 ===
+  Group: OTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-007 ses-01 ===
+  Group: nonOTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 18996 active voxels, mean_act=5.16, sum_selec_norm=750.01
+  r_house_broadVentral: 22685 active voxels, mean_act=5.06, sum_selec_norm=877.72
+  r_object_broadVentral: 42340 active voxels, mean_act=4.62, sum_selec_norm=1495.96
+  r_word_broadVentral: 4889 active voxels, mean_act=3.67, sum_selec_norm=137.24
+=== sub-007 ses-03 ===
+  Group: nonOTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 11966 active voxels, mean_act=3.87, sum_selec_norm=354.13
+  r_house_broadVentral: 5345 active voxels, mean_act=3.32, sum_selec_norm=135.90
+  r_object_broadVentral: 24438 active voxels, mean_act=3.83, sum_selec_norm=716.05
+  r_word_broadVentral: 1613 active voxels, mean_act=2.74, sum_selec_norm=33.81
+=== sub-007 ses-04 ===
+  Group: nonOTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 4166 active voxels, mean_act=4.32, sum_selec_norm=137.60
+  r_house_broadVentral: 2236 active voxels, mean_act=3.11, sum_selec_norm=53.27
+  r_object_broadVentral: 37347 active voxels, mean_act=3.69, sum_selec_norm=1054.81
+  r_word_broadVentral: 787 active voxels, mean_act=2.96, sum_selec_norm=17.85
+=== sub-008 ses-01 ===
+  Group: OTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-008 ses-02 ===
+  Group: OTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-010 ses-02 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 3479 active voxels, mean_act=3.14, sum_selec_norm=88.01
+  r_house_broadVentral: 3551 active voxels, mean_act=3.06, sum_selec_norm=87.55
+  r_object_broadVentral: 14847 active voxels, mean_act=3.98, sum_selec_norm=476.45
+  r_word_broadVentral: 4136 active voxels, mean_act=2.77, sum_selec_norm=92.25
+=== sub-010 ses-03 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 1963 active voxels, mean_act=3.74, sum_selec_norm=59.13
+  r_house_broadVentral: 1109 active voxels, mean_act=3.15, sum_selec_norm=28.18
+  r_object_broadVentral: 13352 active voxels, mean_act=3.99, sum_selec_norm=428.65
+  r_word_broadVentral: 4058 active voxels, mean_act=2.95, sum_selec_norm=96.45
+=== sub-017 ses-01 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 14414 active voxels, mean_act=3.36, sum_selec_norm=379.27
+  r_house_broadVentral: 21804 active voxels, mean_act=3.22, sum_selec_norm=549.63
+  r_object_broadVentral: 11430 active voxels, mean_act=3.46, sum_selec_norm=309.27
+  r_word_broadVentral: 23883 active voxels, mean_act=3.54, sum_selec_norm=661.74
+=== sub-017 ses-03 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 510 active voxels, mean_act=2.65, sum_selec_norm=10.57
+  r_house_broadVentral: 1832 active voxels, mean_act=2.68, sum_selec_norm=38.42
+  r_object_broadVentral: 9826 active voxels, mean_act=3.04, sum_selec_norm=234.15
+  r_word_broadVentral: 1721 active voxels, mean_act=2.98, sum_selec_norm=40.12
+=== sub-017 ses-04 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 2828 active voxels, mean_act=2.80, sum_selec_norm=61.87
+  r_house_broadVentral: 1202 active voxels, mean_act=2.77, sum_selec_norm=26.06
+  r_object_broadVentral: 3889 active voxels, mean_act=3.14, sum_selec_norm=95.66
+  r_word_broadVentral: 3329 active voxels, mean_act=2.87, sum_selec_norm=74.81
+=== sub-018 ses-02 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 8924 active voxels, mean_act=4.92, sum_selec_norm=454.54
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 14147 active voxels, mean_act=5.25, sum_selec_norm=768.50
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 49646 active voxels, mean_act=5.07, sum_selec_norm=2604.50
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 5208 active voxels, mean_act=4.07, sum_selec_norm=219.54
+=== sub-018 ses-03 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 9294 active voxels, mean_act=4.06, sum_selec_norm=390.54
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 16709 active voxels, mean_act=4.81, sum_selec_norm=832.50
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 22017 active voxels, mean_act=3.96, sum_selec_norm=902.81
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 5381 active voxels, mean_act=3.37, sum_selec_norm=187.49
+=== sub-021 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi info
+=== sub-021 ses-02 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 2294 active voxels, mean_act=4.06, sum_selec_norm=111.26
+  r_house_broadVentral: 866 active voxels, mean_act=4.06, sum_selec_norm=42.01
+  r_object_broadVentral: 15421 active voxels, mean_act=4.44, sum_selec_norm=818.00
+  r_word_broadVentral: 180 active voxels, mean_act=2.54, sum_selec_norm=5.47
+=== sub-021 ses-03 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 5953 active voxels, mean_act=4.14, sum_selec_norm=294.63
+  r_house_broadVentral: 1618 active voxels, mean_act=4.24, sum_selec_norm=81.91
+  r_object_broadVentral: 17470 active voxels, mean_act=4.63, sum_selec_norm=965.34
+  r_word_broadVentral: 916 active voxels, mean_act=2.77, sum_selec_norm=30.27
+=== sub-022 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 7551 active voxels, mean_act=3.83, sum_selec_norm=265.66
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 17665 active voxels, mean_act=4.04, sum_selec_norm=655.78
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 21904 active voxels, mean_act=4.05, sum_selec_norm=815.32
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 14517 active voxels, mean_act=3.73, sum_selec_norm=497.73
+=== sub-022 ses-02 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 3660 active voxels, mean_act=3.74, sum_selec_norm=125.79
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 10193 active voxels, mean_act=4.54, sum_selec_norm=425.63
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 35431 active voxels, mean_act=4.02, sum_selec_norm=1311.33
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 600 active voxels, mean_act=2.89, sum_selec_norm=15.92
+=== sub-025 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 14087 active voxels, mean_act=5.00, sum_selec_norm=577.25
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 22663 active voxels, mean_act=5.31, sum_selec_norm=988.01
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 48963 active voxels, mean_act=4.73, sum_selec_norm=1901.30
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 3295 active voxels, mean_act=3.85, sum_selec_norm=104.04
+=== sub-025 ses-02 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 22737 active voxels, mean_act=4.55, sum_selec_norm=848.69
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 8495 active voxels, mean_act=4.00, sum_selec_norm=278.61
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 21901 active voxels, mean_act=6.11, sum_selec_norm=1098.05
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 11620 active voxels, mean_act=3.18, sum_selec_norm=303.16
+=== sub-025 ses-03 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 18037 active voxels, mean_act=6.63, sum_selec_norm=980.24
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 23500 active voxels, mean_act=5.35, sum_selec_norm=1031.50
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 45504 active voxels, mean_act=5.80, sum_selec_norm=2163.83
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 10290 active voxels, mean_act=5.58, sum_selec_norm=470.92
+=== sub-027 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 24970 active voxels, mean_act=3.14, sum_selec_norm=879.29
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 18810 active voxels, mean_act=3.21, sum_selec_norm=678.49
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 14741 active voxels, mean_act=3.23, sum_selec_norm=534.59
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 5952 active voxels, mean_act=2.95, sum_selec_norm=197.26
+=== sub-027 ses-02 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 2691 active voxels, mean_act=3.53, sum_selec_norm=106.72
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 5772 active voxels, mean_act=4.13, sum_selec_norm=267.27
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 24725 active voxels, mean_act=5.16, sum_selec_norm=1431.12
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 1286 active voxels, mean_act=4.09, sum_selec_norm=59.04
+=== sub-038 ses-02 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 7414 active voxels, mean_act=4.07, sum_selec_norm=275.38
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 24472 active voxels, mean_act=4.93, sum_selec_norm=1099.30
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 38677 active voxels, mean_act=5.07, sum_selec_norm=1786.59
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 5894 active voxels, mean_act=4.73, sum_selec_norm=254.18
+=== sub-045 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi info
+=== sub-045 ses-02 ===
+  Group: nonOTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 6119 active voxels, mean_act=4.67, sum_selec_norm=297.95
+  r_house_broadVentral: 7915 active voxels, mean_act=4.52, sum_selec_norm=372.56
+  r_object_broadVentral: 20433 active voxels, mean_act=5.01, sum_selec_norm=1065.85
+  r_word_broadVentral: 4781 active voxels, mean_act=3.36, sum_selec_norm=167.43
+=== sub-045 ses-03 ===
+  Group: nonOTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 4455 active voxels, mean_act=3.95, sum_selec_norm=183.36
+  r_house_broadVentral: 9519 active voxels, mean_act=4.39, sum_selec_norm=435.06
+  r_object_broadVentral: 39252 active voxels, mean_act=4.89, sum_selec_norm=2000.92
+  r_word_broadVentral: 7946 active voxels, mean_act=3.86, sum_selec_norm=319.60
+=== sub-047 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi info
+=== sub-047 ses-02 ===
+  Group: nonOTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-049 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi info
+=== sub-049 ses-02 ===
+  Group: nonOTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-052 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 6020 active voxels, mean_act=3.41, sum_selec_norm=177.63
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 14967 active voxels, mean_act=4.06, sum_selec_norm=526.48
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 66567 active voxels, mean_act=4.70, sum_selec_norm=2711.11
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 4548 active voxels, mean_act=3.31, sum_selec_norm=130.39
+=== sub-052 ses-02 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 10135 active voxels, mean_act=3.08, sum_selec_norm=270.47
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 7797 active voxels, mean_act=3.65, sum_selec_norm=246.19
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 6566 active voxels, mean_act=3.31, sum_selec_norm=188.31
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 18607 active voxels, mean_act=3.35, sum_selec_norm=540.68
+=== sub-057 ses-02 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 14753 active voxels, mean_act=5.11, sum_selec_norm=664.15
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 19832 active voxels, mean_act=4.86, sum_selec_norm=848.87
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 46157 active voxels, mean_act=4.98, sum_selec_norm=2024.71
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 4719 active voxels, mean_act=4.82, sum_selec_norm=200.63
+=== sub-058 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 3500 active voxels, mean_act=3.90, sum_selec_norm=135.63
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 5547 active voxels, mean_act=4.29, sum_selec_norm=236.64
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 38552 active voxels, mean_act=5.41, sum_selec_norm=2070.58
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 1930 active voxels, mean_act=3.93, sum_selec_norm=75.29
+=== sub-058 ses-02 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 2588 active voxels, mean_act=4.27, sum_selec_norm=109.71
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 2507 active voxels, mean_act=3.68, sum_selec_norm=91.70
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 15040 active voxels, mean_act=4.74, sum_selec_norm=708.63
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 1527 active voxels, mean_act=3.59, sum_selec_norm=54.43
+=== sub-059 ses-02 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 7940 active voxels, mean_act=4.51, sum_selec_norm=344.45
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 11765 active voxels, mean_act=4.06, sum_selec_norm=459.23
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 52414 active voxels, mean_act=5.64, sum_selec_norm=2840.31
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 6604 active voxels, mean_act=5.03, sum_selec_norm=319.41
+=== sub-062 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 12179 active voxels, mean_act=4.48, sum_selec_norm=569.43
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 17461 active voxels, mean_act=5.18, sum_selec_norm=944.06
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 27549 active voxels, mean_act=4.99, sum_selec_norm=1436.70
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 4810 active voxels, mean_act=3.79, sum_selec_norm=190.29
+=== sub-062 ses-02 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 15940 active voxels, mean_act=4.13, sum_selec_norm=687.71
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 25782 active voxels, mean_act=5.06, sum_selec_norm=1363.45
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 15620 active voxels, mean_act=4.32, sum_selec_norm=705.72
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 7259 active voxels, mean_act=3.09, sum_selec_norm=234.13
+=== sub-064 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 3985 active voxels, mean_act=3.97, sum_selec_norm=148.53
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 13455 active voxels, mean_act=4.31, sum_selec_norm=543.45
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 31867 active voxels, mean_act=4.34, sum_selec_norm=1298.22
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 2193 active voxels, mean_act=3.84, sum_selec_norm=78.99
+=== sub-064 ses-02 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 9318 active voxels, mean_act=3.92, sum_selec_norm=342.89
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 17494 active voxels, mean_act=4.40, sum_selec_norm=721.91
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 12868 active voxels, mean_act=4.11, sum_selec_norm=496.71
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 20925 active voxels, mean_act=4.09, sum_selec_norm=803.35
+=== sub-066 ses-01 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 3743 active voxels, mean_act=4.35, sum_selec_norm=183.74
+  r_house_broadVentral: 12198 active voxels, mean_act=4.43, sum_selec_norm=609.53
+  r_object_broadVentral: 25971 active voxels, mean_act=5.97, sum_selec_norm=1747.81
+  r_word_broadVentral: 7975 active voxels, mean_act=3.90, sum_selec_norm=350.99
+=== sub-067 ses-02 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 3903 active voxels, mean_act=3.19, sum_selec_norm=136.65
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 4107 active voxels, mean_act=3.45, sum_selec_norm=155.28
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 23104 active voxels, mean_act=3.58, sum_selec_norm=908.43
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 3723 active voxels, mean_act=3.42, sum_selec_norm=139.70
+=== sub-068 ses-02 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 10765 active voxels, mean_act=4.37, sum_selec_norm=447.22
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 18509 active voxels, mean_act=4.16, sum_selec_norm=732.13
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 41582 active voxels, mean_act=5.03, sum_selec_norm=1987.77
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 14940 active voxels, mean_act=4.76, sum_selec_norm=675.22
+=== sub-068 ses-03 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 9200 active voxels, mean_act=4.18, sum_selec_norm=365.21
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 28718 active voxels, mean_act=4.43, sum_selec_norm=1209.07
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 29741 active voxels, mean_act=4.71, sum_selec_norm=1330.58
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 10704 active voxels, mean_act=4.57, sum_selec_norm=464.84
+=== sub-069 ses-01 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 2118 active voxels, mean_act=2.82, sum_selec_norm=60.05
+  r_house_broadVentral: 1854 active voxels, mean_act=2.94, sum_selec_norm=54.96
+  r_object_broadVentral: 3334 active voxels, mean_act=3.08, sum_selec_norm=103.29
+  r_word_broadVentral: 11342 active voxels, mean_act=3.08, sum_selec_norm=351.32
+=== sub-070 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi info
+=== sub-070 ses-02 ===
+  Group: nonOTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 9213 active voxels, mean_act=5.34, sum_selec_norm=505.59
+  r_house_broadVentral: 16084 active voxels, mean_act=5.75, sum_selec_norm=949.72
+  r_object_broadVentral: 36363 active voxels, mean_act=5.58, sum_selec_norm=2082.78
+  r_word_broadVentral: 15268 active voxels, mean_act=4.72, sum_selec_norm=740.19
+=== sub-071 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 8498 active voxels, mean_act=3.83, sum_selec_norm=286.65
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 23366 active voxels, mean_act=4.21, sum_selec_norm=867.57
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 30791 active voxels, mean_act=4.19, sum_selec_norm=1136.90
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 9572 active voxels, mean_act=3.62, sum_selec_norm=305.63
+=== sub-072 ses-01 ===
+  Group: nonOTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-072 ses-02 ===
+  Group: nonOTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-073 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi info
+=== sub-073 ses-02 ===
+  Group: nonOTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-074 ses-01 ===
+  Group: OTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-075 ses-01 ===
+  Group: OTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-076 ses-01 ===
+  Group: OTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-077 ses-01 ===
+  Group: OTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-078 ses-01 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 8899 active voxels, mean_act=5.87, sum_selec_norm=626.02
+  r_house_broadVentral: 9616 active voxels, mean_act=4.90, sum_selec_norm=564.14
+  r_object_broadVentral: 36781 active voxels, mean_act=6.11, sum_selec_norm=2692.51
+  r_word_broadVentral: 4711 active voxels, mean_act=5.29, sum_selec_norm=298.54
+=== sub-079 ses-01 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 21664 active voxels, mean_act=5.46, sum_selec_norm=1044.33
+  r_house_broadVentral: 20644 active voxels, mean_act=5.20, sum_selec_norm=948.02
+  r_object_broadVentral: 38419 active voxels, mean_act=5.25, sum_selec_norm=1779.30
+  r_word_broadVentral: 5097 active voxels, mean_act=4.50, sum_selec_norm=202.66
+=== sub-079 ses-02 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 12675 active voxels, mean_act=4.87, sum_selec_norm=545.41
+  r_house_broadVentral: 12445 active voxels, mean_act=4.74, sum_selec_norm=520.71
+  r_object_broadVentral: 53386 active voxels, mean_act=5.24, sum_selec_norm=2470.34
+  r_word_broadVentral: 6408 active voxels, mean_act=4.85, sum_selec_norm=274.18
+=== sub-081 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi info
+=== sub-081 ses-02 ===
+  Group: nonOTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 5194 active voxels, mean_act=4.62, sum_selec_norm=268.87
+  r_house_broadVentral: 10192 active voxels, mean_act=3.91, sum_selec_norm=445.89
+  r_object_broadVentral: 14536 active voxels, mean_act=4.33, sum_selec_norm=703.93
+  r_word_broadVentral: 5001 active voxels, mean_act=3.88, sum_selec_norm=217.10
+=== sub-083 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 13213 active voxels, mean_act=6.09, sum_selec_norm=662.54
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 15006 active voxels, mean_act=4.81, sum_selec_norm=595.18
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 64344 active voxels, mean_act=7.51, sum_selec_norm=3980.90
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 7021 active voxels, mean_act=6.09, sum_selec_norm=351.99
+=== sub-084 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 621 active voxels, mean_act=3.22, sum_selec_norm=16.34
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 1000 active voxels, mean_act=3.65, sum_selec_norm=29.84
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 7363 active voxels, mean_act=4.36, sum_selec_norm=261.99
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 531 active voxels, mean_act=3.24, sum_selec_norm=14.06
+=== sub-085 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 14367 active voxels, mean_act=4.81, sum_selec_norm=604.83
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 24422 active voxels, mean_act=5.37, sum_selec_norm=1149.60
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 45658 active voxels, mean_act=5.77, sum_selec_norm=2309.67
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 9885 active voxels, mean_act=5.46, sum_selec_norm=472.58
+=== sub-086 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi info
+=== sub-086 ses-02 ===
+  Group: nonOTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-087 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 22723 active voxels, mean_act=5.71, sum_selec_norm=1204.19
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 27962 active voxels, mean_act=5.20, sum_selec_norm=1351.02
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 40348 active voxels, mean_act=4.87, sum_selec_norm=1825.42
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 11822 active voxels, mean_act=5.09, sum_selec_norm=558.41
+=== sub-088 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 4938 active voxels, mean_act=4.85, sum_selec_norm=253.42
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 12410 active voxels, mean_act=5.09, sum_selec_norm=667.67
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 46710 active voxels, mean_act=5.82, sum_selec_norm=2876.59
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 6562 active voxels, mean_act=4.91, sum_selec_norm=340.84
+=== sub-089 ses-01 ===
+  Group: OTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-090 ses-01 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 5045 active voxels, mean_act=4.20, sum_selec_norm=221.66
+  r_house_broadVentral: 6043 active voxels, mean_act=4.29, sum_selec_norm=271.74
+  r_object_broadVentral: 7314 active voxels, mean_act=3.87, sum_selec_norm=296.71
+  r_word_broadVentral: 10993 active voxels, mean_act=3.25, sum_selec_norm=373.50
+=== sub-091 ses-01 ===
+  Group: OTC | Intact hemi: left | Analyzing: ['l']
+  l_face_broadVentral: no suprathreshold voxels
+  l_house_broadVentral: no suprathreshold voxels
+  l_object_broadVentral: no suprathreshold voxels
+  l_word_broadVentral: no suprathreshold voxels
+=== sub-092 ses-01 ===
+  Group: OTC | Intact hemi: right | Analyzing: ['r']
+  r_face_broadVentral: 9240 active voxels, mean_act=3.70, sum_selec_norm=341.52
+  r_house_broadVentral: 7722 active voxels, mean_act=3.37, sum_selec_norm=259.77
+  r_object_broadVentral: 11078 active voxels, mean_act=3.43, sum_selec_norm=379.98
+  r_word_broadVentral: 15590 active voxels, mean_act=4.40, sum_selec_norm=685.15
+=== sub-093 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 9226 active voxels, mean_act=3.94, sum_selec_norm=376.56
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 28074 active voxels, mean_act=4.63, sum_selec_norm=1348.59
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 29022 active voxels, mean_act=4.76, sum_selec_norm=1433.31
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 8184 active voxels, mean_act=4.42, sum_selec_norm=375.33
+=== sub-094 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 15175 active voxels, mean_act=5.04, sum_selec_norm=769.37
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 28303 active voxels, mean_act=5.50, sum_selec_norm=1565.06
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 34004 active voxels, mean_act=5.27, sum_selec_norm=1803.76
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 20181 active voxels, mean_act=5.16, sum_selec_norm=1047.00
+=== sub-095 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 9481 active voxels, mean_act=4.29, sum_selec_norm=406.10
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 12394 active voxels, mean_act=4.16, sum_selec_norm=514.72
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 15747 active voxels, mean_act=3.53, sum_selec_norm=554.90
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 5648 active voxels, mean_act=5.24, sum_selec_norm=295.42
+=== sub-096 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 9288 active voxels, mean_act=5.00, sum_selec_norm=427.04
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 15881 active voxels, mean_act=5.18, sum_selec_norm=756.55
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 46239 active voxels, mean_act=5.43, sum_selec_norm=2308.07
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 11918 active voxels, mean_act=5.08, sum_selec_norm=557.10
+=== sub-097 ses-01 ===
+  Group: control | Intact hemi: both | Analyzing: ['l', 'r']
+  l_face_broadVentral: no suprathreshold voxels
+  r_face_broadVentral: 11976 active voxels, mean_act=5.68, sum_selec_norm=700.96
+  l_house_broadVentral: no suprathreshold voxels
+  r_house_broadVentral: 17475 active voxels, mean_act=5.86, sum_selec_norm=1055.68
+  l_object_broadVentral: no suprathreshold voxels
+  r_object_broadVentral: 40157 active voxels, mean_act=6.15, sum_selec_norm=2545.55
+  l_word_broadVentral: no suprathreshold voxels
+  r_word_broadVentral: 10536 active voxels, mean_act=5.66, sum_selec_norm=614.96
+
+============================================================
+Saved: /user_data/csimmon2/sym_pt/group_results/selectivity/selectivity_summary_broad.csv
+Total rows: 432
+Patients: 26 | Controls: 24
+Sessions: 6
+============================================================

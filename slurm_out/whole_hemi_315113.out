@@ -1,0 +1,685 @@
+============================================================
+WHOLE-HEMISPHERE SELECTIVITY ANALYSIS
+============================================================
+Threshold: z > 2.3
+Mask: full hemisphere (split at midline)
+
+Processing 50 subjects
+
+=== sub-004 ses-01 ===
+  l_face: 5933 active voxels, sum_selec_norm=27.62
+  l_house: 7371 active voxels, sum_selec_norm=33.90
+  l_object: 4972 active voxels, sum_selec_norm=22.44
+  l_word: 2416 active voxels, sum_selec_norm=11.12
+=== sub-004 ses-02 ===
+  l_face: 203935 active voxels, sum_selec_norm=25502.91
+  l_house: 222237 active voxels, sum_selec_norm=28408.28
+  l_object: 70496 active voxels, sum_selec_norm=7795.55
+  l_word: 194719 active voxels, sum_selec_norm=24370.50
+=== sub-004 ses-03 ===
+  l_face: 1662 active voxels, sum_selec_norm=7.48
+  l_house: 2889 active voxels, sum_selec_norm=13.70
+  l_object: 12856 active voxels, sum_selec_norm=59.92
+  l_word: 905 active voxels, sum_selec_norm=4.13
+=== sub-004 ses-05 ===
+  l_face: 8296 active voxels, sum_selec_norm=38.07
+  l_house: 1727 active voxels, sum_selec_norm=7.85
+  l_object: 13753 active voxels, sum_selec_norm=65.07
+  l_word: 907 active voxels, sum_selec_norm=4.02
+=== sub-004 ses-06 ===
+  l_face: 32394 active voxels, sum_selec_norm=161.64
+  l_house: 11805 active voxels, sum_selec_norm=57.34
+  l_object: 37433 active voxels, sum_selec_norm=189.79
+  l_word: 23662 active voxels, sum_selec_norm=117.12
+=== sub-007 ses-01 ===
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-007/ses-01/anat/T1w_brain_mask_right.nii.gz (694,363 voxels)
+  r_face: 32631 active voxels, sum_selec_norm=162.95
+  r_house: 45908 active voxels, sum_selec_norm=300.23
+  r_object: 36315 active voxels, sum_selec_norm=215.00
+  r_word: 36677 active voxels, sum_selec_norm=190.97
+=== sub-007 ses-03 ===
+  r_face: 28093 active voxels, sum_selec_norm=123.56
+  r_house: 18237 active voxels, sum_selec_norm=111.38
+  r_object: 24946 active voxels, sum_selec_norm=130.64
+  r_word: 7513 active voxels, sum_selec_norm=33.16
+=== sub-007 ses-04 ===
+  r_face: 16871 active voxels, sum_selec_norm=68.69
+  r_house: 12649 active voxels, sum_selec_norm=77.90
+  r_object: 56194 active voxels, sum_selec_norm=279.67
+  r_word: 14871 active voxels, sum_selec_norm=68.15
+=== sub-008 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-008/ses-01/anat/T1w_brain_mask_left.nii.gz (235,280 voxels)
+  l_face: 25325 active voxels, sum_selec_norm=452.88
+  l_house: 17452 active voxels, sum_selec_norm=339.94
+  l_object: 20802 active voxels, sum_selec_norm=247.06
+  l_word: 3225 active voxels, sum_selec_norm=37.89
+=== sub-008 ses-02 ===
+  l_face: 11581 active voxels, sum_selec_norm=146.04
+  l_house: 4677 active voxels, sum_selec_norm=53.15
+  l_object: 1770 active voxels, sum_selec_norm=20.28
+  l_word: 5549 active voxels, sum_selec_norm=66.44
+=== sub-010 ses-02 ===
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-010/ses-02/anat/T1w_brain_mask_right.nii.gz (129,804 voxels)
+  r_face: 3096 active voxels, sum_selec_norm=89.44
+  r_house: 1918 active voxels, sum_selec_norm=50.61
+  r_object: 3975 active voxels, sum_selec_norm=85.40
+  r_word: 3129 active voxels, sum_selec_norm=67.25
+=== sub-010 ses-03 ===
+  r_face: 3133 active voxels, sum_selec_norm=73.71
+  r_house: 1619 active voxels, sum_selec_norm=39.84
+  r_object: 1305 active voxels, sum_selec_norm=27.26
+  r_word: 6822 active voxels, sum_selec_norm=150.82
+=== sub-017 ses-01 ===
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-017/ses-01/anat/T1w_brain_mask_right.nii.gz (864,169 voxels)
+  r_face: 49546 active voxels, sum_selec_norm=176.26
+  r_house: 49091 active voxels, sum_selec_norm=162.01
+  r_object: 14627 active voxels, sum_selec_norm=50.90
+  r_word: 141403 active voxels, sum_selec_norm=530.82
+=== sub-017 ses-03 ===
+  r_face: 30330 active voxels, sum_selec_norm=101.95
+  r_house: 18732 active voxels, sum_selec_norm=59.48
+  r_object: 56576 active voxels, sum_selec_norm=202.25
+  r_word: 11425 active voxels, sum_selec_norm=37.14
+=== sub-017 ses-04 ===
+  r_face: 25061 active voxels, sum_selec_norm=93.99
+  r_house: 12987 active voxels, sum_selec_norm=43.75
+  r_object: 32702 active voxels, sum_selec_norm=112.22
+  r_word: 23024 active voxels, sum_selec_norm=83.26
+=== sub-018 ses-02 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-018/ses-02/anat/T1w_brain_mask_left.nii.gz (629,995 voxels)
+  l_face: 32064 active voxels, sum_selec_norm=199.34
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-018/ses-02/anat/T1w_brain_mask_right.nii.gz (603,786 voxels)
+  r_face: 12787 active voxels, sum_selec_norm=85.96
+  l_house: 46073 active voxels, sum_selec_norm=307.56
+  r_house: 33333 active voxels, sum_selec_norm=211.87
+  l_object: 80868 active voxels, sum_selec_norm=502.79
+  r_object: 72731 active voxels, sum_selec_norm=488.25
+  l_word: 9913 active voxels, sum_selec_norm=45.48
+  r_word: 26806 active voxels, sum_selec_norm=158.71
+=== sub-018 ses-03 ===
+  l_face: 33204 active voxels, sum_selec_norm=191.79
+  r_face: 15058 active voxels, sum_selec_norm=79.95
+  l_house: 48507 active voxels, sum_selec_norm=286.81
+  r_house: 46032 active voxels, sum_selec_norm=268.40
+  l_object: 22093 active voxels, sum_selec_norm=120.44
+  r_object: 30498 active voxels, sum_selec_norm=162.12
+  l_word: 19923 active voxels, sum_selec_norm=89.39
+  r_word: 33234 active voxels, sum_selec_norm=163.82
+=== sub-021 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi
+=== sub-021 ses-02 ===
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-021/ses-01/anat/T1w_brain_mask_right.nii.gz (450,313 voxels)
+  r_face: 3296 active voxels, sum_selec_norm=29.74
+  r_house: 2142 active voxels, sum_selec_norm=16.36
+  r_object: 32454 active voxels, sum_selec_norm=203.23
+  r_word: 1210 active voxels, sum_selec_norm=6.96
+=== sub-021 ses-03 ===
+  r_face: 18036 active voxels, sum_selec_norm=118.30
+  r_house: 5930 active voxels, sum_selec_norm=38.35
+  r_object: 34950 active voxels, sum_selec_norm=246.56
+  r_word: 17035 active voxels, sum_selec_norm=105.38
+=== sub-022 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-022/ses-01/anat/T1w_brain_mask_left.nii.gz (697,429 voxels)
+  l_face: 43255 active voxels, sum_selec_norm=198.68
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-022/ses-01/anat/T1w_brain_mask_right.nii.gz (666,345 voxels)
+  r_face: 24090 active voxels, sum_selec_norm=114.56
+  l_house: 102805 active voxels, sum_selec_norm=471.68
+  r_house: 84308 active voxels, sum_selec_norm=411.26
+  l_object: 10128 active voxels, sum_selec_norm=47.49
+  r_object: 33668 active voxels, sum_selec_norm=180.93
+  l_word: 99705 active voxels, sum_selec_norm=451.95
+  r_word: 103044 active voxels, sum_selec_norm=507.01
+=== sub-022 ses-02 ===
+  l_face: 16889 active voxels, sum_selec_norm=72.52
+  r_face: 14606 active voxels, sum_selec_norm=64.07
+  l_house: 67704 active voxels, sum_selec_norm=310.83
+  r_house: 32872 active voxels, sum_selec_norm=157.08
+  l_object: 58586 active voxels, sum_selec_norm=266.59
+  r_object: 94788 active voxels, sum_selec_norm=513.55
+  l_word: 14775 active voxels, sum_selec_norm=57.67
+  r_word: 4553 active voxels, sum_selec_norm=18.53
+=== sub-025 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-025/ses-01/anat/T1w_brain_mask_left.nii.gz (782,526 voxels)
+  l_face: 54219 active voxels, sum_selec_norm=248.55
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-025/ses-01/anat/T1w_brain_mask_right.nii.gz (771,597 voxels)
+  r_face: 59974 active voxels, sum_selec_norm=267.41
+  l_house: 102891 active voxels, sum_selec_norm=471.95
+  r_house: 94781 active voxels, sum_selec_norm=433.23
+  l_object: 59735 active voxels, sum_selec_norm=288.44
+  r_object: 58779 active voxels, sum_selec_norm=314.51
+  l_word: 12429 active voxels, sum_selec_norm=46.95
+  r_word: 32341 active voxels, sum_selec_norm=146.32
+=== sub-025 ses-02 ===
+  l_face: 96370 active voxels, sum_selec_norm=511.26
+  r_face: 75424 active voxels, sum_selec_norm=345.40
+  l_house: 37515 active voxels, sum_selec_norm=217.24
+  r_house: 31484 active voxels, sum_selec_norm=184.30
+  l_object: 63724 active voxels, sum_selec_norm=396.94
+  r_object: 83947 active voxels, sum_selec_norm=522.10
+  l_word: 64612 active voxels, sum_selec_norm=265.37
+  r_word: 75895 active voxels, sum_selec_norm=357.47
+=== sub-025 ses-03 ===
+  l_face: 54572 active voxels, sum_selec_norm=320.59
+  r_face: 27971 active voxels, sum_selec_norm=144.10
+  l_house: 81311 active voxels, sum_selec_norm=423.94
+  r_house: 56335 active voxels, sum_selec_norm=318.99
+  l_object: 76449 active voxels, sum_selec_norm=443.72
+  r_object: 105871 active voxels, sum_selec_norm=619.63
+  l_word: 59558 active voxels, sum_selec_norm=291.83
+  r_word: 67208 active voxels, sum_selec_norm=362.49
+=== sub-027 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-027/ses-01/anat/T1w_brain_mask_left.nii.gz (563,188 voxels)
+  l_face: 120492 active voxels, sum_selec_norm=630.26
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-027/ses-01/anat/T1w_brain_mask_right.nii.gz (589,151 voxels)
+  r_face: 113055 active voxels, sum_selec_norm=569.28
+  l_house: 62545 active voxels, sum_selec_norm=327.40
+  r_house: 65772 active voxels, sum_selec_norm=332.28
+  l_object: 23667 active voxels, sum_selec_norm=130.42
+  r_object: 15590 active voxels, sum_selec_norm=80.88
+  l_word: 23101 active voxels, sum_selec_norm=116.16
+  r_word: 18884 active voxels, sum_selec_norm=92.13
+=== sub-027 ses-02 ===
+  l_face: 14226 active voxels, sum_selec_norm=88.35
+  r_face: 12830 active voxels, sum_selec_norm=68.96
+  l_house: 18952 active voxels, sum_selec_norm=141.56
+  r_house: 16843 active voxels, sum_selec_norm=108.19
+  l_object: 63922 active voxels, sum_selec_norm=433.08
+  r_object: 75673 active voxels, sum_selec_norm=513.05
+  l_word: 4597 active voxels, sum_selec_norm=23.23
+  r_word: 8175 active voxels, sum_selec_norm=46.10
+=== sub-038 ses-02 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-038/ses-02/anat/T1w_brain_mask_left.nii.gz (694,240 voxels)
+  l_face: 43156 active voxels, sum_selec_norm=215.55
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-038/ses-02/anat/T1w_brain_mask_right.nii.gz (706,558 voxels)
+  r_face: 58633 active voxels, sum_selec_norm=276.82
+  l_house: 39681 active voxels, sum_selec_norm=235.83
+  r_house: 57148 active voxels, sum_selec_norm=302.76
+  l_object: 48428 active voxels, sum_selec_norm=271.04
+  r_object: 61688 active voxels, sum_selec_norm=352.94
+  l_word: 19768 active voxels, sum_selec_norm=95.35
+  r_word: 38058 active voxels, sum_selec_norm=190.37
+=== sub-045 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi
+=== sub-045 ses-02 ===
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-045/ses-01/anat/T1w_brain_mask_right.nii.gz (617,201 voxels)
+  r_face: 16851 active voxels, sum_selec_norm=90.23
+  r_house: 40505 active voxels, sum_selec_norm=258.26
+  r_object: 50263 active voxels, sum_selec_norm=342.00
+  r_word: 51955 active voxels, sum_selec_norm=318.71
+=== sub-045 ses-03 ===
+  r_face: 14427 active voxels, sum_selec_norm=68.26
+  r_house: 17098 active voxels, sum_selec_norm=94.15
+  r_object: 68353 active voxels, sum_selec_norm=402.66
+  r_word: 70193 active voxels, sum_selec_norm=388.83
+=== sub-047 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi
+=== sub-047 ses-02 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-047/ses-01/anat/T1w_brain_mask_left.nii.gz (668,613 voxels)
+  l_face: 36644 active voxels, sum_selec_norm=190.29
+  l_house: 49036 active voxels, sum_selec_norm=308.96
+  l_object: 39114 active voxels, sum_selec_norm=260.23
+  l_word: 32723 active voxels, sum_selec_norm=143.45
+=== sub-049 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi
+=== sub-049 ses-02 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-049/ses-01/anat/T1w_brain_mask_left.nii.gz (652,076 voxels)
+  l_face: 20886 active voxels, sum_selec_norm=108.79
+  l_house: 30519 active voxels, sum_selec_norm=169.05
+  l_object: 13971 active voxels, sum_selec_norm=84.32
+  l_word: 28369 active voxels, sum_selec_norm=124.96
+=== sub-052 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-052/ses-01/anat/T1w_brain_mask_left.nii.gz (775,389 voxels)
+  l_face: 34478 active voxels, sum_selec_norm=138.25
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-052/ses-01/anat/T1w_brain_mask_right.nii.gz (700,800 voxels)
+  r_face: 14026 active voxels, sum_selec_norm=61.59
+  l_house: 29265 active voxels, sum_selec_norm=140.20
+  r_house: 25038 active voxels, sum_selec_norm=144.10
+  l_object: 140395 active voxels, sum_selec_norm=646.01
+  r_object: 135418 active voxels, sum_selec_norm=695.08
+  l_word: 46002 active voxels, sum_selec_norm=166.89
+  r_word: 40049 active voxels, sum_selec_norm=175.12
+=== sub-052 ses-02 ===
+  l_face: 101516 active voxels, sum_selec_norm=407.22
+  r_face: 73258 active voxels, sum_selec_norm=320.87
+  l_house: 51412 active voxels, sum_selec_norm=201.96
+  r_house: 29682 active voxels, sum_selec_norm=130.11
+  l_object: 13554 active voxels, sum_selec_norm=68.05
+  r_object: 23530 active voxels, sum_selec_norm=130.76
+  l_word: 211057 active voxels, sum_selec_norm=971.78
+  r_word: 163835 active voxels, sum_selec_norm=845.27
+=== sub-057 ses-02 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-057/ses-02/anat/T1w_brain_mask_left.nii.gz (721,565 voxels)
+  l_face: 29120 active voxels, sum_selec_norm=187.10
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-057/ses-02/anat/T1w_brain_mask_right.nii.gz (735,147 voxels)
+  r_face: 17693 active voxels, sum_selec_norm=99.97
+  l_house: 30461 active voxels, sum_selec_norm=207.12
+  r_house: 18056 active voxels, sum_selec_norm=108.38
+  l_object: 86901 active voxels, sum_selec_norm=418.06
+  r_object: 98546 active voxels, sum_selec_norm=491.85
+  l_word: 15805 active voxels, sum_selec_norm=84.70
+  r_word: 18055 active voxels, sum_selec_norm=90.18
+=== sub-058 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-058/ses-01/anat/T1w_brain_mask_left.nii.gz (633,509 voxels)
+  l_face: 6127 active voxels, sum_selec_norm=38.73
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-058/ses-01/anat/T1w_brain_mask_right.nii.gz (652,261 voxels)
+  r_face: 4065 active voxels, sum_selec_norm=22.49
+  l_house: 11352 active voxels, sum_selec_norm=64.30
+  r_house: 10386 active voxels, sum_selec_norm=58.67
+  l_object: 59675 active voxels, sum_selec_norm=348.61
+  r_object: 65594 active voxels, sum_selec_norm=424.00
+  l_word: 3488 active voxels, sum_selec_norm=16.94
+  r_word: 8549 active voxels, sum_selec_norm=42.09
+=== sub-058 ses-02 ===
+  l_face: 7326 active voxels, sum_selec_norm=46.01
+  r_face: 5394 active voxels, sum_selec_norm=32.91
+  l_house: 17241 active voxels, sum_selec_norm=98.36
+  r_house: 11438 active voxels, sum_selec_norm=69.47
+  l_object: 16710 active voxels, sum_selec_norm=97.41
+  r_object: 32168 active voxels, sum_selec_norm=206.38
+  l_word: 24460 active voxels, sum_selec_norm=115.26
+  r_word: 21547 active voxels, sum_selec_norm=103.28
+=== sub-059 ses-02 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-059/ses-02/anat/T1w_brain_mask_left.nii.gz (662,230 voxels)
+  l_face: 14517 active voxels, sum_selec_norm=88.86
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-059/ses-02/anat/T1w_brain_mask_right.nii.gz (671,014 voxels)
+  r_face: 5447 active voxels, sum_selec_norm=25.41
+  l_house: 17619 active voxels, sum_selec_norm=97.27
+  r_house: 17751 active voxels, sum_selec_norm=85.66
+  l_object: 140894 active voxels, sum_selec_norm=835.29
+  r_object: 140543 active voxels, sum_selec_norm=832.66
+  l_word: 21963 active voxels, sum_selec_norm=115.63
+  r_word: 34097 active voxels, sum_selec_norm=197.74
+=== sub-062 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-062/ses-01/anat/T1w_brain_mask_left.nii.gz (643,066 voxels)
+  l_face: 66700 active voxels, sum_selec_norm=380.15
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-062/ses-01/anat/T1w_brain_mask_right.nii.gz (591,168 voxels)
+  r_face: 48434 active voxels, sum_selec_norm=258.77
+  l_house: 35139 active voxels, sum_selec_norm=251.18
+  r_house: 21300 active voxels, sum_selec_norm=149.73
+  l_object: 40265 active voxels, sum_selec_norm=213.49
+  r_object: 65342 active voxels, sum_selec_norm=424.58
+  l_word: 13362 active voxels, sum_selec_norm=61.98
+  r_word: 21131 active voxels, sum_selec_norm=123.21
+=== sub-062 ses-02 ===
+  l_face: 138651 active voxels, sum_selec_norm=762.54
+  r_face: 74981 active voxels, sum_selec_norm=411.52
+  l_house: 120110 active voxels, sum_selec_norm=690.79
+  r_house: 52538 active voxels, sum_selec_norm=322.08
+  l_object: 14284 active voxels, sum_selec_norm=70.09
+  r_object: 28554 active voxels, sum_selec_norm=193.75
+  l_word: 69727 active voxels, sum_selec_norm=325.27
+  r_word: 71761 active voxels, sum_selec_norm=383.21
+=== sub-064 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-064/ses-01/anat/T1w_brain_mask_left.nii.gz (686,506 voxels)
+  l_face: 25850 active voxels, sum_selec_norm=147.21
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-064/ses-01/anat/T1w_brain_mask_right.nii.gz (694,272 voxels)
+  r_face: 19789 active voxels, sum_selec_norm=102.70
+  l_house: 29364 active voxels, sum_selec_norm=181.31
+  r_house: 30453 active voxels, sum_selec_norm=191.71
+  l_object: 55562 active voxels, sum_selec_norm=262.88
+  r_object: 77591 active voxels, sum_selec_norm=388.95
+  l_word: 8621 active voxels, sum_selec_norm=37.18
+  r_word: 13774 active voxels, sum_selec_norm=65.12
+=== sub-064 ses-02 ===
+  l_face: 22716 active voxels, sum_selec_norm=108.83
+  r_face: 15198 active voxels, sum_selec_norm=68.28
+  l_house: 26061 active voxels, sum_selec_norm=144.51
+  r_house: 28355 active voxels, sum_selec_norm=147.61
+  l_object: 23834 active voxels, sum_selec_norm=129.67
+  r_object: 33073 active voxels, sum_selec_norm=181.19
+  l_word: 76358 active voxels, sum_selec_norm=343.52
+  r_word: 87776 active voxels, sum_selec_norm=430.68
+=== sub-066 ses-01 ===
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-066/ses-01/anat/T1w_brain_mask_right.nii.gz (242,351 voxels)
+  r_face: 3421 active voxels, sum_selec_norm=42.38
+  r_house: 12649 active voxels, sum_selec_norm=171.69
+  r_object: 39158 active voxels, sum_selec_norm=583.62
+  r_word: 16622 active voxels, sum_selec_norm=237.07
+=== sub-067 ses-02 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-067/ses-02/anat/T1w_brain_mask_left.nii.gz (587,866 voxels)
+  l_face: 10408 active voxels, sum_selec_norm=58.15
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-067/ses-02/anat/T1w_brain_mask_right.nii.gz (580,151 voxels)
+  r_face: 6206 active voxels, sum_selec_norm=31.01
+  l_house: 4659 active voxels, sum_selec_norm=28.87
+  r_house: 3988 active voxels, sum_selec_norm=23.63
+  l_object: 36261 active voxels, sum_selec_norm=188.16
+  r_object: 41905 active voxels, sum_selec_norm=240.72
+  l_word: 15025 active voxels, sum_selec_norm=78.93
+  r_word: 11336 active voxels, sum_selec_norm=63.52
+=== sub-068 ses-02 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-068/ses-02/anat/T1w_brain_mask_left.nii.gz (673,584 voxels)
+  l_face: 28577 active voxels, sum_selec_norm=168.96
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-068/ses-02/anat/T1w_brain_mask_right.nii.gz (686,597 voxels)
+  r_face: 21617 active voxels, sum_selec_norm=115.74
+  l_house: 36660 active voxels, sum_selec_norm=191.68
+  r_house: 43274 active voxels, sum_selec_norm=231.05
+  l_object: 81596 active voxels, sum_selec_norm=478.50
+  r_object: 92030 active voxels, sum_selec_norm=523.09
+  l_word: 62118 active voxels, sum_selec_norm=334.14
+  r_word: 81545 active voxels, sum_selec_norm=494.78
+=== sub-068 ses-03 ===
+  l_face: 22885 active voxels, sum_selec_norm=140.60
+  r_face: 12748 active voxels, sum_selec_norm=71.64
+  l_house: 53561 active voxels, sum_selec_norm=309.97
+  r_house: 45213 active voxels, sum_selec_norm=265.23
+  l_object: 36881 active voxels, sum_selec_norm=203.60
+  r_object: 45781 active voxels, sum_selec_norm=242.60
+  l_word: 24930 active voxels, sum_selec_norm=159.03
+  r_word: 37024 active voxels, sum_selec_norm=239.11
+=== sub-069 ses-01 ===
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-069/ses-01/anat/T1w_brain_mask_right.nii.gz (179,327 voxels)
+  r_face: 11370 active voxels, sum_selec_norm=179.87
+  r_house: 2974 active voxels, sum_selec_norm=46.61
+  r_object: 1439 active voxels, sum_selec_norm=20.94
+  r_word: 12694 active voxels, sum_selec_norm=212.59
+=== sub-070 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi
+=== sub-070 ses-02 ===
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-070/ses-01/anat/T1w_brain_mask_right.nii.gz (643,974 voxels)
+  r_face: 23434 active voxels, sum_selec_norm=135.50
+  r_house: 22924 active voxels, sum_selec_norm=176.50
+  r_object: 47096 active voxels, sum_selec_norm=357.25
+  r_word: 90201 active voxels, sum_selec_norm=586.69
+=== sub-071 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-071/ses-01/anat/T1w_brain_mask_left.nii.gz (718,477 voxels)
+  l_face: 21868 active voxels, sum_selec_norm=104.81
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-071/ses-01/anat/T1w_brain_mask_right.nii.gz (715,049 voxels)
+  r_face: 19584 active voxels, sum_selec_norm=92.87
+  l_house: 33101 active voxels, sum_selec_norm=168.72
+  r_house: 36434 active voxels, sum_selec_norm=194.61
+  l_object: 75980 active voxels, sum_selec_norm=359.25
+  r_object: 65129 active voxels, sum_selec_norm=287.80
+  l_word: 49755 active voxels, sum_selec_norm=206.66
+  r_word: 49904 active voxels, sum_selec_norm=221.35
+=== sub-072 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-072/ses-01/anat/T1w_brain_mask_left.nii.gz (695,756 voxels)
+  l_face: 50909 active voxels, sum_selec_norm=273.23
+  l_house: 32050 active voxels, sum_selec_norm=168.12
+  l_object: 98233 active voxels, sum_selec_norm=476.74
+  l_word: 54761 active voxels, sum_selec_norm=259.68
+=== sub-072 ses-02 ===
+  l_face: 26259 active voxels, sum_selec_norm=153.92
+  l_house: 12837 active voxels, sum_selec_norm=61.16
+  l_object: 13891 active voxels, sum_selec_norm=65.33
+  l_word: 23642 active voxels, sum_selec_norm=117.34
+=== sub-073 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi
+=== sub-073 ses-02 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-073/ses-01/anat/T1w_brain_mask_left.nii.gz (693,424 voxels)
+  l_face: 76736 active voxels, sum_selec_norm=465.24
+  l_house: 31227 active voxels, sum_selec_norm=202.15
+  l_object: 66937 active voxels, sum_selec_norm=461.60
+  l_word: 21796 active voxels, sum_selec_norm=157.43
+=== sub-074 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-074/ses-01/anat/T1w_brain_mask_left.nii.gz (573,164 voxels)
+  l_face: 5257 active voxels, sum_selec_norm=24.61
+  l_house: 5597 active voxels, sum_selec_norm=26.21
+  l_object: 6052 active voxels, sum_selec_norm=29.12
+  l_word: 3594 active voxels, sum_selec_norm=16.39
+=== sub-075 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-075/ses-01/anat/T1w_brain_mask_left.nii.gz (474,851 voxels)
+  l_face: 64361 active voxels, sum_selec_norm=390.00
+  l_house: 26091 active voxels, sum_selec_norm=152.58
+  l_object: 6911 active voxels, sum_selec_norm=46.79
+  l_word: 19569 active voxels, sum_selec_norm=114.10
+=== sub-076 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-076/ses-01/anat/T1w_brain_mask_left.nii.gz (660,719 voxels)
+  l_face: 164239 active voxels, sum_selec_norm=961.45
+  l_house: 101209 active voxels, sum_selec_norm=491.57
+  l_object: 39393 active voxels, sum_selec_norm=178.37
+  l_word: 104651 active voxels, sum_selec_norm=547.57
+=== sub-077 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-077/ses-01/anat/T1w_brain_mask_left.nii.gz (115,461 voxels)
+  l_face: 2054 active voxels, sum_selec_norm=58.89
+  l_house: 2785 active voxels, sum_selec_norm=69.92
+  l_object: 4371 active voxels, sum_selec_norm=103.59
+  l_word: 8167 active voxels, sum_selec_norm=220.95
+=== sub-078 ses-01 ===
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-078/ses-01/anat/T1w_brain_mask_right.nii.gz (520,411 voxels)
+  r_face: 19743 active voxels, sum_selec_norm=151.18
+  r_house: 19683 active voxels, sum_selec_norm=161.98
+  r_object: 90931 active voxels, sum_selec_norm=695.37
+  r_word: 20292 active voxels, sum_selec_norm=175.71
+=== sub-079 ses-01 ===
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-079/ses-01/anat/T1w_brain_mask_right.nii.gz (702,908 voxels)
+  r_face: 53969 active voxels, sum_selec_norm=297.93
+  r_house: 61687 active voxels, sum_selec_norm=400.49
+  r_object: 66246 active voxels, sum_selec_norm=402.92
+  r_word: 45265 active voxels, sum_selec_norm=249.44
+=== sub-079 ses-02 ===
+  r_face: 13887 active voxels, sum_selec_norm=87.73
+  r_house: 29167 active voxels, sum_selec_norm=188.80
+  r_object: 123216 active voxels, sum_selec_norm=673.22
+  r_word: 42437 active voxels, sum_selec_norm=225.72
+=== sub-081 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi
+=== sub-081 ses-02 ===
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-081/ses-01/anat/T1w_brain_mask_right.nii.gz (567,489 voxels)
+  r_face: 5658 active voxels, sum_selec_norm=38.37
+  r_house: 19476 active voxels, sum_selec_norm=114.74
+  r_object: 37679 active voxels, sum_selec_norm=216.16
+  r_word: 33867 active voxels, sum_selec_norm=203.57
+=== sub-083 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-083/ses-01/anat/T1w_brain_mask_left.nii.gz (774,642 voxels)
+  l_face: 35461 active voxels, sum_selec_norm=209.96
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-083/ses-01/anat/T1w_brain_mask_right.nii.gz (775,618 voxels)
+  r_face: 32343 active voxels, sum_selec_norm=163.99
+  l_house: 19756 active voxels, sum_selec_norm=115.05
+  r_house: 19626 active voxels, sum_selec_norm=110.32
+  l_object: 203093 active voxels, sum_selec_norm=1109.42
+  r_object: 150974 active voxels, sum_selec_norm=916.01
+  l_word: 46845 active voxels, sum_selec_norm=191.55
+  r_word: 64409 active voxels, sum_selec_norm=309.97
+=== sub-084 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-084/ses-01/anat/T1w_brain_mask_left.nii.gz (767,914 voxels)
+  l_face: 53483 active voxels, sum_selec_norm=223.36
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-084/ses-01/anat/T1w_brain_mask_right.nii.gz (778,942 voxels)
+  r_face: 58905 active voxels, sum_selec_norm=232.44
+  l_house: 16313 active voxels, sum_selec_norm=75.45
+  r_house: 12561 active voxels, sum_selec_norm=53.40
+  l_object: 110710 active voxels, sum_selec_norm=458.72
+  r_object: 98321 active voxels, sum_selec_norm=408.55
+  l_word: 60649 active voxels, sum_selec_norm=246.51
+  r_word: 83304 active voxels, sum_selec_norm=348.73
+=== sub-085 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-085/ses-01/anat/T1w_brain_mask_left.nii.gz (724,321 voxels)
+  l_face: 65622 active voxels, sum_selec_norm=326.65
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-085/ses-01/anat/T1w_brain_mask_right.nii.gz (728,278 voxels)
+  r_face: 41562 active voxels, sum_selec_norm=186.57
+  l_house: 32077 active voxels, sum_selec_norm=178.70
+  r_house: 30888 active voxels, sum_selec_norm=187.49
+  l_object: 121273 active voxels, sum_selec_norm=623.91
+  r_object: 147613 active voxels, sum_selec_norm=776.51
+  l_word: 20756 active voxels, sum_selec_norm=92.58
+  r_word: 24142 active voxels, sum_selec_norm=132.94
+=== sub-086 ses-01 ===
+  SKIP: pre-surgical or no intact_hemi
+=== sub-086 ses-02 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-086/ses-01/anat/T1w_brain_mask_left.nii.gz (605,537 voxels)
+  l_face: 20915 active voxels, sum_selec_norm=126.42
+  l_house: 15765 active voxels, sum_selec_norm=86.38
+  l_object: 16000 active voxels, sum_selec_norm=90.01
+  l_word: 33527 active voxels, sum_selec_norm=165.81
+=== sub-087 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-087/ses-01/anat/T1w_brain_mask_left.nii.gz (690,323 voxels)
+  l_face: 94102 active voxels, sum_selec_norm=544.92
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-087/ses-01/anat/T1w_brain_mask_right.nii.gz (686,461 voxels)
+  r_face: 45083 active voxels, sum_selec_norm=231.90
+  l_house: 70947 active voxels, sum_selec_norm=411.13
+  r_house: 53964 active voxels, sum_selec_norm=332.60
+  l_object: 56276 active voxels, sum_selec_norm=283.67
+  r_object: 84140 active voxels, sum_selec_norm=468.95
+  l_word: 84642 active voxels, sum_selec_norm=442.02
+  r_word: 95376 active voxels, sum_selec_norm=601.83
+=== sub-088 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-088/ses-01/anat/T1w_brain_mask_left.nii.gz (614,872 voxels)
+  l_face: 28972 active voxels, sum_selec_norm=224.63
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-088/ses-01/anat/T1w_brain_mask_right.nii.gz (602,531 voxels)
+  r_face: 14281 active voxels, sum_selec_norm=101.45
+  l_house: 39103 active voxels, sum_selec_norm=272.16
+  r_house: 25083 active voxels, sum_selec_norm=182.88
+  l_object: 92360 active voxels, sum_selec_norm=629.11
+  r_object: 102011 active voxels, sum_selec_norm=761.89
+  l_word: 46798 active voxels, sum_selec_norm=277.16
+  r_word: 53861 active voxels, sum_selec_norm=348.39
+=== sub-089 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-089/ses-01/anat/T1w_brain_mask_left.nii.gz (628,229 voxels)
+  l_face: 25507 active voxels, sum_selec_norm=152.08
+  l_house: 30689 active voxels, sum_selec_norm=204.74
+  l_object: 49720 active voxels, sum_selec_norm=241.82
+  l_word: 22097 active voxels, sum_selec_norm=118.71
+=== sub-090 ses-01 ===
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-090/ses-01/anat/T1w_brain_mask_right.nii.gz (194,488 voxels)
+  r_face: 1837 active voxels, sum_selec_norm=25.67
+  r_house: 1086 active voxels, sum_selec_norm=14.77
+  r_object: 6995 active voxels, sum_selec_norm=107.60
+  r_word: 18862 active voxels, sum_selec_norm=303.89
+=== sub-091 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-091/ses-01/anat/T1w_brain_mask_left.nii.gz (78,827 voxels)
+  l_face: 4944 active voxels, sum_selec_norm=199.11
+  l_house: 5078 active voxels, sum_selec_norm=183.98
+  l_object: 491 active voxels, sum_selec_norm=16.18
+  l_word: 9875 active voxels, sum_selec_norm=406.27
+=== sub-092 ses-01 ===
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-092/ses-01/anat/T1w_brain_mask_right.nii.gz (69,472 voxels)
+  r_face: 3956 active voxels, sum_selec_norm=166.35
+  r_house: 1118 active voxels, sum_selec_norm=43.26
+  r_object: 1697 active voxels, sum_selec_norm=66.15
+  r_word: 11430 active voxels, sum_selec_norm=527.05
+=== sub-093 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-093/ses-01/anat/T1w_brain_mask_left.nii.gz (605,612 voxels)
+  l_face: 29831 active voxels, sum_selec_norm=173.83
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-093/ses-01/anat/T1w_brain_mask_right.nii.gz (616,718 voxels)
+  r_face: 26286 active voxels, sum_selec_norm=134.91
+  l_house: 73251 active voxels, sum_selec_norm=437.32
+  r_house: 62048 active voxels, sum_selec_norm=371.66
+  l_object: 25649 active voxels, sum_selec_norm=165.50
+  r_object: 38435 active voxels, sum_selec_norm=242.75
+  l_word: 48153 active voxels, sum_selec_norm=258.02
+  r_word: 56424 active voxels, sum_selec_norm=324.10
+=== sub-094 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-094/ses-01/anat/T1w_brain_mask_left.nii.gz (613,068 voxels)
+  l_face: 50635 active voxels, sum_selec_norm=341.80
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-094/ses-01/anat/T1w_brain_mask_right.nii.gz (642,904 voxels)
+  r_face: 32909 active voxels, sum_selec_norm=212.09
+  l_house: 97975 active voxels, sum_selec_norm=641.35
+  r_house: 84400 active voxels, sum_selec_norm=539.80
+  l_object: 50602 active voxels, sum_selec_norm=336.76
+  r_object: 49853 active voxels, sum_selec_norm=311.13
+  l_word: 108908 active voxels, sum_selec_norm=639.20
+  r_word: 97297 active voxels, sum_selec_norm=596.46
+=== sub-095 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-095/ses-01/anat/T1w_brain_mask_left.nii.gz (631,747 voxels)
+  l_face: 18175 active voxels, sum_selec_norm=114.22
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-095/ses-01/anat/T1w_brain_mask_right.nii.gz (617,140 voxels)
+  r_face: 6827 active voxels, sum_selec_norm=38.14
+  l_house: 24224 active voxels, sum_selec_norm=144.35
+  r_house: 13443 active voxels, sum_selec_norm=80.31
+  l_object: 31152 active voxels, sum_selec_norm=143.37
+  r_object: 29275 active voxels, sum_selec_norm=147.20
+  l_word: 11455 active voxels, sum_selec_norm=72.70
+  r_word: 17271 active voxels, sum_selec_norm=111.14
+=== sub-096 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-096/ses-01/anat/T1w_brain_mask_left.nii.gz (672,215 voxels)
+  l_face: 21886 active voxels, sum_selec_norm=125.47
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-096/ses-01/anat/T1w_brain_mask_right.nii.gz (682,703 voxels)
+  r_face: 15788 active voxels, sum_selec_norm=98.57
+  l_house: 19394 active voxels, sum_selec_norm=130.15
+  r_house: 19381 active voxels, sum_selec_norm=133.29
+  l_object: 68669 active voxels, sum_selec_norm=408.61
+  r_object: 71120 active voxels, sum_selec_norm=419.74
+  l_word: 39650 active voxels, sum_selec_norm=210.82
+  r_word: 47046 active voxels, sum_selec_norm=270.56
+=== sub-097 ses-01 ===
+    Creating left hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-097/ses-01/anat/T1w_brain_mask_left.nii.gz (605,417 voxels)
+  l_face: 38329 active voxels, sum_selec_norm=237.25
+    Creating right hemisphere mask...
+    Saved: /user_data/csimmon2/sym_pt/sub-097/ses-01/anat/T1w_brain_mask_right.nii.gz (618,825 voxels)
+  r_face: 16133 active voxels, sum_selec_norm=106.59
+  l_house: 25237 active voxels, sum_selec_norm=198.98
+  r_house: 17234 active voxels, sum_selec_norm=143.07
+  l_object: 93561 active voxels, sum_selec_norm=598.15
+  r_object: 123577 active voxels, sum_selec_norm=801.13
+  l_word: 24028 active voxels, sum_selec_norm=169.83
+  r_word: 20348 active voxels, sum_selec_norm=136.25
+
+============================================================
+Saved: /user_data/csimmon2/sym_pt/group_results/selectivity/selectivity_summary_wholehemi.csv
+Patients: 26 | Controls: 24
+============================================================
+
+To bootstrap: python 03_resample_selectivity.py --suffix _wholehemi
+
+Done!

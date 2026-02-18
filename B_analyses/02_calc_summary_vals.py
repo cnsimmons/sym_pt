@@ -36,18 +36,38 @@ from sym_pt_params import (processed_dir, skip_subs, get_sessions,
 # Ayzenberg used p < .01 uncorrected ≈ z = 2.3
 THRESH = 2.3
 
-# Category → COPE mapping for selectivity contrasts
-# From 1stLevel design.fsf:
-#   COPE 1: Face > Object
-#   COPE 2: House > Object
-#   COPE 3: Object > Scramble
-#   COPE 4: Word > Object
-CATEGORY_COPES = {
-    'face': 1,     # Face > Object
-    'house': 2,    # House > Object
-    'object': 3,   # Object > Scramble
-    'word': 4,     # Word > Object
+# ── Contrast Maps ────────────────────────────────────────────────────────────
+# Three contrast maps following different approaches in the literature.
+#
+# 1. "differential" — each category vs. a single other category (Ayzenberg 2023)
+# 2. "category_vs_rest" — each category vs. mean of all others
+# 3. "liu" — pairwise contrasts used in Liu 2025
+#    NOTE: Liu contrasts require COPEs that may not yet exist in your FEAT.
+#    If missing, patch the 1stLevel template and re-run FEAT first.
+
+CONTRAST_MAPS = {
+    'differential': {
+        'face': 1,     # Face > Object
+        'house': 2,    # House > Object
+        'object': 3,   # Object > Scramble
+        'word': 4,     # Word > Object
+    },
+    'category_vs_rest': {
+        'face': 6,     # Face > mean(House, Object, Word, Scramble)
+        'house': 7,    # House > mean(Face, Object, Word, Scramble)
+        'object': 8,   # Object > mean(Face, House, Word, Scramble)
+        'word': 9,     # Word > mean(Face, House, Object, Scramble)
+    },
+    # 'liu': {           # Uncomment once COPEs are available
+    #     'face': ??,    # Face > House
+    #     'house': ??,   # House > Face
+    #     'object': 3,   # Object > Scramble (same as differential)
+    #     'word': ??,    # Word > Face
+    # },
 }
+
+# Default contrast map
+DEFAULT_CONTRAST = 'differential'
 
 # Output suffix (for different threshold/contrast versions)
 OUTPUT_SUFFIX = ''
@@ -56,11 +76,14 @@ OUTPUT_SUFFIX = ''
 # When --broad is used, measures within ventral/dorsal parcels
 # instead of category-specific searchmasks
 BROAD_MASK_MAP = {
-    'face': 'Ventral',
-    'word': 'Ventral',
-    'house': 'Ventral',
-    'object': 'Ventral',   # LOC is ventral/lateral stream
+    'face': 'ventral_visual_cortex',
+    'word': 'ventral_visual_cortex',
+    'house': 'ventral_visual_cortex',
+    'object': 'ventral_visual_cortex',   # LOC is ventral/lateral stream
 }
+
+# MNI ROI source directory (bilateral masks before splitting)
+from sym_pt_params import roi_dir as mni_roi_dir, mni_brain
 
 # ── Helper: determine which hemispheres to analyze ───────────────────────────
 
@@ -99,6 +122,81 @@ def get_hemis_for_subject(sub_clean, ses):
 
 
 # ── Core Functions ───────────────────────────────────────────────────────────
+
+def get_or_create_broad_hemi_mask(sub_clean, first_ses, hemi, pathway_name):
+    """
+    Create a hemisphere-specific broad mask on the fly.
+    
+    The pre-split masks (lVentral, rVentral etc.) from register_mirror.py
+    have a splitting bug (empty left masks). Instead, we warp the full
+    bilateral mask to native space and split by hemisphere here.
+    
+    Caches result so it's only done once per subject.
+    """
+    import subprocess
+    
+    first_ses_str = f'{first_ses:02d}'
+    anat_dir = f'{processed_dir}/sub-{sub_clean}/ses-{first_ses_str}/anat'
+    roi_out_dir = f'{processed_dir}/sub-{sub_clean}/ses-{first_ses_str}/ROIs'
+    os.makedirs(roi_out_dir, exist_ok=True)
+    
+    hemi_label = 'left' if hemi == 'l' else 'right'
+    out_path = f'{roi_out_dir}/{hemi}_{pathway_name}_broad.nii.gz'
+    
+    if os.path.exists(out_path):
+        return out_path
+    
+    # Source: bilateral MNI-space mask
+    src_mask = f'{mni_roi_dir}/{pathway_name}.nii.gz'
+    if not os.path.exists(src_mask):
+        print(f'    WARNING: MNI mask not found: {src_mask}')
+        return None
+    
+    # Transform
+    mni2anat = f'{anat_dir}/mni2anat.mat'
+    ref_brain = f'{anat_dir}/T1w_brain.nii.gz'
+    
+    if not os.path.exists(mni2anat) or not os.path.exists(ref_brain):
+        print(f'    WARNING: transform or ref brain not found')
+        return None
+    
+    # Warp bilateral mask to native space
+    tmp_bilateral = f'{roi_out_dir}/{pathway_name}_bilateral_tmp.nii.gz'
+    if not os.path.exists(tmp_bilateral):
+        cmd = (f'flirt -in {src_mask} -ref {ref_brain} '
+               f'-out {tmp_bilateral} -applyxfm -init {mni2anat} '
+               f'-interp trilinear')
+        subprocess.run(cmd.split(), check=True, capture_output=True)
+    
+    # Load and split by hemisphere
+    bilateral_img = nib.load(tmp_bilateral)
+    bilateral_data = bilateral_img.get_fdata()
+    
+    # Binarize first
+    binary_data = (bilateral_data > 0.5).astype(np.float32)
+    
+    # Split at midline
+    mid_x = binary_data.shape[0] // 2
+    hemi_data = np.zeros_like(binary_data)
+    
+    if hemi == 'l':
+        hemi_data[mid_x:, :, :] = binary_data[mid_x:, :, :]
+    elif hemi == 'r':
+        hemi_data[:mid_x, :, :] = binary_data[:mid_x, :, :]
+    
+    # Save
+    out_img = nib.Nifti1Image(hemi_data, bilateral_img.affine)
+    nib.save(out_img, out_path)
+    
+    n_vox = int(hemi_data.sum())
+    print(f'    Created broad mask: {out_path} ({n_vox:,} voxels)')
+    
+    # Clean up temp
+    if os.path.exists(tmp_bilateral):
+        os.remove(tmp_bilateral)
+    
+    return out_path
+
 
 def calc_summary_vals(zstat_path, searchmask_path, thresh=THRESH):
     """
@@ -140,7 +238,7 @@ def calc_summary_vals(zstat_path, searchmask_path, thresh=THRESH):
     return mask_size, mean_act, volume, sum_selec, sum_selec_norm
 
 
-def process_subject(sub_clean, ses, first_ses, thresh=THRESH, dry_run=False, broad=False):
+def process_subject(sub_clean, ses, first_ses, category_copes, thresh=THRESH, dry_run=False, broad=False):
     """Process all categories × hemispheres for one subject-session."""
     ses_str = f'{ses:02d}'
     first_ses_str = f'{first_ses:02d}'
@@ -164,7 +262,7 @@ def process_subject(sub_clean, ses, first_ses, thresh=THRESH, dry_run=False, bro
     
     results = []
     
-    for category, cope_num in CATEGORY_COPES.items():
+    for category, cope_num in category_copes.items():
         zstat_path = (f'{gfeat_dir}/cope{cope_num}.feat/stats/'
                       f'zstat1_ses{first_ses_str}.nii.gz')
         
@@ -180,8 +278,12 @@ def process_subject(sub_clean, ses, first_ses, thresh=THRESH, dry_run=False, bro
             # Determine mask path based on mode
             if broad:
                 pathway = BROAD_MASK_MAP[category]
-                searchmask_path = f'{broad_roi_dir}/{hemi}{pathway}.nii.gz'
-                mask_label = f'{hemi}_{category}_broad{pathway}'
+                searchmask_path = get_or_create_broad_hemi_mask(
+                    sub_clean, first_ses, hemi, pathway)
+                if searchmask_path is None:
+                    print(f'  SKIP {hemi}_{category}: broad mask creation failed')
+                    continue
+                mask_label = f'{hemi}_{category}_broad'
             else:
                 searchmask_path = f'{roi_dir}/{hemi}_{category}_searchmask.nii.gz'
                 mask_label = f'{hemi}_{category}'
@@ -206,6 +308,8 @@ def process_subject(sub_clean, ses, first_ses, thresh=THRESH, dry_run=False, bro
                 'intact_hemi': intact_hemi,
                 'hemi': hemi_full,
                 'category': category,
+                'contrast_map': 'broad' if broad else next(
+                    (k for k, v in CONTRAST_MAPS.items() if v == category_copes), 'unknown'),
                 'cope': cope_num,
                 'mask_type': 'broad' if broad else 'searchmask',
                 'mask_size': mask_size,
@@ -237,22 +341,34 @@ def main():
                         help='Output file suffix')
     parser.add_argument('--broad', action='store_true',
                         help='Use broad ventral/dorsal masks instead of category searchmasks')
+    parser.add_argument('--contrast', type=str, default=DEFAULT_CONTRAST,
+                        choices=list(CONTRAST_MAPS.keys()),
+                        help=f'Contrast map to use (default: {DEFAULT_CONTRAST})')
     args = parser.parse_args()
     
     thresh = args.threshold
     
-    # Auto-set suffix for broad mode if not specified
+    # Select contrast map
+    CATEGORY_COPES = CONTRAST_MAPS[args.contrast]
+    
+    # Auto-set suffix based on flags
     suffix = args.suffix
-    if args.broad and not suffix:
-        suffix = '_broad'
+    if not suffix:
+        parts = []
+        if args.contrast != DEFAULT_CONTRAST:
+            parts.append(f'_{args.contrast}')
+        if args.broad:
+            parts.append('_broad')
+        suffix = ''.join(parts)
     
     print('=' * 60)
     print('CALCULATE SELECTIVITY SUMMARY VALUES')
     print('=' * 60)
     print(f'Threshold: z > {thresh}')
-    print(f'Categories: {list(CATEGORY_COPES.keys())}')
-    print(f'COPEs: {CATEGORY_COPES}')
+    print(f'Contrast map: {args.contrast}')
+    print(f'Categories & COPEs: {CATEGORY_COPES}')
     print(f'Mask type: {"BROAD ventral/dorsal" if args.broad else "category-specific searchmasks"}')
+    print(f'Output suffix: "{suffix}"')
     print(f'NOTE: Patients = intact hemi only, pre-surgical excluded')
     print()
     
@@ -283,7 +399,7 @@ def main():
         for ses in sessions:
             print(f'=== sub-{sub_clean} ses-{ses:02d} ===')
             
-            results = process_subject(sub_clean, ses, first_ses, thresh, args.dry_run, args.broad)
+            results = process_subject(sub_clean, ses, first_ses, CATEGORY_COPES, thresh, args.dry_run, args.broad)
             all_results.extend(results)
     
     if not args.dry_run and all_results:
