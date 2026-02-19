@@ -33,11 +33,39 @@ from sym_pt_params import (processed_dir, skip_subs, get_sessions,
 
 THRESH = 2.3
 
+# ══════════════════════════════════════════════════════════════════════════════
+# 05_calc_peak_coords.py — replace CATEGORY_COPES
+# ══════════════════════════════════════════════════════════════════════════════
+#
+# ORIGINAL keys unchanged. New sub-ROIs added.
+# sub-083 and sub-085 are controls and do not appear in SUBJECTS_TO_SKIP here
+# since peak_coords has no RSA dependency — their peaks are valid.
+
 CATEGORY_COPES = {
-    'face': 1,
-    'house': 2,
+    # ── ORIGINAL — DO NOT CHANGE ──────────────────────────────────────────────
+    'face':   1,
+    'house':  2,
     'object': 3,
-    'word': 4,
+    'word':   4,
+
+    # ── NEW: house split ──────────────────────────────────────────────────────
+    'house_PPA': 2,
+    'house_TOS': 2,
+
+    # ── NEW: face sub-ROIs ────────────────────────────────────────────────────
+    'face_FFA': 1,
+    'face_STS': 1,
+
+    # ── NEW: object sub-ROIs ──────────────────────────────────────────────────
+    'object_LOC': 3,
+    'object_pF':  3,
+
+    # ── NEW: word sub-ROIs ────────────────────────────────────────────────────
+    'word_VWFA': 4,
+    'word_STG':  9,
+
+    # ── NEW: early visual cortex ──────────────────────────────────────────────
+    'evc': 3,
 }
 
 N_SUBS = 4

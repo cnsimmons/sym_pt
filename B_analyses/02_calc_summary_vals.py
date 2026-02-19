@@ -45,25 +45,46 @@ THRESH = 2.3
 #    NOTE: Liu contrasts require COPEs that may not yet exist in your FEAT.
 #    If missing, patch the 1stLevel template and re-run FEAT first.
 
-CONTRAST_MAPS = {
-    'differential': {
-        'face': 1,     # Face > Object
-        'house': 2,    # House > Object
-        'object': 3,   # Object > Scramble
-        'word': 4,     # Word > Object
-    },
-    'category_vs_rest': {
-        'face': 6,     # Face > mean(House, Object, Word, Scramble)
-        'house': 7,    # House > mean(Face, Object, Word, Scramble)
-        'object': 8,   # Object > mean(Face, House, Word, Scramble)
-        'word': 9,     # Word > mean(Face, House, Object, Scramble)
-    },
-    # 'liu': {           # Uncomment once COPEs are available
-    #     'face': ??,    # Face > House
-    #     'house': ??,   # House > Face
-    #     'object': 3,   # Object > Scramble (same as differential)
-    #     'word': ??,    # Word > Face
-    # },
+# ── CATEGORY_COPES ─────────────────────────────────────────────────────────────
+# Replace the existing CATEGORY_COPES dict in 02_calc_summary_vals.py.
+#
+# ORIGINAL keys (face, house, object, word) are UNCHANGED.
+# New sub-ROI keys added — additive only.
+#
+# Cope numbers from design.fsf:
+#   1  = Face > Object
+#   2  = House > Object
+#   3  = Object > Scramble
+#   4  = Word > Object
+#   9  = Word > mean(Face+House+Object+Scramble)
+#   3  = Object > Scramble  (reused for LOC and pF)
+#   3  = Object > Scramble  (reused for evc — most category-neutral differential)
+
+CATEGORY_COPES = {
+    # ── ORIGINAL — DO NOT CHANGE ──────────────────────────────────────────────
+    'face':   1,   # Face > Object
+    'house':  2,   # House > Object
+    'object': 3,   # Object > Scramble
+    'word':   4,   # Word > Object
+
+    # ── NEW: house split ──────────────────────────────────────────────────────
+    'house_PPA': 2,   # House > Object  (same as house)
+    'house_TOS': 2,   # House > Object  (same as house)
+
+    # ── NEW: face sub-ROIs ────────────────────────────────────────────────────
+    'face_FFA': 1,    # Face > Object
+    'face_STS': 1,    # Face > Object
+
+    # ── NEW: object sub-ROIs ──────────────────────────────────────────────────
+    'object_LOC': 3,  # Object > Scramble
+    'object_pF':  3,  # Object > Scramble
+
+    # ── NEW: word sub-ROIs ────────────────────────────────────────────────────
+    'word_VWFA': 4,   # Word > Object
+    'word_STG':  9,   # Word > mean(all) — more selective for language areas
+
+    # ── NEW: early visual cortex ──────────────────────────────────────────────
+    'evc': 3,         # Object > Scramble — least category-specific differential
 }
 
 # Default contrast map
@@ -309,7 +330,7 @@ def process_subject(sub_clean, ses, first_ses, category_copes, thresh=THRESH, dr
                 'hemi': hemi_full,
                 'category': category,
                 'contrast_map': 'broad' if broad else next(
-                    (k for k, v in CONTRAST_MAPS.items() if v == category_copes), 'unknown'),
+                    (k for k, v in CATEGORY_COPES.items() if v == category_copes), 'unknown'),
                 'cope': cope_num,
                 'mask_type': 'broad' if broad else 'searchmask',
                 'mask_size': mask_size,
@@ -342,14 +363,14 @@ def main():
     parser.add_argument('--broad', action='store_true',
                         help='Use broad ventral/dorsal masks instead of category searchmasks')
     parser.add_argument('--contrast', type=str, default=DEFAULT_CONTRAST,
-                        choices=list(CONTRAST_MAPS.keys()),
+                        choices=list(CATEGORY_COPES.keys()),
                         help=f'Contrast map to use (default: {DEFAULT_CONTRAST})')
     args = parser.parse_args()
     
     thresh = args.threshold
     
     # Select contrast map
-    CATEGORY_COPES = CONTRAST_MAPS[args.contrast]
+    active_copes = CATEGORY_COPES
     
     # Auto-set suffix based on flags
     suffix = args.suffix
@@ -366,7 +387,7 @@ def main():
     print('=' * 60)
     print(f'Threshold: z > {thresh}')
     print(f'Contrast map: {args.contrast}')
-    print(f'Categories & COPEs: {CATEGORY_COPES}')
+    print(f'Categories & COPEs: {active_copes}')
     print(f'Mask type: {"BROAD ventral/dorsal" if args.broad else "category-specific searchmasks"}')
     print(f'Output suffix: "{suffix}"')
     print(f'NOTE: Patients = intact hemi only, pre-surgical excluded')
@@ -399,7 +420,7 @@ def main():
         for ses in sessions:
             print(f'=== sub-{sub_clean} ses-{ses:02d} ===')
             
-            results = process_subject(sub_clean, ses, first_ses, CATEGORY_COPES, thresh, args.dry_run, args.broad)
+            results = process_subject(sub_clean, ses, first_ses, active_copes, thresh, args.dry_run, args.broad)
             all_results.extend(results)
     
     if not args.dry_run and all_results:

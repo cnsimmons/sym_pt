@@ -30,13 +30,16 @@ from sym_pt_params import (processed_dir, skip_subs, get_sessions,
 
 THRESH = 2.3
 
+# 06_calc_whole_hemisphere.py — replace CATEGORY_COPES
 CATEGORY_COPES = {
-    'face': 1,
-    'house': 2,
+    # original — unchanged
+    'face':   1,
+    'house':  2,
     'object': 3,
-    'word': 4,
+    'word':   4,
+    # new: evc as whole-hemisphere baseline
+    'evc':    3,
 }
-
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 

@@ -57,7 +57,18 @@ from sym_pt_params import (processed_dir, skip_subs, get_sessions,
 
 # ── Configuration ────────────────────────────────────────────────────────────
 
-CATEGORIES = ['face', 'word', 'object', 'house']
+#CATEGORIES = ['face', 'word', 'object', 'house']
+
+CATEGORIES = [
+    # original
+    'face', 'word', 'object', 'house',
+    # new sub-ROIs
+    'house_PPA', 'house_TOS',
+    'face_FFA', 'face_STS',
+    'object_LOC', 'object_pF',
+    'word_VWFA', 'word_STG',
+    'evc',
+]
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
