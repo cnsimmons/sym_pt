@@ -11,7 +11,7 @@ sub-008,ses-01,14.78,Female,right,left,OTC,,post
 sub-008,ses-02,17.9,Female,right,left,OTC,,post
 sub-010,ses-02,12.8,Male,left,right,OTC,,post
 sub-010,ses-03,14.3,Male,left,right,OTC,,post
-sub-017,ses-01,15.7,Male,left,right,OTC,,post
+sub-017,ses-01,15.7,Male,left,right,OTC,,pre
 sub-017,ses-03,16.2,Male,left,right,OTC,,post
 sub-017,ses-04,18.65,Male,left,right,OTC,,post
 sub-021,ses-01,13.3,Female,left,right,OTC,TC,pre
