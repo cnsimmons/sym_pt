@@ -7,13 +7,19 @@ For each subject × session × category × hemisphere:
   2. Extract beta patterns from copes 15-18 in run-1 and run-2
   3. Correlate within-category patterns across runs → split-half reliability
 
+UPDATE: Now loops over ALL available post-surgical sessions (not just session 1).
+  This is critical because the geometry preservation analysis compares the first
+  and last post-surgical sessions. If split-half reliability is equivalent at both
+  timepoints, the argument that the geometry deficit reflects temporal change
+  (rather than noise) is substantially stronger.
+
 Output: {processed_dir}/group_results/geometry/split_half_reliability.csv
 
 Usage:
   python compute_split_half_reliability.py
 """
 
-import os, sys, argparse
+import os, sys, gc
 import numpy as np
 import nibabel as nib
 import pandas as pd
@@ -37,12 +43,8 @@ PRE_SURGERY_SESSIONS = {
     'sub-086': ['01'],
 }
 
-# RSA betas — same copes as geometry pipeline
 RSA_COPES = {'face': 15, 'house': 16, 'object': 17, 'word': 18}
-
-# Localizer copes for finding ROI peaks
 LOC_COPES = {'face': 1, 'house': 2, 'object': 3, 'word': 4}
-
 CATEGORIES = ['face', 'house', 'object', 'word']
 BILATERAL  = ['house', 'object']
 
@@ -51,12 +53,10 @@ TOP_PCT       = 0.10
 MIN_VOXELS    = 50
 SPHERE_RADIUS = 6
 
-_CACHE = {}
-def _load(fp):
-    k = str(fp)
-    if k not in _CACHE:
-        _CACHE[k] = nib.load(k)
-    return _CACHE[k]
+
+def load_nii(fp):
+    """Load NIfTI without caching."""
+    return nib.load(str(fp))
 
 
 def load_subjects():
@@ -92,38 +92,34 @@ def find_runs(sub_id, session):
     loc_dir = BASE_DIR / sub_id / f'ses-{session}' / 'derivatives' / 'fsl' / 'loc'
     runs = []
     for d in sorted(loc_dir.iterdir()) if loc_dir.exists() else []:
-        if d.name.startswith('run-') and (d / '1stLevel.feat' / 'stats').exists():
-            runs.append(d.name)  # e.g. 'run-01'
+        if d.name.startswith('run-') and (d / '1stLevel.feat' / 'reg_standard' / 'stats').exists():
+            runs.append(d.name)
     return runs
 
 
 def extract_roi(sub_id, session, category, hemi, first_ses):
-    """Localize ROI using HighLevel zstat (same as geometry pipeline).
-    Returns sphere mask and peak info, or None."""
+    """Localize ROI using HighLevel zstat. Returns sphere mask or None."""
     cope_num = LOC_COPES[category]
-    
-    # Searchmask
+
     roi_dir = BASE_DIR / sub_id / f'ses-{first_ses}' / 'ROIs'
     mask_path = roi_dir / f'{hemi}_{category}_searchmask.nii.gz'
     if not mask_path.exists():
         return None
 
-    mask_img = _load(mask_path)
+    mask_img = load_nii(mask_path)
     mask = mask_img.get_fdata() > 0
     affine = mask_img.affine
 
-    # Brain mask
     bm_file = BASE_DIR / sub_id / f'ses-{first_ses}' / 'anat' / 'T1w_brain_mask.nii.gz'
-    bm = _load(bm_file).get_fdata() > 0 if bm_file.exists() else None
+    bm = load_nii(bm_file).get_fdata() > 0 if bm_file.exists() else None
 
-    # Zstat from HighLevel for localization
     feat = BASE_DIR / sub_id / f'ses-{session}' / 'derivatives' / 'fsl' / 'loc' / 'HighLevel.gfeat'
     zname = 'zstat1.nii.gz' if session == first_ses else f'zstat1_ses{first_ses}.nii.gz'
     zf = feat / f'cope{cope_num}.feat' / 'stats' / zname
     if not zf.exists():
         return None
 
-    z = _load(zf).get_fdata().copy()
+    z = load_nii(zf).get_fdata().copy()
     if bm is not None:
         z[~bm] = 0
 
@@ -145,7 +141,6 @@ def extract_roi(sub_id, session, category, hemi, first_ses):
     pidx = np.unravel_index(np.argmax(z * roi), z.shape)
     peak_coord = nib.affines.apply_affine(affine, np.array(pidx))
 
-    # Build sphere
     grid = np.array(np.meshgrid(
         np.arange(z.shape[0]), np.arange(z.shape[1]),
         np.arange(z.shape[2]), indexing='ij'
@@ -160,28 +155,27 @@ def extract_roi(sub_id, session, category, hemi, first_ses):
 
 
 def extract_run_pattern(sub_id, session, run_name, sphere, first_ses):
-    """Extract beta pattern (copes 15-18) from a single run within the sphere."""
-    run_stats = (BASE_DIR / sub_id / f'ses-{session}' / 'derivatives' / 
-                 'fsl' / 'loc' / run_name / '1stLevel.feat' / 'stats')
-    
+    """Extract beta pattern (copes 15-18) from a single run within the sphere.
+    Uses reg_standard/stats for registered cope maps."""
+    run_stats = (BASE_DIR / sub_id / f'ses-{session}' / 'derivatives' /
+                 'fsl' / 'loc' / run_name / '1stLevel.feat' / 'reg_standard' / 'stats')
+
     patterns = []
-    valid_cats = []
     for cat in CATEGORIES:
         cope_file = run_stats / f'cope{RSA_COPES[cat]}.nii.gz'
         if not cope_file.exists():
             return None, None
-        betas = _load(cope_file).get_fdata()[sphere]
+        betas = load_nii(cope_file).get_fdata()[sphere]
         betas = betas[np.isfinite(betas)]
         if len(betas) == 0:
             return None, None
         patterns.append(betas)
-        valid_cats.append(cat)
 
     if len(patterns) != 4:
         return None, None
 
     min_v = min(len(b) for b in patterns)
-    return np.column_stack([b[:min_v] for b in patterns]), valid_cats
+    return np.column_stack([b[:min_v] for b in patterns]), CATEGORIES
 
 
 def compute_split_half(pattern_run1, pattern_run2, cat_idx):
@@ -194,82 +188,129 @@ def compute_split_half(pattern_run1, pattern_run2, cat_idx):
     return r
 
 
+def get_post_surgical_sessions(sid, info):
+    """Return list of post-surgical sessions for a subject."""
+    pre = PRE_SURGERY_SESSIONS.get(sid, [])
+    return [s for s in info['sessions'] if s not in pre]
+
+
+def determine_first_ses(sid, info):
+    """Determine the first session to use for ROI masks (handles pre-surgical exclusion)."""
+    pre = PRE_SURGERY_SESSIONS.get(sid, [])
+    first_ses = info['sessions'][0]
+    if first_ses in pre and len(info['sessions']) > 1:
+        first_ses = [s for s in info['sessions'] if s not in pre][0]
+    return first_ses
+
+
 def main():
     subjects = load_subjects()
     print(f'Loaded {len(subjects)} subjects')
-    
+
     rows = []
-    
-    for sid, info in subjects.items():
-        sessions = info['sessions']
-        
-        # Skip pre-surgical sessions
-        pre = PRE_SURGERY_SESSIONS.get(sid, [])
-        sessions = [s for s in sessions if s not in pre]
-        if not sessions:
+
+    for sid, info in sorted(subjects.items()):
+        # Get all post-surgical sessions
+        post_sessions = get_post_surgical_sessions(sid, info)
+        if not post_sessions:
             continue
-        
-        # Use first valid session
-        session = sessions[0]
-        first_ses = info['sessions'][0]
-        if first_ses in pre and len(info['sessions']) > 1:
-            first_ses = [s for s in info['sessions'] if s not in pre][0]
-        
-        # Determine hemispheres
+
+        first_ses = determine_first_ses(sid, info)
+
+        # For controls, use all sessions; for patients, use post-surgical only
+        sessions_to_process = post_sessions
+
         if info['patient_status'] == 'patient':
             hemis = [info['hemi']]
             hemi_labels = ['intact']
         else:
             hemis = ['l', 'r']
             hemi_labels = ['left', 'right']
-        
-        # Find runs
-        runs = find_runs(sid, session)
-        if len(runs) < 2:
-            print(f'  {sid} ses-{session}: <2 runs, skipping')
-            continue
-        
-        print(f'{info["code"]} ses-{session}: {len(runs)} runs')
-        
-        for hemi, hl in zip(hemis, hemi_labels):
-            for category in CATEGORIES:
-                # Localize ROI
-                sphere = extract_roi(sid, session, category, hemi, first_ses)
-                if sphere is None:
-                    print(f'  {category} {hemi}: no ROI')
-                    continue
-                
-                # Extract patterns from first two runs
-                p1, cats1 = extract_run_pattern(sid, session, runs[0], sphere, first_ses)
-                p2, cats2 = extract_run_pattern(sid, session, runs[1], sphere, first_ses)
-                
-                if p1 is None or p2 is None:
-                    print(f'  {category} {hemi}: pattern extraction failed')
-                    continue
-                
-                cat_idx = CATEGORIES.index(category)
-                r = compute_split_half(p1, p2, cat_idx)
-                
-                cat_type = 'symmetric' if category in BILATERAL else 'asymmetric'
-                
-                rows.append({
-                    'subject':      info['code'],
-                    'subject_id':   sid,
-                    'group':        info['group'] if info['patient_status'] == 'patient' else 'control',
-                    'status':       info['patient_status'],
-                    'surgery_side': info['surgery_side'],
-                    'session':      session,
-                    'hemi':         'left' if hemi == 'l' else 'right',
-                    'hemi_label':   hl,
-                    'category':     category,
-                    'cat_type':     cat_type,
-                    'split_half_r': r,
-                    'n_voxels':     sphere.sum(),
-                })
-                
-                r_str = f'{r:.3f}' if np.isfinite(r) else 'nan'
-                print(f'  {category} {hemi}: r={r_str} ({sphere.sum()} voxels)')
-    
+
+        for session in sessions_to_process:
+            runs = find_runs(sid, session)
+            if len(runs) < 2:
+                continue
+
+            # Determine if this is the first or last post-surgical session
+            # (for tagging in output — helps match to geometry analysis)
+            session_rank = post_sessions.index(session)
+            is_first_post = (session_rank == 0)
+            is_last_post  = (session_rank == len(post_sessions) - 1)
+
+            if is_first_post:
+                session_label = 'first_post'
+            elif is_last_post:
+                session_label = 'last_post'
+            else:
+                session_label = 'intermediate'
+
+            print(f'{info["code"]} ses-{session} ({session_label}): {len(runs)} runs')
+
+            for hemi, hl in zip(hemis, hemi_labels):
+                for category in CATEGORIES:
+                    sphere = extract_roi(sid, session, category, hemi, first_ses)
+                    if sphere is None:
+                        continue
+
+                    # Compute split-half for all available run pairs
+                    # Primary: run-1 vs run-2 (most comparable to standard split-half)
+                    p1, _ = extract_run_pattern(sid, session, runs[0], sphere, first_ses)
+                    p2, _ = extract_run_pattern(sid, session, runs[1], sphere, first_ses)
+
+                    if p1 is None or p2 is None:
+                        continue
+
+                    cat_idx = CATEGORIES.index(category)
+                    r_12 = compute_split_half(p1, p2, cat_idx)
+
+                    cat_type = 'symmetric' if category in BILATERAL else 'asymmetric'
+
+                    row_base = {
+                        'subject':        info['code'],
+                        'subject_id':     sid,
+                        'group':          info['group'] if info['patient_status'] == 'patient' else 'control',
+                        'status':         info['patient_status'],
+                        'surgery_side':   info['surgery_side'],
+                        'session':        session,
+                        'session_label':  session_label,
+                        'session_rank':   session_rank,
+                        'n_post_sessions': len(post_sessions),
+                        'hemi':           'left' if hemi == 'l' else 'right',
+                        'hemi_label':     hl,
+                        'category':       category,
+                        'cat_type':       cat_type,
+                        'n_voxels':       int(sphere.sum()),
+                    }
+
+                    # Run 1 vs Run 2
+                    rows.append({
+                        **row_base,
+                        'run_pair':      f'{runs[0]}_vs_{runs[1]}',
+                        'split_half_r':  r_12,
+                    })
+
+                    r_str = f'{r_12:.3f}' if np.isfinite(r_12) else 'nan'
+                    print(f'  {category} {hemi} {runs[0]}v{runs[1]}: r={r_str} ({sphere.sum()} vox)')
+
+                    # If 3+ runs available, also compute run-1 vs run-3 and run-2 vs run-3
+                    # for additional robustness (and average across pairs)
+                    if len(runs) >= 3:
+                        p3, _ = extract_run_pattern(sid, session, runs[2], sphere, first_ses)
+                        if p3 is not None:
+                            r_13 = compute_split_half(p1, p3, cat_idx)
+                            r_23 = compute_split_half(p2, p3, cat_idx)
+
+                            rows.append({**row_base, 'run_pair': f'{runs[0]}_vs_{runs[2]}', 'split_half_r': r_13})
+                            rows.append({**row_base, 'run_pair': f'{runs[1]}_vs_{runs[2]}', 'split_half_r': r_23})
+
+                            # Also store the mean across all pairs
+                            pair_rs = [r for r in [r_12, r_13, r_23] if np.isfinite(r)]
+                            if pair_rs:
+                                rows.append({**row_base, 'run_pair': 'mean_all_pairs', 'split_half_r': np.mean(pair_rs)})
+
+        gc.collect()
+
     df = pd.DataFrame(rows)
     out_file = OUTPUT_DIR / 'split_half_reliability.csv'
     df.to_csv(out_file, index=False)
@@ -277,6 +318,40 @@ def main():
     print(f'Total rows: {len(df)}')
     print(f'Patients: {df[df["status"]=="patient"]["subject"].nunique()}')
     print(f'Controls: {df[df["status"]=="control"]["subject"].nunique()}')
+
+    # ── Summary statistics ────────────────────────────────────────────────────
+    print('\n' + '='*70)
+    print('SUMMARY: Split-half reliability by category type')
+    print('='*70)
+
+    # Filter to primary run pair (run-1 vs run-2) for clean summary
+    primary = df[df['run_pair'].str.contains('run-01_vs_run-02') | 
+                 df['run_pair'].str.contains('run-1_vs_run-2') |
+                 (~df['run_pair'].str.contains('mean'))]
+    # Safer: just use the first run pair per subject/session/category
+    primary = df.groupby(['subject_id', 'session', 'hemi', 'category']).first().reset_index()
+
+    for status in ['patient', 'control']:
+        grp = primary[primary['status'] == status]
+        if grp.empty:
+            continue
+        print(f'\n--- {status.upper()} ---')
+        for ct in ['symmetric', 'asymmetric']:
+            vals = grp[grp['cat_type'] == ct]['split_half_r'].dropna()
+            if len(vals) > 0:
+                print(f'  {ct}: M={vals.mean():.3f}, SD={vals.std():.3f}, n={len(vals)}')
+
+        # By session label (for patients)
+        if status == 'patient':
+            print(f'\n  By session timepoint:')
+            for sl in ['first_post', 'last_post', 'intermediate']:
+                sl_grp = grp[grp['session_label'] == sl]
+                if sl_grp.empty:
+                    continue
+                for ct in ['symmetric', 'asymmetric']:
+                    vals = sl_grp[sl_grp['cat_type'] == ct]['split_half_r'].dropna()
+                    if len(vals) > 0:
+                        print(f'    {sl} / {ct}: M={vals.mean():.3f}, SD={vals.std():.3f}, n={len(vals)}')
 
 
 if __name__ == '__main__':
