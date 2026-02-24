@@ -180,3 +180,260 @@ control058 ses-01 (first_post): 3 runs
   house l run-01vrun-02: r=0.960 (925 vox)
   object l run-01vrun-02: r=0.935 (925 vox)
   word l run-01vrun-02: r=0.564 (925 vox)
+  face r run-01vrun-02: r=0.950 (925 vox)
+  house r run-01vrun-02: r=0.966 (925 vox)
+  object r run-01vrun-02: r=0.946 (925 vox)
+  word r run-01vrun-02: r=0.135 (925 vox)
+control058 ses-02 (last_post): 3 runs
+  face l run-01vrun-02: r=0.939 (925 vox)
+  house l run-01vrun-02: r=0.964 (925 vox)
+  object l run-01vrun-02: r=0.953 (925 vox)
+  word l run-01vrun-02: r=0.890 (925 vox)
+  face r run-01vrun-02: r=0.906 (925 vox)
+  house r run-01vrun-02: r=0.903 (925 vox)
+  object r run-01vrun-02: r=0.837 (925 vox)
+  word r run-01vrun-02: r=-0.189 (925 vox)
+control059 ses-02 (first_post): 3 runs
+  face l run-01vrun-02: r=-0.076 (899 vox)
+  house l run-01vrun-02: r=0.788 (899 vox)
+  object l run-01vrun-02: r=0.984 (899 vox)
+  word l run-01vrun-02: r=0.950 (899 vox)
+  face r run-01vrun-02: r=0.884 (899 vox)
+  house r run-01vrun-02: r=0.901 (899 vox)
+  object r run-01vrun-02: r=0.988 (899 vox)
+  word r run-01vrun-02: r=0.901 (899 vox)
+control062 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.687 (925 vox)
+  house l run-01vrun-02: r=0.963 (925 vox)
+  object l run-01vrun-02: r=0.968 (925 vox)
+  word l run-01vrun-02: r=-0.100 (925 vox)
+  face r run-01vrun-02: r=0.977 (925 vox)
+  house r run-01vrun-02: r=0.955 (925 vox)
+  object r run-01vrun-02: r=0.986 (925 vox)
+control062 ses-02 (last_post): 3 runs
+  face l run-01vrun-02: r=0.955 (925 vox)
+  house l run-01vrun-02: r=0.928 (925 vox)
+  object l run-01vrun-02: r=0.934 (925 vox)
+  word l run-01vrun-02: r=0.441 (925 vox)
+  face r run-01vrun-02: r=0.971 (925 vox)
+  house r run-01vrun-02: r=0.917 (925 vox)
+  object r run-01vrun-02: r=0.978 (925 vox)
+control064 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.973 (925 vox)
+  house l run-01vrun-02: r=0.922 (925 vox)
+  object l run-01vrun-02: r=0.973 (925 vox)
+  word l run-01vrun-02: r=0.864 (925 vox)
+  face r run-01vrun-02: r=0.962 (925 vox)
+  house r run-01vrun-02: r=0.986 (925 vox)
+  object r run-01vrun-02: r=0.924 (925 vox)
+  word r run-01vrun-02: r=0.598 (925 vox)
+control064 ses-02 (last_post): 3 runs
+  face l run-01vrun-02: r=0.696 (925 vox)
+  house l run-01vrun-02: r=0.865 (925 vox)
+  object l run-01vrun-02: r=0.969 (925 vox)
+  word l run-01vrun-02: r=0.929 (925 vox)
+  face r run-01vrun-02: r=0.971 (925 vox)
+  house r run-01vrun-02: r=0.933 (925 vox)
+  object r run-01vrun-02: r=0.971 (925 vox)
+  word r run-01vrun-02: r=0.028 (925 vox)
+OTC066 ses-01 (first_post): 3 runs
+  face r run-01vrun-02: r=0.945 (895 vox)
+  house r run-01vrun-02: r=0.970 (895 vox)
+  object r run-01vrun-02: r=0.943 (895 vox)
+  word r run-01vrun-02: r=0.892 (895 vox)
+control067 ses-02 (first_post): 2 runs
+  face l run-01vrun-02: r=0.689 (923 vox)
+  house l run-01vrun-02: r=0.290 (923 vox)
+  object l run-01vrun-02: r=0.893 (923 vox)
+  word l run-01vrun-02: r=0.563 (923 vox)
+  face r run-01vrun-02: r=0.730 (923 vox)
+  house r run-01vrun-02: r=0.768 (923 vox)
+  object r run-01vrun-02: r=0.899 (923 vox)
+  word r run-01vrun-02: r=-0.262 (923 vox)
+control068 ses-02 (first_post): 3 runs
+  face l run-01vrun-02: r=0.944 (921 vox)
+  house l run-01vrun-02: r=0.913 (921 vox)
+  object l run-01vrun-02: r=0.958 (921 vox)
+  word l run-01vrun-02: r=0.908 (921 vox)
+  face r run-01vrun-02: r=0.920 (921 vox)
+  house r run-01vrun-02: r=0.463 (921 vox)
+  object r run-01vrun-02: r=0.963 (921 vox)
+control068 ses-03 (last_post): 3 runs
+  face l run-01vrun-02: r=0.911 (921 vox)
+  house l run-01vrun-02: r=0.976 (921 vox)
+  object l run-01vrun-02: r=0.968 (921 vox)
+  word l run-01vrun-02: r=0.895 (921 vox)
+  face r run-01vrun-02: r=0.695 (921 vox)
+  house r run-01vrun-02: r=0.610 (921 vox)
+  object r run-01vrun-02: r=0.933 (921 vox)
+OTC069 ses-01 (first_post): 3 runs
+  face r run-01vrun-02: r=0.604 (897 vox)
+  house r run-01vrun-02: r=0.702 (897 vox)
+  object r run-01vrun-02: r=0.155 (897 vox)
+  word r run-01vrun-02: r=0.801 (897 vox)
+nonOTC070 ses-02 (first_post): 3 runs
+control071 ses-01 (first_post): 2 runs
+  face l run-01vrun-03: r=0.640 (925 vox)
+  house l run-01vrun-03: r=0.936 (925 vox)
+  object l run-01vrun-03: r=0.921 (925 vox)
+  word l run-01vrun-03: r=0.438 (925 vox)
+  face r run-01vrun-03: r=0.864 (925 vox)
+  house r run-01vrun-03: r=0.926 (925 vox)
+  object r run-01vrun-03: r=0.946 (925 vox)
+  word r run-01vrun-03: r=0.364 (925 vox)
+nonOTC072 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.941 (895 vox)
+  house l run-01vrun-02: r=0.890 (895 vox)
+  object l run-01vrun-02: r=0.976 (895 vox)
+  word l run-01vrun-02: r=0.786 (895 vox)
+nonOTC072 ses-02 (last_post): 3 runs
+  face l run-01vrun-02: r=0.962 (895 vox)
+  house l run-01vrun-02: r=0.944 (895 vox)
+  object l run-01vrun-02: r=0.982 (895 vox)
+  word l run-01vrun-02: r=0.918 (895 vox)
+nonOTC073 ses-02 (first_post): 3 runs
+OTC074 ses-01 (first_post): 3 runs
+  house l run-01vrun-02: r=0.563 (899 vox)
+  object l run-01vrun-02: r=0.685 (899 vox)
+OTC075 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.621 (899 vox)
+  house l run-01vrun-02: r=0.123 (899 vox)
+  object l run-01vrun-02: r=0.595 (899 vox)
+  word l run-01vrun-02: r=0.177 (899 vox)
+OTC076 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.911 (899 vox)
+  house l run-01vrun-02: r=0.446 (899 vox)
+  object l run-01vrun-02: r=0.900 (899 vox)
+  word l run-01vrun-02: r=0.844 (899 vox)
+OTC077 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.961 (923 vox)
+  house l run-01vrun-02: r=0.939 (923 vox)
+  object l run-01vrun-02: r=0.873 (923 vox)
+  word l run-01vrun-02: r=0.838 (923 vox)
+OTC078 ses-01 (first_post): 3 runs
+  face r run-01vrun-02: r=0.963 (897 vox)
+  house r run-01vrun-02: r=0.927 (897 vox)
+  object r run-01vrun-02: r=0.989 (897 vox)
+OTC079 ses-01 (first_post): 3 runs
+  face r run-01vrun-02: r=0.957 (897 vox)
+  house r run-01vrun-02: r=0.980 (897 vox)
+  object r run-01vrun-02: r=0.933 (897 vox)
+OTC079 ses-02 (last_post): 3 runs
+  face r run-01vrun-02: r=0.937 (897 vox)
+  house r run-01vrun-02: r=0.983 (897 vox)
+  object r run-01vrun-02: r=0.807 (897 vox)
+  word r run-01vrun-02: r=0.552 (897 vox)
+nonOTC081 ses-02 (first_post): 2 runs
+control084 ses-01 (first_post): 3 runs
+  house l run-01vrun-02: r=0.369 (923 vox)
+  object l run-01vrun-02: r=0.828 (923 vox)
+  house r run-01vrun-02: r=0.451 (923 vox)
+  object r run-01vrun-02: r=0.903 (923 vox)
+nonOTC086 ses-02 (first_post): 2 runs
+control087 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.985 (897 vox)
+  house l run-01vrun-02: r=0.991 (897 vox)
+  object l run-01vrun-02: r=0.969 (897 vox)
+  word l run-01vrun-02: r=0.993 (897 vox)
+  face r run-01vrun-02: r=0.986 (897 vox)
+  house r run-01vrun-02: r=0.864 (897 vox)
+  object r run-01vrun-02: r=0.954 (897 vox)
+  word r run-01vrun-02: r=0.649 (897 vox)
+control088 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.896 (897 vox)
+  house l run-01vrun-02: r=0.896 (897 vox)
+  object l run-01vrun-02: r=0.963 (897 vox)
+  word l run-01vrun-02: r=0.980 (897 vox)
+  face r run-01vrun-02: r=0.969 (897 vox)
+  house r run-01vrun-02: r=0.971 (897 vox)
+  object r run-01vrun-02: r=0.950 (897 vox)
+  word r run-01vrun-02: r=0.075 (897 vox)
+OTC089 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.757 (897 vox)
+  house l run-01vrun-02: r=0.956 (897 vox)
+  object l run-01vrun-02: r=0.969 (897 vox)
+  word l run-01vrun-02: r=0.788 (897 vox)
+OTC090 ses-01 (first_post): 3 runs
+  face r run-01vrun-02: r=0.927 (897 vox)
+  house r run-01vrun-02: r=0.810 (897 vox)
+  object r run-01vrun-02: r=0.922 (897 vox)
+  word r run-01vrun-02: r=0.944 (897 vox)
+OTC091 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.954 (925 vox)
+  house l run-01vrun-02: r=0.949 (925 vox)
+  object l run-01vrun-02: r=0.963 (925 vox)
+  word l run-01vrun-02: r=0.774 (925 vox)
+OTC092 ses-01 (first_post): 3 runs
+  face r run-01vrun-02: r=0.896 (923 vox)
+  house r run-01vrun-02: r=0.274 (923 vox)
+  object r run-01vrun-02: r=0.895 (923 vox)
+  word r run-01vrun-02: r=0.942 (923 vox)
+control093 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.961 (925 vox)
+  house l run-01vrun-02: r=0.910 (925 vox)
+  object l run-01vrun-02: r=0.931 (925 vox)
+  word l run-01vrun-02: r=0.968 (925 vox)
+  face r run-01vrun-02: r=0.899 (925 vox)
+  house r run-01vrun-02: r=0.886 (925 vox)
+  object r run-01vrun-02: r=0.947 (925 vox)
+  word r run-01vrun-02: r=-0.059 (925 vox)
+control094 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.929 (895 vox)
+  house l run-01vrun-02: r=0.908 (895 vox)
+  object l run-01vrun-02: r=0.970 (895 vox)
+  word l run-01vrun-02: r=0.233 (895 vox)
+  face r run-01vrun-02: r=0.986 (895 vox)
+  house r run-01vrun-02: r=0.741 (895 vox)
+  object r run-01vrun-02: r=0.961 (895 vox)
+  word r run-01vrun-02: r=0.744 (895 vox)
+control095 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.893 (921 vox)
+  house l run-01vrun-02: r=0.984 (921 vox)
+  object l run-01vrun-02: r=0.792 (921 vox)
+  word l run-01vrun-02: r=0.682 (921 vox)
+  face r run-01vrun-02: r=0.905 (921 vox)
+  house r run-01vrun-02: r=0.907 (921 vox)
+  object r run-01vrun-02: r=0.955 (921 vox)
+control096 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.977 (899 vox)
+  house l run-01vrun-02: r=0.967 (899 vox)
+  object l run-01vrun-02: r=0.951 (899 vox)
+  word l run-01vrun-02: r=0.962 (899 vox)
+  face r run-01vrun-02: r=0.867 (899 vox)
+  house r run-01vrun-02: r=0.946 (899 vox)
+  object r run-01vrun-02: r=0.947 (899 vox)
+  word r run-01vrun-02: r=-0.006 (899 vox)
+control097 ses-01 (first_post): 3 runs
+  face l run-01vrun-02: r=0.983 (923 vox)
+  house l run-01vrun-02: r=0.612 (923 vox)
+  object l run-01vrun-02: r=0.977 (923 vox)
+  word l run-01vrun-02: r=0.932 (923 vox)
+  face r run-01vrun-02: r=0.950 (923 vox)
+  house r run-01vrun-02: r=0.927 (923 vox)
+  object r run-01vrun-02: r=0.969 (923 vox)
+  word r run-01vrun-02: r=0.855 (923 vox)
+
+Saved: /user_data/csimmon2/sym_pt/group_results/geometry/split_half_reliability.csv
+Total rows: 1247
+Patients: 17
+Controls: 22
+
+======================================================================
+SUMMARY: Split-half reliability by category type
+======================================================================
+
+--- PATIENT ---
+  symmetric: M=0.747, SD=0.324, n=54
+  asymmetric: M=0.603, SD=0.413, n=49
+
+  By session timepoint:
+    first_post / symmetric: M=0.792, SD=0.254, n=34
+    first_post / asymmetric: M=0.691, SD=0.354, n=30
+    last_post / symmetric: M=0.650, SD=0.438, n=12
+    last_post / asymmetric: M=0.540, SD=0.502, n=11
+    intermediate / symmetric: M=0.700, SD=0.398, n=8
+    intermediate / asymmetric: M=0.361, SD=0.427, n=8
+
+--- CONTROL ---
+  symmetric: M=0.887, SD=0.149, n=128
+  asymmetric: M=0.724, SD=0.318, n=113
