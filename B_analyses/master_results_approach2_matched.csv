@@ -1,0 +1,49 @@
+Resection,Category,Metric,Ctrl M(SD),OTC M(SD),OTC v Ctrl
+L-resec (intact RH) vs Ctrl RH,Face,Mean Activation,4.71 (1.29),4.61 (1.30),0.844
+L-resec (intact RH) vs Ctrl RH,Face,Volume,1547.25 (1093.53),1140.62 (891.99),0.272
+L-resec (intact RH) vs Ctrl RH,Face,Sum Selectivity,492.96 (429.66),386.33 (302.49),0.425
+L-resec (intact RH) vs Ctrl RH,Face,Liu Distinctiveness,0.74 (0.38),0.83 (0.21),0.495
+L-resec (intact RH) vs Ctrl RH,Face,Geometry Preservation,0.74 (0.30),0.87 (0.07),0.212
+L-resec (intact RH) vs Ctrl RH,Face,RDM Distance,1.16 (0.69),0.82 (0.47),0.297
+L-resec (intact RH) vs Ctrl RH,House,Mean Activation,4.22 (0.74),4.16 (0.84),0.842
+L-resec (intact RH) vs Ctrl RH,House,Volume,4868.92 (2890.45),3327.25 (1734.86),0.055
+L-resec (intact RH) vs Ctrl RH,House,Sum Selectivity,624.91 (407.27),450.80 (258.92),0.146
+L-resec (intact RH) vs Ctrl RH,House,Liu Distinctiveness,0.02 (0.80),0.39 (0.82),0.355
+L-resec (intact RH) vs Ctrl RH,House,Geometry Preservation,0.40 (0.53),0.19 (0.65),0.567
+L-resec (intact RH) vs Ctrl RH,House,RDM Distance,1.94 (1.18),1.59 (0.44),0.404
+L-resec (intact RH) vs Ctrl RH,Object,Mean Activation,4.41 (0.72),4.54 (1.09),0.742
+L-resec (intact RH) vs Ctrl RH,Object,Volume,19595.54 (8738.70),14576.12 (6865.55),0.077
+L-resec (intact RH) vs Ctrl RH,Object,Sum Selectivity,1759.72 (914.68),1564.70 (1196.86),0.661
+L-resec (intact RH) vs Ctrl RH,Object,Liu Distinctiveness,1.23 (0.49),1.13 (0.43),0.632
+L-resec (intact RH) vs Ctrl RH,Object,Geometry Preservation,0.64 (0.30),0.51 (0.11),0.233
+L-resec (intact RH) vs Ctrl RH,Object,RDM Distance,1.04 (0.65),1.72 (0.43),0.017*
+L-resec (intact RH) vs Ctrl RH,Word,Mean Activation,2.94 (0.52),3.07 (0.54),0.510
+L-resec (intact RH) vs Ctrl RH,Word,Volume,144.04 (150.34),680.50 (839.57),0.056
+L-resec (intact RH) vs Ctrl RH,Word,Sum Selectivity,29.76 (34.70),158.58 (199.71),0.055
+L-resec (intact RH) vs Ctrl RH,Word,Liu Distinctiveness,0.40 (0.53),0.77 (0.09),0.016*
+L-resec (intact RH) vs Ctrl RH,Word,Geometry Preservation,-0.09 (0.26),0.71 (0.17),<.001*
+L-resec (intact RH) vs Ctrl RH,Word,RDM Distance,1.38 (0.49),1.28 (1.27),0.825
+R-resec (intact LH) vs Ctrl LH,Face,Mean Activation,4.37 (1.35),3.87 (0.99),0.235
+R-resec (intact LH) vs Ctrl LH,Face,Volume,1046.33 (640.32),1469.75 (1241.73),0.325
+R-resec (intact LH) vs Ctrl LH,Face,Sum Selectivity,299.41 (232.09),444.88 (389.51),0.288
+R-resec (intact LH) vs Ctrl LH,Face,Liu Distinctiveness,0.77 (0.36),0.75 (0.33),0.874
+R-resec (intact LH) vs Ctrl LH,Face,Geometry Preservation,0.65 (0.25),0.50 (0.38),0.502
+R-resec (intact LH) vs Ctrl LH,Face,RDM Distance,1.13 (0.46),1.78 (0.98),0.306
+R-resec (intact LH) vs Ctrl LH,House,Mean Activation,4.18 (0.55),3.76 (0.82),0.149
+R-resec (intact LH) vs Ctrl LH,House,Volume,3980.08 (2608.64),3515.38 (2126.74),0.588
+R-resec (intact LH) vs Ctrl LH,House,Sum Selectivity,499.46 (332.36),477.17 (389.37),0.878
+R-resec (intact LH) vs Ctrl LH,House,Liu Distinctiveness,0.57 (0.77),0.61 (0.66),0.876
+R-resec (intact LH) vs Ctrl LH,House,Geometry Preservation,0.49 (0.60),-0.08 (0.08),0.002*
+R-resec (intact LH) vs Ctrl LH,House,RDM Distance,1.52 (0.88),2.90 (0.61),<.001*
+R-resec (intact LH) vs Ctrl LH,Object,Mean Activation,4.74 (0.86),4.02 (0.96),0.045*
+R-resec (intact LH) vs Ctrl LH,Object,Volume,20816.00 (7370.01),9908.12 (7239.15),<.001*
+R-resec (intact LH) vs Ctrl LH,Object,Sum Selectivity,1942.04 (865.54),941.57 (811.86),0.001*
+R-resec (intact LH) vs Ctrl LH,Object,Liu Distinctiveness,1.07 (0.36),1.09 (0.37),0.905
+R-resec (intact LH) vs Ctrl LH,Object,Geometry Preservation,0.53 (0.39),0.23 (0.51),0.344
+R-resec (intact LH) vs Ctrl LH,Object,RDM Distance,1.36 (1.09),1.47 (0.08),0.770
+R-resec (intact LH) vs Ctrl LH,Word,Mean Activation,3.41 (0.75),3.04 (0.82),0.223
+R-resec (intact LH) vs Ctrl LH,Word,Volume,676.67 (759.36),338.12 (337.69),0.070
+R-resec (intact LH) vs Ctrl LH,Word,Sum Selectivity,164.30 (203.54),76.89 (80.15),0.067
+R-resec (intact LH) vs Ctrl LH,Word,Liu Distinctiveness,0.59 (0.35),0.80 (0.60),0.363
+R-resec (intact LH) vs Ctrl LH,Word,Geometry Preservation,0.77 (0.22),0.38 (0.53),0.205
+R-resec (intact LH) vs Ctrl LH,Word,RDM Distance,1.09 (0.76),1.94 (1.54),0.420
