@@ -79,7 +79,7 @@ print(f"  Best longitudinal control: {best_long}")
 print(f"    Mean Liu = {candidates[best_long]:.3f}")
 
 BEST_CTRL = 'sub-052'
-TARGETS = ['sub-004', 'sub-007', 'sub-021', BEST_CTRL]
+TARGETS = ['sub-010, 'sub-008', BEST_CTRL]
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PULL 2: Liu distinctiveness per category for 4 exemplar participants
