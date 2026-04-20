@@ -21,7 +21,7 @@ templateSes="01"
 templateRun="01"
 
 # Skip list
-SKIP_SUBS=("108")
+SKIP_SUBS=()
 
 echo "Using template: $templateFSF"
 echo "Reading CSV: $CSV_FILE"

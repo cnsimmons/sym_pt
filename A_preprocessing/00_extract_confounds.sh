@@ -21,7 +21,7 @@ FD_THRESH=0.5
 DUMMY=0
 
 # Skip list (from sym_pt_params)
-SKIP_SUBS=("108")
+#SKIP_SUBS=("108")
 
 echo "============================================="
 echo "MOTION SPIKE EXTRACTION (fsl_motion_outliers)"

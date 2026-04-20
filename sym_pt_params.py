@@ -32,7 +32,7 @@ mni_brain = '/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain.nii.gz'
 # =============================================================================
 # 4. SUBJECT CONFIGURATION
 # =============================================================================
-skip_subs = ['108']
+skip_subs = []
 
 # Note: session_start offsets (sub-010, sub-018, sub-068) are no longer needed.
 # The unified CSV has explicit session numbers per row.
