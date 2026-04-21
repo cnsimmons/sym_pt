@@ -17,7 +17,7 @@ from glob import glob
 
 # Job parametersx
 job_name = 'register_zstats'
-mem = 4  # GB
+mem = 16  # GB
 run_time = "01:00:00"
 
 # Script to run
@@ -74,7 +74,8 @@ os.makedirs('slurm_out', exist_ok=True)
 
 # Get all subjects
 subject_dirs = glob(f'{processed_dir}/sub-*')
-subjects = sorted([os.path.basename(d).replace('sub-', '') for d in subject_dirs if os.path.isdir(d)])
+#subjects = sorted([os.path.basename(d).replace('sub-', '') for d in subject_dirs if os.path.isdir(d)])
+subjects = ['108']
 
 print(f"Found {len(subjects)} subjects")
 print("")

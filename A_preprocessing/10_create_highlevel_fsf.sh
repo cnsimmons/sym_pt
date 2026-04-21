@@ -13,7 +13,7 @@ gitDir='/user_data/csimmon2/git_repos/sym_pt'
 CSV_FILE="${gitDir}/sub_info.csv"
 templateFSF="${gitDir}/template_HighLevel.fsf"
 
-SKIP_SUBS=("108")
+SKIP_SUBS=()
 
 echo "Using template: $templateFSF"
 echo ""

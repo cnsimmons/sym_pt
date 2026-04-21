@@ -19,7 +19,7 @@ from sym_pt_params import processed_dir, get_sessions
 
 # Job parameters
 job_name = 'register_1stlevel'
-mem = 4  # GB - FLIRT with applyxfm is lightweight
+mem = 16  # GB - FLIRT with applyxfm is lightweight
 run_time = "01:00:00"
 pause_crit = 12  # Number of jobs before pausing
 pause_time = 1   # Minutes to pause
@@ -88,6 +88,7 @@ os.makedirs('slurm_out', exist_ok=True)
 # Get all subjects
 subject_dirs = glob(f'{processed_dir}/sub-*')
 subjects = sorted([os.path.basename(d).replace('sub-', '') for d in subject_dirs if os.path.isdir(d)])
+#subjects = ['108']  # TEMP - limit to one subject for testing
 
 print(f"Found {len(subjects)} subjects")
 print("")

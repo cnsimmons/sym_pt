@@ -17,7 +17,7 @@ from glob import glob
 
 # Job parameters
 job_name = 'register_highlevel'
-mem = 4  # GB
+mem = 16  # GB
 run_time = "00:30:00"
 
 SCRIPT_PATH = '/user_data/csimmon2/git_repos/sym_pt/A_preprocessing/register_highlevel.py'

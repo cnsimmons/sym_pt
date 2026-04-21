@@ -7,7 +7,7 @@
 dataDir='/user_data/csimmon2/sym_pt'
 CSV_FILE='/user_data/csimmon2/git_repos/sym_pt/sub_info.csv'
 
-SKIP_SUBS=("108")
+SKIP_SUBS=()
 
 should_skip() {
     local sub="$1"

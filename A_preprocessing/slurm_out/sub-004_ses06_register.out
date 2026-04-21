@@ -1,0 +1,15 @@
+ERROR: Unable to locate a modulefile for 'fsl/6.0.3'
+Processing sub-004 ses-06
+Reference: ses-01 anat
+Found runs: ['01', '02', '03']
+
+  sub-004 loc run-01
+    anat2ses01.mat missing - run script 08 first
+
+  sub-004 loc run-02
+    anat2ses01.mat missing - run script 08 first
+
+  sub-004 loc run-03
+    anat2ses01.mat missing - run script 08 first
+
+Finished sub-004 ses-06
