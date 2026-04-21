@@ -1,0 +1,12 @@
+ERROR: Unable to locate a modulefile for 'fsl/6.0.3'
+Processing sub-108 ses-02
+Reference: ses-01 anat
+Found runs: ['01', '02', '03']
+
+  Run 01:
+
+  Run 02:
+
+  Run 03:
+
+Finished sub-108 ses-02

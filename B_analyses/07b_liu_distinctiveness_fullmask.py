@@ -37,7 +37,7 @@ BASE_DIR   = Path(processed_dir)
 OUTPUT_DIR = Path(f'{processed_dir}/group_results/liu_distinctiveness')
 
 # Exclusions (same as 07_liu_distinctiveness.py)
-SUBJECTS_TO_SKIP = ['OTC108', 'control083', 'control085']
+SUBJECTS_TO_SKIP = ['control083', 'control085']
 
 PRE_SURGERY_SESSIONS = {
     'sub-021': ['01'], 'sub-045': ['01'], 'sub-047': ['01'], 'sub-049': ['01'],
@@ -241,6 +241,7 @@ def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     subs   = load_subjects()
+    subs = {'sub-108': subs['sub-108']}
     n_pt   = sum(1 for v in subs.values() if v['patient_status'] == 'patient')
     n_ctrl = sum(1 for v in subs.values() if v['patient_status'] == 'control')
     print(f'Patients: {n_pt}, Controls: {n_ctrl}, Total: {len(subs)}')
