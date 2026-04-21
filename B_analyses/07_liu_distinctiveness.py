@@ -392,7 +392,7 @@ def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     subs   = load_subjects()
-    subs = {'sub-108': subs['sub-108']}
+    #subs = {'sub-108': subs['sub-108']}
     n_pt   = sum(1 for v in subs.values() if v['patient_status'] == 'patient')
     n_ctrl = sum(1 for v in subs.values() if v['patient_status'] == 'control')
     print(f'Patients: {n_pt}, Controls: {n_ctrl}, Total: {len(subs)}')

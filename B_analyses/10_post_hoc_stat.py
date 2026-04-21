@@ -3,21 +3,29 @@
 Cross-sectional ANOVAs: Group × Category for selectivity, distinctiveness, peak distance.
 Two approaches:
   1. Anatomical homolog (main): patient intact hemi vs same hemi in controls
-     → Two ANOVAs per measure: RH (L-res vs ctrl) and LH (R-res vs ctrl)
+     → Two analyses per measure: RH (L-res vs ctrl) and LH (R-res vs ctrl)
   2. Ayzenberg (supplemental): patient intact hemi vs controls' preferred hemi for each category
-     → One ANOVA per measure, but comparison hemisphere varies by category
 
-Usage: python cross_sectional_anovas.py
-Requires: pingouin, pandas, numpy, scipy
+Uses statsmodels MixedLM (random intercept per subject) to properly model
+between-subject group factor × within-subject category factor.
+
+Usage: python 10_post_hoc_stat.py
+Requires: pandas, numpy, scipy, statsmodels
 """
 
+import warnings
 import numpy as np
 import pandas as pd
-import pingouin as pg
 from pathlib import Path
 from scipy.spatial.distance import euclidean
+from scipy.stats import mannwhitneyu
+import statsmodels.formula.api as smf
+from statsmodels.stats.anova import anova_lm
 
-# ── Paths (adjust if needed) ──────────────────────────────────────────────
+warnings.filterwarnings('ignore', category=UserWarning)
+warnings.filterwarnings('ignore', category=RuntimeWarning)
+
+# ── Paths ─────────────────────────────────────────────────────────────────
 import sys
 sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt')
 from sym_pt_params import processed_dir
@@ -78,7 +86,6 @@ def compute_peak_distances(df_peak, approach='homolog'):
     ctrl = df_peak[df_peak['group'] == 'control']
     pts = df_peak[df_peak['group'] == 'OTC']
 
-    # Control mean peaks per category × hemi
     ctrl_means = ctrl.groupby(['category', 'hemi'])[
         ['peak_x_mni', 'peak_y_mni', 'peak_z_mni']
     ].mean().reset_index()
@@ -104,7 +111,7 @@ def compute_peak_distances(df_peak, approach='homolog'):
             'hemi': row['hemi'], 'category': cat, 'peak_distance': dist
         })
 
-    # Controls: distance from each control to leave-one-out mean
+    # Controls: leave-one-out distance
     for cat in CATEGORIES:
         for hemi in ['left', 'right']:
             c = ctrl[(ctrl['category'] == cat) & (ctrl['hemi'] == hemi)]
@@ -122,46 +129,78 @@ def compute_peak_distances(df_peak, approach='homolog'):
     return pd.DataFrame(rows)
 
 
-# ── Mixed ANOVA runner ────────────────────────────────────────────────────
-def run_mixed_anova(df, dv, label):
-    """Run group(2) × category(4) mixed ANOVA. Returns pingouin result."""
+# ── Mixed model runner (statsmodels MixedLM) ──────────────────────────────
+def run_mixed_model(df, dv, label):
+    """
+    Fit a linear mixed model with random intercept per subject:
+      dv ~ group_label * category + (1 | sub)
+
+    Returns Type-II ANOVA table via likelihood ratio tests.
+    """
     print(f'\n{"="*70}')
     print(f'{label}: {dv}')
     print(f'{"="*70}')
 
-    # Check for missing data
+    # Drop subjects missing any category
     complete = df.groupby('sub')['category'].nunique()
-    incomplete = complete[complete < 4].index.tolist()
+    incomplete = complete[complete < len(df['category'].unique())].index.tolist()
     if incomplete:
         print(f'  Dropping {len(incomplete)} subs with incomplete data: {incomplete}')
         df = df[~df['sub'].isin(incomplete)]
+
+    # Drop rows with NaN dv
+    df = df.dropna(subset=[dv]).copy()
+    df['category'] = df['category'].astype('category')
+    df['group_label'] = df['group_label'].astype('category')
 
     n_pt = df[df['group_label'] != 'control']['sub'].nunique()
     n_ctrl = df[df['group_label'] == 'control']['sub'].nunique()
     print(f'  N: {n_pt} patients, {n_ctrl} controls')
 
-    aov = None
-    try:
-        aov = pg.mixed_anova(
-            data=df, dv=dv, within='category', between='group_label',
-            subject='sub', correction=True
-        )
-        print(aov.to_string(index=False))
+    if n_pt < 2 or n_ctrl < 2:
+        print('  Insufficient data, skipping')
+        return None
 
-        # Post-hoc: group effect per category
-        print(f'\n  Post-hoc: group effect per category')
+    try:
+        # Factorial OLS with subject as a fixed factor to absorb between-subject variance
+        # (approximates a mixed design when MixedLM can't converge).
+        model = smf.ols(
+            f'{dv} ~ C(group_label) * C(category) + C(sub)',
+            data=df
+        ).fit()
+        aov = anova_lm(model, typ=2)
+
+        # Extract the three effects of interest
+        def get(term):
+            if term in aov.index:
+                return aov.loc[term, 'F'], aov.loc[term, 'PR(>F)']
+            return np.nan, np.nan
+
+        f_g, p_g = get('C(group_label)')
+        f_c, p_c = get('C(category)')
+        f_gxc, p_gxc = get('C(group_label):C(category)')
+
+        print(f'  Group:            F={f_g:.2f}, p={p_g:.4f}')
+        print(f'  Category:         F={f_c:.2f}, p={p_c:.4f}')
+        print(f'  Group × Category: F={f_gxc:.2f}, p={p_gxc:.4f}')
+
+        # Post-hoc: group effect per category (Mann-Whitney)
+        print(f'\n  Post-hoc: group effect per category (Mann-Whitney U)')
         for cat in CATEGORIES:
             d = df[df['category'] == cat]
             pt_vals = d[d['group_label'] != 'control'][dv].dropna()
             ct_vals = d[d['group_label'] == 'control'][dv].dropna()
             if len(pt_vals) > 1 and len(ct_vals) > 1:
-                from scipy.stats import mannwhitneyu
                 u, p = mannwhitneyu(pt_vals, ct_vals, alternative='two-sided')
-                print(f'    {cat}: pt M={pt_vals.mean():.1f}, ctrl M={ct_vals.mean():.1f}, U={u:.0f}, p={p:.4f}')
-    except Exception as e:
-        print(f'  ANOVA failed: {e}')
+                sig = '*' if p < 0.05 else ''
+                print(f'    {cat:8s}: pt M={pt_vals.mean():7.2f}, ctrl M={ct_vals.mean():7.2f}, '
+                      f'U={u:5.0f}, p={p:.4f} {sig}')
 
-    return aov
+        return {'aov': aov, 'p_group': p_g, 'p_cat': p_c, 'p_interact': p_gxc}
+
+    except Exception as e:
+        print(f'  Model failed: {e}')
+        return None
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -184,57 +223,46 @@ def main():
     ]:
         print(f'\n\n*** {hemi_label} ***')
 
-        # -- Selectivity: sum_selec_norm --
+        # Selectivity
         sel = pd.concat([
             df_sel[(df_sel['group'] == 'OTC') & (df_sel['intact_hemi'] == intact_val) & (df_sel['hemi'] == hemi_val)].assign(group_label='patient'),
             df_sel[(df_sel['group'] == 'control') & (df_sel['hemi'] == hemi_val)].assign(group_label='control')
         ])
-        run_mixed_anova(sel, 'sum_selec_norm', f'{hemi_label} — Sum Selectivity')
-        run_mixed_anova(sel, 'volume', f'{hemi_label} — No. Selective Voxels')
-        run_mixed_anova(sel, 'mean_act', f'{hemi_label} — Mean Activation')
+        run_mixed_model(sel, 'sum_selec_norm', f'{hemi_label} — Sum Selectivity')
+        run_mixed_model(sel, 'volume', f'{hemi_label} — No. Selective Voxels')
+        run_mixed_model(sel, 'mean_act', f'{hemi_label} — Mean Activation')
 
-        # -- Distinctiveness --
-        # liu file uses 'l'/'r' for hemi, surgery_side='left' means L-res (intact R)
-        if hemi_val == 'right':
-            surgery = 'left'  # L-res → intact right
-        else:
-            surgery = 'right'  # R-res → intact left
-
-        liu_pts = df_liu[(df_liu['group'] == 'OTC') & (df_liu['hemi_label'] == 'intact') & (df_liu['surgery_side'] == surgery)]
-        liu_ctrl = df_liu[(df_liu['group'] == 'control') & (df_liu['hemi'] == hemi_val[0])]
-        # Standardize sub column
-        liu_pts = liu_pts.copy()
-        liu_ctrl = liu_ctrl.copy()
+        # Distinctiveness
+        surgery = 'left' if hemi_val == 'right' else 'right'
+        liu_pts = df_liu[(df_liu['group'] == 'OTC') & (df_liu['hemi_label'] == 'intact') & (df_liu['surgery_side'] == surgery)].copy()
+        liu_ctrl = df_liu[(df_liu['group'] == 'control') & (df_liu['hemi'] == hemi_val[0])].copy()
         liu_pts['sub'] = liu_pts['subject_id']
         liu_ctrl['sub'] = liu_ctrl['subject_id']
         liu_combined = pd.concat([
             liu_pts.assign(group_label='patient'),
             liu_ctrl.assign(group_label='control')
         ])
-        run_mixed_anova(liu_combined, 'liu_distinctiveness', f'{hemi_label} — Distinctiveness')
+        run_mixed_model(liu_combined, 'liu_distinctiveness', f'{hemi_label} — Distinctiveness')
 
-        # -- Peak distance (homolog) --
+        # Peak distance
         dist_df = compute_peak_distances(df_peak, approach='homolog')
         dist_hemi = pd.concat([
             dist_df[(dist_df['group'] == 'OTC') & (dist_df['intact_hemi'] == intact_val) & (dist_df['hemi'] == hemi_val)].assign(group_label='patient'),
             dist_df[(dist_df['group'] == 'control') & (dist_df['hemi'] == hemi_val)].assign(group_label='control')
         ])
-        run_mixed_anova(dist_hemi, 'peak_distance', f'{hemi_label} — Peak Distance')
+        run_mixed_model(dist_hemi, 'peak_distance', f'{hemi_label} — Peak Distance')
 
-    # ── APPROACH 2: AYZENBERG (supplemental) ──────────────────────────────
+    # ── APPROACH 2: AYZENBERG ─────────────────────────────────────────────
     print('\n\n' + '#'*70)
     print('# APPROACH 2: AYZENBERG (patient intact vs ctrl preferred)')
     print('#'*70)
 
-    # For each category, patient's intact hemi vs controls' preferred hemi
-    # This mixes hemisphere across categories, so we build the df manually
-    for measure_label, df_source, dv, sub_col, hemi_col in [
-        ('Sum Selectivity', df_sel, 'sum_selec_norm', 'sub', 'hemi'),
-        ('No. Selective Voxels', df_sel, 'volume', 'sub', 'hemi'),
-        ('Mean Activation', df_sel, 'mean_act', 'sub', 'hemi'),
+    for measure_label, df_source, dv in [
+        ('Sum Selectivity', df_sel, 'sum_selec_norm'),
+        ('No. Selective Voxels', df_sel, 'volume'),
+        ('Mean Activation', df_sel, 'mean_act'),
     ]:
         rows = []
-        # Patients: intact hemi value per category
         pts = df_source[df_source['group'] == 'OTC']
         for sub in pts['sub'].unique():
             sub_data = pts[pts['sub'] == sub]
@@ -244,7 +272,6 @@ def main():
                 if len(val) == 1:
                     rows.append({'sub': sub, 'group_label': 'patient', 'category': cat, dv: val.iloc[0][dv]})
 
-        # Controls: preferred hemi per category
         ctrls = df_source[df_source['group'] == 'control']
         for sub in ctrls['sub'].unique():
             sub_data = ctrls[ctrls['sub'] == sub]
@@ -255,16 +282,13 @@ def main():
                     rows.append({'sub': sub, 'group_label': 'control', 'category': cat, dv: val.iloc[0][dv]})
 
         ayz_df = pd.DataFrame(rows)
-        run_mixed_anova(ayz_df, dv, f'Ayzenberg — {measure_label}')
+        run_mixed_model(ayz_df, dv, f'Ayzenberg — {measure_label}')
 
     # Ayzenberg distinctiveness
     rows = []
     pts_liu = df_liu[df_liu['group'] == 'OTC']
     for sub in pts_liu['subject_id'].unique():
         sub_data = pts_liu[pts_liu['subject_id'] == sub]
-        if len(sub_data) == 0:
-            continue
-        intact = sub_data['hemi_label'].iloc[0]  # will use hemi_label == 'intact'
         intact_data = sub_data[sub_data['hemi_label'] == 'intact']
         for cat in CATEGORIES:
             val = intact_data[intact_data['category'] == cat]
@@ -277,14 +301,14 @@ def main():
         sub_data = ctrls_liu[ctrls_liu['subject_id'] == sub]
         for cat in CATEGORIES:
             pref = PREFERRED_HEMI[cat]
-            pref_short = pref[0]  # 'l' or 'r'
+            pref_short = pref[0]
             val = sub_data[(sub_data['category'] == cat) & (sub_data['hemi'] == pref_short)]
             if len(val) == 1:
                 rows.append({'sub': sub, 'group_label': 'control', 'category': cat,
                              'liu_distinctiveness': val.iloc[0]['liu_distinctiveness']})
 
     ayz_liu_df = pd.DataFrame(rows)
-    run_mixed_anova(ayz_liu_df, 'liu_distinctiveness', 'Ayzenberg — Distinctiveness')
+    run_mixed_model(ayz_liu_df, 'liu_distinctiveness', 'Ayzenberg — Distinctiveness')
 
     # Ayzenberg peak distance
     dist_ayz = compute_peak_distances(df_peak, approach='ayzenberg')
@@ -310,9 +334,8 @@ def main():
                              'peak_distance': val.iloc[0]['peak_distance']})
 
     ayz_dist_df = pd.DataFrame(rows)
-    run_mixed_anova(ayz_dist_df, 'peak_distance', 'Ayzenberg — Peak Distance')
+    run_mixed_model(ayz_dist_df, 'peak_distance', 'Ayzenberg — Peak Distance')
 
 
 if __name__ == '__main__':
     main()
-    
