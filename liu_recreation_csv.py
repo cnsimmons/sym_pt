@@ -38,10 +38,11 @@ OUTPUT_DIR = Path('/user_data/csimmon2/git_repos/sym_pt')
 
 SPHERE_RADIUS = 7   # Liu specifies 7mm
 
-SUBJECTS_TO_SKIP = ['OTC108', 'control083', 'control085']
+SUBJECTS_TO_SKIP = ['sub-017','control083', 'control085']
 PRE_SURGERY_SESSIONS = {
     'sub-021': ['01'], 'sub-045': ['01'], 'sub-047': ['01'], 'sub-049': ['01'],
     'sub-070': ['01'], 'sub-073': ['01'], 'sub-081': ['01'], 'sub-086': ['01'],
+    'sub-108': ['02'],  # skip ses-02 if ses-01 is the one to keep
 }
 
 # Liu's paired contrasts → your GLM cope numbers
@@ -57,6 +58,7 @@ LOC_CONTRASTS = {
     'object_LOC': {'cope': 3,  'negate': False, 'exact': True,  'liu': 'object>scramble', 'used': 'object>scramble'},
     'word_VWFA':  {'cope': 13, 'negate': True,  'exact': True,  'liu': 'word>face', 'used': 'word>face (−cope13)'},
     'word_STG':   {'cope': 13, 'negate': True,  'exact': True,  'liu': 'word>face', 'used': 'word>face (−cope13)'},
+    'evc': {'cope': 3, 'negate': False, 'exact': False, 'liu': 'EVC (anatomical)', 'used': 'object>scramble'},
 }
 
 # RSA betas (raw condition betas — same for all)
@@ -74,6 +76,7 @@ CONTROL_HEMIS = {
     'house_TOS':  ['l', 'r'],
     'object_pF':  ['l', 'r'],
     'object_LOC': ['l', 'r'],
+    'evc': ['l', 'r'],
     'word_VWFA':  ['l'],      # typically LH
     'word_STG':   ['l'],      # typically LH
 }
