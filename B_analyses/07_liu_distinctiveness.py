@@ -58,7 +58,7 @@ PRE_SURGERY_SESSIONS = {
 COPE_MAPS = {
     'differential': {
         # original
-        'face': 1, 'house': 2, 'object': 3, 'word': 4,
+        'face': 1, 'house': 2, 'object': 3, 'word': 13,
         # house split (required — bimodal Y distribution, GMM k=3 >> k=1)
         'house_PPA': 2, 'house_TOS': 2,
         # face sub-ROIs
@@ -66,7 +66,7 @@ COPE_MAPS = {
         # object sub-ROIs
         'object_LOC': 3, 'object_pF': 3,
         # word sub-ROIs
-        'word_VWFA': 4, 'word_STG': 9,
+        'word_VWFA': 13, 'word_STG': 13,
         # early visual cortex
         'evc': 3,
     },
@@ -197,6 +197,8 @@ def extract_roi(subject_id, session, category, hemi, loc_copes, subs):
         return None
 
     z = _load(zf).get_fdata().copy()
+    if category in ('word', 'word_VWFA', 'word_STG'):
+        z = -z
     if bm is not None:
         z[~bm] = 0
 
