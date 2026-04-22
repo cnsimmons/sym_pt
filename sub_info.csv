@@ -37,8 +37,8 @@ sub-075,ses-01,11.58,Female,right,left,OTC,ED,post
 sub-076,ses-01,16.07,Male,right,left,OTC,JH,post
 sub-077,ses-01,7.8,Female,right,left,OTC,KI,post
 sub-078,ses-01,22.22,Female,left,right,OTC,IT,post
-sub-079,ses-01,16.65,Male,left,right,OTC,X,post
-sub-079,ses-02,17.34,Male,left,right,OTC,X,post
+sub-079,ses-01,16.65,Male,right,left,OTC,X,post
+sub-079,ses-02,17.34,Male,right,left,OTC,X,post
 sub-081,ses-01,14.6,Female,left,right,nonOTC,,pre
 sub-081,ses-02,15.0,Female,left,right,nonOTC,,post
 sub-086,ses-01,15.3,Female,right,left,nonOTC,,pre
