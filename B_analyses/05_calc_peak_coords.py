@@ -42,31 +42,35 @@ THRESH = 2.3
 # since peak_coords has no RSA dependency — their peaks are valid.
 
 CATEGORY_COPES = {
-    # ── ORIGINAL — DO NOT CHANGE ──────────────────────────────────────────────
+    # ── Face/house/object: Ayzenberg-style X>Object (unchanged) ───────────────
     'face':   1,
     'house':  2,
     'object': 3,
-    'word':   4,
 
-    # ── NEW: house split ──────────────────────────────────────────────────────
+    # ── Word ROIs: Liu-style Word>Face via cope 13 (Face>Word, negated) ───────
+    # Updated 2026-04-22 to match Liu (2025). Previously used cope 4/9.
+    'word':      13,
+    'word_VWFA': 13,
+    'word_STG':  13,
+
+    # ── House split ───────────────────────────────────────────────────────────
     'house_PPA': 2,
     'house_TOS': 2,
 
-    # ── NEW: face sub-ROIs ────────────────────────────────────────────────────
+    # ── Face sub-ROIs ─────────────────────────────────────────────────────────
     'face_FFA': 1,
     'face_STS': 1,
 
-    # ── NEW: object sub-ROIs ──────────────────────────────────────────────────
+    # ── Object sub-ROIs ───────────────────────────────────────────────────────
     'object_LOC': 3,
     'object_pF':  3,
 
-    # ── NEW: word sub-ROIs ────────────────────────────────────────────────────
-    'word_VWFA': 4,
-    'word_STG':  9,
-
-    # ── NEW: early visual cortex ──────────────────────────────────────────────
+    # ── Early visual cortex ───────────────────────────────────────────────────
     'evc': 3,
 }
+
+# Categories requiring zstat negation (cope 13 is Face>Word; negate → Word>Face)
+NEGATE_COPE = {'word', 'word_VWFA', 'word_STG'}
 
 N_SUBS = 4
 ITER = 10000
@@ -134,12 +138,15 @@ def native_voxel_to_mni_mm(voxel_ijk, native_img, anat2stand_mat, mni_ref):
         return [np.nan, np.nan, np.nan]
 
 
-def find_peak_in_mask(zstat_path, mask_path, thresh=THRESH):
+def find_peak_in_mask(zstat_path, mask_path, thresh=THRESH, negate=False):
     """
     Find the peak (max z-value) voxel within a mask above threshold.
+    If negate=True, flip zstat sign before thresholding (for cope 13 → word>face).
     Returns: (peak_ijk, peak_value) or (None, None) if no suprathreshold voxels.
     """
     zstat_data = nib.load(zstat_path).get_fdata()
+    if negate:
+        zstat_data = -zstat_data
     mask_data = nib.load(mask_path).get_fdata() > 0
 
     # Mask and threshold
@@ -195,7 +202,9 @@ def process_subject(sub_clean, ses, first_ses):
             if not os.path.exists(mask_path):
                 continue
 
-            peak_ijk, peak_val = find_peak_in_mask(zstat_path, mask_path, THRESH)
+            peak_ijk, peak_val = find_peak_in_mask(
+                zstat_path, mask_path, THRESH,
+                negate=(category in NEGATE_COPE))
 
             if peak_ijk is None:
                 print(f'  {hemi}_{category}: no peak')

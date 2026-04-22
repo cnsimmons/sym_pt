@@ -106,11 +106,11 @@ CATEGORY_PARCELS_NEW = {
     'face_FFA': {
         'indices': [37, 38],
         'names':   ['Temporal Fusiform posterior', 'Temporal Occipital Fusiform'],
-    },
+    }, 
     'face_STS': {
-        'indices': [15, 16],
-        'names':   ['Superior Temporal Gyrus anterior',
-                    'Superior Temporal Gyrus posterior'],
+    'indices': [8, 9],   # was [15, 16]
+    'names':   ['Superior Temporal Gyrus anterior',
+                'Superior Temporal Gyrus posterior'],    
     },
     # ── Object sub-ROIs ───────────────────────────────────────────────────────
     'object_LOC': {
@@ -127,13 +127,13 @@ CATEGORY_PARCELS_NEW = {
         'names':   ['Temporal Fusiform anterior', 'Temporal Fusiform posterior'],
     },
     'word_STG': {
-        'indices': [15, 16],
+        'indices': [8, 9],   # was [15, 16]
         'names':   ['Superior Temporal Gyrus anterior',
                     'Superior Temporal Gyrus posterior'],
     },
     # ── Early visual cortex (Liu-style reference ROI) ─────────────────────────
     'evc': {
-        'indices': [4, 5],
+        'indices': [23, 31],   # was [4, 5]
         'names':   ['Intracalcarine Cortex', 'Cuneal Cortex'],
     },
 }
