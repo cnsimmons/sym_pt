@@ -1,118 +1,105 @@
 #!/usr/bin/env python3
 """
-01_create_searchmasks.py - Create category-specific anatomical searchmasks
-Uses Harvard-Oxford cortical atlas probability maps warped to native space.
-Generates uniform searchmasks for ALL subjects (patients and controls).
+01_create_searchmasks.py — Create category-specific anatomical searchmasks.
 
-Category-parcel mapping (ORIGINAL — unchanged):
-  face:   Temporal Fusiform (anterior + posterior) + Temporal Occipital Fusiform
-  word:   Temporal Fusiform (anterior + posterior) + Temporal Occipital Fusiform
-  object: Lateral Occipital Cortex (superior + inferior)
-  house:  Parahippocampal (anterior + posterior) + Lingual + Posterior Cingulate
+Harvard-Oxford cortical probability atlas (25% threshold) warped to each
+subject's native anatomical space via FLIRT. Masks are used for:
+  - Cross-sectional peak-finding and RSA sphere placement
+  - Sum-selectivity (Ayzenberg-style) normalization
+  - Longitudinal analyses (same masks across all time points)
 
-New sub-ROIs (additive — original pipeline unaffected):
-  house_PPA:  Parahippocampal anterior + posterior
-  house_TOS:  Lateral Occipital sup/inf + Lingual
-  face_FFA:   Temporal Fusiform posterior + Temporal Occipital Fusiform
-  face_STS:   Superior Temporal Gyrus anterior + posterior
-  object_LOC: Lateral Occipital superior + inferior
-  object_pF:  Temporal Occipital Fusiform
-  word_VWFA:  Temporal Fusiform anterior + posterior
-  word_STG:   Superior Temporal Gyrus anterior + posterior
-  evc:        Intracalcarine Cortex + Cuneal Cortex
+ROI definitions (validated against localizer literature):
+  face_FFA       [37, 38]     TF posterior + TO Fusiform
+                              (Schütz et al. 2019, Nat Comms)
+  face_STS       [9, 12]      STG posterior + MTG posterior
+                              (covers pSTS at STG/MTG border;
+                               HO has no sulcus parcel)
+  house_PPA      [33, 34, 35] Parahippocampal ant + post + Lingual
+                              (canonical PPA at CoS/lingual junction;
+                               Epstein & Kanwisher 1998; Weiner et al. 2018)
+  house_TOS      [21, 22]     LOC sup + LOC inf
+                              (TOS/OPA on transverse occipital sulcus)
+  object_LOC     [21, 22]     LOC sup + LOC inf
+  object_pF      [38]         TO Fusiform
+  word_VWFA      [37, 38]     TF posterior + TO Fusiform
+                              (canonical VWFA at OTS/fusiform border;
+                               MNI ~-44,-58,-15; overlaps FFA anatomy —
+                               contrast differentiates)
+  word_STG       [8, 9]       STG anterior + posterior (Wernicke's)
+  word_pSTG_liu  [9]          STG posterior only (tight Liu-spec reference)
+  evc            [23, 31]     Intracalcarine + Cuneal (V1/V2 territory)
+
+Overlap by design:
+  - face_FFA and word_VWFA share anatomy [37, 38]; contrast differentiates.
+    Required for face/word competition analyses in longitudinal data.
+  - face_STS [9, 12] and word_STG [8, 9] share parcel 9 only.
+  - word_pSTG_liu ⊂ word_STG (tighter subset for Liu RDM comparison).
+  - object_LOC and house_TOS share [21, 22]; contrast differentiates.
+
+Harvard-Oxford cortical volume index reference (0-indexed, 4D prob atlas):
+   4  IFG pars triangularis           22  Lateral Occipital Cortex inferior
+   5  IFG pars opercularis            23  Intracalcarine Cortex
+   8  Superior Temporal Gyrus ant     29  Cingulate Gyrus posterior
+   9  Superior Temporal Gyrus post    31  Cuneal Cortex
+  12  Middle Temporal Gyrus post      33  Parahippocampal Gyrus anterior
+  15  ITG temporooccipital            34  Parahippocampal Gyrus posterior
+  16  Postcentral Gyrus               35  Lingual Gyrus
+  21  Lateral Occipital Cortex sup    36  Temporal Fusiform Cortex anterior
+                                      37  Temporal Fusiform Cortex posterior
+                                      38  Temporal Occipital Fusiform Cortex
 
 Usage:
-  python 01_create_searchmasks.py              # All subjects
+  python 01_create_searchmasks.py              # All subjects, all masks
   python 01_create_searchmasks.py --sub 004    # Single subject
   python 01_create_searchmasks.py --dry-run    # Preview only
-  python 01_create_searchmasks.py --new-only   # Only new sub-ROIs (skip originals)
+  python 01_create_searchmasks.py --threshold 50  # More conservative
+
+Design choices:
+  - 25% probability threshold (liberal, accommodates patient displacement)
+  - No dilation (Liu/Ayzenberg do not dilate; threshold already liberal)
+  - FLIRT linear MNI→native (stable near resections; FNIRT can warp tissue
+    into lesion cavity)
+  - Overwrites existing masks (no skip-if-exists; prevents stale files from
+    prior index bugs)
 """
 import os
 import sys
 import argparse
 import subprocess
+import shutil
 import numpy as np
 import nibabel as nib
-from scipy.ndimage import binary_dilation
 
 sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt')
 from sym_pt_params import processed_dir, skip_subs, get_sessions
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 
-FSLDIR        = os.environ.get('FSLDIR', '/opt/fsl/6.0.3')
-ATLAS_DIR     = f'{FSLDIR}/data/atlases/HarvardOxford'
-PROB_ATLAS    = f'{ATLAS_DIR}/HarvardOxford-cort-prob-2mm.nii.gz'
-PROB_THRESHOLD = 25
-DILATION_ITERS = 1
-
-# ── Harvard-Oxford index reference (0-based) ──────────────────────────────────
-#  4  Intracalcarine Cortex
-#  5  Cuneal Cortex
-# 15  Superior Temporal Gyrus anterior
-# 16  Superior Temporal Gyrus posterior
-# 21  Lateral Occipital Cortex superior
-# 22  Lateral Occipital Cortex inferior
-# 29  Cingulate Gyrus posterior
-# 33  Parahippocampal Gyrus anterior
-# 34  Parahippocampal Gyrus posterior
-# 35  Lingual Gyrus
-# 36  Temporal Fusiform Cortex anterior
-# 37  Temporal Fusiform Cortex posterior
-# 38  Temporal Occipital Fusiform Cortex
+FSLDIR         = os.environ.get('FSLDIR', '/opt/fsl/6.0.3')
+ATLAS_DIR      = f'{FSLDIR}/data/atlases/HarvardOxford'
+PROB_ATLAS     = f'{ATLAS_DIR}/HarvardOxford-cort-prob-2mm.nii.gz'
+PROB_THRESHOLD = 25  # % — liberal by design
 
 # ── Category parcels ──────────────────────────────────────────────────────────
 
-# ORIGINAL keys — DO NOT CHANGE. These produce identical outputs to before.
-CATEGORY_PARCELS_ORIGINAL = {
-    'face': {
-        'indices': [36, 37, 38],
-        'names':   ['Temporal Fusiform anterior', 'Temporal Fusiform posterior',
-                    'Temporal Occipital Fusiform'],
-    },
-    'word': {
-        'indices': [36, 37, 38],
-        'names':   ['Temporal Fusiform anterior', 'Temporal Fusiform posterior',
-                    'Temporal Occipital Fusiform'],
-    },
-    'object': {
-        'indices': [21, 22],
-        'names':   ['Lateral Occipital superior', 'Lateral Occipital inferior'],
-    },
-    'house': {
-        'indices': [33, 34, 35, 29],
-        'names':   ['Parahippocampal anterior', 'Parahippocampal posterior',
-                    'Lingual Gyrus', 'Cingulate posterior'],
-    },
-}
-
-# NEW sub-ROIs — additive only.
-# house_PPA / house_TOS: required split — bimodal Y distribution confirmed
-#   (GMM BIC k=3 >> k=1, clusters at Y~20mm and Y~40mm, sep ~20mm).
-#   Epstein & Kanwisher (1998); Dilks et al. (2013).
-# All other sub-ROIs: future use, commented literature in roi_contrast_table.md
-CATEGORY_PARCELS_NEW = {
-    # ── House split (required) ────────────────────────────────────────────────
-    'house_PPA': {
-        'indices': [33, 34],
-        'names':   ['Parahippocampal anterior', 'Parahippocampal posterior'],
-    },
-    'house_TOS': {
-        'indices': [21, 22, 35],
-        'names':   ['Lateral Occipital superior', 'Lateral Occipital inferior',
-                    'Lingual Gyrus'],
-    },
-    # ── Face sub-ROIs ─────────────────────────────────────────────────────────
+CATEGORY_PARCELS = {
     'face_FFA': {
         'indices': [37, 38],
         'names':   ['Temporal Fusiform posterior', 'Temporal Occipital Fusiform'],
-    }, 
-    'face_STS': {
-    'indices': [8, 9],   # was [15, 16]
-    'names':   ['Superior Temporal Gyrus anterior',
-                'Superior Temporal Gyrus posterior'],    
     },
-    # ── Object sub-ROIs ───────────────────────────────────────────────────────
+    'face_STS': {
+        'indices': [9, 12],
+        'names':   ['STG posterior', 'MTG posterior'],
+    },
+    'house_PPA': {
+        'indices': [33, 34, 35],
+        'names':   ['Parahippocampal anterior', 'Parahippocampal posterior',
+                    'Lingual Gyrus'],
+    },
+    'house_TOS': {
+        'indices': [21, 22],
+        'names':   ['Lateral Occipital superior', 'Lateral Occipital inferior'],
+    },
     'object_LOC': {
         'indices': [21, 22],
         'names':   ['Lateral Occipital superior', 'Lateral Occipital inferior'],
@@ -121,25 +108,25 @@ CATEGORY_PARCELS_NEW = {
         'indices': [38],
         'names':   ['Temporal Occipital Fusiform'],
     },
-    # ── Word sub-ROIs ─────────────────────────────────────────────────────────
     'word_VWFA': {
-        'indices': [36, 37],
-        'names':   ['Temporal Fusiform anterior', 'Temporal Fusiform posterior'],
+        'indices': [37, 38],
+        'names':   ['Temporal Fusiform posterior', 'Temporal Occipital Fusiform'],
     },
     'word_STG': {
-        'indices': [8, 9],   # was [15, 16]
-        'names':   ['Superior Temporal Gyrus anterior',
-                    'Superior Temporal Gyrus posterior'],
+        'indices': [8, 9],
+        'names':   ['STG anterior', 'STG posterior'],
     },
-    # ── Early visual cortex (Liu-style reference ROI) ─────────────────────────
+    'word_pSTG_liu': {
+        'indices': [9],
+        'names':   ['STG posterior'],
+    },
     'evc': {
-        'indices': [23, 31],   # was [4, 5]
+        'indices': [23, 31],
         'names':   ['Intracalcarine Cortex', 'Cuneal Cortex'],
     },
 }
 
-# Combined — used when running all masks
-CATEGORY_PARCELS_ALL = {**CATEGORY_PARCELS_ORIGINAL, **CATEGORY_PARCELS_NEW}
+HEMIS = ['l', 'r']
 
 
 # ── Core functions ────────────────────────────────────────────────────────────
@@ -147,60 +134,66 @@ CATEGORY_PARCELS_ALL = {**CATEGORY_PARCELS_ORIGINAL, **CATEGORY_PARCELS_NEW}
 def load_atlas():
     """Load the Harvard-Oxford probability atlas."""
     print(f"Loading atlas: {PROB_ATLAS}")
-    atlas_img  = nib.load(PROB_ATLAS)
-    atlas_data = atlas_img.get_fdata()
-    print(f"  Shape: {atlas_data.shape} (x, y, z, regions)")
-    print(f"  {atlas_data.shape[3]} regions available")
-    return atlas_img, atlas_data
+    img  = nib.load(PROB_ATLAS)
+    data = img.get_fdata()
+    print(f"  Shape: {data.shape} (x, y, z, n_regions={data.shape[3]})")
+    return img, data
 
 
 def extract_hemisphere_mask(atlas_data, region_indices, hemisphere,
                             threshold=PROB_THRESHOLD):
-    """Extract and combine probability maps for given regions, split by hemisphere.
-    MNI x-midpoint is at voxel 45 (for 2mm 91-voxel atlas)."""
+    """Combine probability maps for given parcels, threshold, split by hemi.
+
+    FSL 2mm MNI152 (91x109x91, radiological convention):
+      - x-midpoint at voxel 45
+      - voxels [0:45]  → right hemisphere (MNI x > 0)
+      - voxels [45:]   → left hemisphere  (MNI x < 0)
+    """
     combined = np.zeros(atlas_data.shape[:3], dtype=float)
     for idx in region_indices:
         combined = np.maximum(combined, atlas_data[:, :, :, idx])
 
     binary_mask = combined > threshold
-    midpoint    = atlas_data.shape[0] // 2   # 45 for 91-voxel atlas
+    midpoint    = atlas_data.shape[0] // 2  # 45
 
     hemi_mask = np.zeros_like(binary_mask)
     if hemisphere == 'l':
         hemi_mask[midpoint:, :, :] = binary_mask[midpoint:, :, :]
     elif hemisphere == 'r':
         hemi_mask[:midpoint, :, :] = binary_mask[:midpoint, :, :]
+    else:
+        raise ValueError(f"hemisphere must be 'l' or 'r', got {hemisphere!r}")
     return hemi_mask
 
 
-def warp_mask_to_native(mask_nii_path, ref_brain, mni2anat_mat, output_path):
-    """Warp an MNI-space mask to native space using FLIRT."""
-    cmd = (f'flirt -in {mask_nii_path} -ref {ref_brain} '
-           f'-out {output_path} -applyxfm -init {mni2anat_mat} '
-           f'-interp nearestneighbour')
-    subprocess.run(cmd.split(), check=True, capture_output=True)
-    cmd_bin = f'fslmaths {output_path} -bin {output_path}'
-    subprocess.run(cmd_bin.split(), check=True, capture_output=True)
+def warp_mask_to_native(mni_mask_path, ref_brain, mni2anat_mat, output_path):
+    """Warp MNI-space mask to native space via FLIRT (nearest-neighbour)."""
+    subprocess.run(
+        ['flirt', '-in', mni_mask_path, '-ref', ref_brain,
+         '-out', output_path, '-applyxfm', '-init', mni2anat_mat,
+         '-interp', 'nearestneighbour'],
+        check=True, capture_output=True
+    )
+    subprocess.run(
+        ['fslmaths', output_path, '-bin', output_path],
+        check=True, capture_output=True
+    )
 
 
-def create_searchmasks_for_subject(sub, ses, atlas_img, atlas_data,
-                                   parcels, prob_threshold=PROB_THRESHOLD,
-                                   dilation_iters=DILATION_ITERS, dry_run=False):
-    """Create searchmasks for one subject-session using the given parcels dict."""
-    import shutil
-    sub_clean = sub.replace('sub-', '')
+def create_searchmasks_for_subject(sub_clean, ses, atlas_img, atlas_data,
+                                   threshold=PROB_THRESHOLD, dry_run=False):
+    """Generate all searchmasks for one subject-session. Overwrites existing."""
     ses_str   = f'{ses:02d}'
-
     anat_dir  = f'{processed_dir}/sub-{sub_clean}/ses-{ses_str}/anat'
     roi_dir   = f'{processed_dir}/sub-{sub_clean}/ses-{ses_str}/ROIs'
     ref_brain = f'{anat_dir}/T1w_brain.nii.gz'
     mni2anat  = f'{anat_dir}/mni2anat.mat'
 
     if not os.path.exists(ref_brain):
-        print(f"  SKIP: T1w_brain.nii.gz missing")
+        print(f"  SKIP: {ref_brain} missing")
         return 0
     if not os.path.exists(mni2anat):
-        print(f"  SKIP: mni2anat.mat missing")
+        print(f"  SKIP: {mni2anat} missing")
         return 0
 
     if not dry_run:
@@ -212,49 +205,36 @@ def create_searchmasks_for_subject(sub, ses, atlas_img, atlas_data,
 
     n_created = 0
 
-    for hemi in ['l', 'r']:
-        for category, parcel_info in parcels.items():
+    for hemi in HEMIS:
+        for category, parcel_info in CATEGORY_PARCELS.items():
             output_file = f'{roi_dir}/{hemi}_{category}_searchmask.nii.gz'
 
-            if os.path.exists(output_file):
-                continue
-
             if dry_run:
-                print(f"  WOULD CREATE: {hemi}_{category}_searchmask.nii.gz "
-                      f"({', '.join(parcel_info['names'])})")
+                print(f"  WOULD WRITE: {hemi}_{category}_searchmask.nii.gz "
+                      f"[{', '.join(parcel_info['names'])}]")
                 n_created += 1
                 continue
 
-            # 1. Extract hemisphere mask in MNI space
+            # 1. Build MNI-space hemisphere mask
             hemi_mask = extract_hemisphere_mask(
-                atlas_data, parcel_info['indices'], hemi, prob_threshold)
+                atlas_data, parcel_info['indices'], hemi, threshold)
 
             if hemi_mask.sum() == 0:
-                print(f"  WARNING: {hemi}_{category} empty in MNI space")
+                print(f"  WARN: {hemi}_{category} empty at {threshold}% thresh")
                 continue
 
             # 2. Save MNI-space mask temporarily
             tmp_mni = f'{tmp_dir}/{hemi}_{category}_mni.nii.gz'
             nib.save(nib.Nifti1Image(hemi_mask.astype(np.float32),
-                                      atlas_img.affine), tmp_mni)
+                                     atlas_img.affine), tmp_mni)
 
-            # 3. Warp to native space
-            tmp_native = f'{tmp_dir}/{hemi}_{category}_native.nii.gz'
-            warp_mask_to_native(tmp_mni, ref_brain, mni2anat, tmp_native)
+            # 3. Warp to native space (overwrites if exists — prevents stale files)
+            warp_mask_to_native(tmp_mni, ref_brain, mni2anat, output_file)
 
-            # 4. Load, optionally dilate
-            native_img  = nib.load(tmp_native)
-            native_data = native_img.get_fdata() > 0
-            if dilation_iters > 0:
-                native_data = binary_dilation(native_data,
-                                              iterations=dilation_iters)
-
-            # 5. Save
-            nib.save(nib.Nifti1Image(native_data.astype(np.float32),
-                                      native_img.affine), output_file)
-
-            print(f"  {hemi}_{category}: {native_data.sum():,} voxels "
-                  f"({', '.join(parcel_info['names'])})")
+            # 4. Report final voxel count
+            final = nib.load(output_file).get_fdata() > 0
+            print(f"  {hemi}_{category:15s}: {final.sum():>6,} voxels "
+                  f"[{', '.join(parcel_info['names'])}]")
             n_created += 1
 
     if not dry_run and os.path.exists(tmp_dir):
@@ -267,37 +247,22 @@ def create_searchmasks_for_subject(sub, ses, atlas_img, atlas_data,
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Create Harvard-Oxford searchmasks')
-    parser.add_argument('--sub',       type=str,
+        description='Create Harvard-Oxford searchmasks (overwrites existing).')
+    parser.add_argument('--sub', type=str,
                         help='Single subject (e.g., 004)')
-    parser.add_argument('--dry-run',   action='store_true',
+    parser.add_argument('--dry-run', action='store_true',
                         help='Preview without creating files')
-    parser.add_argument('--new-only',  action='store_true',
-                        help='Only generate new sub-ROI masks (skip originals)')
     parser.add_argument('--threshold', type=int, default=PROB_THRESHOLD,
                         help=f'Probability threshold %% (default: {PROB_THRESHOLD})')
-    parser.add_argument('--no-dilate', action='store_true',
-                        help='Skip dilation step')
     args = parser.parse_args()
 
-    prob_threshold = args.threshold
-    dilation_iters = 0 if args.no_dilate else DILATION_ITERS
-
-    # Select parcel set
-    if args.new_only:
-        parcels    = CATEGORY_PARCELS_NEW
-        parcel_tag = 'new sub-ROIs only'
-    else:
-        parcels    = CATEGORY_PARCELS_ALL
-        parcel_tag = 'all (original + new sub-ROIs)'
-
-    print("=" * 60)
-    print("CREATE SEARCHMASKS (Harvard-Oxford Atlas)")
-    print("=" * 60)
-    print(f"Parcel set:            {parcel_tag}")
-    print(f"Probability threshold: {prob_threshold}%")
-    print(f"Dilation iterations:   {dilation_iters}")
-    print(f"Masks to generate:     {list(parcels.keys())}")
+    print("=" * 64)
+    print("CREATE SEARCHMASKS — Harvard-Oxford cortical atlas")
+    print("=" * 64)
+    print(f"Probability threshold: {args.threshold}%")
+    print(f"Masks per hemisphere:  {len(CATEGORY_PARCELS)}")
+    print(f"Categories: {list(CATEGORY_PARCELS.keys())}")
+    print(f"Mode: {'DRY RUN (no files written)' if args.dry_run else 'WRITE (overwrites existing)'}")
     print()
 
     atlas_img, atlas_data = load_atlas()
@@ -321,15 +286,15 @@ def main():
         first_ses = sessions[0]
         print(f"=== sub-{sub_clean} ses-{first_ses:02d} ===")
         n = create_searchmasks_for_subject(
-            f'sub-{sub_clean}', first_ses, atlas_img, atlas_data,
-            parcels, prob_threshold, dilation_iters, args.dry_run)
+            sub_clean, first_ses, atlas_img, atlas_data,
+            args.threshold, args.dry_run)
         total_created += n
 
     print()
-    print("=" * 60)
-    print(f"{'Would create' if args.dry_run else 'Created'}: "
+    print("=" * 64)
+    print(f"{'Would write' if args.dry_run else 'Wrote'}: "
           f"{total_created} searchmasks")
-    print("=" * 60)
+    print("=" * 64)
 
 
 if __name__ == '__main__':
