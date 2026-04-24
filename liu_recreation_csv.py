@@ -74,8 +74,10 @@ CONTRASTS = {
 RSA_COPES = {'face': 15, 'house': 16, 'object': 17, 'word': 18}
 
 # Control hemispheres: words are LH-preferred in controls; others bilateral
-CONTROL_HEMIS = {cat: (['l'] if cat.startswith('word') else ['l', 'r'])
-                 for cat in CONTRASTS}
+# Controls: bilateral for ALL categories
+CONTROL_HEMIS = {cat: ['l', 'r'] for cat in CONTRASTS}
+#CONTROL_HEMIS = {cat: (['l'] if cat.startswith('word') else ['l', 'r'])
+#                 for cat in CONTRASTS}
 
 # ── NIfTI cache ──────────────────────────────────────────────────────────────
 _CACHE = {}
@@ -284,17 +286,35 @@ def process_session(sid, info, session):
                 'n_searchmask':        sel['n_searchmask'],
                 'sel_threshold_z':     SEL_Z_THRESH,
             }
-            for pair, fz in pairs.items():
-                rows.append({**base, 'pair': pair, 'fisher_r': fz})
+            if pairs:
+                for pair, fz in pairs.items():
+                    rows.append({**base, 'pair': pair, 'fisher_r': fz})
+            else:
+                # ROIs with no RSA-preferred category (e.g., EVC):
+                # emit a single row so peak/sum-selec aren't lost.
+                rows.append({**base, 'pair': None, 'fisher_r': np.nan})
     return rows
 
 # ── Main ─────────────────────────────────────────────────────────────────────
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--sub', type=str, help='Single subject (e.g., 021)')
+    parser.add_argument('--category', type=str,
+                        help='Run single category (e.g., evc). Merges into existing CSV.')
     args = parser.parse_args()
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    out = OUTPUT_DIR / OUTPUT_NAME
+
+    # Restrict categories if --category flag used
+    global CONTRASTS, CONTROL_HEMIS
+    if args.category:
+        if args.category not in CONTRASTS:
+            print(f'ERROR: unknown category {args.category!r}. Valid: {list(CONTRASTS)}')
+            sys.exit(1)
+        CONTRASTS     = {args.category: CONTRASTS[args.category]}
+        CONTROL_HEMIS = {args.category: CONTROL_HEMIS[args.category]}
+
     subs = load_subjects()
     if args.sub:
         sid  = f'sub-{args.sub.replace("sub-", "")}'
@@ -315,8 +335,19 @@ def main():
                 continue
             all_rows.extend(process_session(sid, info, session))
 
-    df  = pd.DataFrame(all_rows)
-    out = OUTPUT_DIR / OUTPUT_NAME
+    df_new = pd.DataFrame(all_rows)
+
+    # Merge mode: if --category used and CSV exists, replace that category's rows
+    if args.category and out.exists():
+        df_old = pd.read_csv(out)
+        n_before = len(df_old)
+        df_old = df_old[df_old['category'] != args.category]
+        df = pd.concat([df_old, df_new], ignore_index=True)
+        print(f'\nMerge: dropped {n_before - len(df_old)} old {args.category} rows, '
+              f'added {len(df_new)} new rows')
+    else:
+        df = df_new
+
     df.to_csv(out, index=False)
     print(f'\nSaved: {out} ({len(df)} rows, {df["subject_id"].nunique()} subjects)')
 
