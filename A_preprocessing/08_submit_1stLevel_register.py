@@ -20,7 +20,7 @@ from sym_pt_params import processed_dir, get_sessions
 # Job parameters
 job_name = 'register_1stlevel'
 mem = 32  # GB - FLIRT with applyxfm is lightweight
-run_time = "01:00:00"
+run_time = "02:00:00"
 pause_crit = 12  # Number of jobs before pausing
 pause_time = 1   # Minutes to pause
 
@@ -50,7 +50,7 @@ def setup_sbatch(job_name, script_name):
 #SBATCH --output=slurm_out/{job_name}.out
 
 # Load modules
-module load fsl/6.0.3
+module load fsl-6.0.3
 export FSLDIR=/opt/fsl/6.0.3
 . $FSLDIR/etc/fslconf/fsl.sh
 export PATH=$FSLDIR/bin:$PATH
@@ -88,7 +88,7 @@ os.makedirs('slurm_out', exist_ok=True)
 # Get all subjects
 subject_dirs = glob(f'{processed_dir}/sub-*')
 #subjects = sorted([os.path.basename(d).replace('sub-', '') for d in subject_dirs if os.path.isdir(d)])
-subjects = ['108']  # TEMP - limit to one subject for testing
+subjects = ['001', '016']
 
 print(f"Found {len(subjects)} subjects")
 print("")
