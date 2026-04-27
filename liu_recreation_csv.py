@@ -334,6 +334,7 @@ def main():
             if session in PRE_SURGERY_SESSIONS.get(sid, set()):
                 continue
             all_rows.extend(process_session(sid, info, session))
+        _CACHE.clear()
 
     df_new = pd.DataFrame(all_rows)
 
