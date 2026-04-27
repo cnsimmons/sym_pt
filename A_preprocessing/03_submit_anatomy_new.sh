@@ -9,7 +9,7 @@ MAX_RUNNING=12
 POLL_INTERVAL=60
 
 # New subjects to process tonight
-NEW_SUBS=(098 101 108 109)
+NEW_SUBS=(005 039 082)
 
 mkdir -p $LOG_DIR
 echo "Processing ${#NEW_SUBS[@]} new subjects"

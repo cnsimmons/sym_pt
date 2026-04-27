@@ -45,6 +45,10 @@ sub-089,ses-01,18.29,Male,right,left,OTC,ON,post
 sub-090,ses-01,15.58,Female,left,right,OTC,KT,post
 sub-091,ses-01,37.26,Male,right,left,OTC,SI,post
 sub-092,ses-01,19.78,Female,left,right,OTC,FO,post
+sub-005,ses-01,19.42,Male,right,left,OTC,KU,post
+sub-039,ses-01,17.02,Female,right,left,OTC,KQ,post
+sub-080,ses-01,11.32,Male,right,left,nonOTC,SR,post
+sub-082,ses-01,20.46,Male,left,right,OTC,KB,post
 sub-098,ses-01,16.11,Female,right,left,OTC,BI,post
 sub-099,ses-01,11.54,Male,left,right,OTC,KN,post
 sub-101,ses-01,18.71,Female,right,left,OTC,BN,post
