@@ -71,6 +71,7 @@ CONTRASTS = {
     'word_VWFA':     (13, True),   # −cope13 = Word>Face
     'word_STG':      (13, True),
     'word_pSTG_liu': (13, True),
+    'word_IFG':      (13, True),
     'evc':           (19, False),
 }
 RSA_COPES = {'face': 15, 'house': 16, 'object': 17, 'word': 18}
