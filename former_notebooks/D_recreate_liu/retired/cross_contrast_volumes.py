@@ -13,7 +13,7 @@ from sym_pt_params import processed_dir, skip_subs, get_sessions, get_sub_info, 
 
 # Reuse v2 conventions
 sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt')
-from liu_recreation_csv_v2 import (
+from D_liu.liu_recreation_csv_v2 import (
     CONTRASTS, EXTRA_SKIP, PRE_SURGERY_SESSIONS, SEL_Z_THRESH,
     _load_searchmask, _load_zstat, load_subjects, _CACHE
 )
