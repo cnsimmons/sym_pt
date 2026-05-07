@@ -1,5 +1,3 @@
-granularity,measure,n_units,spearman_rho,p_one_sided_primary,p_two_sided,predicted_direction,sign_supports
-Category-level (4 units),sum_sel,4,-0.19999999999999998,0.4603,0.9218,negative (rank reversal),True
-Category-level (4 units),distinct,4,-1.0,0.0449,0.0905,negative (rank reversal),True
-Sub-ROI-level (10 units),sum_sel,10,0.33333333333333326,0.8208,0.3791,negative (rank reversal),False
-Sub-ROI-level (10 units),distinct,10,-0.43030303030303024,0.1102,0.2269,negative (rank reversal),True
+measure,rho,ci_lo,ci_hi,bs_excludes_zero,p_one_sided,p_two_sided
+sum_sel,0.7999999999999999,-0.9049999999999999,1.0,False,0.94,0.39
+distinct,-0.39999999999999997,-1.0,0.7999999999999999,False,0.34,0.79

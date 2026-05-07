@@ -86,9 +86,10 @@ def get_run_beta_path(sub_id, ses, run, cope_num):
                         '1stLevel.feat', 'reg_standard', 'stats',
                         f'cope{cope_num}.nii.gz')
 
-def get_searchmask_path(sub_id, ses, hemi, cat):
+def get_searchmask_path(sub_id, ses, hemi, roi_label):
+    """ROI-specific searchmask, e.g. l_face_FFA_searchmask.nii.gz"""
     return os.path.join(processed_dir, sub_id, f'ses-{ses}', 'ROIs',
-                        f'{hemi}_{cat}_searchmask.nii.gz')
+                        f'{hemi}_{roi_label}_searchmask.nii.gz')
 
 
 # --- Sphere construction -------------------------------------------------------
@@ -162,7 +163,7 @@ def main(peak_csv):
                     skipped.append((sid, ses, h, roi_label, 'peak NaN'))
                     continue
 
-                sm_path = get_searchmask_path(sid, ses, h, anat_cat)
+                sm_path = get_searchmask_path(sid, ses, h, roi_label)
                 if not os.path.exists(sm_path):
                     skipped.append((sid, ses, h, roi_label, 'no searchmask'))
                     continue

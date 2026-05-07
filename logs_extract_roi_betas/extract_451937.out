@@ -1,0 +1,35 @@
+Running on mind-0-15
+Peak CSV: /user_data/csimmon2/git_repos/sym_pt/D_liu/liu_exact_replication_v2.csv
+  Filtered to primary ROIs: 3288 rows
+Loaded 65 subjects
+
+Wrote: /user_data/csimmon2/sym_pt/group_results/roi_betas/roi_per_condition_responses.csv  (1424 rows)
+Wrote: /user_data/csimmon2/sym_pt/group_results/roi_betas/roi_split_half_loro.csv  (5696 rows)
+
+Skipped 41 entries (first 25):
+  ('sub-004', '06', 'l', 'face_FFA', 'no searchmask')
+  ('sub-004', '06', 'l', 'house_PPA', 'no searchmask')
+  ('sub-004', '06', 'l', 'object_LOC', 'no searchmask')
+  ('sub-004', '06', 'l', 'word_VWFA', 'no searchmask')
+  ('sub-008', '02', 'l', 'face_FFA', 'no searchmask')
+  ('sub-008', '02', 'l', 'house_PPA', 'no searchmask')
+  ('sub-008', '02', 'l', 'object_LOC', 'no searchmask')
+  ('sub-008', '02', 'l', 'word_VWFA', 'no searchmask')
+  ('sub-010', '03', 'r', 'face_FFA', 'no searchmask')
+  ('sub-010', '03', 'r', 'house_PPA', 'no searchmask')
+  ('sub-010', '03', 'r', 'object_LOC', 'no searchmask')
+  ('sub-010', '03', 'r', 'word_VWFA', 'no searchmask')
+  ('sub-021', '03', 'r', 'face_FFA', 'no searchmask')
+  ('sub-021', '03', 'r', 'house_PPA', 'no searchmask')
+  ('sub-021', '03', 'r', 'object_LOC', 'no searchmask')
+  ('sub-021', '03', 'r', 'word_VWFA', 'no searchmask')
+  ('sub-067', '02', 'missing run-03 cope15')
+  ('sub-071', '01', 'missing run-02 cope15')
+  ('sub-079', '02', 'l', 'face_FFA', 'no searchmask')
+  ('sub-079', '02', 'l', 'house_PPA', 'no searchmask')
+  ('sub-079', '02', 'l', 'object_LOC', 'no searchmask')
+  ('sub-079', '02', 'l', 'word_VWFA', 'no searchmask')
+  ('sub-083', '01', 'l', 'face_FFA', 'no peak in CSV')
+  ('sub-083', '01', 'l', 'house_PPA', 'no peak in CSV')
+  ('sub-083', '01', 'l', 'object_LOC', 'no peak in CSV')
+  ... and 16 more
