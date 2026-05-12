@@ -51,11 +51,11 @@ SEL_Z_THRESH = float(norm.ppf(0.99))            # ≈2.326, p<.01 one-tailed
 SEL_RESCALE  = 1000.0
 
 EXTRA_SKIP = {'sub-017', 'control083', 'control085'}  # beyond sym_pt_params.skip_subs
-PRE_SURGERY_SESSIONS = {
-    'sub-021': {'01'}, 'sub-045': {'01'}, 'sub-047': {'01'}, 'sub-049': {'01'},
-    'sub-070': {'01'}, 'sub-073': {'01'}, 'sub-081': {'01'}, 'sub-086': {'01'},
-    'sub-108': {'02'},
-}
+PRE_SURGERY_SESSIONS = {}
+#    'sub-021': {'01'}, 'sub-045': {'01'}, 'sub-047': {'01'}, 'sub-049': {'01'},
+#    'sub-070': {'01'}, 'sub-073': {'01'}, 'sub-081': {'01'}, 'sub-086': {'01'},
+#    'sub-108': {'02'},
+# }
 
 # GLM cope numbers (from FEAT design.con):
 # 1=Face>Object, 2=House>Object, 3=Object>Scramble, 13=Face>Word, 19=Scramble_raw

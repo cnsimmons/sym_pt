@@ -21,6 +21,14 @@ Outputs: per (category, hemi):
   - randomise output: rand_tfce_corrp_tstat1.nii.gz (ctrl > pt)
                       rand_tfce_corrp_tstat2.nii.gz (pt > ctrl)
 
+Usage
+-----
+  python tfce_votc_contrasts.py                  # primary  → tfce_votc/
+  python tfce_votc_contrasts.py --exclude-liu    # sensitivity → tfce_votc_excl_liu/
+
+The --exclude-liu flag drops the 4 Liu (2025) overlap patients and writes
+to a parallel output directory so primary results are not overwritten.
+
 References:
   - Smith & Nichols (2009) NeuroImage — TFCE
   - FSL randomise documentation
@@ -43,14 +51,16 @@ HEMIS = ['l', 'r']
 N_PERM_DEFAULT = 10000
 
 EXTRA_SKIP = {'sub-017', 'control083', 'control085'}
+LIU_OVERLAP_SUBS = {'sub-004', 'sub-021', 'sub-044', 'sub-099'}  # Liu 2025 overlap
 PRE_SURGERY_SESSIONS = {
     'sub-021': {'01'}, 'sub-045': {'01'}, 'sub-047': {'01'}, 'sub-049': {'01'},
     'sub-070': {'01'}, 'sub-073': {'01'}, 'sub-081': {'01'}, 'sub-086': {'01'},
     'sub-108': {'02'},
 }
 
-OUT_DIR = Path(processed_dir) / 'group_results' / 'tfce_votc'
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+OUT_DIR_PRIMARY = Path(processed_dir) / 'group_results' / 'tfce_votc'
+OUT_DIR_SENS    = Path(processed_dir) / 'group_results' / 'tfce_votc_excl_liu'
+OUT_DIR = OUT_DIR_PRIMARY  # finalized in main() based on --exclude-liu
 
 
 def build_votc_masks_and_save():
@@ -118,7 +128,11 @@ def load_subjects():
 
         subjects[sid] = {
             'session': post_sessions[0],
-            'first_session': f'{sessions[0]:02d}',
+            # Anatomical anchor = first POST-surgery session. The pre-surgery
+            # session (e.g. sub-021/ses-01) is excluded upstream, so its zstats
+            # are never registered. Using the raw sessions[0] would resolve to
+            # zstat1_ses01_mni.nii.gz, which doesn't exist → silent drop.
+            'first_session': post_sessions[0],
             'group': group,
             'hemi': ('l' if intact == 'left' else 'r') if pt else None,
             'intact_hemi': intact if pt else 'both',
@@ -177,16 +191,32 @@ def run_randomise(input_4d, out_prefix, mask, design_mat, design_con, n_perm):
 
 
 def main():
+    global OUT_DIR
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--category', choices=CATEGORIES, default=None)
     parser.add_argument('--hemi', choices=HEMIS, default=None)
     parser.add_argument('--n-perm', type=int, default=N_PERM_DEFAULT)
+    parser.add_argument('--exclude-liu', action='store_true',
+                        help='Exclude the 4 Liu (2025) overlap patients. '
+                             'Writes to tfce_votc_excl_liu/ (primary output left alone).')
     args = parser.parse_args()
+
+    if args.exclude_liu:
+        EXTRA_SKIP.update(LIU_OVERLAP_SUBS)
+        OUT_DIR = OUT_DIR_SENS
+        print('=' * 70)
+        print('SENSITIVITY MODE: excluding Liu (2025) overlap patients')
+        print(f'  Excluded: {sorted(LIU_OVERLAP_SUBS)}')
+        print(f'  Output:   {OUT_DIR}')
+        print('=' * 70)
+
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
 
     cats_to_run = [args.category] if args.category else CATEGORIES
     hemis_to_run = [args.hemi] if args.hemi else HEMIS
 
-    print('Building VOTC masks...')
+    print('\nBuilding VOTC masks...')
     masks = build_votc_masks_and_save()
 
     print('\nLoading subjects...')
