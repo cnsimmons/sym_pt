@@ -49,11 +49,11 @@ COPES = list(range(1, 20))
 
 # Match liu_recreation_csv_v2.py exclusions
 EXTRA_SKIP = {'sub-017', 'control083', 'control085'}
-PRE_SURGERY_SESSIONS = {
-    'sub-021': {'01'}, 'sub-045': {'01'}, 'sub-047': {'01'}, 'sub-049': {'01'},
-    'sub-070': {'01'}, 'sub-073': {'01'}, 'sub-081': {'01'}, 'sub-086': {'01'},
-    'sub-108': {'02'},
-}
+PRE_SURGERY_SESSIONS = {}
+#    'sub-021': {'01'}, 'sub-045': {'01'}, 'sub-047': {'01'}, 'sub-049': {'01'},
+#    'sub-070': {'01'}, 'sub-073': {'01'}, 'sub-081': {'01'}, 'sub-086': {'01'},
+#    'sub-108': {'02'},
+#}
 
 
 def register_one(sub, ses, dry_run=False):
