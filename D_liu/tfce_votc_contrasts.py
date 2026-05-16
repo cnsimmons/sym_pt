@@ -183,11 +183,13 @@ def run_randomise(input_4d, out_prefix, mask, design_mat, design_con, n_perm):
         '-d', str(design_mat),
         '-t', str(design_con),
         '-T',
+        '-R',
         '-n', str(n_perm),
         '--seed=42',
     ]
     print(f'    Running: {" ".join(cmd)}')
     subprocess.run(cmd, check=True)
+
 
 
 def main():

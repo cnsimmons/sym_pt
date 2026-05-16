@@ -1,0 +1,5 @@
+cluster,n_voxels,peak_x_mni,peak_y_mni,peak_z_mni,pt_group,n_ctrl_selective,n_pt_selective,ctrl_face_pct,pt_face_pct,ctrl_house_pct,pt_house_pct,ctrl_object_pct,pt_object_pct,ctrl_word_pct,pt_word_pct
+object_L_down,268,-54,-72,-4,LH,215,3,1.4,100.0,1.9,0.0,96.7,0.0,0.0,0.0
+face_L_up,20,-34,-82,14,LH,20,10,0.0,0.0,100.0,100.0,0.0,0.0,0.0,0.0
+house_R_down,627,38,-82,-10,RH,439,0,0.0,0.0,20.3,0.0,79.5,0.0,0.2,0.0
+word_R_up,682,38,-58,-20,RH,636,50,2.5,0.0,23.0,42.0,74.5,58.0,0.0,0.0
