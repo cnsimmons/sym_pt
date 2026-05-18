@@ -2,36 +2,29 @@
 """
 tfce_votc_contrasts.py
 
-TFCE-corrected voxelwise group comparisons within VOTC.
+Voxelwise group comparisons within VOTC via FSL randomise.
 
-Contrast: category-vs-all-others (FEAT copes 6=face, 7=house, 8=object, 9=word).
-Mask: Harvard-Oxford VOTC, hemisphere-split (matching extract_selective_voxel_counts).
-Test: patient vs control, two-sample t-test, TFCE-corrected via FSL randomise.
+Contrast modes (--contrast):
+  - 'others'   (default): copes 6/7/8/9 (cat-vs-all-others).
+  - 'baseline': copes 15/16/17/18 (cat-vs-baseline).
 
-For each category × hemisphere:
-  - Patients (intact side matching hemi) vs controls (same hemi)
-  - Both contrasts: ctrl > pt AND pt > ctrl
-  - 10k permutations
-  - FWE-corrected via TFCE
+Subject-level threshold (--thresh):
+  Each subject's zstat thresholded at z > THRESHOLD (one-sided; below → 0)
+  before merging (Ayzenberg 2023 convention). Default: 2.58 for 'baseline',
+  no threshold for 'others'.
 
-Inputs: zstat1_mni.nii.gz from HighLevel.gfeat (already registered)
-Outputs: per (category, hemi):
-  - merged 4D zstat file
-  - design.mat, design.con
-  - randomise output: rand_tfce_corrp_tstat1.nii.gz (ctrl > pt)
-                      rand_tfce_corrp_tstat2.nii.gz (pt > ctrl)
+Group-level inference (--inference):
+  - 'tfce'   (default): TFCE-FWE via permutation
+  - 'cluster': cluster-extent FWE, voxel-forming t > --cluster-thresh
+  - 'both':   both methods on the same run
+  Default cluster threshold: 3.09 (~p<.001 one-tailed).
 
-Usage
------
-  python tfce_votc_contrasts.py                  # primary  → tfce_votc/
-  python tfce_votc_contrasts.py --exclude-liu    # sensitivity → tfce_votc_excl_liu/
-
-The --exclude-liu flag drops the 4 Liu (2025) overlap patients and writes
-to a parallel output directory so primary results are not overwritten.
+Output (--out-name):
+  Custom output dir under group_results/.
 
 References:
   - Smith & Nichols (2009) NeuroImage — TFCE
-  - FSL randomise documentation
+  - Ayzenberg et al. (2023) Dev Cogn Neurosci — subject-level threshold
 """
 
 import os, sys, time, argparse, subprocess
@@ -39,28 +32,41 @@ import numpy as np
 import nibabel as nib
 import pandas as pd
 from pathlib import Path
-from nilearn import datasets as nl_datasets
+from nilearn import datasets as nl_datasets, image as nl_image
 
 sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt')
 from sym_pt_params import (processed_dir, skip_subs, get_sessions,
                            is_patient, get_sub_info, _load_csv)
 
-CAT_COPES = {'face': 6, 'house': 7, 'object': 8, 'word': 9}
+COPES_BY_MODE = {
+    'others':   {'face': 6,  'house': 7,  'object': 8,  'word': 9},
+    'baseline': {'face': 15, 'house': 16, 'object': 17, 'word': 18},
+}
 CATEGORIES = ['face', 'house', 'object', 'word']
 HEMIS = ['l', 'r']
 N_PERM_DEFAULT = 10000
+BASELINE_DEFAULT_THRESH = 2.58
+DEFAULT_CLUSTER_THRESH = 3.09  # ~p<.001 one-tailed
 
 EXTRA_SKIP = {'sub-017', 'control083', 'control085'}
-LIU_OVERLAP_SUBS = {'sub-004', 'sub-021', 'sub-044', 'sub-099'}  # Liu 2025 overlap
+LIU_OVERLAP_SUBS = {'sub-004', 'sub-021', 'sub-044', 'sub-099'}
 PRE_SURGERY_SESSIONS = {
     'sub-021': {'01'}, 'sub-045': {'01'}, 'sub-047': {'01'}, 'sub-049': {'01'},
     'sub-070': {'01'}, 'sub-073': {'01'}, 'sub-081': {'01'}, 'sub-086': {'01'},
     'sub-108': {'02'},
 }
 
-OUT_DIR_PRIMARY = Path(processed_dir) / 'group_results' / 'tfce_votc'
-OUT_DIR_SENS    = Path(processed_dir) / 'group_results' / 'tfce_votc_excl_liu'
-OUT_DIR = OUT_DIR_PRIMARY  # finalized in main() based on --exclude-liu
+OUT_DIR = None
+
+
+def get_out_dir(args):
+    if args.out_name:
+        base = args.out_name
+    else:
+        base = 'tfce_votc_catbaseline' if args.contrast == 'baseline' else 'tfce_votc'
+    if args.exclude_liu:
+        base = base + '_excl_liu'
+    return Path(processed_dir) / 'group_results' / base
 
 
 def build_votc_masks_and_save():
@@ -128,10 +134,6 @@ def load_subjects():
 
         subjects[sid] = {
             'session': post_sessions[0],
-            # Anatomical anchor = first POST-surgery session. The pre-surgery
-            # session (e.g. sub-021/ses-01) is excluded upstream, so its zstats
-            # are never registered. Using the raw sessions[0] would resolve to
-            # zstat1_ses01_mni.nii.gz, which doesn't exist → silent drop.
             'first_session': post_sessions[0],
             'group': group,
             'hemi': ('l' if intact == 'left' else 'r') if pt else None,
@@ -150,7 +152,6 @@ def get_zstat_path(sid, session, first_session, cope_num):
 
 
 def write_design_files(out_prefix, n_ctrl, n_pt):
-    """Two-sample t-test: controls first, patients second."""
     n_total = n_ctrl + n_pt
     mat_path = Path(f'{out_prefix}.mat')
     con_path = Path(f'{out_prefix}.con')
@@ -169,12 +170,30 @@ def write_design_files(out_prefix, n_ctrl, n_pt):
     return mat_path, con_path
 
 
-def merge_zstats(subject_paths, out_path):
-    cmd = ['fslmerge', '-t', str(out_path)] + [str(p) for p in subject_paths]
-    subprocess.run(cmd, check=True)
+def merge_zstats(subject_paths, out_path, threshold=None):
+    if threshold is None:
+        cmd = ['fslmerge', '-t', str(out_path)] + [str(p) for p in subject_paths]
+        subprocess.run(cmd, check=True)
+        return
+    vols, ref_affine, ref_header = [], None, None
+    for p in subject_paths:
+        img = nib.load(p)
+        thr_img = nl_image.threshold_img(img, threshold=threshold, two_sided=False)
+        data = thr_img.get_fdata().astype(np.float32)
+        vols.append(data)
+        if ref_affine is None:
+            ref_affine, ref_header = img.affine, img.header
+    merged = np.stack(vols, axis=-1)
+    nib.save(nib.Nifti1Image(merged, ref_affine, ref_header), str(out_path))
 
 
-def run_randomise(input_4d, out_prefix, mask, design_mat, design_con, n_perm):
+def run_randomise(input_4d, out_prefix, mask, design_mat, design_con,
+                   n_perm, inference, cluster_thresh):
+    """Run randomise with TFCE and/or cluster-extent inference.
+
+    inference: 'tfce' | 'cluster' | 'both'
+    cluster_thresh: voxel-forming t threshold for cluster mode
+    """
     cmd = [
         'randomise',
         '-i', str(input_4d),
@@ -182,39 +201,62 @@ def run_randomise(input_4d, out_prefix, mask, design_mat, design_con, n_perm):
         '-m', str(mask),
         '-d', str(design_mat),
         '-t', str(design_con),
-        '-T',
-        '-R',
+        '-R',                        # raw t-stats
         '-n', str(n_perm),
         '--seed=42',
     ]
+    if inference in ('tfce', 'both'):
+        cmd += ['-T']
+    if inference in ('cluster', 'both'):
+        cmd += ['-c', str(cluster_thresh)]
     print(f'    Running: {" ".join(cmd)}')
     subprocess.run(cmd, check=True)
-
 
 
 def main():
     global OUT_DIR
 
     parser = argparse.ArgumentParser()
+    parser.add_argument('--contrast', choices=['others', 'baseline'], default='others')
     parser.add_argument('--category', choices=CATEGORIES, default=None)
     parser.add_argument('--hemi', choices=HEMIS, default=None)
     parser.add_argument('--n-perm', type=int, default=N_PERM_DEFAULT)
-    parser.add_argument('--exclude-liu', action='store_true',
-                        help='Exclude the 4 Liu (2025) overlap patients. '
-                             'Writes to tfce_votc_excl_liu/ (primary output left alone).')
+    parser.add_argument('--thresh', type=float, default=None,
+                        help="Subject-level zstat threshold.")
+    parser.add_argument('--inference', choices=['tfce', 'cluster', 'both'],
+                        default='tfce',
+                        help="Group-level inference: 'tfce' (default), "
+                             "'cluster' (extent-based FWE), or 'both'.")
+    parser.add_argument('--cluster-thresh', type=float, default=DEFAULT_CLUSTER_THRESH,
+                        help=f"Voxel-forming t-threshold for cluster-extent inference "
+                             f"(default {DEFAULT_CLUSTER_THRESH}, ~p<.001 one-tailed).")
+    parser.add_argument('--out-name', type=str, default=None)
+    parser.add_argument('--exclude-liu', action='store_true')
     args = parser.parse_args()
+
+    OUT_DIR = get_out_dir(args)
+    CAT_COPES = COPES_BY_MODE[args.contrast]
+
+    if args.thresh is not None:
+        subject_threshold = args.thresh
+    elif args.contrast == 'baseline':
+        subject_threshold = BASELINE_DEFAULT_THRESH
+    else:
+        subject_threshold = None
 
     if args.exclude_liu:
         EXTRA_SKIP.update(LIU_OVERLAP_SUBS)
-        OUT_DIR = OUT_DIR_SENS
-        print('=' * 70)
-        print('SENSITIVITY MODE: excluding Liu (2025) overlap patients')
-        print(f'  Excluded: {sorted(LIU_OVERLAP_SUBS)}')
-        print(f'  Output:   {OUT_DIR}')
-        print('=' * 70)
+        print('SENSITIVITY MODE: excluding Liu overlap patients')
+
+    print('=' * 70)
+    print(f'Contrast: {args.contrast}  |  copes: {CAT_COPES}')
+    print(f'Subject threshold: {subject_threshold}')
+    print(f'Inference: {args.inference}'
+          + (f' (cluster t>{args.cluster_thresh})' if args.inference in ('cluster', 'both') else ''))
+    print(f'Output: {OUT_DIR}')
+    print('=' * 70)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-
     cats_to_run = [args.category] if args.category else CATEGORIES
     hemis_to_run = [args.hemi] if args.hemi else HEMIS
 
@@ -239,7 +281,7 @@ def main():
             test_name = f'{cat}_{hemi}_pt_vs_ctrl'
             test_dir = OUT_DIR / test_name
             test_dir.mkdir(parents=True, exist_ok=True)
-            print(f'\n[{test_name}] {time.time()-t0:.0f}s elapsed')
+            print(f'\n[{test_name}] cope={cope}  {time.time()-t0:.0f}s elapsed')
 
             pt_for_hemi = [s for s in pt_sids if subjects[s]['hemi'] == hemi]
             print(f'  n_ctrl={len(ctrl_sids)}, n_pt={len(pt_for_hemi)}')
@@ -272,8 +314,9 @@ def main():
                 continue
 
             merged = test_dir / 'merged_zstat.nii.gz'
-            print(f'  Merging {len(ctrl_paths) + len(pt_paths)} subjects...')
-            merge_zstats(ctrl_paths + pt_paths, merged)
+            thresh_note = f' (threshold-img at z>{subject_threshold})' if subject_threshold is not None else ''
+            print(f'  Merging {len(ctrl_paths) + len(pt_paths)} subjects{thresh_note}...')
+            merge_zstats(ctrl_paths + pt_paths, merged, threshold=subject_threshold)
 
             design_prefix = test_dir / 'design'
             mat_path, con_path = write_design_files(
@@ -282,20 +325,21 @@ def main():
             randomise_prefix = test_dir / 'rand'
             mask_path = masks[hemi]
             run_randomise(merged, randomise_prefix, mask_path,
-                          mat_path, con_path, args.n_perm)
+                          mat_path, con_path, args.n_perm,
+                          args.inference, args.cluster_thresh)
 
             summary_rows.append({
                 'category': cat, 'hemi': hemi, 'cope': cope,
+                'subject_threshold': subject_threshold,
+                'inference': args.inference,
+                'cluster_thresh': args.cluster_thresh if args.inference in ('cluster', 'both') else None,
                 'n_ctrl': len(ctrl_paths), 'n_pt': len(pt_paths),
                 'output_dir': str(test_dir),
-                'corrp_ctrl_gt_pt': str(randomise_prefix) + '_tfce_corrp_tstat1.nii.gz',
-                'corrp_pt_gt_ctrl': str(randomise_prefix) + '_tfce_corrp_tstat2.nii.gz',
             })
 
     summary_df = pd.DataFrame(summary_rows)
     summary_df.to_csv(OUT_DIR / 'tfce_summary.csv', index=False)
     print(f'\nDone in {time.time()-t0:.0f}s')
-    print(f'Summary: {OUT_DIR / "tfce_summary.csv"}')
 
 
 if __name__ == '__main__':
