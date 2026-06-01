@@ -73,6 +73,7 @@ CONTRASTS = {
     'word_pSTG_liu': (13, True),
     'word_IFG':      (13, True),
     'evc':           (19, False),
+    'house_PPA_strict': (2, False),
 }
 RSA_COPES = {'face': 15, 'house': 16, 'object': 17, 'word': 18}
 
