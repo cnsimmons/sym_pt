@@ -1,19 +1,27 @@
 #!/usr/bin/env python3
 """
-03_wta_analysis.py
+wta_analysis.py
 
-Extracts Winner-Take-All (WTA) categorical territory percentages for each subject.
-Does NOT run statistical comparisons (LMMs/permutations). Outputs a clean CSV
-to be used by downstream statistical scripts.
+Extracts Winner-Take-All (WTA) categorical territory percentages per subject.
+Does NOT run statistics. Outputs a clean long-format CSV for downstream stats.
 
-Pipeline:
-  - Load MNI-space z-stats for Face, House, Object, Word (Baseline contrasts).
-  - Apply Left and Right Harvard-Oxford VOTC masks.
-  - Voxel allegiance is awarded to the category with the highest z-stat, 
-    provided that max z-stat > 2.326 (p<.01 one-tailed).
-  - Calculate the percentage of *selective* VOTC territory won by each category.
+Measures (one CSV, distinguished by `region` + `denominator`):
+  - region='otc',     denominator='selective' : % of selective VOTC voxels per category
+  - region='otc',     denominator='total'     : % of ALL VOTC voxels per category
+                                                 (+ a 'non-selective' category row)
+  - region='cluster_*', denominator='selective': % of selective voxels per category
+                                                  inside each surviving TFCE cluster
 
-Output: D_liu/wta_percentages_v1.csv
+WTA rule: each voxel awarded to the highest-z category; voxel counts as
+selective only if max z > WTA_THRESHOLD.
+
+Sessions: ALL post-surgery sessions are extracted (one block of rows per
+session), matching the univariate/RSA extractors. The registration anchor is
+post_sessions[0]; non-anchor sessions load the ses{anchor}-registered z-maps.
+Downstream cross-sectional stats filter to the subject's last session.
+
+Inputs : zstat1*_mni.nii.gz (copes 6-9), VOTC masks + TFCE clusters from the
+         TFCE pipeline output dir.
 """
 
 import sys
@@ -21,139 +29,184 @@ import numpy as np
 import nibabel as nib
 import pandas as pd
 from pathlib import Path
-from scipy.stats import norm
-from nilearn import datasets as nl_datasets
 
 sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt')
-from params import (processed_dir, should_skip, get_post_sessions,
-                    is_patient, get_sub_info, _load_csv)
+from params import (processed_dir, skip_subs, skip_codes,
+                           get_sessions, get_post_sessions,
+                           is_patient, get_sub_info, _load_csv)
 
 # ── Configuration ────────────────────────────────────────────────────────────
-BASE_DIR    = Path(processed_dir)
-OUTPUT_DIR  = Path('/user_data/csimmon2/git_repos/sym_pt/D_liu')
-OUTPUT_NAME = 'wta_percentages_v1.csv'
 
-SEL_Z_THRESH = float(norm.ppf(0.99)) # ≈2.326
 CATEGORIES = ['face', 'house', 'object', 'word']
-# Baseline copes for WTA competition
-COPES = {'face': 15, 'house': 16, 'object': 17, 'word': 18}
+COPES = {'face': 6, 'house': 7, 'object': 8, 'word': 9}
+WTA_THRESHOLD = 2.326
 
-def get_votc_masks():
-    """Build left and right VOTC masks from Harvard-Oxford atlas."""
-    ho_atlas = nl_datasets.fetch_atlas_harvard_oxford('cort-maxprob-thr25-2mm')
-    ho_img = ho_atlas.maps if isinstance(ho_atlas.maps, nib.Nifti1Image) else nib.load(ho_atlas.maps)
-    ho_data = ho_img.get_fdata()
-    
-    names = ['Temporal Fusiform', 'Temporal Occipital Fusiform', 
-             'Parahippocampal', 'Lingual', 'Lateral Occipital']
-    
-    full_mask = np.zeros(ho_data.shape, dtype=bool)
-    for i, label in enumerate(ho_atlas.labels):
-        if any(n in label for n in names):
-            full_mask |= (ho_data == i)
+TFCE_DIR = Path(processed_dir) / 'group_results' / 'tfce_votc_fdr'
+OUTPUT_CSV = Path(processed_dir) / 'group_results' / 'wta_percentages.csv'
 
-    mid_x = ho_data.shape[0] // 2
-    l_mask, r_mask = full_mask.copy(), full_mask.copy()
-    l_mask[mid_x:, :, :] = False
-    r_mask[:mid_x, :, :] = False
-    
-    return {'l': l_mask, 'r': r_mask}
+# Surviving TFCE clusters: (category, hemi, tstat). tstat1=ctrl>pt, tstat2=pt>ctrl.
+# face did not survive correction in either hemisphere.
+CLUSTERS = [
+    ('object', 'l', 1),
+    ('house',  'r', 1),
+    ('word',   'r', 2),
+]
 
-def load_zstat(sid, session, first_session, cope_num):
-    feat = BASE_DIR / sid / f'ses-{session}' / 'derivatives' / 'fsl' / 'loc' / 'HighLevel.gfeat'
-    zname = 'zstat1_mni.nii.gz' if session == first_session else f'zstat1_ses{first_session}_mni.nii.gz'
-    zpath = feat / f'cope{cope_num}.feat' / 'stats' / zname
-    
+# ── Helper Functions ─────────────────────────────────────────────────────────
+
+def load_zstat(sid, session, cope_num):
+    """Load one MNI z-stat. Each session is independently registered to MNI,
+    so every session has its own zstat1_mni.nii.gz (there is no
+    ses{anchor}-registered MNI file; the anchor naming applies to native
+    within-subject space only)."""
+    feat = (Path(processed_dir) / sid / f'ses-{session}' / 'derivatives' / 'fsl'
+            / 'loc' / 'HighLevel.gfeat' / f'cope{cope_num}.feat' / 'stats')
+    zpath = feat / 'zstat1_mni.nii.gz'
     if not zpath.exists():
         return None
     return nib.load(zpath).get_fdata()
 
-def main():
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    out_path = OUTPUT_DIR / OUTPUT_NAME
-    
-    print('Building VOTC masks...')
-    masks = get_votc_masks()
-    
-    df_csv = _load_csv()
-    subjects = sorted(df_csv['sub_clean'].unique())
-    
-    all_rows = []
-    
-    print('Computing Winner-Take-All territory allocations...')
-    for sc in subjects:
-        sid = f'sub-{sc}'
-        if should_skip(sid): continue
-            
-        post = get_post_sessions(sc)
-        if not post or not (BASE_DIR / sid).exists(): continue
-            
-        # WTA is currently cross-sectional (first post-surgery session)
-        session = f'{post[0]:02d}'
-        info = get_sub_info(sc, post[0])
-        pt = is_patient(sc)
-        group = info.get('group', 'unknown')
-        
-        # Load the 4 category maps
-        z_maps = []
-        missing = False
-        for cat in CATEGORIES:
-            z = load_zstat(sid, session, session, COPES[cat])
-            if z is None:
-                missing = True
-                break
-            z_maps.append(z)
-            
-        if missing:
-            print(f'  [{sid}] SKIP: missing z-stats')
+
+def compute_winner(sid, session):
+    """Return full-volume winner map (0=non-selective, 1-4=face/house/object/word)
+    and the per-voxel max z. Returns (None, None) if any cope is missing."""
+    z_maps = []
+    for cat in CATEGORIES:
+        z = load_zstat(sid, session, COPES[cat])
+        if z is None:
+            return None, None
+        z_maps.append(z)
+    z_stack = np.stack(z_maps, axis=-1)            # (X, Y, Z, 4)
+    max_z = z_stack.max(axis=-1)
+    winner = z_stack.argmax(axis=-1) + 1           # 1=face, 2=house, 3=object, 4=word
+    winner[max_z < WTA_THRESHOLD] = 0              # below threshold -> non-selective
+    return winner, max_z
+
+
+def load_cluster_masks():
+    """Load surviving TFCE cluster masks keyed by (category, hemi)."""
+    cluster_masks = {}
+    for cat, hemi, tstat in CLUSTERS:
+        p = TFCE_DIR / f'{cat}_{hemi}_pt_vs_ctrl' / f'rand_tfce_corrp_tstat{tstat}.nii.gz'
+        if not p.exists():
+            print(f'  WARNING: cluster file not found: {p}')
             continue
-            
-        # Stack maps: Shape (X, Y, Z, 4)
-        z_stack = np.stack(z_maps, axis=-1)
-        
-        # Identify the winner in every voxel
-        winner_idx = np.argmax(z_stack, axis=-1)  # 0=face, 1=house, 2=object, 3=word
-        max_z = np.max(z_stack, axis=-1)
-        
-        # Determine valid hemispheres to process
-        hemis_to_run = ['l', 'r'] if group == 'control' else [('l' if info.get('intact_hemi') == 'left' else 'r')]
-        
-        for hemi in hemis_to_run:
-            hemi_mask = masks[hemi]
-            
-            # Mask to specific hemisphere and apply selectivity threshold
-            valid_voxels = hemi_mask & (max_z > SEL_Z_THRESH)
-            n_selective_voxels = valid_voxels.sum()
-            
-            if n_selective_voxels == 0:
+        cluster_masks[(cat, hemi)] = nib.load(p).get_fdata() > 0.95
+    return cluster_masks
+
+# ── Main Execution Pipeline ──────────────────────────────────────────────────
+
+def main():
+    print(f'Loading VOTC masks from: {TFCE_DIR}')
+    mask_l_path = TFCE_DIR / 'votc_l_mask.nii.gz'
+    mask_r_path = TFCE_DIR / 'votc_r_mask.nii.gz'
+    if not mask_l_path.exists() or not mask_r_path.exists():
+        print('Error: TFCE masks not found. Run the TFCE contrasts script first.')
+        sys.exit(1)
+    masks = {
+        'l': nib.load(mask_l_path).get_fdata() > 0.5,
+        'r': nib.load(mask_r_path).get_fdata() > 0.5,
+    }
+    cluster_masks = load_cluster_masks()
+
+    df_csv = _load_csv()
+    all_rows = []
+
+    print('Computing Winner-Take-All territory allocations (all post sessions)...')
+    for sc in sorted(df_csv['sub_clean'].unique()):
+        if sc in skip_subs:
+            continue
+        sid = f'sub-{sc}'
+        sessions = get_sessions(sc)
+        if not sessions or not (Path(processed_dir) / sid).exists():
+            continue
+
+        info = get_sub_info(sc, sessions[0])
+        group = info.get('group', 'unknown')
+        if f'{group}{sc}' in skip_codes or group == 'nonOTC':
+            continue
+
+        post = get_post_sessions(sc)
+        if not post:
+            continue
+
+        pt = is_patient(sc)
+        intact_hemi = info.get('intact_hemi', '')
+
+        # Each session is independently registered to MNI, so all post sessions
+        # are usable directly (no within-subject anchor needed in MNI space).
+        hemis_to_run = ['l', 'r'] if group == 'control' else \
+                       [('l' if intact_hemi == 'left' else 'r')]
+
+        for ses_num in post:
+            session = f'{ses_num:02d}'
+            winner, max_z = compute_winner(sid, session)
+            if winner is None:
+                print(f'  [{sid} ses-{session}] SKIP: missing z-stats')
                 continue
-                
-            winning_cats = winner_idx[valid_voxels]
-            
-            for i, cat in enumerate(CATEGORIES):
-                voxels_won = (winning_cats == i).sum()
-                pct_won = 100.0 * (voxels_won / n_selective_voxels)
-                
-                all_rows.append({
+
+            for hemi in hemis_to_run:
+                w_hemi = winner[masks[hemi]]            # 1-D over hemi VOTC voxels
+                n_total = w_hemi.size
+                n_selective = int((w_hemi > 0).sum())
+
+                base = {
                     'subject_id': sid,
-                    'code': f"{group}{sc}",
+                    'code': f'{group}{sc}',
                     'session': session,
                     'group': group,
                     'status': 'patient' if pt else 'control',
                     'hemi': hemi,
                     'hemi_label': 'intact' if pt else ('left' if hemi == 'l' else 'right'),
-                    'category': cat,
-                    'wta_pct': pct_won,
-                    'voxel_count': voxels_won,
-                    'total_selective_voxels': n_selective_voxels
-                })
-                
+                }
+
+                # ── region='otc', denominator='selective' ───────────────────────
+                if n_selective > 0:
+                    for i, cat in enumerate(CATEGORIES, start=1):
+                        cnt = int((w_hemi == i).sum())
+                        all_rows.append({**base, 'region': 'otc', 'denominator': 'selective',
+                                         'category': cat, 'wta_pct': 100.0 * cnt / n_selective,
+                                         'voxel_count': cnt, 'denom_voxels': n_selective})
+
+                # ── region='otc', denominator='total' (incl. non-selective) ──────
+                if n_total > 0:
+                    for i, cat in enumerate(CATEGORIES, start=1):
+                        cnt = int((w_hemi == i).sum())
+                        all_rows.append({**base, 'region': 'otc', 'denominator': 'total',
+                                         'category': cat, 'wta_pct': 100.0 * cnt / n_total,
+                                         'voxel_count': cnt, 'denom_voxels': n_total})
+                    ns = int((w_hemi == 0).sum())
+                    all_rows.append({**base, 'region': 'otc', 'denominator': 'total',
+                                     'category': 'non-selective', 'wta_pct': 100.0 * ns / n_total,
+                                     'voxel_count': ns, 'denom_voxels': n_total})
+
+                # ── region='cluster_*', denominator='selective' ──────────────────
+                for cat_c, hemi_c, _ in CLUSTERS:
+                    if hemi_c != hemi or (cat_c, hemi_c) not in cluster_masks:
+                        continue
+                    cluster_in_hemi = cluster_masks[(cat_c, hemi_c)][masks[hemi]]
+                    w_clust = w_hemi[cluster_in_hemi]
+                    n_sel_c = int((w_clust > 0).sum())
+                    if n_sel_c == 0:
+                        continue
+                    region = f'cluster_{cat_c}_{hemi_c}'
+                    for i, cat in enumerate(CATEGORIES, start=1):
+                        cnt = int((w_clust == i).sum())
+                        all_rows.append({**base, 'region': region, 'denominator': 'selective',
+                                         'category': cat, 'wta_pct': 100.0 * cnt / n_sel_c,
+                                         'voxel_count': cnt, 'denom_voxels': n_sel_c})
+
     df = pd.DataFrame(all_rows)
-    df.to_csv(out_path, index=False)
-    
-    print(f'\nSaved: {out_path}')
-    print(f'Total Rows: {len(df)}')
+    OUTPUT_CSV.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(OUTPUT_CSV, index=False)
+
+    print(f'\nSaved: {OUTPUT_CSV}')
+    print(f'Total rows: {len(df)}')
     print(f'Subjects extracted: {df["subject_id"].nunique()}')
+    print(f'Sessions per subject:')
+    print(df.groupby("subject_id")["session"].nunique().value_counts().to_string())
+    print(f'Regions: {sorted(df["region"].unique())}')
+
 
 if __name__ == '__main__':
     main()
