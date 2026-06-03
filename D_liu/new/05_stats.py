@@ -312,7 +312,7 @@ def peak_distance(results, fdr_method='bh'):
         results.append(row(measure='peak_distance', note=f'MISSING input: {PEAK_MNI}'))
         return
     mni = apply_exclusions(pd.read_csv(PEAK_MNI))
-    mni = select_sessions(mni)
+    mni = select_sessions(mni, pt_rule='first')  # manuscript = first-post
     for grp_hemi, hemi_label in [('l', 'LH-intact'), ('r', 'RH-intact')]:
         pc_rows, pvals = [], []
         for roi in PRIMARY_ROIS:
@@ -457,7 +457,7 @@ def wta_composition(results, fdr_method='bh'):
 # =============================================================================
 def geometry(results, fdr_method='bh'):
     rsa = apply_exclusions(pd.read_csv(RSA_CSV))
-    rsa = select_sessions(rsa)  # keeps pair/fisher_r rows
+    rsa = select_sessions(rsa, pt_rule='last')  # RSA = last session (matches notebook); keeps pair/fisher_r
 
     def per_roi(sub_roi, factor_col, model_name, comparison, paired=False):
         chi, dfree, pomni, mse = lmm_omnibus(sub_roi, 'fisher_r', 'pair', factor_col)
@@ -568,7 +568,7 @@ def main():
     print('Sum-selectivity...')
     uni = apply_exclusions(pd.read_csv(UNIVAR_CSV))
     uni = uni[uni['group'] != 'nonOTC']          # 01 includes nonOTC; drop here
-    uni = select_sessions(uni)
+    uni = select_sessions(uni, pt_rule='first')  # manuscript sum-sel = first-post
     uni = uni[uni['sum_selec_norm'] > 0].copy()  # log10 needs positive
     uni['log_sumsel'] = np.log10(uni['sum_selec_norm'])
     scalar_measure(uni, 'log_sumsel', 'sum_selectivity', PRIMARY_ROIS,
@@ -578,7 +578,7 @@ def main():
     print('Distinctiveness...')
     rsa = apply_exclusions(pd.read_csv(RSA_CSV))
     rsa_summary = rsa.drop(columns=['pair', 'fisher_r']).drop_duplicates()
-    rsa_summary = select_sessions(rsa_summary)
+    rsa_summary = select_sessions(rsa_summary, pt_rule='last')  # RSA = last session (matches notebook)
     scalar_measure(rsa_summary, 'liu_distinctiveness', 'distinctiveness', PRIMARY_ROIS,
                    results=results, fdr_method=args.fdr)
 
