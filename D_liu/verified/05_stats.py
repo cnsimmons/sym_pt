@@ -312,7 +312,7 @@ def peak_distance(results, fdr_method='bh'):
         results.append(row(measure='peak_distance', note=f'MISSING input: {PEAK_MNI}'))
         return
     mni = apply_exclusions(pd.read_csv(PEAK_MNI))
-    mni = select_sessions(mni, pt_rule='first')  # manuscript = first-post
+    mni = select_sessions(mni, pt_rule='last')   # uniform last-session (Liu)
     for grp_hemi, hemi_label in [('l', 'LH-intact'), ('r', 'RH-intact')]:
         pc_rows, pvals = [], []
         for roi in PRIMARY_ROIS:
@@ -348,7 +348,7 @@ def peak_distance(results, fdr_method='bh'):
 def wta_composition(results, fdr_method='bh'):
     wta = apply_exclusions(pd.read_csv(WTA_CSV))
     wta = wta[(wta['region'] == 'otc') & (wta['denominator'] == 'selective')].copy()
-    wta = select_sessions(wta, pt_rule='first')   # manuscript WTA = first-post
+    wta = select_sessions(wta, pt_rule='last')    # uniform last-session (Liu)
 
     def lmm_and_posthoc(sub, factor_col, model_name, comparison, paired=False):
         chi, dfree, pomni, mse = lmm_omnibus(sub, 'wta_pct', 'category', factor_col)
@@ -422,7 +422,7 @@ def wta_composition(results, fdr_method='bh'):
     tot = apply_exclusions(pd.read_csv(WTA_CSV))
     tot = tot[(tot['region'] == 'otc') & (tot['denominator'] == 'total') &
               (tot['category'] == 'non-selective')].copy()
-    tot = select_sessions(tot, pt_rule='first')
+    tot = select_sessions(tot, pt_rule='last')
     tot['sel_prop'] = 100.0 - tot['wta_pct']  # selective = 100 - non-selective
     for hemi, label in [('l', 'LH'), ('r', 'RH')]:
         pt = tot[(tot['group'] == 'OTC') & (tot['hemi'] == hemi)]['sel_prop'].dropna()
@@ -439,7 +439,7 @@ def wta_composition(results, fdr_method='bh'):
     # Within-cluster composition — descriptive only
     cl = apply_exclusions(pd.read_csv(WTA_CSV))
     cl = cl[cl['region'].str.startswith('cluster_')].copy()
-    cl = select_sessions(cl, pt_rule='first')
+    cl = select_sessions(cl, pt_rule='last')
     for region in sorted(cl['region'].unique()):
         for cat in CATEGORIES:
             for status, lab in [('control', 'ctrl'), ('patient', 'pt')]:
@@ -568,7 +568,7 @@ def main():
     print('Sum-selectivity...')
     uni = apply_exclusions(pd.read_csv(UNIVAR_CSV))
     uni = uni[uni['group'] != 'nonOTC']          # 01 includes nonOTC; drop here
-    uni = select_sessions(uni, pt_rule='first')  # manuscript sum-sel = first-post
+    uni = select_sessions(uni, pt_rule='last')   # uniform last-session (Liu)
     uni = uni[uni['sum_selec_norm'] > 0].copy()  # log10 needs positive
     uni['log_sumsel'] = np.log10(uni['sum_selec_norm'])
     scalar_measure(uni, 'log_sumsel', 'sum_selectivity', PRIMARY_ROIS,
