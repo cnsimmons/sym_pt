@@ -11,7 +11,7 @@
 dataDir='/user_data/csimmon2/sym_pt'
 gitDir='/user_data/csimmon2/git_repos/sym_pt'
 CSV_FILE="${gitDir}/sub_info.csv"
-templateFSF="${gitDir}/template_HighLevel.fsf"
+templateFSF="${gitDir}/A_preprocessing/template_HighLevel.fsf"
 
 SKIP_SUBS=()
 

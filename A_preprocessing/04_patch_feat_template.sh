@@ -4,7 +4,7 @@
 # Run once, then verify with: grep -E "conname|ncon" template_1stLevel.fsf
 #
 
-TEMPLATE="/user_data/csimmon2/git_repos/sym_pt/template_1stLevel.fsf"
+TEMPLATE="/user_data/csimmon2/git_repos/sym_pt/A_preprocessing/template_1stLevel.fsf"
 
 if [ ! -f "$TEMPLATE" ]; then
     echo "ERROR: Template not found at $TEMPLATE"

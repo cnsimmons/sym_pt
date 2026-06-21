@@ -13,7 +13,7 @@ gitDir='/user_data/csimmon2/git_repos/sym_pt'
 CSV_FILE="${gitDir}/sub_info.csv"
 
 # Template FSF - update this path to your template
-templateFSF="${gitDir}/template_1stLevel.fsf"
+templateFSF="${gitDir}/A_preprocessing/template_1stLevel.fsf"
 
 # Template values to replace
 templateSub="004"
