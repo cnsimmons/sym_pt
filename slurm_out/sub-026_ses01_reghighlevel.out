@@ -1,6 +1,0 @@
-ERROR: Unable to locate a modulefile for 'fsl/6.0.3'
-Processing sub-026 ses-01
-Reference: ses-01
-Mode: symlink (HighLevel already in ses-01 space)
-
-Finished sub-026 ses-01

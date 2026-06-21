@@ -1,34 +1,0 @@
-Patients: 31, Controls: 38, Total: 69
-Sphere: 7mm @ 1mm anat → 2mm RSA; sum-selec z>2.326
-Categories: ['face_FFA', 'face_STS', 'house_PPA', 'house_TOS', 'object_pF', 'object_LOC', 'word_VWFA', 'word_STG', 'word_pSTG_liu', 'evc']
-
-[1/69] control001 (0s)[2/69] OTC004 (42s)[3/69] nonOTC007 (148s)[4/69] OTC008 (212s)[5/69] OTC010 (255s)[6/69] control016 (299s)[7/69] control018 (342s)[8/69] OTC021 (424s)[9/69] control022 (468s)[10/69] control023 (551s)[11/69] control025 (593s)[12/69] control026 (724s)[13/69] control027 (766s)[14/69] control028 (808s)[15/69] control029 (850s)[16/69] control031 (892s)[17/69] control034 (934s)[18/69] control035 (976s)[19/69] control036 (1018s)[20/69] control037 (1059s)[21/69] control038 (1100s)[22/69] control040 (1142s)[23/69] control041 (1184s)[24/69] control043 (1226s)[25/69] OTC044 (1269s)[26/69] nonOTC045 (1291s)[27/69] nonOTC047 (1335s)[28/69] nonOTC049 (1357s)[29/69] control052 (1380s)[30/69] control054 (1463s)[31/69] control057 (1505s)[32/69] control058 (1548s)[33/69] control059 (1632s)[34/69] control062 (1675s)[35/69] control064 (1758s)[36/69] control065 (1844s)[37/69] OTC066 (1889s)[38/69] control067 (1913s)[39/69] control068 (1958s)[40/69] OTC069 (2045s)[41/69] nonOTC070 (2070s)[42/69] control071 (2095s)[43/69] nonOTC072 (2140s)[44/69] nonOTC073 (2188s)[45/69] OTC074 (2213s)[46/69] OTC075 (2238s)[47/69] OTC076 (2262s)[48/69] OTC077 (2287s)[49/69] OTC078 (2312s)[50/69] OTC079 (2338s)[51/69] nonOTC081 (2386s)[52/69] control084 (2411s)[53/69] nonOTC086 (2456s)[54/69] control087 (2482s)[55/69] control088 (2527s)[56/69] OTC089 (2574s)[57/69] OTC090 (2599s)[58/69] OTC091 (2607s)[59/69] OTC092 (2634s)[60/69] control093 (2657s)[61/69] control094 (2700s)[62/69] control095 (2743s)[63/69] control096 (2787s)[64/69] control097 (2835s)[65/69] OTC098 (2879s)[66/69] OTC099 (2881s)[67/69] OTC101 (2903s)[68/69] OTC108 (2904s)[69/69] OTC109 (2927s)
-Saved: /user_data/csimmon2/git_repos/sym_pt/liu_exact_replication_v2.csv (7315 rows, 65 subjects)
-
-ROI × hemi coverage:
-hemi            l   r
-category             
-evc            52  51
-face_FFA       52  51
-face_STS       52  51
-house_PPA      52  51
-house_TOS      52  51
-object_LOC     52  51
-object_pF      52  51
-word_STG       52  51
-word_VWFA      52  51
-word_pSTG_liu  52  51
-
-Sphere voxel counts (2mm, expect ~175):
-                mean   std
-category                  
-evc            166.5  12.3
-face_FFA       168.5  13.3
-face_STS       173.4  12.4
-house_PPA      169.9  12.8
-house_TOS      172.7  12.5
-object_LOC     170.0  12.2
-object_pF      168.3  13.6
-word_STG       170.0  12.4
-word_VWFA      170.6  13.3
-word_pSTG_liu  173.8  11.3

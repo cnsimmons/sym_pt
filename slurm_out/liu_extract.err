@@ -1,2 +1,0 @@
-/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/numpy/lib/function_base.py:2853: RuntimeWarning: invalid value encountered in divide
-  c /= stddev[:, None]
