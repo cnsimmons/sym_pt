@@ -7,31 +7,40 @@ objects, words, scrambled.
 
 ## Two analysis tracks (read this first)
 
-One pipeline, run on two samples. They use **different config files** and
-**different extraction outputs** — keep them straight:
+One pipeline, two tracks. **Same subjects in both** — they differ only in config
+and a couple of extraction choices (below):
 
-| Track | Config | Extraction CSV | Sample |
-|---|---|---|---|
-| **Manuscript (frozen)** — `D_liu/verified/` | `params.py` | `D_liu/liu_exact_replication_v2.csv` (8,358 rows) | MS sample; skips sub-017, excludes sub-108 ses-02 |
-| **Extended (current)** — top-level `D_liu/` | `sym_pt_params.py` | `liu_exact_replication_v2.csv` (repo root, 9,783 rows) | current roster (22 OTC + 38 controls) |
+| Track | Config | Extraction CSV |
+|---|---|---|
+| **Manuscript (frozen)** — `D_liu/verified/` | `params.py` | `D_liu/liu_exact_replication_v2.csv` |
+| **Extended (current)** — top-level `D_liu/` | `sym_pt_params.py` | `liu_exact_replication_v2.csv` (repo root) |
 
-> ⚠️ **Filename trap:** the *newer* config is named `params.py` (its header still
+What actually differs between the two extraction CSVs (not subject count):
+
+- **Pre-surgical sessions:** `verified` drops 9 of them (via `params.py`'s
+  `pre_surgery_sessions`); the extended extraction keeps them because
+  `sym_pt_params.py` has no such exclusion. WARNING: any extended-track analysis must
+  filter these out — pre-op data should not enter post-op results.
+- **ROIs:** the extended extraction includes `house_PPA_strict`; `verified` does not.
+
+> Filename trap: the *newer* config is named `params.py` (its header still
 > reads "sym_pt_params.py", dated 06/02/26); the *older* one is `sym_pt_params.py`.
 > Both must stay — each track imports its own (`from params` vs `from sym_pt_params`).
 
-## Sample (current / extended roster)
+## Sample
 
-- **Patients:** 22 OTC — 11 left-intact / right-resection, 11 right-intact / left-resection; 6 longitudinal.
-- **Controls:** 38 typically developing.
-- **Excluded:** sub-017 (polymicrogyria) — never analyzed.
-- _TODO: confirm exact N for the frozen manuscript (verified) sample._
+Same roster for both tracks:
+
+- Patients: 22 OTC — 11 left-intact / right-resection, 11 right-intact / left-resection; 6 longitudinal.
+- Controls: 38 typically developing.
+- Excluded: sub-017 (polymicrogyria) — never analyzed.
 
 Roster: `sub_info.csv` (long format, one row per subject-session).
 Scanner labels: `F_harmonization/sub_info_scanner.csv`.
 
 ## Scanners
 
-Two sites: Siemens **Verio** (32-ch) and **Prisma** (64-ch). Scanner is derived
+Two sites: Siemens Verio (32-ch) and Prisma (64-ch). Scanner is derived
 per session from BIDS JSON sidecars by `F_harmonization/add_scanner.py`.
 Scanner is confounded with group, so extent/detection measures are harmonized
 with ComBat (in progress — `F_harmonization/`). Relative measures (LI, WTA, RSA)
@@ -39,7 +48,7 @@ are largely scanner-robust.
 
 ## Repository structure
 
-- `A_preprocessing/` — raw BIDS → 1st-level FEAT → registration → MNI z-stat maps (steps 00–13). FEAT templates live here: `template_1stLevel.fsf`, `template_HighLevel.fsf`.
+- `A_preprocessing/` — raw BIDS -> 1st-level FEAT -> registration -> MNI z-stat maps (steps 00–13). FEAT templates live here: `template_1stLevel.fsf`, `template_HighLevel.fsf`.
 - `B_analyses/` — searchmask/ROI creation, summary values, peak coords, distinctiveness, geometry, post-hoc stats.
 - `C_results/` — result notebooks and figures.
 - `D_liu/` — Liu recreation (extended track) and `verified/` (frozen manuscript track).
