@@ -1,0 +1,169 @@
+
+===== p_perm: 161 changed =====
+           measure                           model        level         comparison hemi  p_perm_old  p_perm_new
+     peak_distance            LH-intact_pt_vs_ctrl     face_FFA patient_vs_control    l    0.579742    0.272873
+     peak_distance            LH-intact_pt_vs_ctrl    house_PPA patient_vs_control    l    0.888711    0.689131
+     peak_distance            LH-intact_pt_vs_ctrl   object_LOC patient_vs_control    l    0.278472    0.503450
+     peak_distance            LH-intact_pt_vs_ctrl    word_VWFA patient_vs_control    l    0.651835    0.642536
+     peak_distance            RH-intact_pt_vs_ctrl     face_FFA patient_vs_control    r    0.965503    0.851715
+     peak_distance            RH-intact_pt_vs_ctrl    house_PPA patient_vs_control    r    0.426057    0.809119
+     peak_distance            RH-intact_pt_vs_ctrl   object_LOC patient_vs_control    r    0.036296    0.036796
+     peak_distance            RH-intact_pt_vs_ctrl    word_VWFA patient_vs_control    r    0.084892    0.095390
+   sum_selectivity            LH-intact_pt_vs_ctrl     face_FFA patient_vs_control    l    0.741926    0.558744
+   sum_selectivity            LH-intact_pt_vs_ctrl    house_PPA patient_vs_control    l    0.420358    0.539546
+   sum_selectivity            LH-intact_pt_vs_ctrl   object_LOC patient_vs_control    l    0.002500    0.005299
+   sum_selectivity            LH-intact_pt_vs_ctrl    word_VWFA patient_vs_control    l    0.804020    0.655934
+   sum_selectivity            LH-intact_pt_vs_ctrl          ALL            omnibus    l         NaN         NaN
+   sum_selectivity            RH-intact_pt_vs_ctrl     face_FFA patient_vs_control    r    0.696330    0.924708
+   sum_selectivity            RH-intact_pt_vs_ctrl    house_PPA patient_vs_control    r    0.566443    0.511549
+   sum_selectivity            RH-intact_pt_vs_ctrl   object_LOC patient_vs_control    r    0.317868    0.188081
+   sum_selectivity            RH-intact_pt_vs_ctrl    word_VWFA patient_vs_control    r    0.933507    0.953405
+   sum_selectivity            RH-intact_pt_vs_ctrl          ALL            omnibus    r         NaN         NaN
+   sum_selectivity                       ctrl_LvsR     face_FFA  control_asymmetry   lr    0.004600    0.005000
+   sum_selectivity                       ctrl_LvsR    house_PPA  control_asymmetry   lr    0.713529    0.715128
+   sum_selectivity                       ctrl_LvsR   object_LOC  control_asymmetry   lr    0.001200    0.002100
+   sum_selectivity                       ctrl_LvsR    word_VWFA  control_asymmetry   lr    0.262674    0.261274
+   sum_selectivity                       ctrl_LvsR          ALL            omnibus   lr         NaN         NaN
+   distinctiveness            LH-intact_pt_vs_ctrl     face_FFA patient_vs_control    l    0.386661    0.233177
+   distinctiveness            LH-intact_pt_vs_ctrl    house_PPA patient_vs_control    l    0.212879    0.146385
+   distinctiveness            LH-intact_pt_vs_ctrl   object_LOC patient_vs_control    l    0.915708    0.664434
+   distinctiveness            LH-intact_pt_vs_ctrl    word_VWFA patient_vs_control    l    0.677432    0.804520
+   distinctiveness            LH-intact_pt_vs_ctrl          ALL            omnibus    l         NaN         NaN
+   distinctiveness            RH-intact_pt_vs_ctrl     face_FFA patient_vs_control    r    0.185181    0.131887
+   distinctiveness            RH-intact_pt_vs_ctrl    house_PPA patient_vs_control    r    0.235576    0.196480
+   distinctiveness            RH-intact_pt_vs_ctrl   object_LOC patient_vs_control    r    0.779722    0.841016
+   distinctiveness            RH-intact_pt_vs_ctrl    word_VWFA patient_vs_control    r    0.038696    0.017298
+   distinctiveness            RH-intact_pt_vs_ctrl          ALL            omnibus    r         NaN         NaN
+   distinctiveness                       ctrl_LvsR     face_FFA  control_asymmetry   lr    0.062594    0.065793
+   distinctiveness                       ctrl_LvsR    house_PPA  control_asymmetry   lr    0.753425    0.753725
+   distinctiveness                       ctrl_LvsR   object_LOC  control_asymmetry   lr    0.081192    0.086191
+   distinctiveness                       ctrl_LvsR    word_VWFA  control_asymmetry   lr    0.004400    0.003600
+   distinctiveness                       ctrl_LvsR          ALL            omnibus   lr         NaN         NaN
+               wta                M1_LH_ctrl_vs_pt          ALL            omnibus  NaN         NaN         NaN
+               wta                M1_LH_ctrl_vs_pt         face patient_vs_control  NaN    0.920708    0.339966
+               wta                M1_LH_ctrl_vs_pt        house patient_vs_control  NaN    0.069593    0.115088
+               wta                M1_LH_ctrl_vs_pt       object patient_vs_control  NaN    0.036496    0.073093
+               wta                M1_LH_ctrl_vs_pt         word patient_vs_control  NaN    0.001000    0.001600
+               wta                M2_RH_ctrl_vs_pt          ALL            omnibus  NaN         NaN         NaN
+               wta                M2_RH_ctrl_vs_pt         face patient_vs_control  NaN    0.020198    0.004400
+               wta                M2_RH_ctrl_vs_pt        house patient_vs_control  NaN    0.036396    0.020798
+               wta                M2_RH_ctrl_vs_pt       object patient_vs_control  NaN    0.013499    0.004900
+               wta                M2_RH_ctrl_vs_pt         word patient_vs_control  NaN    0.006799    0.003800
+               wta                  M3_LH_vs_RH_pt          ALL            omnibus  NaN         NaN         NaN
+               wta                  M3_LH_vs_RH_pt         face   patient_subgroup  NaN    0.737026    0.233577
+               wta                  M3_LH_vs_RH_pt        house   patient_subgroup  NaN    0.260474    0.190781
+               wta                  M3_LH_vs_RH_pt       object   patient_subgroup  NaN    0.393861    0.594941
+               wta                  M3_LH_vs_RH_pt         word   patient_subgroup  NaN    0.794521    0.683032
+               wta                    M4_ctrl_LvsR          ALL            omnibus  NaN         NaN         NaN
+               wta                    M4_ctrl_LvsR         word  control_asymmetry  NaN    0.001200    0.000900
+wta_within_cluster                 cluster_house_r    face_ctrl        descriptive  NaN         NaN         NaN
+wta_within_cluster                 cluster_house_r      face_pt        descriptive  NaN         NaN         NaN
+wta_within_cluster                 cluster_house_r   house_ctrl        descriptive  NaN         NaN         NaN
+wta_within_cluster                 cluster_house_r     house_pt        descriptive  NaN         NaN         NaN
+wta_within_cluster                 cluster_house_r  object_ctrl        descriptive  NaN         NaN         NaN
+wta_within_cluster                 cluster_house_r    object_pt        descriptive  NaN         NaN         NaN
+wta_within_cluster                 cluster_house_r    word_ctrl        descriptive  NaN         NaN         NaN
+wta_within_cluster                 cluster_house_r      word_pt        descriptive  NaN         NaN         NaN
+wta_within_cluster                cluster_object_l    face_ctrl        descriptive  NaN         NaN         NaN
+wta_within_cluster                cluster_object_l      face_pt        descriptive  NaN         NaN         NaN
+wta_within_cluster                cluster_object_l   house_ctrl        descriptive  NaN         NaN         NaN
+wta_within_cluster                cluster_object_l     house_pt        descriptive  NaN         NaN         NaN
+wta_within_cluster                cluster_object_l  object_ctrl        descriptive  NaN         NaN         NaN
+wta_within_cluster                cluster_object_l    object_pt        descriptive  NaN         NaN         NaN
+wta_within_cluster                cluster_object_l    word_ctrl        descriptive  NaN         NaN         NaN
+wta_within_cluster                cluster_object_l      word_pt        descriptive  NaN         NaN         NaN
+wta_within_cluster                  cluster_word_r    face_ctrl        descriptive  NaN         NaN         NaN
+wta_within_cluster                  cluster_word_r      face_pt        descriptive  NaN         NaN         NaN
+wta_within_cluster                  cluster_word_r   house_ctrl        descriptive  NaN         NaN         NaN
+wta_within_cluster                  cluster_word_r     house_pt        descriptive  NaN         NaN         NaN
+wta_within_cluster                  cluster_word_r  object_ctrl        descriptive  NaN         NaN         NaN
+wta_within_cluster                  cluster_word_r    object_pt        descriptive  NaN         NaN         NaN
+wta_within_cluster                  cluster_word_r    word_ctrl        descriptive  NaN         NaN         NaN
+wta_within_cluster                  cluster_word_r      word_pt        descriptive  NaN         NaN         NaN
+          geometry   face_FFA_LH-intact_pt_vs_ctrl          ALL            omnibus  NaN         NaN         NaN
+          geometry   face_FFA_LH-intact_pt_vs_ctrl   face-house patient_vs_control  NaN    0.748125    0.708229
+          geometry   face_FFA_LH-intact_pt_vs_ctrl  face-object patient_vs_control  NaN    0.941506    0.769223
+          geometry   face_FFA_LH-intact_pt_vs_ctrl    face-word patient_vs_control  NaN    0.066993    0.017698
+          geometry   face_FFA_LH-intact_pt_vs_ctrl house-object patient_vs_control  NaN    0.636436    0.580342
+          geometry   face_FFA_LH-intact_pt_vs_ctrl   house-word patient_vs_control  NaN    0.677932    0.779722
+          geometry   face_FFA_LH-intact_pt_vs_ctrl  object-word patient_vs_control  NaN    0.736526    0.946105
+          geometry   face_FFA_RH-intact_pt_vs_ctrl          ALL            omnibus  NaN         NaN         NaN
+          geometry   face_FFA_RH-intact_pt_vs_ctrl   face-house patient_vs_control  NaN    0.255874    0.390961
+          geometry   face_FFA_RH-intact_pt_vs_ctrl  face-object patient_vs_control  NaN    0.713229    0.583842
+          geometry   face_FFA_RH-intact_pt_vs_ctrl house-object patient_vs_control  NaN    0.228377    0.290771
+          geometry   face_FFA_RH-intact_pt_vs_ctrl   house-word patient_vs_control  NaN    0.442056    0.244276
+          geometry   face_FFA_RH-intact_pt_vs_ctrl  object-word patient_vs_control  NaN    0.049095    0.025197
+          geometry              face_FFA_ctrl_LvsR          ALL            omnibus  NaN         NaN         NaN
+          geometry              face_FFA_ctrl_LvsR   face-house  control_asymmetry  NaN    0.875812    0.870813
+          geometry              face_FFA_ctrl_LvsR  face-object  control_asymmetry  NaN    0.733127    0.730327
+          geometry              face_FFA_ctrl_LvsR    face-word  control_asymmetry  NaN    0.000200    0.000100
+          geometry              face_FFA_ctrl_LvsR house-object  control_asymmetry  NaN    0.244776    0.240776
+          geometry              face_FFA_ctrl_LvsR   house-word  control_asymmetry  NaN    0.125587    0.133487
+          geometry              face_FFA_ctrl_LvsR  object-word  control_asymmetry  NaN    0.002100    0.001100
+          geometry  house_PPA_LH-intact_pt_vs_ctrl          ALL            omnibus  NaN         NaN         NaN
+          geometry  house_PPA_LH-intact_pt_vs_ctrl   face-house patient_vs_control  NaN    0.236976    0.174283
+          geometry  house_PPA_LH-intact_pt_vs_ctrl  face-object patient_vs_control  NaN    0.006099    0.010599
+          geometry  house_PPA_LH-intact_pt_vs_ctrl    face-word patient_vs_control  NaN    0.441556    0.573543
+          geometry  house_PPA_LH-intact_pt_vs_ctrl house-object patient_vs_control  NaN    0.288871    0.246375
+          geometry  house_PPA_LH-intact_pt_vs_ctrl   house-word patient_vs_control  NaN    0.199480    0.127787
+          geometry  house_PPA_LH-intact_pt_vs_ctrl  object-word patient_vs_control  NaN    0.000500    0.001000
+          geometry  house_PPA_RH-intact_pt_vs_ctrl          ALL            omnibus  NaN         NaN         NaN
+          geometry  house_PPA_RH-intact_pt_vs_ctrl   face-house patient_vs_control  NaN    0.705129    0.614939
+          geometry  house_PPA_RH-intact_pt_vs_ctrl  face-object patient_vs_control  NaN    0.827217    0.859614
+          geometry  house_PPA_RH-intact_pt_vs_ctrl    face-word patient_vs_control  NaN    0.451555    0.507549
+          geometry  house_PPA_RH-intact_pt_vs_ctrl house-object patient_vs_control  NaN    0.147385    0.143586
+          geometry  house_PPA_RH-intact_pt_vs_ctrl   house-word patient_vs_control  NaN    0.079592    0.076792
+          geometry  house_PPA_RH-intact_pt_vs_ctrl  object-word patient_vs_control  NaN    0.216178    0.225477
+          geometry             house_PPA_ctrl_LvsR          ALL            omnibus  NaN         NaN         NaN
+          geometry             house_PPA_ctrl_LvsR   face-house  control_asymmetry  NaN    0.339666    0.341766
+          geometry             house_PPA_ctrl_LvsR  face-object  control_asymmetry  NaN    0.486051    0.484652
+          geometry             house_PPA_ctrl_LvsR    face-word  control_asymmetry  NaN    0.527247    0.519348
+          geometry             house_PPA_ctrl_LvsR house-object  control_asymmetry  NaN    0.518248    0.512249
+          geometry             house_PPA_ctrl_LvsR   house-word  control_asymmetry  NaN    0.482652    0.502250
+          geometry             house_PPA_ctrl_LvsR  object-word  control_asymmetry  NaN    0.997600    0.998600
+          geometry object_LOC_LH-intact_pt_vs_ctrl          ALL            omnibus  NaN         NaN         NaN
+          geometry object_LOC_LH-intact_pt_vs_ctrl   face-house patient_vs_control  NaN    0.083992    0.055194
+          geometry object_LOC_LH-intact_pt_vs_ctrl  face-object patient_vs_control  NaN    0.828917    0.762224
+          geometry object_LOC_LH-intact_pt_vs_ctrl    face-word patient_vs_control  NaN    0.651735    0.428557
+          geometry object_LOC_LH-intact_pt_vs_ctrl house-object patient_vs_control  NaN    0.995100    0.907009
+          geometry object_LOC_LH-intact_pt_vs_ctrl   house-word patient_vs_control  NaN    0.753425    0.379662
+          geometry object_LOC_LH-intact_pt_vs_ctrl  object-word patient_vs_control  NaN    0.619838    0.484752
+          geometry object_LOC_RH-intact_pt_vs_ctrl          ALL            omnibus  NaN         NaN         NaN
+          geometry object_LOC_RH-intact_pt_vs_ctrl   face-house patient_vs_control  NaN    0.069593    0.019398
+          geometry object_LOC_RH-intact_pt_vs_ctrl  face-object patient_vs_control  NaN    0.995900    0.592841
+          geometry object_LOC_RH-intact_pt_vs_ctrl    face-word patient_vs_control  NaN    0.460654    0.449155
+          geometry object_LOC_RH-intact_pt_vs_ctrl house-object patient_vs_control  NaN    0.748725    0.565443
+          geometry object_LOC_RH-intact_pt_vs_ctrl   house-word patient_vs_control  NaN    0.459254    0.248475
+          geometry object_LOC_RH-intact_pt_vs_ctrl  object-word patient_vs_control  NaN    0.325667    0.598440
+          geometry            object_LOC_ctrl_LvsR          ALL            omnibus  NaN         NaN         NaN
+          geometry            object_LOC_ctrl_LvsR   face-house  control_asymmetry  NaN    0.350665    0.346365
+          geometry            object_LOC_ctrl_LvsR  face-object  control_asymmetry  NaN    0.001700    0.001000
+          geometry            object_LOC_ctrl_LvsR    face-word  control_asymmetry  NaN    0.584942    0.592641
+          geometry            object_LOC_ctrl_LvsR house-object  control_asymmetry  NaN    0.058094    0.055794
+          geometry            object_LOC_ctrl_LvsR   house-word  control_asymmetry  NaN    0.303470    0.295470
+          geometry            object_LOC_ctrl_LvsR  object-word  control_asymmetry  NaN    0.741126    0.730427
+          geometry  word_VWFA_LH-intact_pt_vs_ctrl          ALL            omnibus  NaN         NaN         NaN
+          geometry  word_VWFA_LH-intact_pt_vs_ctrl   face-house patient_vs_control  NaN    0.386761    0.464554
+          geometry  word_VWFA_LH-intact_pt_vs_ctrl  face-object patient_vs_control  NaN    0.486151    0.517748
+          geometry  word_VWFA_LH-intact_pt_vs_ctrl    face-word patient_vs_control  NaN    0.916108    0.621438
+          geometry  word_VWFA_LH-intact_pt_vs_ctrl house-object patient_vs_control  NaN    0.333767    0.531147
+          geometry  word_VWFA_LH-intact_pt_vs_ctrl   house-word patient_vs_control  NaN    0.907709    0.986701
+          geometry  word_VWFA_LH-intact_pt_vs_ctrl  object-word patient_vs_control  NaN    0.364464    0.373463
+          geometry  word_VWFA_RH-intact_pt_vs_ctrl          ALL            omnibus  NaN         NaN         NaN
+          geometry  word_VWFA_RH-intact_pt_vs_ctrl   face-house patient_vs_control  NaN    0.186981    0.167583
+          geometry  word_VWFA_RH-intact_pt_vs_ctrl  face-object patient_vs_control  NaN    0.489051    0.469053
+          geometry  word_VWFA_RH-intact_pt_vs_ctrl    face-word patient_vs_control  NaN    0.785521    0.783622
+          geometry  word_VWFA_RH-intact_pt_vs_ctrl house-object patient_vs_control  NaN    0.339066    0.263574
+          geometry  word_VWFA_RH-intact_pt_vs_ctrl   house-word patient_vs_control  NaN    0.004800    0.001600
+          geometry  word_VWFA_RH-intact_pt_vs_ctrl  object-word patient_vs_control  NaN    0.041396    0.016198
+          geometry             word_VWFA_ctrl_LvsR          ALL            omnibus  NaN         NaN         NaN
+          geometry             word_VWFA_ctrl_LvsR   face-house  control_asymmetry  NaN    0.589241    0.590641
+          geometry             word_VWFA_ctrl_LvsR  face-object  control_asymmetry  NaN    0.272073    0.270573
+          geometry             word_VWFA_ctrl_LvsR    face-word  control_asymmetry  NaN    0.071693    0.071393
+          geometry             word_VWFA_ctrl_LvsR house-object  control_asymmetry  NaN    0.370063    0.359664
+          geometry             word_VWFA_ctrl_LvsR  object-word  control_asymmetry  NaN    0.007199    0.011299
+--- p_perm CROSSED .05 (3): ---
+ measure                           model      level         comparison hemi  p_perm_old  p_perm_new
+     wta                M1_LH_ctrl_vs_pt     object patient_vs_control  NaN    0.036496    0.073093
+geometry   face_FFA_LH-intact_pt_vs_ctrl  face-word patient_vs_control  NaN    0.066993    0.017698
+geometry object_LOC_RH-intact_pt_vs_ctrl face-house patient_vs_control  NaN    0.069593    0.019398
