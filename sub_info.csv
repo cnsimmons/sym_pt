@@ -32,7 +32,7 @@ sub-073,ses-01,10.3,Female,right,left,nonOTC,,pre
 sub-073,ses-02,10.9,Female,right,left,nonOTC,,post
 sub-074,ses-01,13.05,Female,right,left,OTC,JD,post
 sub-075,ses-01,11.58,Female,right,left,OTC,ED,post
-sub-076,ses-01,16.07,Male,right,left,OTC,JH,post
+sub-076,ses-01,16.07,Male,left,right,OTC,JH,post
 sub-077,ses-01,7.8,Female,right,left,OTC,KI,post
 sub-078,ses-01,22.22,Female,left,right,OTC,IT,post
 sub-079,ses-01,16.65,Male,right,left,OTC,X,post
