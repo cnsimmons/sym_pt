@@ -550,14 +550,17 @@ def tfce_clusters():
 # Main
 # =============================================================================
 def main():
+    global RSA_CSV
     global N_PERM, N_BOOT
     ap = argparse.ArgumentParser()
     ap.add_argument('--fdr', choices=['bh', 'by'], default=FDR_METHOD)
     ap.add_argument('--n-perm', type=int, default=N_PERM)
     ap.add_argument('--n-boot', type=int, default=N_BOOT)
     ap.add_argument('--univar', default=str(UNIVAR_CSV))   # swap to univariate_v1_harmonized.csv for the harmonized run
+    ap.add_argument('--rsa', default=str(RSA_CSV))   # harmonized RSA input
     ap.add_argument('--tag', default='')                   # suffix appended to output filenames (e.g. _harmonized)
     args = ap.parse_args()
+    RSA_CSV = args.rsa
     N_PERM, N_BOOT = args.n_perm, args.n_boot
 
     results = []
