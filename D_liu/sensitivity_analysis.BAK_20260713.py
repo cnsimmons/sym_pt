@@ -1,32 +1,24 @@
 #!/usr/bin/env python3
 """
 sensitivity_analysis.py — Liu (2025) patient-overlap sensitivity analysis.
+
 Reruns the cross-sectional tests with the 4 Liu-overlap patients excluded,
-and outputs a single side-by-side CSV comparing primary vs sensitivity stats.
+and outputs a single side-by-side CSV comparing primary (n=22) vs
+sensitivity (n=18) statistics.
 
 Liu overlap patients (excluded in sensitivity sample):
   sub-004 (UD, LH-intact)
   sub-021 (TC, RH-intact)
   sub-044 (SN, RH-intact)
   sub-099 (KN, RH-intact)
-→ Sensitivity sample drops 1 LH-intact + 3 RH-intact from the corrected
-  10 LH / 12 RH cohort = 9 LH-intact + 9 RH-intact = 18 OTC patients.
 
-HARMONIZED INPUTS (matching primary analysis):
-  - sum-selectivity     → univariate_v1_harmonized.csv (sum_selec_norm)
-  - distinctiveness     → rsa_v1_harmonized.csv        (liu_distinctiveness)
-  - distance (Test 1)   → peak_coords_mni.csv          (peaks are NOT harmonized)
-  - TFCE (Test 5)       → tfce_votc_harmonized (primary)
-                          tfce_votc_harmonized_excl_liu (sensitivity; rerun req'd)
-
-Session rule (matches 05_stats_harmony.select_sessions):
-  patients → last session, controls → first session.
+→ Sensitivity sample: 10 LH-intact + 8 RH-intact = 18 OTC patients.
 
 Tests
 -----
-  1. Distance to 2D control centroid (peak_x_mni, peak_y_mni) — raw peaks
-  2. Sum-selectivity (log10 sum_selec_norm) — harmonized
-  3. Liu distinctiveness (Fisher-z, raw metric) — harmonized
+  1. Distance to 2D control centroid (peak_x_mni, peak_y_mni)
+  2. Sum-selectivity (log10 sum_selec_norm)
+  3. Liu distinctiveness (Fisher-z, raw)
   5. WTA composition within surviving TFCE clusters
      (requires Test 4 output in TFCE_DIR_PRIMARY and TFCE_DIR_SENS)
 
@@ -39,12 +31,14 @@ Usage
   python sensitivity_analysis.py                # all available tests
   python sensitivity_analysis.py --skip-tfce    # Tests 1, 2, 3 only
 """
+
 import sys
 import argparse
 import numpy as np
 import pandas as pd
 from pathlib import Path
 from collections import Counter
+
 import nibabel as nib
 from statsmodels.stats.multitest import multipletests
 
@@ -66,53 +60,22 @@ CATEGORIES  = ['face', 'house', 'object', 'word']
 WTA_THRESH  = 2.33    # selectivity threshold for WTA tally
 FWE_THRESH  = 0.95    # 1 − p_FWE; voxels > .95 survive at p<.05 FWE
 
-# --- Input sources -----------------------------------------------------------
-REPO_DLIU        = Path('/user_data/csimmon2/git_repos/sym_pt/D_liu')
 PEAK_CSV         = Path(processed_dir) / 'group_results' / 'peak_coords' / 'peak_coords_mni.csv'
-UNIVAR_CSV       = REPO_DLIU / 'univariate_v1_harmonized.csv'   # harmonized sum-sel
-RSA_CSV          = REPO_DLIU / 'rsa_v1_harmonized.csv'          # harmonized distinctiveness
-TFCE_DIR_PRIMARY = Path(processed_dir) / 'group_results' / 'tfce_votc_harmonized'
-TFCE_DIR_SENS    = Path(processed_dir) / 'group_results' / 'tfce_votc_harmonized_excl_liu'
+TFCE_DIR_PRIMARY = Path(processed_dir) / 'group_results' / 'tfce_votc'
+TFCE_DIR_SENS    = Path(processed_dir) / 'group_results' / 'tfce_votc_excl_liu'
 OUT_DIR          = Path(processed_dir) / 'group_results' / 'sensitivity_liu_overlap'
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
-# ── Session selection (matches 05_stats_harmony.select_sessions) ─────────────
-def select_sessions(df):
-    """Patients → last session; controls → first session. Requires ses_num
-    (present in harmonized CSVs). Returns one row-set per subject."""
-    d = df.copy()
-    if 'ses_num' not in d.columns:
-        d['ses_num'] = pd.to_numeric(d['session'], errors='coerce').astype('Int64')
-    keep = []
-    for sid, g in d.groupby('subject_id'):
-        is_ctrl = (g['group'].iloc[0] == 'control')
-        target = g['ses_num'].min() if is_ctrl else g['ses_num'].max()
-        keep.append(g[g['ses_num'] == target])
-    return pd.concat(keep, ignore_index=True)
-
-
 # ── Data loading + subject filtering ─────────────────────────────────────────
 def load_peak_data():
-    """Load peak_coords_mni.csv, de-duplicate to one row per (sub, cat, hemi).
-    Peaks are NOT harmonized (coordinates), so this stays on peak_coords."""
+    """Load peak_coords_mni.csv and de-duplicate to one row per (sub, cat, hemi).
+
+    Per-pair rows (face-house, face-object, …) duplicate non-pair-dependent
+    columns (sum_selec_norm, peak_x_mni, liu_distinctiveness, etc.), so
+    drop_duplicates is safe for the perm-test columns we use.
+    """
     df = pd.read_csv(PEAK_CSV)
-    return df.drop_duplicates(subset=['subject_id', 'category', 'hemi']).copy()
-
-
-def load_sumsel_data():
-    """Harmonized sum-selectivity, session-selected, one row per (sub, cat, hemi)."""
-    df = pd.read_csv(UNIVAR_CSV)
-    df = select_sessions(df)
-    return df.drop_duplicates(subset=['subject_id', 'category', 'hemi']).copy()
-
-
-def load_distinctiveness_data():
-    """Harmonized distinctiveness. rsa file is per-pair; liu_distinctiveness is
-    the per-ROI value duplicated across pair rows, so dedup on (sub, cat, hemi)
-    to recover one row per ROI (matches load_peak_data's rationale)."""
-    df = pd.read_csv(RSA_CSV)
-    df = select_sessions(df)
     return df.drop_duplicates(subset=['subject_id', 'category', 'hemi']).copy()
 
 
@@ -192,8 +155,7 @@ def run_distance_test(df, ctrl_subs, pt_lh, pt_rh, label):
 # ── Tests 2, 3: generic per-ROI perm test on a column ───────────────────────
 def run_column_test(df, ctrl_subs, pt_lh, pt_rh, label,
                     measure_name, column, transform=None):
-    """Per-ROI × hemi perm test on a value column. df is the measure-specific
-    (harmonized) frame for sum-sel / distinctiveness."""
+    """Per-ROI × hemi perm test on a column in peak_coords_mni.csv."""
     rows = []
     for intact, hemi_label in [('l', 'LH'), ('r', 'RH')]:
         pt_subs_h = pt_lh if intact == 'l' else pt_rh
@@ -283,9 +245,9 @@ def build_control_wta(df, ctrl_subs, sample_label):
     """Build a 3D WTA map from the control mean zstat (cat-vs-all, copes 6–9).
 
     Per voxel: argmax across the 4 categories. Selectivity gate at WTA_THRESH.
-    Controls are not excluded in the sensitivity sample (only patients are), so
-    this is identical for primary and sensitivity. We rebuild anyway for
-    transparency.
+    Note: controls are not excluded in the sensitivity sample (only patients are
+    excluded), so this is identical for primary and sensitivity. We rebuild
+    anyway for transparency.
     """
     print(f'    [{sample_label}] Building control WTA map (n={len(ctrl_subs)} controls)...')
     ctrl_mean = {}
@@ -418,20 +380,16 @@ def main():
     args = parser.parse_args()
 
     print('=' * 78)
-    print('Liu (2025) patient-overlap sensitivity analysis  [HARMONIZED inputs]')
+    print('Liu (2025) patient-overlap sensitivity analysis')
     print('=' * 78)
     print(f'Excluded in sensitivity sample: {LIU_OVERLAP_SUBS}')
 
-    # Measure-specific frames (harmonized where applicable, session-selected)
-    peak_df   = load_peak_data()             # distance — raw peaks
-    sumsel_df = load_sumsel_data()           # sum-sel  — harmonized
-    dist_df   = load_distinctiveness_data()  # distinct — harmonized
+    df = load_peak_data()
 
-    # Subject lists come from the sum-sel frame (has group + intact_hemi and
-    # matches the harmonized cohort used for the reported stats).
-    ctrl_subs, pt_lh_pri, pt_rh_pri = build_subject_lists(sumsel_df, exclude_liu=False)
-    _,         pt_lh_sen, pt_rh_sen = build_subject_lists(sumsel_df, exclude_liu=True)
-    print(f'\nPrimary     sample: {len(ctrl_subs)} ctrl, '
+    # --- Build subject lists for both samples ----------------------------------
+    ctrl_subs, pt_lh_pri, pt_rh_pri = build_subject_lists(df, exclude_liu=False)
+    _,         pt_lh_sen, pt_rh_sen = build_subject_lists(df, exclude_liu=True)
+    print(f'\nPrimary    sample: {len(ctrl_subs)} ctrl, '
           f'{len(pt_lh_pri)} LH-intact, {len(pt_rh_pri)} RH-intact OTC')
     print(f'Sensitivity sample: {len(ctrl_subs)} ctrl, '
           f'{len(pt_lh_sen)} LH-intact, {len(pt_rh_sen)} RH-intact OTC')
@@ -444,12 +402,12 @@ def main():
         ('sensitivity', pt_lh_sen, pt_rh_sen),
     ]:
         long_rows.append(
-            run_distance_test(peak_df, ctrl_subs, pt_lh, pt_rh, sample_label))
+            run_distance_test(df, ctrl_subs, pt_lh, pt_rh, sample_label))
         long_rows.append(
-            run_column_test(sumsel_df, ctrl_subs, pt_lh, pt_rh, sample_label,
+            run_column_test(df, ctrl_subs, pt_lh, pt_rh, sample_label,
                             'sum_sel', 'sum_selec_norm', transform='log10'))
         long_rows.append(
-            run_column_test(dist_df, ctrl_subs, pt_lh, pt_rh, sample_label,
+            run_column_test(df, ctrl_subs, pt_lh, pt_rh, sample_label,
                             'distinctiveness', 'liu_distinctiveness', transform=None))
     long_df = pd.concat(long_rows, ignore_index=True)
     long_df = apply_bh_fdr_within_measure(long_df)
@@ -470,17 +428,17 @@ def main():
         print(f'  Primary TFCE dir missing: {TFCE_DIR_PRIMARY}')
     if not sens_ok:
         print(f'  Sensitivity TFCE dir missing: {TFCE_DIR_SENS}')
-        print('  → Run the excl-Liu TFCE (harmonized subject maps, 4 patients dropped)')
-        print('    into tfce_votc_harmonized_excl_liu first, then re-run this.')
+        print('  → Run `python tfce_votc_contrasts.py --exclude-liu` first, then re-run this.')
     if not (primary_ok or sens_ok):
         return
+
     wta_parts = []
     if primary_ok:
-        wta, peak_z = build_control_wta(peak_df, ctrl_subs, 'primary')
+        wta, peak_z = build_control_wta(df, ctrl_subs, 'primary')
         if wta is not None:
             wta_parts.append(tally_wta_in_clusters(TFCE_DIR_PRIMARY, wta, peak_z, 'primary'))
     if sens_ok:
-        wta, peak_z = build_control_wta(peak_df, ctrl_subs, 'sensitivity')
+        wta, peak_z = build_control_wta(df, ctrl_subs, 'sensitivity')
         if wta is not None:
             wta_parts.append(tally_wta_in_clusters(TFCE_DIR_SENS, wta, peak_z, 'sensitivity'))
     if wta_parts:
@@ -489,6 +447,7 @@ def main():
         wta_csv = OUT_DIR / 'tfce_wta_primary_vs_sensitivity.csv'
         wta_df.to_csv(wta_csv, index=False)
         print(f'\nSaved: {wta_csv}')
+
     print('\n[3/3] Done.')
 
 
