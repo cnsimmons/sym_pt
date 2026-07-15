@@ -107,6 +107,11 @@ def main():
         'l': nib.load(mask_l_path).get_fdata() > 0.5,
         'r': nib.load(mask_r_path).get_fdata() > 0.5,
     }
+    # MNI affine + per-hemi voxel ijk. np.argwhere is C-order, matching the
+    # flattening of winner[masks[hemi]], so mask_ijk[hemi][k] <-> w_hemi[k].
+    # Used to locate face-winning voxels for the per-patient face centroid.
+    mni_affine = nib.load(mask_l_path).affine
+    mask_ijk = {h: np.argwhere(masks[h]) for h in masks}
     cluster_masks = load_cluster_masks()
 
     df_csv = _load_csv()
@@ -150,6 +155,17 @@ def main():
                 n_total = w_hemi.size
                 n_selective = int((w_hemi > 0).sum())
 
+                # Face-winning voxel centroid + extent in MNI, per subject x hemi
+                # x session. Uses the same winners/session as the counts, so it
+                # rides select_sessions(pt_rule='last') downstream unchanged.
+                face_ijk = mask_ijk[hemi][w_hemi == 1]
+                if face_ijk.shape[0] > 0:
+                    face_xyz = nib.affines.apply_affine(mni_affine, face_ijk)
+                    face_cx, face_cy, face_cz = (float(v) for v in face_xyz.mean(0))
+                    face_extent_mm = float(np.linalg.norm(face_xyz.max(0) - face_xyz.min(0)))
+                else:
+                    face_cx = face_cy = face_cz = face_extent_mm = float('nan')
+
                 base = {
                     'subject_id': sid,
                     'code': f'{group}{sc}',
@@ -158,6 +174,8 @@ def main():
                     'status': 'patient' if pt else 'control',
                     'hemi': hemi,
                     'hemi_label': 'intact' if pt else ('left' if hemi == 'l' else 'right'),
+                    'face_mni_x': face_cx, 'face_mni_y': face_cy, 'face_mni_z': face_cz,
+                    'face_extent_mm': face_extent_mm,
                 }
 
                 # ── region='otc', denominator='selective' ───────────────────────

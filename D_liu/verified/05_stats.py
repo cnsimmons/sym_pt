@@ -27,6 +27,11 @@ Framework (locked):
     Control L-vs-R asymmetry tests are corrected as a SEPARATE family.
     (BY available via FDR_METHOD; matches notebook fdr_correct.)
 
+Supplementary:
+  - Leave-one-out robustness (Table S4): harmonized inputs, 4 parcels x 2 hemi
+    x 3 scalar measures (distance, sum-sel, distinctiveness), dropping each OTC
+    patient in turn. See loo_robustness().
+
 Usage:
   python 05_statistics.py [--fdr bh|by] [--n-perm 10000] [--n-boot 5000]
 """
@@ -51,6 +56,13 @@ TFCE_DIR    = Path(processed_dir) / 'group_results' / 'tfce_votc_fdr'
 
 OUT_RESULTS = D_LIU / 'stats_results.csv'
 OUT_TFCE    = D_LIU / 'tfce_clusters.csv'
+
+# Harmonized inputs for the leave-one-out supplement (ComBat-adjusted values;
+# peak coords are NOT harmonized -> distance reuses PEAK_MNI).
+UNIVAR_HARM = D_LIU / 'univariate_v1_harmonized.csv'
+RSA_HARM    = D_LIU / 'rsa_v1_harmonized.csv'
+OUT_LOO        = D_LIU / 'loo_robustness.csv'          # 24-cell summary = Table S4
+OUT_LOO_DETAIL = D_LIU / 'loo_robustness_detail.csv'   # 528-row per-drop long
 
 # ── Notebook constants ───────────────────────────────────────────────────────
 EXCLUDE     = ['sub-017']
@@ -547,6 +559,113 @@ def tfce_clusters():
     return pd.DataFrame(rows)
 
 # =============================================================================
+# Leave-one-out robustness (Supplementary Table S4)
+#   Harmonized inputs. 4 primary parcels x 2 hemi x 3 scalar measures
+#   (distance, sum-sel, distinctiveness). Drop each OTC patient in turn,
+#   recompute the per-cell patient-vs-control permutation p, classify.
+#   Uniform last-session (Liu). Threshold = raw permutation p < .05
+#   (matches manuscript ROBUST/FRAGILE/OUTLIER-EMERGENT definitions).
+#   Peak coords are NOT ComBat-harmonized -> distance reuses PEAK_MNI.
+# =============================================================================
+def _loo_sumsel():
+    df = apply_exclusions(pd.read_csv(UNIVAR_HARM))
+    df = df[df['group'] != 'nonOTC']
+    df = select_sessions(df, pt_rule='last')
+    df = df[df['sum_selec_norm'] > 0].copy()
+    df['value'] = np.log10(df['sum_selec_norm'])
+    return df
+
+def _loo_distinct():
+    rsa = apply_exclusions(pd.read_csv(RSA_HARM))
+    rsa = rsa.drop(columns=['pair', 'fisher_r']).drop_duplicates()
+    rsa = select_sessions(rsa, pt_rule='last')
+    if 'liu_distinctiveness' not in rsa.columns:
+        raise KeyError(f"'liu_distinctiveness' not in {RSA_HARM.name}; cols={list(rsa.columns)}")
+    rsa['value'] = rsa['liu_distinctiveness']
+    return rsa
+
+def _loo_distance():
+    mni = apply_exclusions(pd.read_csv(PEAK_MNI))
+    mni = select_sessions(mni, pt_rule='last')
+    return mni
+
+def _cell_p_scalar(df, roi, hemi, drop=None):
+    d = df if drop is None else df[df['subject_id'] != drop]
+    pt = d[(d['group'] == 'OTC') & (d['category'] == roi) & (d['hemi'] == hemi)]['value'].dropna().values
+    ct = d[(d['status'] == 'control') & (d['category'] == roi) & (d['hemi'] == hemi)]['value'].dropna().values
+    if len(pt) < 2 or len(ct) < 3:
+        return np.nan
+    _, p = perm_independent(pt, ct)
+    return p
+
+def _cell_p_distance(mni, roi, hemi, drop=None):
+    d = mni if drop is None else mni[mni['subject_id'] != drop]
+    c = d[(d['status'] == 'control') & (d['category'] == roi) & (d['hemi'] == hemi)] \
+        .drop_duplicates('subject_id')[['peak_x_mni', 'peak_y_mni']].dropna().values
+    if len(c) < 3:
+        return np.nan
+    cen = c.mean(0)                       # controls not dropped -> centroid fixed
+    ct_d = np.linalg.norm(c - cen, axis=1)
+    p = d[(d['group'] == 'OTC') & (d['category'] == roi) & (d['hemi'] == hemi)] \
+        .drop_duplicates('subject_id')[['peak_x_mni', 'peak_y_mni']].dropna().values
+    if len(p) < 2:
+        return np.nan
+    pt_d = np.linalg.norm(p - cen, axis=1)
+    _, pval = perm_independent(pt_d, ct_d)
+    return pval
+
+def loo_robustness():
+    measures = [
+        ('distance',        _loo_distance(), _cell_p_distance),
+        ('sum_selectivity', _loo_sumsel(),   _cell_p_scalar),
+        ('distinctiveness', _loo_distinct(), _cell_p_scalar),
+    ]
+    # fixed drop roster: every OTC patient, every cell (manuscript: 528 = 24 x 22)
+    roster = set()
+    for _, df, _ in measures:
+        roster |= set(df[df['group'] == 'OTC']['subject_id'].unique())
+    roster = sorted(roster)
+    print(f'  LOO drop roster: {len(roster)} OTC patients')
+
+    summary, detail = [], []
+    for mname, df, cellp in measures:
+        for roi in PRIMARY_ROIS:
+            for hemi in ('l', 'r'):
+                p_full = cellp(df, roi, hemi, drop=None)
+                drops = {}
+                for s in roster:
+                    pv = cellp(df, roi, hemi, drop=s)
+                    drops[s] = pv
+                    detail.append({'measure': mname, 'parcel': roi, 'hemi': hemi,
+                                   'dropped': s, 'p': round(pv, 4) if not np.isnan(pv) else np.nan})
+                valid = {s: pv for s, pv in drops.items() if not np.isnan(pv)}
+                full_sig = (not np.isnan(p_full)) and p_full < 0.05
+                broke   = [s for s, pv in valid.items() if pv >= 0.05]
+                emerged = [s for s, pv in valid.items() if pv < 0.05]
+                if not valid:
+                    cls, driver = 'insufficient', ''
+                elif full_sig:
+                    cls = 'ROBUST' if not broke else 'FRAGILE'
+                    driver = max(broke, key=lambda s: valid[s]) if broke else ''
+                elif emerged:
+                    cls = 'OUTLIER-EMERGENT'
+                    driver = min(emerged, key=lambda s: valid[s])
+                else:
+                    cls, driver = 'stable-null', ''
+                pv_list = list(valid.values())
+                summary.append({'measure': mname, 'parcel': roi, 'hemi': hemi,
+                                'p_full': round(p_full, 4) if not np.isnan(p_full) else np.nan,
+                                'classification': cls,
+                                'n_drops': len(valid), 'n_break': len(broke),
+                                'n_emergent': len(emerged),
+                                'p_max': round(max(pv_list), 4) if pv_list else np.nan,
+                                'driver': driver})
+    pd.DataFrame(summary).to_csv(OUT_LOO, index=False)
+    pd.DataFrame(detail).to_csv(OUT_LOO_DETAIL, index=False)
+    print(f'  Saved: {OUT_LOO} ({len(summary)} cells)')
+    print(f'  Saved: {OUT_LOO_DETAIL} ({len(detail)} drops)')
+
+# =============================================================================
 # Main
 # =============================================================================
 def main():
@@ -601,6 +720,10 @@ def main():
     tdf = tfce_clusters()
     tdf.to_csv(OUT_TFCE, index=False)
     print(f'Saved: {OUT_TFCE} ({len(tdf)} clusters)')
+
+    # ── Leave-one-out robustness (Table S4, harmonized inputs) ──
+    print('Leave-one-out robustness...')
+    loo_robustness()
 
 if __name__ == '__main__':
     main()
