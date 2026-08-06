@@ -88,7 +88,7 @@ os.makedirs('slurm_out', exist_ok=True)
 # Get all subjects
 subject_dirs = glob(f'{processed_dir}/sub-*')
 #subjects = sorted([os.path.basename(d).replace('sub-', '') for d in subject_dirs if os.path.isdir(d)])
-subjects = ['090', '039', '082','005']
+subjects = ['098','101','109']
 
 print(f"Found {len(subjects)} subjects")
 print("")
