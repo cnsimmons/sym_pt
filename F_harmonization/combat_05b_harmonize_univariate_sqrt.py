@@ -40,7 +40,7 @@ STATS    = GIT / 'D_liu' / 'verified' / '05_stats.py'
 UNIVAR   = GIT / 'D_liu' / 'univariate_v1.csv'
 SCANNER  = GIT / 'F_harmonization' / 'sub_info_scanner.csv'
 OUT      = GIT / 'D_liu' / 'univariate_v1_harmonized_sqrt.csv'   # SQRT: new output
-MEASURES = ['sum_selec_norm', 'volume', 'mean_act']
+MEASURES = ['sum_selec_norm', 'volume', 'mean_act', 'peak_z']
 WINSOR   = (5, 95)
 
 # SQRT: which measures get sqrt before ComBat. mean_act has no negatives and is
