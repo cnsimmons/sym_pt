@@ -87,6 +87,4 @@ def run(csv, valcol, measure, exp_dict, higher_is_better):
               f"{'OK (matches rVWFA)' if m > 0 else '*** SIGN WRONG ***'}")
 
 run(UNIV, 'sum_selec_norm',      'SUM-SEL (extent)',       EXP_SUMSEL, higher_is_better=True)
-run(UNIV, 'volume',              'VOLUME (extent)',        EXP_SUMSEL, higher_is_better=True)
-run(UNIV, 'peak_z',              'PEAK-Z',                 EXP_SUMSEL, higher_is_better=True)
 run(RSA,  'liu_distinctiveness', 'DISTINCTIVENESS',        EXP_DIST,   higher_is_better=False)
