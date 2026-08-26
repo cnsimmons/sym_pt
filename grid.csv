@@ -1,0 +1,46 @@
+measure,comparison,comparison_name,spec,beta,p,n_group_a,n_group_b,age_cap,roi_set
+peak_z,1,A = LH ctrl        B = LH-intact pt,binA  word+face | house+object,1.4937061270078154,0.04897551224387806,36,12,23.0,primary_strict
+peak_z,1,A = LH ctrl        B = LH-intact pt,binB  word | face+house+object,1.667597728746883,0.05347326336831584,36,12,23.0,primary_strict
+peak_z,1,A = LH ctrl        B = LH-intact pt,binC  word+face+house | object,1.6222758977501712,0.04147926036981509,36,12,23.0,primary_strict
+peak_z,1,A = LH ctrl        B = LH-intact pt,cont  |LI| z>1.96,8.252830097558498,0.020989505247376312,36,12,23.0,primary_strict
+peak_z,1,A = LH ctrl        B = LH-intact pt,cont  |LI| z>2.33,7.605273728277997,0.022488755622188907,36,12,23.0,primary_strict
+peak_z,2,A = RH ctrl        B = RH-intact pt,binA  word+face | house+object,-0.11907622880408919,0.9095452273863068,36,12,23.0,primary_strict
+peak_z,2,A = RH ctrl        B = RH-intact pt,binB  word | face+house+object,-0.6186861749048678,0.5562218890554723,36,12,23.0,primary_strict
+peak_z,2,A = RH ctrl        B = RH-intact pt,binC  word+face+house | object,-1.3238041025620855,0.3618190904547726,36,12,23.0,primary_strict
+peak_z,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>1.96,-1.791318849863114,0.736631684157921,36,12,23.0,primary_strict
+peak_z,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>2.33,-1.6191802287460404,0.7376311844077961,36,12,23.0,primary_strict
+peak_z,3,A = LH-intact pt   B = RH-intact pt,binA  word+face | house+object,-1.3690966020027453,0.44127936031984005,12,12,23.0,primary_strict
+peak_z,3,A = LH-intact pt   B = RH-intact pt,binB  word | face+house+object,-2.8409577773676986,0.0544727636181909,12,12,23.0,primary_strict
+peak_z,3,A = LH-intact pt   B = RH-intact pt,binC  word+face+house | object,-1.6529234217272872,0.5742128935532234,12,12,23.0,primary_strict
+peak_z,3,A = LH-intact pt   B = RH-intact pt,cont  |LI| z>1.96,-10.569869145633021,0.14142928535732133,12,12,23.0,primary_strict
+peak_z,3,A = LH-intact pt   B = RH-intact pt,cont  |LI| z>2.33,-10.004000632454371,0.12043978010994502,12,12,23.0,primary_strict
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,binA  word+face | house+object,0.21282408566362276,0.06796601699150424,35,12,23.0,primary_strict
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,binB  word | face+house+object,0.051101784794781,0.7096451774112944,35,12,23.0,primary_strict
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,binC  word+face+house | object,0.11490807142010073,0.4407796101949025,35,12,23.0,primary_strict
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,cont  |LI| z>1.96,0.7470710433679071,0.20389805097451275,35,12,23.0,primary_strict
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,cont  |LI| z>2.33,0.6615673708588343,0.23138430784607697,35,12,23.0,primary_strict
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,binA  word+face | house+object,-0.15808868728904568,0.22788605697151423,35,12,23.0,primary_strict
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,binB  word | face+house+object,-0.21373619652930387,0.14292853573213393,35,12,23.0,primary_strict
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,binC  word+face+house | object,-0.1963471186304313,0.22488755622188905,35,12,23.0,primary_strict
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>1.96,-0.9591077284183294,0.15692153923038482,35,12,23.0,primary_strict
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>2.33,-0.8890564547025432,0.15542228885557222,35,12,23.0,primary_strict
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,binA  word+face | house+object,-0.055879678489285434,0.6966516741629185,12,12,23.0,primary_strict
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,binB  word | face+house+object,0.028821501707610553,0.8540729635182409,12,12,23.0,primary_strict
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,binC  word+face+house | object,0.021142366971670157,0.9290354822588706,12,12,23.0,primary_strict
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,cont  |LI| z>1.96,-0.09857266856293112,0.894552723638181,12,12,23.0,primary_strict
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,cont  |LI| z>2.33,-0.080537356712854,0.9065467266366817,12,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,binA  word+face | house+object,0.10613770680459042,0.34182908545727136,35,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,binB  word | face+house+object,-0.08523147985671921,0.44627686156921537,35,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,binC  word+face+house | object,-0.045987276479630426,0.6356821589205397,35,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,cont  |LI| z>1.96,0.1173757039032911,0.8210894552723638,35,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,cont  |LI| z>2.33,0.08270458725181717,0.8670664667666167,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,binA  word+face | house+object,-0.13619335582549247,0.16891554222888555,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,binB  word | face+house+object,-0.4984078549934012,0.0024987506246876563,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,binC  word+face+house | object,-0.07827643050207178,0.2563718140929535,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>1.96,-1.5435163737849538,0.009495252373813094,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>2.33,-1.5048659909846656,0.00849575212393803,35,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,binA  word+face | house+object,0.0038625865895454137,0.9675162418790605,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,binB  word | face+house+object,0.060385883365691284,0.6896551724137931,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,binC  word+face+house | object,0.15196367349274742,0.27786106946526734,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,cont  |LI| z>1.96,0.15236369339284528,0.7941029485257372,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,cont  |LI| z>2.33,0.13563679064910505,0.8035982008995503,12,12,23.0,primary_strict
