@@ -1,0 +1,27 @@
+@page { size: Letter; margin: 0.7in 0.65in; }
+body { font-family: "DejaVu Sans", Helvetica, Arial, sans-serif;
+       font-size: 9.5pt; line-height: 1.4; color: #1a1a1a; }
+h1 { font-size: 16pt; margin: 0 0 4pt 0; border-bottom: 2px solid #333;
+     padding-bottom: 5pt; }
+h2 { font-size: 12pt; margin: 16pt 0 6pt 0; color: #1a3a5c;
+     border-bottom: 1px solid #c8c8c8; padding-bottom: 3pt;
+     page-break-after: avoid; }
+p { margin: 5pt 0; }
+hr { display: none; }
+table { border-collapse: collapse; width: 100%; margin: 5pt 0 9pt 0;
+        font-size: 8.5pt; page-break-inside: avoid; }
+th { background: #eef1f4; text-align: left; padding: 3.5pt 5pt;
+     border-bottom: 1.2px solid #999; font-weight: 600; }
+td { padding: 3pt 5pt; border-bottom: 0.5px solid #e2e2e2;
+     vertical-align: top; }
+td:nth-child(1) { width: 42%; }
+td:nth-child(2), td:nth-child(3), td:nth-child(4) { text-align: right;
+     white-space: nowrap; }
+td:nth-child(5) { text-align: left; width: 5%; color: #b03030;
+     font-weight: 700; }
+code { font-family: "DejaVu Sans Mono", monospace; font-size: 8pt;
+       background: none; }
+strong { color: #000; }
+em { color: #555; }
+td:nth-child(1) { font-family: "DejaVu Sans Mono", monospace;
+                  font-size: 7.8pt; letter-spacing: -0.1pt; }

@@ -1,0 +1,357 @@
+#!/usr/bin/env python
+"""
+marlene_lmm.py — the three LMMs, per measure.
+
+Companion to marlene_grid.py, NOT a replacement. The grid collapses category
+into a single 1-df modifier (binA/binB/binC/continuous LI) and tests it by
+permutation. This script keeps category as a full factor and tests the
+category x group interaction as a joint Wald chi2 from a random-intercept
+mixed model.
+
+  six models, each measure. PRIMARY:
+    1  A = LH controls      B = LH-intact patients
+    2  A = RH controls      B = RH-intact patients
+    3  A = LH-intact pt     B = RH-intact patients
+  SUPPLEMENTAL:
+    4  A = RH controls      B = LH-intact patients   CROSSED
+    5  A = LH controls      B = RH-intact patients   CROSSED
+    6  A = LH controls      B = RH controls          PAIRED, within subject
+
+  Comparisons 4 and 5 pit a patient's intact hemisphere against the OPPOSITE
+  control hemisphere, so they confound resection with normal asymmetry.
+  Comparison 6 measures that asymmetry alone and is the reference for them.
+  In comparison 6 each control contributes both hemispheres; the subject random
+  intercept pairs them, matching lmm_omnibus's ctrl_LvsR model.
+
+  fixed:   C(factor) * C(grp) + age            [comparisons 1, 2]
+           C(factor) * C(grp) + age + C(surg)  [comparison 3 only]
+  random:  intercept by subject_id
+  REML.
+
+  factor = roi  (4 levels -> 3 df interaction) for peak_z, distinctiveness
+  factor = pair (6 levels -> 5 df interaction) for geometry, with roi dummies,
+           following lmm_omnibus in 05_stats_harmony.py
+
+Surgery type is patient-only, so it enters comparison 3 alone, where both sides
+are patients and Hemi/OTC is a clean 2-level covariate. In comparisons 1 and 2
+every control would be a third "none" level that is redundant with grp.
+
+Run --surg-look to additionally fit comparisons 1 and 2 with grp replaced by a
+three-level none/Hemi/OTC factor. That is exploratory: 6 df on ~6 subjects per
+cell.
+
+Usage:
+  python marlene_lmm.py
+  python marlene_lmm.py --csv lmm.csv
+  python marlene_lmm.py --surg-look
+"""
+import argparse
+import warnings
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+from scipy import stats
+
+GIT  = Path('/user_data/csimmon2/git_repos/sym_pt')
+RSA  = GIT / 'D_liu' / 'rsa_v1_harmonized.csv'
+UNI  = GIT / 'D_liu' / 'univariate_v1_harmonized_sqrt.csv'
+INFO = GIT / 'sub_info.csv'
+
+ROIS  = ['object_LOC', 'house_PPA_strict', 'face_FFA', 'word_VWFA']
+PAIRS = ['face-house', 'face-object', 'face-word',
+         'house-object', 'house-word', 'object-word']
+AGE_CAP = 23.0
+
+# Surgery type, reconciled from the cross-sectional figure script's P-codes
+# via the public_id -> sub_bids key. sub-091 is present but falls to the age cap.
+SURG = {
+    'sub-077': 'Hemi', 'sub-004': 'OTC',  'sub-075': 'OTC',  'sub-074': 'Hemi',
+    'sub-008': 'Hemi', 'sub-098': 'Hemi', 'sub-079': 'OTC',  'sub-039': 'OTC',
+    'sub-109': 'Hemi', 'sub-089': 'OTC',  'sub-101': 'Hemi', 'sub-005': 'OTC',
+    'sub-091': 'Hemi',
+    'sub-099': 'Hemi', 'sub-069': 'Hemi', 'sub-044': 'OTC',  'sub-010': 'Hemi',
+    'sub-021': 'OTC',  'sub-090': 'Hemi', 'sub-076': 'OTC',  'sub-108': 'Hemi',
+    'sub-066': 'Hemi', 'sub-092': 'Hemi', 'sub-082': 'OTC',  'sub-078': 'OTC',
+}
+
+COMPARISONS = {
+    1: 'A = LH ctrl        B = LH-intact pt',
+    2: 'A = RH ctrl        B = RH-intact pt',
+    3: 'A = LH-intact pt   B = RH-intact pt',
+    4: 'A = RH ctrl        B = LH-intact pt  [crossed]',
+    5: 'A = LH ctrl        B = RH-intact pt  [crossed]',
+    6: 'A = LH ctrl        B = RH ctrl       [paired]',
+}
+PRIMARY = (1, 2, 3)
+PAIRED = (6,)          # subject contributes BOTH groups; random intercept pairs them
+
+
+# ---------------------------------------------------------------- data loading
+
+def _sessions(df, group, rule):
+    x = df[df['group'] == group].copy()
+    s = x.groupby('subject_id')['session'].agg(rule).rename('sx')
+    x = x.join(s, on='subject_id')
+    return x[x['session'] == x['sx']].drop(columns=['sx'], errors='ignore')
+
+
+def load_measure(measure, cap=AGE_CAP, quiet=False):
+    """(ctl, pat) long frames. val oriented HIGHER = MORE selective / distinct.
+
+    Same source files, session rule, orientation and age cap as marlene_grid.py,
+    but 'age' is carried through because the LMM needs it as a covariate.
+    """
+    info = pd.read_csv(INFO)
+    info['session'] = info['ses'].str.replace('ses-', '', regex=False).astype(int)
+
+    if measure == 'peak_z':
+        d = pd.read_csv(UNI)
+        d['session'] = d['session'].astype(int)
+        d = d[d['category'].isin(ROIS)].drop_duplicates(
+            ['subject_id', 'session', 'hemi', 'category'])
+        d = d.rename(columns={'category': 'roi', 'peak_z': 'val'})
+        flip = False
+    elif measure == 'distinctiveness':
+        d = pd.read_csv(RSA)
+        d['session'] = d['session'].astype(int)
+        d = d[d['category'].isin(ROIS)].drop_duplicates(
+            ['subject_id', 'session', 'hemi', 'category'])
+        d = d.rename(columns={'category': 'roi', 'liu_distinctiveness': 'val'})
+        flip = True
+    elif measure == 'geometry':
+        d = pd.read_csv(RSA)
+        d['session'] = d['session'].astype(int)
+        d = d[d['category'].isin(ROIS)].drop_duplicates(
+            ['subject_id', 'session', 'hemi', 'category', 'pair'])
+        d = d.rename(columns={'category': 'roi', 'fisher_r': 'val'})
+        flip = True
+    else:
+        raise ValueError(measure)
+
+    def add_age(x):
+        return x.merge(info[['sub', 'session', 'age']],
+                       left_on=['subject_id', 'session'],
+                       right_on=['sub', 'session'], how='left')
+
+    ctl = add_age(_sessions(d, 'control', 'min'))
+    pat = _sessions(d, 'OTC', 'max')
+    pat['intact'] = pat['intact_hemi'].map({'left': 'l', 'right': 'r'})
+    pat = add_age(pat[pat['hemi'] == pat['intact']])
+
+    if flip:
+        ctl['val'] = -ctl['val']
+        pat['val'] = -pat['val']
+
+    if cap is not None:
+        dc = sorted(ctl.loc[ctl['age'] > cap, 'subject_id'].unique())
+        dp = sorted(pat.loc[pat['age'] > cap, 'subject_id'].unique())
+        if (dc or dp) and not quiet:
+            print(f'  [{measure}] age > {cap:g} excluded — '
+                  f'controls {dc}, patients {dp}')
+        ctl = ctl[ctl['age'] <= cap]
+        pat = pat[pat['age'] <= cap]
+
+    cols = ['subject_id', 'hemi', 'roi', 'val', 'age']
+    if measure == 'geometry':
+        cols = cols + ['pair']
+    return ctl[cols], pat[cols + ['intact']]
+
+
+def build_frame(ctl, pat, comparison, pair_level=False):
+    """Long frame with subject_id, roi, val, age, grp (+pair). grp=1 is GROUP B."""
+    keep = ['subject_id', 'roi', 'val', 'age'] + (['pair'] if pair_level else [])
+    if comparison == 1:
+        a = ctl[ctl['hemi'] == 'l'][keep].assign(grp=0)
+        b = pat[pat['intact'] == 'l'][keep].assign(grp=1)
+    elif comparison == 2:
+        a = ctl[ctl['hemi'] == 'r'][keep].assign(grp=0)
+        b = pat[pat['intact'] == 'r'][keep].assign(grp=1)
+    elif comparison == 3:
+        a = pat[pat['intact'] == 'l'][keep].assign(grp=0)
+        b = pat[pat['intact'] == 'r'][keep].assign(grp=1)
+    elif comparison == 4:
+        a = ctl[ctl['hemi'] == 'r'][keep].assign(grp=0)
+        b = pat[pat['intact'] == 'l'][keep].assign(grp=1)
+    elif comparison == 5:
+        a = ctl[ctl['hemi'] == 'l'][keep].assign(grp=0)
+        b = pat[pat['intact'] == 'r'][keep].assign(grp=1)
+    elif comparison == 6:
+        a = ctl[ctl['hemi'] == 'l'][keep].assign(grp=0)
+        b = ctl[ctl['hemi'] == 'r'][keep].assign(grp=1)
+    else:
+        raise ValueError(comparison)
+    df = pd.concat([a, b], ignore_index=True).dropna(subset=['val'])
+    # balanced design: require the full complement of cells per subject.
+    # in a paired comparison each subject supplies both groups, so twice as many.
+    need = len(ROIS) * (len(PAIRS) if pair_level else 1)
+    if comparison in PAIRED:
+        need *= 2
+    unit = df.groupby('subject_id').size()
+    return df[df['subject_id'].isin(unit[unit == need].index)].copy()
+
+
+# ------------------------------------------------------------------- the model
+
+def joint_wald(res, want):
+    """Joint Wald chi2 over fixed-effect names containing every token in `want`.
+
+    pinv rather than inv so a rank-deficient interaction block returns a value
+    instead of raising; check `converged` and the df before trusting it.
+    """
+    fe = res.fe_params
+    names = [n for n in fe.index if all(t in n for t in want)]
+    if not names:
+        return np.nan, 0, np.nan, []
+    V = res.cov_params()
+    try:
+        Vs = np.asarray(V.loc[names, names], dtype=float)
+    except KeyError:
+        return np.nan, len(names), np.nan, names
+    b = fe[names].to_numpy(float)
+    chi2 = float(b @ np.linalg.pinv(Vs) @ b)
+    df = int(np.linalg.matrix_rank(Vs))
+    p = float(stats.chi2.sf(chi2, df)) if df > 0 else np.nan
+    return chi2, df, p, names
+
+
+def fit_one(df, factor, comparison, group_var='grp', with_surg=False):
+    """Random-intercept LMM; returns a dict of everything worth reporting."""
+    d = df.rename(columns={'val': 'y', factor: 'f', group_var: 'g'}).copy()
+    d['g'] = d['g'].astype(str)
+
+    terms = ['C(f) * C(g)', 'age']
+    if factor == 'pair':
+        terms.insert(1, 'C(roi)')
+    if with_surg:
+        d['surg'] = d['subject_id'].map(SURG)
+        if d['surg'].nunique() > 1:
+            terms.append('C(surg)')
+    formula = 'y ~ ' + ' + '.join(terms)
+
+    out = {'formula': formula,
+           'n_a': int(d.loc[d['g'] == d['g'].min(), 'subject_id'].nunique()),
+           'n_b': int(d.loc[d['g'] == d['g'].max(), 'subject_id'].nunique()),
+           'n_obs': len(d)}
+
+    with warnings.catch_warnings(record=True) as w:
+        warnings.simplefilter('always')
+        try:
+            res = smf.mixedlm(formula, d, groups=d['subject_id']).fit(reml=True)
+        except Exception as e:
+            out.update(converged=False, warn=f'FIT FAILED: {type(e).__name__}',
+                       chi2=np.nan, df=np.nan, p=np.nan,
+                       age_beta=np.nan, age_p=np.nan,
+                       surg_beta=np.nan, surg_p=np.nan, group_var=np.nan)
+            return out
+        msgs = sorted({str(x.message).split('.')[0] for x in w})
+
+    chi2, dfree, p, _ = joint_wald(res, ['C(f)', 'C(g)'])
+    fe, pv = res.fe_params, res.pvalues
+
+    def coef(prefix):
+        hit = [n for n in fe.index if n.startswith(prefix)]
+        return (float(fe[hit[0]]), float(pv[hit[0]])) if hit else (np.nan, np.nan)
+
+    age_b, age_p = coef('age')
+    sg_b, sg_p = coef('C(surg)')
+
+    out.update(converged=bool(getattr(res, 'converged', False)),
+               warn='; '.join(m for m in msgs if m)[:120],
+               chi2=chi2, df=dfree, p=p,
+               age_beta=age_b, age_p=age_p,
+               surg_beta=sg_b, surg_p=sg_p,
+               group_var=float(np.asarray(res.cov_re).ravel()[0]))
+    return out
+
+
+# -------------------------------------------------------------------- reporting
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--csv', default=None, help='write results here')
+    ap.add_argument('--age-cap', type=float, default=AGE_CAP)
+    ap.add_argument('--comparisons', nargs='+', type=int,
+                    default=sorted(COMPARISONS),
+                    help='subset of 1-6; default all')
+    ap.add_argument('--surg-look', action='store_true',
+                    help='exploratory: comparisons 1-2 with none/Hemi/OTC in place of grp')
+    args = ap.parse_args()
+
+    print(f'ROIs: {ROIS}')
+    print(f'age cap: {args.age_cap:g}   random intercept by subject, REML')
+    print('interaction = joint Wald chi2 on C(factor):C(grp)')
+    print('all measures oriented so HIGHER = MORE selective / MORE distinct\n')
+
+    rows = []
+    for measure in ['peak_z', 'distinctiveness', 'geometry']:
+        pair_level = measure == 'geometry'
+        factor = 'pair' if pair_level else 'roi'
+        ctl, pat = load_measure(measure, cap=args.age_cap)
+
+        print('=' * 78)
+        print(f'MEASURE: {measure}')
+        print(f'  factor = {factor}'
+              + ('   (roi dummies included)' if pair_level else ''))
+
+        for comp in [c for c in args.comparisons if c in COMPARISONS]:
+            label = COMPARISONS[comp]
+            d = build_frame(ctl, pat, comp, pair_level=pair_level)
+            r = fit_one(d, factor, comp, with_surg=(comp == 3))
+            r.update(measure=measure, comparison=comp, comparison_name=label,
+                     model='primary', factor=factor, age_cap=args.age_cap,
+                     role='primary' if comp in PRIMARY else 'supplemental',
+                     paired=comp in PAIRED)
+            rows.append(r)
+
+            tag = '' if comp in PRIMARY else '   [SUPPLEMENTAL]'
+            print(f'\n  {comp}. {label}{tag}')
+            if comp == 3:
+                print('     (patient-group x category; no control reference)')
+            if comp in (4, 5):
+                print('     (crossed hemispheres; confounded with normal '
+                      'asymmetry — read against comparison 6)')
+            if comp in PAIRED:
+                print('     (within subject; random intercept pairs the two '
+                      'hemispheres)')
+            flag = '' if r['converged'] else '   ** DID NOT CONVERGE **'
+            print(f'     chi2({r["df"]}) = {r["chi2"]:.3f}   p = {r["p"]:.4f}'
+                  f'   nA={r["n_a"]} nB={r["n_b"]}{flag}')
+            print(f'     age    beta = {r["age_beta"]:+.4f}  p = {r["age_p"]:.4f}')
+            if comp == 3 and not np.isnan(r['surg_beta']):
+                print(f'     surg   beta = {r["surg_beta"]:+.4f}  p = {r["surg_p"]:.4f}'
+                      '   (OTC vs Hemi)')
+            if r['warn']:
+                print(f'     warn: {r["warn"]}')
+
+        if args.surg_look:
+            print('\n  --- exploratory: grp replaced by none/Hemi/OTC ---')
+            for comp in (1, 2):
+                d = build_frame(ctl, pat, comp, pair_level=pair_level)
+                d['g3'] = d['subject_id'].map(SURG).fillna('none')
+                r = fit_one(d, factor, comp, group_var='g3')
+                r.update(measure=measure, comparison=comp,
+                         comparison_name=COMPARISONS[comp], model='surg_look',
+                         factor=factor, age_cap=args.age_cap)
+                rows.append(r)
+                flag = '' if r['converged'] else '   ** DID NOT CONVERGE **'
+                print(f'  {comp}. chi2({r["df"]}) = {r["chi2"]:.3f}'
+                      f'   p = {r["p"]:.4f}{flag}')
+
+    print('\n' + '=' * 78)
+    print('TFCE: no subject x category value exists, so it cannot take this '
+          'form. Report the existing cluster table instead.')
+
+    if args.csv:
+        cols = ['measure', 'model', 'role', 'paired', 'comparison',
+                'comparison_name', 'factor',
+                'chi2', 'df', 'p', 'age_beta', 'age_p', 'surg_beta', 'surg_p',
+                'group_var', 'n_a', 'n_b', 'n_obs', 'converged', 'warn',
+                'formula', 'age_cap']
+        pd.DataFrame(rows)[cols].to_csv(args.csv, index=False)
+        print(f'\nwrote {args.csv}')
+
+
+if __name__ == '__main__':
+    main()

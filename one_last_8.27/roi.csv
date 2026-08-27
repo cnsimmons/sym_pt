@@ -1,0 +1,217 @@
+measure,comparison,comparison_name,role,paired,roi,pair,diff,cohen_d,p,q_fdr,higher_group,n_a,n_b,age_cap,roi_set
+peak_z,1,A = LH ctrl        B = LH-intact pt,primary,False,object_LOC,,-2.3424091391772315,-0.8223680496665929,0.01919616076784643,0.07678464307138572,A,36,12,23.0,primary_strict
+peak_z,1,A = LH ctrl        B = LH-intact pt,primary,False,house_PPA_strict,,-1.3749439787603484,-0.5697592905639273,0.09118176364727054,0.18236352729454108,A,36,12,23.0,primary_strict
+peak_z,1,A = LH ctrl        B = LH-intact pt,primary,False,face_FFA,,-0.9530488817051843,-0.24795676767196334,0.45810837832433515,0.6108111710991135,A,36,12,23.0,primary_strict
+peak_z,1,A = LH ctrl        B = LH-intact pt,primary,False,word_VWFA,,-0.019653499767285254,-0.010727929454830072,0.9748050389922016,0.9748050389922016,A,36,12,23.0,primary_strict
+peak_z,2,A = RH ctrl        B = RH-intact pt,primary,False,object_LOC,,-0.4126629179466885,-0.12823069898978046,0.7124575084983004,0.7124575084983004,A,36,12,23.0,primary_strict
+peak_z,2,A = RH ctrl        B = RH-intact pt,primary,False,house_PPA_strict,,-1.1555700663290844,-0.37991376508233116,0.2581483703259348,0.7124575084983004,A,36,12,23.0,primary_strict
+peak_z,2,A = RH ctrl        B = RH-intact pt,primary,False,face_FFA,,0.5505049054248037,0.13146000168993824,0.6924615076984603,0.7124575084983004,B,36,12,23.0,primary_strict
+peak_z,2,A = RH ctrl        B = RH-intact pt,primary,False,word_VWFA,,0.4097093792936546,0.27011381496002274,0.4123175364927015,0.7124575084983004,B,36,12,23.0,primary_strict
+peak_z,3,A = LH-intact pt   B = RH-intact pt,primary,False,object_LOC,,0.9851476135897315,0.26811430637403316,0.509498100379924,0.6793308005065654,B,12,12,23.0,primary_strict
+peak_z,3,A = LH-intact pt   B = RH-intact pt,primary,False,house_PPA_strict,,1.0657749067729094,0.37052242839175753,0.37772445510897823,0.6793308005065654,B,12,12,23.0,primary_strict
+peak_z,3,A = LH-intact pt   B = RH-intact pt,primary,False,face_FFA,,2.2715370834898216,0.5983138551790026,0.15656868626274745,0.6262747450509898,B,12,12,23.0,primary_strict
+peak_z,3,A = LH-intact pt   B = RH-intact pt,primary,False,word_VWFA,,0.046763161272744824,0.021975335973263455,0.9560087982403519,0.9560087982403519,B,12,12,23.0,primary_strict
+peak_z,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,object_LOC,,-1.39781053153642,-0.45117563948944117,0.1873625274945011,0.30553889222155567,A,36,12,23.0,primary_strict
+peak_z,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,house_PPA_strict,,-2.221344973101994,-0.770229750871215,0.026194761047790442,0.10477904419116177,A,36,12,23.0,primary_strict
+peak_z,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,face_FFA,,-1.721032178065018,-0.4112586923713533,0.22915416916616677,0.30553889222155567,A,36,12,23.0,primary_strict
+peak_z,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,word_VWFA,,0.36294621802090976,0.21422702515865116,0.5248950209958009,0.5248950209958009,B,36,12,23.0,primary_strict
+peak_z,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,object_LOC,,-1.3572615255875,-0.4556974531103367,0.18156368726254749,0.619876024795041,A,36,12,23.0,primary_strict
+peak_z,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,house_PPA_strict,,-0.3091690719874389,-0.11893063824620491,0.7186562687462508,0.9582083583283344,A,36,12,23.0,primary_strict
+peak_z,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,face_FFA,,1.3184882017846373,0.34275908444709347,0.3099380123975205,0.619876024795041,B,36,12,23.0,primary_strict
+peak_z,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,word_VWFA,,0.02710966150545957,0.016240220732603124,0.9636072785442912,0.9636072785442912,B,36,12,23.0,primary_strict
+peak_z,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,object_LOC,,-0.9445986076408117,-0.4842090861904589,0.007198560287942412,0.022795440911817635,A,36,36,23.0,primary_strict
+peak_z,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,house_PPA_strict,,0.8464009943416454,0.44163922356233276,0.011397720455908818,0.022795440911817635,B,36,36,23.0,primary_strict
+peak_z,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,face_FFA,,0.7679832963598339,0.1935411100724249,0.25874825034993,0.25874825034993,B,36,36,23.0,primary_strict
+peak_z,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,word_VWFA,,-0.382599717788195,-0.29550198258821503,0.08338332333533294,0.11117776444711058,A,36,36,23.0,primary_strict
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,primary,False,object_LOC,,-0.019541554980067932,-0.052298506655144544,0.8774245150969806,0.8774245150969806,A,36,12,23.0,primary_strict
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,primary,False,house_PPA_strict,,-0.05537353091036275,-0.14226401174132983,0.6746650669866027,0.8774245150969806,A,36,12,23.0,primary_strict
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,primary,False,face_FFA,,0.2325749466640793,0.7461461828442514,0.03059388122375525,0.122375524895021,B,36,12,23.0,primary_strict
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,primary,False,word_VWFA,,0.11003564993913495,0.30705792850626895,0.3709258148370326,0.7418516296740651,B,35,12,23.0,primary_strict
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,primary,False,object_LOC,,-0.07384549189216649,-0.16192111089344807,0.6342731453709258,0.6342731453709258,A,36,12,23.0,primary_strict
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,primary,False,house_PPA_strict,,-0.18913400218328724,-0.650696792354822,0.0595880823835233,0.0874491768313004,A,36,12,23.0,primary_strict
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,primary,False,face_FFA,,-0.202739194794476,-0.6397452814989508,0.0655868826234753,0.0874491768313004,A,35,12,23.0,primary_strict
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,primary,False,word_VWFA,,-0.36525480229938845,-0.9248892309807137,0.007798440311937612,0.03119376124775045,A,35,12,23.0,primary_strict
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,primary,False,object_LOC,,-0.2157443152027918,-0.4954680137354422,0.2419516096780644,0.3226021462374192,A,12,12,23.0,primary_strict
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,primary,False,house_PPA_strict,,-0.12815108625600205,-0.31217539397083566,0.45770845830833834,0.45770845830833834,A,12,12,23.0,primary_strict
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,primary,False,face_FFA,,-0.27738334474403004,-0.8846128617022263,0.04059188162367527,0.16236752649470107,A,12,12,23.0,primary_strict
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,primary,False,word_VWFA,,-0.17827141369332977,-0.5159154900703568,0.22515496900619877,0.3226021462374192,A,12,12,23.0,primary_strict
+distinctiveness,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,object_LOC,,0.1418988233106253,0.30084648461920804,0.3707258548290342,0.5840831833633273,B,36,12,23.0,primary_strict
+distinctiveness,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,house_PPA_strict,,-0.060982915927285206,-0.17759575573188682,0.5840831833633273,0.5840831833633273,A,36,12,23.0,primary_strict
+distinctiveness,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,face_FFA,,0.07464414994955404,0.23196559314737067,0.4927014597080584,0.5840831833633273,B,35,12,23.0,primary_strict
+distinctiveness,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,word_VWFA,,-0.18698338860605868,-0.4765354650299012,0.16676664667066587,0.5840831833633273,A,35,12,23.0,primary_strict
+distinctiveness,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,object_LOC,,-0.23528587018285974,-0.6651201024283144,0.052189562087582485,0.20875824835032994,A,36,12,23.0,primary_strict
+distinctiveness,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,house_PPA_strict,,-0.1835246171663648,-0.5340891138295257,0.11457708458308338,0.22915416916616677,A,36,12,23.0,primary_strict
+distinctiveness,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,face_FFA,,-0.04480839807995074,-0.14606613423594061,0.6590681863627275,0.6590681863627275,A,36,12,23.0,primary_strict
+distinctiveness,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,word_VWFA,,-0.06823576375419482,-0.18895055272149844,0.585882823435313,0.6590681863627275,A,35,12,23.0,primary_strict
+distinctiveness,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,object_LOC,,-0.16144037829069366,-0.278468756397397,0.10597880423915217,0.14130507231886955,A,36,36,23.0,primary_strict
+distinctiveness,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,house_PPA_strict,,0.0056093850169224545,0.015389661515129001,0.9286142771445711,0.9286142771445711,B,36,36,23.0,primary_strict
+distinctiveness,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,face_FFA,,0.1715629084610269,0.4192899427027524,0.021795640871825634,0.04359128174365127,B,35,35,23.0,primary_strict
+distinctiveness,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,word_VWFA,,0.2970190385451935,0.6165165412724336,0.0015996800639872025,0.00639872025594881,B,35,35,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,object_LOC,OMNIBUS (6 pairs),0.07042773325857765,,0.6076784643071386,,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,object_LOC,face-house,0.21424602195109865,0.5194810563018732,0.13357328534293142,0.7884423115376925,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,object_LOC,face-object,-0.05131594701740516,-0.11097920848579186,0.7416516696660668,0.7884423115376925,A,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,object_LOC,face-word,0.09903217412750331,0.23843650890682563,0.4829034193161368,0.7884423115376925,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,object_LOC,house-object,-0.037682885976595415,-0.0899307162989901,0.7884423115376925,0.7884423115376925,A,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,object_LOC,house-word,0.07256597314444979,0.18736989447945218,0.5766846630673865,0.7884423115376925,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,object_LOC,object-word,0.07348371963957478,0.15229234610226167,0.6538692261547691,0.7884423115376925,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,house_PPA_strict,OMNIBUS (6 pairs),0.11362171967619918,,0.4347130573885223,,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,house_PPA_strict,face-house,0.01440861862245592,0.033508004953098657,0.9162167566486703,0.9422115576884623,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,house_PPA_strict,face-object,0.1496050765890924,0.39405953705603786,0.24055188962207558,0.4811037792441512,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,house_PPA_strict,face-word,0.22271116141438285,0.4835100674916081,0.16656668666266747,0.4811037792441512,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,house_PPA_strict,house-object,-0.010689619878421375,-0.023621063133087664,0.9422115576884623,0.9422115576884623,A,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,house_PPA_strict,house-word,-0.20088878366893537,-0.44529148415161474,0.1985602879424115,0.4811037792441512,A,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,house_PPA_strict,object-word,0.031009670244793897,0.08574765577335366,0.8006398720255948,0.9422115576884623,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,face_FFA,OMNIBUS (6 pairs),0.21528823415865792,,0.1357728454309138,,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,face_FFA,face-house,0.11330401817548325,0.269141354403605,0.4217156568686263,0.5060587882423515,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,face_FFA,face-object,0.21398164511483742,0.6087111938290664,0.08338332333533294,0.2501499700059988,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,face_FFA,face-word,0.3301299304070138,0.9469225197313694,0.007998400319936013,0.04799040191961608,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,face_FFA,house-object,0.15193827034502916,0.3029792345488799,0.3593281343731254,0.5060587882423515,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,face_FFA,house-word,-0.15670454818866392,-0.3300136182971514,0.3251349730053989,0.5060587882423515,A,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,face_FFA,object-word,0.005913104844599504,0.01485069465455533,0.9676064787042592,0.9676064787042592,B,36,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,word_VWFA,OMNIBUS (6 pairs),0.18974971587685024,,0.2903419316136773,,B,35,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,word_VWFA,face-house,0.15156022907192035,0.3097836642301915,0.36472705458908217,0.5470905818836233,B,35,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,word_VWFA,face-object,0.1801494682239254,0.4131575062406728,0.22515496900619877,0.45030993801239755,B,35,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,word_VWFA,face-word,0.0847252146578521,0.2174077312293561,0.5276944611077784,0.5810837832433513,B,35,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,word_VWFA,house-object,0.22698097805789608,0.41255779242678076,0.22395520895820836,0.45030993801239755,B,35,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,word_VWFA,house-word,-0.09830893565318799,-0.1850662247745806,0.5810837832433513,0.5810837832433513,A,35,12,23.0,primary_strict
+geometry,1,A = LH ctrl        B = LH-intact pt,primary,False,word_VWFA,object-word,0.25683070048371026,0.4828762796276778,0.15996800639872025,0.45030993801239755,B,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,object_LOC,OMNIBUS (6 pairs),0.18026275114446308,,0.3015396920615877,,B,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,object_LOC,face-house,0.31303238366512176,0.8192744967344967,0.01779644071185763,0.10677864427114578,B,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,object_LOC,face-object,0.031131641379098074,0.06910602485304122,0.8354329134173165,0.9418116376724655,B,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,object_LOC,face-word,0.12943280935877954,0.2770451599457327,0.41351729654069186,0.8270345930813837,B,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,object_LOC,house-object,0.01246407524851234,0.022594635932787037,0.9418116376724655,0.9418116376724655,B,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,object_LOC,house-word,0.06372497537890509,0.13211299439049143,0.6950609878024395,0.9418116376724655,B,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,object_LOC,object-word,-0.24563228824625138,-0.42622714387384864,0.20775844831033793,0.6232753449310138,A,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,house_PPA_strict,OMNIBUS (6 pairs),0.30553478817444873,,0.029994001199760048,,B,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,house_PPA_strict,face-house,-0.24355329769937684,-0.6408972218547291,0.0639872025594881,0.1279744051189762,A,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,house_PPA_strict,face-object,-0.04561283065116872,-0.10691197097950589,0.7430513897220556,0.7800439912017595,A,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,house_PPA_strict,face-word,0.08363053842935197,0.20451754630073918,0.5256948610277944,0.7800439912017595,B,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,house_PPA_strict,house-object,0.03254688971536879,0.0878776948944724,0.7800439912017596,0.7800439912017595,B,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,house_PPA_strict,house-word,-0.4207708670321975,-0.9452334253751267,0.007398520295940812,0.04439112177564487,A,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,house_PPA_strict,object-word,-0.24297028522648678,-0.6370241873812105,0.0611877624475105,0.1279744051189762,A,36,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,face_FFA,OMNIBUS (6 pairs),0.6565408805836601,,0.003999200159968006,,B,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,face_FFA,face-house,0.12335602228922898,0.2952571865432098,0.3809238152369526,0.4571085782843431,B,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,face_FFA,face-object,-0.06868561063725709,-0.1739252259838325,0.6072785442911418,0.6072785442911418,A,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,face_FFA,face-word,-0.6342879041009148,-1.5744763985810641,0.0001999600079984003,0.0011997600479904018,A,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,face_FFA,house-object,0.21635755386572986,0.4600880654569121,0.1807638472305539,0.3615276944611077,B,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,face_FFA,house-word,-0.17270957616507987,-0.3778267380488243,0.26854629074185166,0.4028194361127775,A,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,face_FFA,object-word,-0.3970467543469048,-0.9029924325911471,0.012397520495900819,0.03719256148770246,A,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,word_VWFA,OMNIBUS (6 pairs),0.7001138732564862,,0.011397720455908818,,B,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,word_VWFA,face-house,-0.2246094678790857,-0.4374308688678671,0.1975604879024195,0.395120975804839,A,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,word_VWFA,face-object,0.10662970612270739,0.25804324714769067,0.4355128974205159,0.5226154769046192,B,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,word_VWFA,face-word,-0.02509910223200662,-0.06344004491184155,0.8494301139772046,0.8494301139772046,A,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,word_VWFA,house-object,-0.1495146127986582,-0.3331862402477796,0.3165366926614677,0.4748050389922016,A,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,word_VWFA,house-word,-0.646887841058483,-1.1478769948099516,0.0015996800639872025,0.009598080383923215,A,35,12,23.0,primary_strict
+geometry,2,A = RH ctrl        B = RH-intact pt,primary,False,word_VWFA,object-word,-0.44367341895278645,-0.8992493197653116,0.008598280343931213,0.02579484103179364,A,35,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,object_LOC,OMNIBUS (6 pairs),0.16099877303012025,,0.498500299940012,,B,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,object_LOC,face-house,0.033966193193544325,0.06726583124945033,0.8798240351929614,0.8798240351929613,B,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,object_LOC,face-object,-0.2533889028338431,-0.5556267557318857,0.1933613277344531,0.7576484703059387,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,object_LOC,face-word,-0.05319383430158364,-0.1233533807235739,0.7634473105378924,0.8798240351929613,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,object_LOC,house-object,-0.1333253797175178,-0.26364311545616004,0.5288942211557689,0.8798240351929613,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,object_LOC,house-word,-0.06662474766361981,-0.15216629238289725,0.7070585882823436,0.8798240351929613,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,object_LOC,object-word,-0.26569726529446,-0.47369146651047234,0.2525494901019796,0.7576484703059387,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,house_PPA_strict,OMNIBUS (6 pairs),0.14396294670489657,,0.5970805838832234,,B,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,house_PPA_strict,face-house,-0.31383813370199115,-0.6532550117102927,0.12377524495100979,0.7426514697060588,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,house_PPA_strict,face-object,-0.18254557635630186,-0.4568730012561281,0.27294541091781643,0.8188362327534493,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,house_PPA_strict,face-word,0.01700313909492346,0.0383737167054771,0.9270145970805839,0.9270145970805839,B,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,house_PPA_strict,house-object,-0.029765203984652988,-0.06947584354245363,0.8650269946010798,0.9270145970805839,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,house_PPA_strict,house-word,-0.06679807083081434,-0.11714013440879781,0.7760447910417917,0.9270145970805839,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,house_PPA_strict,object-word,-0.08067607277282068,-0.20068635544026422,0.6234753049390122,0.9270145970805839,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,face_FFA,OMNIBUS (6 pairs),0.4425809703633701,,0.10717856428714258,,B,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,face_FFA,face-house,0.012343242980660807,0.03237521704223143,0.936612677464507,0.936612677464507,B,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,face_FFA,face-object,-0.25233970904713543,-0.6044514819431483,0.15476904619076184,0.46430713857228556,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,face_FFA,face-word,-0.5872166816027673,-1.4513082463528906,0.001999600079984003,0.01199760047990402,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,face_FFA,house-object,-0.08526330764199175,-0.1666255001361791,0.6794641071785643,0.8153569286142772,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,face_FFA,house-word,0.09038898057059624,0.1792369134818085,0.6644671065786842,0.8153569286142772,B,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,face_FFA,object-word,-0.13597740754583876,-0.24928705104424093,0.5340931813637273,0.8153569286142772,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,word_VWFA,OMNIBUS (6 pairs),0.378919720522448,,0.13937212557488501,,B,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,word_VWFA,face-house,-0.30242013899965925,-0.8463646634651268,0.04899020195960808,0.2939412117576485,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,word_VWFA,face-object,-0.17080998470316544,-0.3426421161145781,0.41211757648470304,0.4945410917816437,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,word_VWFA,face-word,0.11480492873166048,0.2784476886009237,0.4993001399720056,0.4993001399720056,B,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,word_VWFA,house-object,-0.27569890309178546,-0.5768733644654327,0.17616476704659068,0.35232953409318135,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,word_VWFA,house-word,-0.1944520107994726,-0.43692549529409763,0.2927414517096581,0.43911217756448717,A,12,12,23.0,primary_strict
+geometry,3,A = LH-intact pt   B = RH-intact pt,primary,False,word_VWFA,object-word,-0.36233146129549054,-0.6501314615103472,0.12297540491901619,0.35232953409318135,A,12,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,object_LOC,OMNIBUS (6 pairs),0.23083058849869642,,0.22195560887822435,,B,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,object_LOC,face-house,0.27906619047157744,0.6413519600794788,0.0625874825034993,0.19496100779844033,B,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,object_LOC,face-object,0.28452054421294115,0.6276246209114493,0.0649870025994801,0.19496100779844033,B,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,object_LOC,face-word,0.18262664366036319,0.3870339708571402,0.2571485702859428,0.5142971405718856,B,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,object_LOC,house-object,0.14578945496603013,0.26224334030722535,0.43951209758048393,0.5274145170965807,B,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,object_LOC,house-word,0.1303497230425249,0.28303278543929733,0.39912017596480703,0.5274145170965807,B,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,object_LOC,object-word,0.020064977048208643,0.03412766754677813,0.9208158368326335,0.9208158368326335,B,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,house_PPA_strict,OMNIBUS (6 pairs),0.1836486942281924,,0.1817636472705459,,B,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,house_PPA_strict,face-house,0.07028483600261429,0.16379328006869523,0.6210757848430314,0.6480703859228154,B,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,house_PPA_strict,face-object,0.13693274570513314,0.3237291714209366,0.3411317736452709,0.6480703859228154,B,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,house_PPA_strict,face-word,0.06662739933442852,0.15196447980162353,0.6480703859228154,0.6480703859228154,B,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,house_PPA_strict,house-object,0.062312093700021776,0.16675544701872458,0.622875424915017,0.6480703859228154,B,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,house_PPA_strict,house-word,-0.35397279620138317,-0.7489686896777894,0.02979404119176165,0.17876424715056988,A,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,house_PPA_strict,object-word,-0.1622942124536661,-0.40613079061013657,0.23135372925414918,0.6480703859228154,A,36,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,face_FFA,OMNIBUS (6 pairs),0.27662156351221945,,0.07418516296740651,,B,35,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,face_FFA,face-house,0.11101277930856818,0.27872058667700345,0.3997200559888022,0.4796640671865626,B,35,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,face_FFA,face-object,0.18365409840987834,0.47888441459172526,0.16336732653469307,0.2450509898020396,B,35,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,face_FFA,face-word,-0.04707122249814766,-0.11786807869136016,0.7110577884423115,0.7110577884423114,A,35,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,face_FFA,house-object,0.3016208615077216,0.6388334675419218,0.0625874825034993,0.16356728654269145,B,35,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,face_FFA,house-word,-0.2630985567356761,-0.6267941519719407,0.06678664267146571,0.16356728654269145,A,35,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,face_FFA,object-word,-0.261069346801066,-0.602335555454559,0.08178364327134573,0.16356728654269145,A,35,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,word_VWFA,OMNIBUS (6 pairs),0.32983759016013425,,0.10677864427114576,,B,35,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,word_VWFA,face-house,0.07781067112057355,0.1552011027105357,0.6450709858028394,0.6450709858028394,B,35,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,word_VWFA,face-object,0.27743969082587283,0.6451655489305426,0.0629874025194961,0.1889622075584883,B,35,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,word_VWFA,face-word,-0.1399040309636671,-0.31731745699960057,0.34913017396520696,0.6130773845230955,A,35,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,word_VWFA,house-object,0.12618429029312728,0.2759773863038213,0.40871825634873027,0.6130773845230955,B,35,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,word_VWFA,house-word,-0.4524358302590103,-0.7617918388321894,0.028194361127774445,0.16916616676664667,A,35,12,23.0,primary_strict
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],supplemental,False,word_VWFA,object-word,-0.0813419576572959,-0.16292241995473405,0.6302739452109578,0.6450709858028394,A,35,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,object_LOC,OMNIBUS (6 pairs),0.2227806748970239,,0.1295740851829634,,B,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,object_LOC,face-house,0.24821221514464298,0.6971847031170464,0.041991601679664065,0.16076784643071387,B,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,object_LOC,face-object,-0.30470484985124824,-0.6629635863327474,0.05358928214357129,0.16076784643071387,A,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,object_LOC,face-word,0.04583833982591967,0.11179413514524522,0.7370525894821036,0.8844631073785244,B,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,object_LOC,house-object,-0.1710082656941132,-0.4137547423659328,0.22835432913417317,0.34253149370125974,A,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,object_LOC,house-word,0.005941225480829981,0.014386251954783793,0.9638072385522896,0.9638072385522896,B,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,object_LOC,object-word,-0.19221354565488524,-0.4104856678657097,0.21435712857428516,0.34253149370125974,A,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,house_PPA_strict,OMNIBUS (6 pairs),0.2239656532801837,,0.08318336332733453,,B,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,house_PPA_strict,face-house,-0.29942951507953525,-0.7858354936607826,0.022595480903819236,0.1355728854229154,A,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,house_PPA_strict,face-object,-0.032940499767209475,-0.08584572417051572,0.8028394321135773,0.8028394321135773,A,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,house_PPA_strict,face-word,0.2397143005093063,0.5541184797387092,0.10797840431913618,0.21595680863827235,B,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,house_PPA_strict,house-object,-0.04045482386307436,-0.08993584032015364,0.7796440711857628,0.8028394321135773,A,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,house_PPA_strict,house-word,-0.2676868544997497,-0.6339049497666326,0.06598680263947211,0.19796040791841635,A,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,house_PPA_strict,object-word,-0.04966640252802679,-0.14546806878825969,0.6608678264347131,0.8028394321135773,A,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,face_FFA,OMNIBUS (6 pairs),0.10911220094217927,,0.4305138972205559,,B,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,face_FFA,face-house,0.12564726115614405,0.2861591602413543,0.40671865626874626,0.7590481903619276,B,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,face_FFA,face-object,-0.038358063932298014,-0.10547164888993321,0.7590481903619276,0.7590481903619276,A,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,face_FFA,face-word,-0.2570867511957534,-0.7292140375603029,0.03479304139172166,0.20875824835032997,A,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,face_FFA,house-object,0.06667496270303741,0.13341933499590886,0.6850629874025195,0.7590481903619276,B,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,face_FFA,house-word,-0.06631556761806767,-0.13067938340657995,0.6920615876824635,0.7590481903619276,A,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,face_FFA,object-word,-0.13006430270123925,-0.321271472031703,0.3489302139572086,0.7590481903619276,A,36,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,word_VWFA,OMNIBUS (6 pairs),0.16187103501620925,,0.3333333333333333,,B,35,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,word_VWFA,face-house,-0.1508599099277389,-0.3007224008135819,0.366126774645071,0.732253549290142,A,35,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,word_VWFA,face-object,0.009339483520759972,0.022265121767197013,0.9484103179364127,0.9484103179364127,B,35,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,word_VWFA,face-word,0.19953014338951258,0.5909343055055641,0.08398320335932813,0.2519496100779844,B,35,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,word_VWFA,house-object,-0.04871792503388939,-0.08969535135232813,0.7860427914417116,0.9432513497300541,A,35,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,word_VWFA,house-word,-0.2927609464526606,-0.5890136566720683,0.07898420315936813,0.2519496100779844,A,35,12,23.0,primary_strict
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],supplemental,False,word_VWFA,object-word,-0.10550076081178028,-0.20043630443923427,0.5510897820435913,0.8266346730653868,A,35,12,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,object_LOC,OMNIBUS (6 pairs),0.16383046212870694,,0.07398520295940812,,B,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,object_LOC,face-house,-0.0648201685204788,-0.15969132948511255,0.35332933413317336,0.6195560887822434,A,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,object_LOC,face-object,-0.3358364912303464,-0.5729090733644976,0.002599480103979204,0.015596880623875225,A,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,object_LOC,face-word,-0.08359446953285975,-0.12284955409669471,0.45930813837232554,0.6195560887822434,A,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,object_LOC,house-object,-0.18347234094262557,-0.294056892399742,0.08458308338332333,0.25374925014997,A,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,object_LOC,house-word,-0.05778374989807522,-0.1056708303918759,0.5162967406518696,0.6195560887822434,A,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,object_LOC,object-word,0.05341874259136639,0.07228053515906,0.6610677864427115,0.6610677864427115,B,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,house_PPA_strict,OMNIBUS (6 pairs),0.09377523656850272,,0.04839032193561288,,B,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,house_PPA_strict,face-house,-0.055876217380158355,-0.11800832559310484,0.47910417916416714,0.5749250149970007,A,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,house_PPA_strict,face-object,0.012672330883959063,0.03048824930093333,0.8528294341131774,0.8528294341131774,B,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,house_PPA_strict,face-word,0.1560837620799542,0.29042150289314106,0.09158168366326734,0.18316336732653468,B,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,house_PPA_strict,house-object,-0.07300171357844332,-0.13555664637536344,0.41991601679664065,0.5749250149970007,A,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,house_PPA_strict,house-word,0.1530840125324478,0.3361589183804779,0.05438912217556489,0.16316736652669467,B,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,house_PPA_strict,object-word,0.19330388269846,0.4293733615275261,0.016796640671865627,0.10077984403119376,B,36,36,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,face_FFA,OMNIBUS (6 pairs),0.24820991225627934,,0.003199360127974405,,B,35,35,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,face_FFA,face-house,0.017477618564620948,0.0333307867707755,0.848630273945211,0.848630273945211,B,35,35,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,face_FFA,face-object,0.04609120873758023,0.09039238870890977,0.6040791841631674,0.7248950209958009,B,35,35,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,face_FFA,face-word,0.3930270038493644,0.9552898571665449,0.0001999600079984003,0.0011997600479904018,B,35,35,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,face_FFA,house-object,-0.13505080262627897,-0.22538453154984883,0.1875624875024995,0.3233353329334133,A,35,35,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,face_FFA,house-word,0.12933827768466144,0.21531225038954468,0.21555688862227554,0.3233353329334133,B,35,35,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,face_FFA,object-word,0.2787398266540293,0.5808444532294672,0.001999600079984003,0.00599880023995201,B,35,35,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,word_VWFA,OMNIBUS (6 pairs),0.31528925916211364,,0.007398520295940812,,B,35,35,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,word_VWFA,face-house,0.07374955795134681,0.12450475850291962,0.48410317936412717,0.4841031793641271,B,35,35,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,word_VWFA,face-object,-0.09729022260194754,-0.2005692244201314,0.24375124975005,0.365626874625075,A,35,35,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,word_VWFA,face-word,0.22462924562151915,0.4579292818187527,0.010197960407918417,0.020395920815836834,B,35,35,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,word_VWFA,house-object,0.10079668776476872,0.16196266578957266,0.36052789442111577,0.43263347330533897,B,35,35,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,word_VWFA,house-word,0.3541268946058223,0.49319297148350655,0.0065986802639472104,0.01979604079184163,B,35,35,23.0,primary_strict
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],supplemental,True,word_VWFA,object-word,0.33817265814100633,0.5409676109362977,0.003599280143971206,0.01979604079184163,B,35,35,23.0,primary_strict
