@@ -25,8 +25,11 @@ FIVE SPECIFICATIONS per comparison
   binC   binary  word+face+house    vs  object
   cont196  continuous, |LI| at z>1.96 as the category-level predictor
   cont233  continuous, |LI| at z>2.33
+  rank     the same a priori order coded as ranks (word 4, face 3,
+           object = house 1.5), so it differs from the |LI| rows only in
+           whether the SPACING between categories is used
 
-= 15 cells per measure primary, 30 with the supplement. Measures: peak_z,
+= 18 cells per measure primary, 36 with the supplement. Measures: peak_z,
 RSA distinctiveness, RSA geometry. TFCE is excluded — it has no subject x
 category value, so it cannot take this form; its row is the cluster table.
 
@@ -131,6 +134,16 @@ LI = {
     1.96: {'word_VWFA': 0.357, 'face_FFA': 0.234,
            'object_LOC': 0.114, 'house_PPA': 0.115, 'house_PPA_strict': 0.115},
 }
+
+# RANK version of the same a priori order: word > face > object = house.
+# Identical hypothesis to the |LI| gradient, coded discretely instead of
+# continuously, so the two rows differ only in whether the spacing between
+# categories is used. object and house tie — their control |LI| values are
+# 0.130 and 0.124 and they swap rank at z>1.96 — so they share the mean of
+# ranks 1 and 2.
+RANK_ROI = {'word_VWFA': 4.0, 'face_FFA': 3.0,
+            'object_LOC': 1.5, 'house_PPA': 1.5, 'house_PPA_strict': 1.5}
+RANK_CAT = {'word': 4.0, 'face': 3.0, 'object': 1.5, 'house': 1.5}
 
 CATS = ['face', 'house', 'object', 'word']
 PAIRS = ['face-house', 'face-object', 'face-word',
@@ -388,10 +401,12 @@ def main():
     roi_specs = list(SPLITS.items()) + [
         ('cont  |LI| z>1.96', LI[1.96]),
         ('cont  |LI| z>2.33', LI[2.33]),
+        ('rank  word>face>object=house', RANK_ROI),
     ]
     pair_specs = [(k, pair_modifier(v)) for k, v in CAT_SPLITS.items()] + [
         ('cont  |LI| z>1.96', pair_modifier(LI_CAT[1.96])),
         ('cont  |LI| z>2.33', pair_modifier(LI_CAT[2.33])),
+        ('rank  word>face>object=house', pair_modifier(RANK_CAT)),
     ]
 
     rows = []

@@ -64,6 +64,8 @@ Usage
   python combat_07_searchlight_distinctiveness.py --stage 1 --sub sub-004
   python combat_07_searchlight_distinctiveness.py --stage 3,4
   python combat_07_searchlight_distinctiveness.py --stage 4 --merge-thresh 0.0
+  python combat_07_searchlight_distinctiveness.py --list-subjects > subjects.txt
+  python combat_07_searchlight_distinctiveness.py --stage 4 --category word --hemi r
   python combat_07_searchlight_distinctiveness.py --stage all --dry-run
 """
 import argparse
@@ -295,6 +297,7 @@ def stage3(subjects, dry=False):
     4 categories stacked as features, one fit per hemisphere, batch=scanner,
     preserve group+age+sex."""
     from neuroHarmonize import harmonizationLearn
+    from nilearn.image import resample_to_img
     HARM_DIR.mkdir(parents=True, exist_ok=True)
     v.OUT_DIR = OUT_DIR
     masks = v.build_votc_masks_and_save()
@@ -302,9 +305,40 @@ def stage3(subjects, dry=False):
     print('\n=== STAGE 3 ComBat (batch=scanner, preserve group+age+sex) ===')
 
     for hemi in HEMIS:
-        mimg = nib.load(str(masks[hemi]))
-        mask = mimg.get_fdata().astype(bool)
+        # ORIENTATION. The VOTC masks come from nilearn's Harvard-Oxford fetch
+        # and are stored ('R','A','S'). flirt writes against FSL's MNI152, which
+        # is ('L','A','S'). Same shape, same world coordinates, OPPOSITE array
+        # order along x. So `img.get_fdata()[mask]` — pure positional indexing —
+        # reads the mirrored hemisphere.
+        #
+        # In combat_01 this is invisible: those maps are whole-brain, so mirrored
+        # indexing still lands on real data, and the write-back in combat_03 uses
+        # the same mask, so extract and restore hit the same voxels.
+        #
+        # Here it is fatal: the searchlight maps contain data in ONE hemisphere,
+        # so a mirrored votc_l index reads the empty right side and every feature
+        # comes back all-zero, which then makes ComBat return NaN.
+        #
+        # Resample the mask into the data's own grid so numpy indexing and world
+        # coordinates agree. Nearest-neighbour keeps it a mask.
+        ref = next((MNI_DIR / f'{sid}_{c}_{hemi}_distinct_mni.nii.gz'
+                    for sid in subjects for c in CATEGORIES
+                    if (MNI_DIR / f'{sid}_{c}_{hemi}_distinct_mni.nii.gz').exists()),
+                   None)
+        if ref is None:
+            print(f'  [{hemi.upper()}H] no stage-2 maps found — run stage 2')
+            continue
+        refimg = nib.load(str(ref))
+        mimg = resample_to_img(nib.load(str(masks[hemi])), refimg,
+                               interpolation='nearest')
+        mask = mimg.get_fdata() > 0.5
         nvox = int(mask.sum())
+        print(f'  [{hemi.upper()}H] mask {nib.aff2axcodes(nib.load(str(masks[hemi])).affine)}'
+              f' -> data {nib.aff2axcodes(refimg.affine)}; '
+              f'{nvox:,} voxels after resample')
+        if nvox == 0:
+            print(f'  [{hemi.upper()}H] mask empty after resample — aborting')
+            continue
 
         subs, cov_rows = [], []
         for sid, info in subjects.items():
@@ -335,9 +369,16 @@ def stage3(subjects, dry=False):
                    .get_fdata()[mask].astype(np.float32) for s in subs]))
         data = np.hstack(X)
 
+        allzero = int((data == 0).all(axis=0).sum())
         print(f'  [{hemi.upper()}H] n={len(subs)}  features={data.shape[1]:,}  '
               f'site={cov.scanner.value_counts().to_dict()}  '
               f'group={cov.group.value_counts().to_dict()}')
+        print(f'    features all-zero across subjects: {allzero:,} '
+              f'({100 * allzero / data.shape[1]:.1f}%)')
+        if allzero > 0.5 * data.shape[1]:
+            print('    ABORT: over half the features are all-zero. Mask and data '
+                  'are not aligned, or stage 1/2 produced empty maps.')
+            continue
         if dry:
             continue
 
@@ -363,7 +404,7 @@ def stage3(subjects, dry=False):
             for j, sid in enumerate(subs):
                 vol = np.zeros(mask.shape, np.float32)
                 vol[mask] = block[j]
-                nib.save(nib.Nifti1Image(vol, mimg.affine),
+                nib.save(nib.Nifti1Image(vol, refimg.affine),
                          str(HARM_DIR / f'{sid}_{cat}_{hemi}_harm.nii.gz'))
         np.savez_compressed(HARM_DIR / f'subs_{hemi}.npz',
                             subs=np.array(subs), group=cov['group'].values)
@@ -372,7 +413,7 @@ def stage3(subjects, dry=False):
 
 # ── stage 4: randomise ───────────────────────────────────────────────────────
 
-def stage4(dry=False, merge_thresh=None):
+def stage4(dry=False, merge_thresh=None, only_cat=None, only_hemi=None):
     """TFCE via the verified module's own merge / design / randomise.
 
     THRESHOLD IS NONE HERE, AND THAT IS NOT A DIVERGENCE FROM THE PIPELINE.
@@ -396,8 +437,10 @@ def stage4(dry=False, merge_thresh=None):
     print(f'    merge threshold = '
           f'{"none (full signed scale)" if merge_thresh is None else merge_thresh}')
 
-    for cat in CATEGORIES:
-        for hemi in HEMIS:
+    cats  = [only_cat]  if only_cat  else CATEGORIES
+    hemis = [only_hemi] if only_hemi else HEMIS
+    for cat in cats:
+        for hemi in hemis:
             f = HARM_DIR / f'subs_{hemi}.npz'
             if not f.exists():
                 print(f'  [{cat}_{hemi}] no subs_{hemi}.npz — run stage 3')
@@ -458,6 +501,12 @@ def main():
                          "maps are signed distinctiveness values, not zstats, so "
                          "negatives are the measure. Pass a number only "
                          "deliberately.")
+    ap.add_argument('--category', default=None, choices=CATEGORIES,
+                    help='stage 4 only: restrict to one category (for job arrays)')
+    ap.add_argument('--hemi', default=None, choices=HEMIS,
+                    help='stage 4 only: restrict to one hemisphere (for job arrays)')
+    ap.add_argument('--list-subjects', action='store_true',
+                    help='print subject ids one per line and exit; feeds a job array')
     ap.add_argument('--dry-run', action='store_true')
     args = ap.parse_args()
 
@@ -465,8 +514,13 @@ def main():
 
     stages = ([1, 2, 3, 4] if args.stage == 'all'
               else [int(x) for x in args.stage.split(',')])
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
 
+    if args.list_subjects:
+        for sid in v.load_subjects():
+            print(sid)
+        return
+
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
     subjects = v.load_subjects()
     print(f'{len(subjects)} subjects from verified load_subjects '
           f'({sum(1 for i in subjects.values() if i["group"] == "control")} control, '
@@ -486,7 +540,8 @@ def main():
     if 3 in stages:
         stage3(subjects, dry=args.dry_run)
     if 4 in stages:
-        stage4(dry=args.dry_run, merge_thresh=mt)
+        stage4(dry=args.dry_run, merge_thresh=mt,
+               only_cat=args.category, only_hemi=args.hemi)
 
 
 if __name__ == '__main__':
