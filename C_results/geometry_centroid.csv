@@ -1,0 +1,31 @@
+metric,roi,test,k,n,acc,p
+euclid,face_FFA,control_loo,48,70,0.6857142857142857,0.002547564898253959
+euclid,face_FFA,LH-intact pt (preserved LEFT),7,12,0.5833333333333334,0.7744140625
+euclid,face_FFA,RH-intact pt (preserved RIGHT),9,12,0.75,0.14599609375
+euclid,house_PPA,control_loo,27,72,0.375,0.044370920008025706
+euclid,house_PPA,LH-intact pt (preserved LEFT),8,12,0.6666666666666666,0.3876953125
+euclid,house_PPA,RH-intact pt (preserved RIGHT),4,12,0.3333333333333333,0.3876953125
+euclid,object_LOC,control_loo,41,72,0.5694444444444444,0.2887842804141048
+euclid,object_LOC,LH-intact pt (preserved LEFT),6,12,0.5,1.0
+euclid,object_LOC,RH-intact pt (preserved RIGHT),6,12,0.5,1.0
+euclid,word_VWFA,control_loo,41,70,0.5857142857142857,0.18821620302302766
+euclid,word_VWFA,LH-intact pt (preserved LEFT),7,12,0.5833333333333334,0.7744140625
+euclid,word_VWFA,RH-intact pt (preserved RIGHT),8,12,0.6666666666666666,0.3876953125
+euclid,POOLED,control_loo,49,70,0.7,0.001093244972968613
+euclid,POOLED,LH-intact pt (preserved LEFT),8,12,0.6666666666666666,0.3876953125
+euclid,POOLED,RH-intact pt (preserved RIGHT),10,12,0.8333333333333334,0.03857421875
+corr,face_FFA,control_loo,44,70,0.6285714285714286,0.041391428673915445
+corr,face_FFA,LH-intact pt (preserved LEFT),5,12,0.4166666666666667,0.7744140625
+corr,face_FFA,RH-intact pt (preserved RIGHT),9,12,0.75,0.14599609375
+corr,house_PPA,control_loo,38,72,0.5277777777777778,0.7239481457469139
+corr,house_PPA,LH-intact pt (preserved LEFT),6,12,0.5,1.0
+corr,house_PPA,RH-intact pt (preserved RIGHT),4,12,0.3333333333333333,0.3876953125
+corr,object_LOC,control_loo,47,72,0.6527777777777778,0.012774595538064907
+corr,object_LOC,LH-intact pt (preserved LEFT),6,12,0.5,1.0
+corr,object_LOC,RH-intact pt (preserved RIGHT),4,12,0.3333333333333333,0.3876953125
+corr,word_VWFA,control_loo,46,70,0.6571428571428571,0.011526409654363481
+corr,word_VWFA,LH-intact pt (preserved LEFT),9,12,0.75,0.14599609375
+corr,word_VWFA,RH-intact pt (preserved RIGHT),8,12,0.6666666666666666,0.3876953125
+corr,POOLED,control_loo,45,70,0.6428571428571429,0.022462895492509277
+corr,POOLED,LH-intact pt (preserved LEFT),7,12,0.5833333333333334,0.7744140625
+corr,POOLED,RH-intact pt (preserved RIGHT),6,12,0.5,1.0

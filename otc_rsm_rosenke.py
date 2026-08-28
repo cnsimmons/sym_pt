@@ -40,6 +40,14 @@ THREE ANALYSES, all from Rosenke
      differing in etiology, resection extent and age at surgery, a group mean
      may be hiding exactly this.
 
+  B2 PER-CATEGORY DISTINCTIVENESS over the whole OTC parcel. Each category's
+     value is the mean of the 3 pair entries containing it — the same
+     construction as liu_distinctiveness, but over the OTC parcel rather than a
+     7 mm sphere. Higher = more similar to the other categories = LESS distinct.
+     Reported with the between-subject SD per category and the patient/control
+     SD ratio, which is what answers whether one category carries the excess
+     between-patient spread seen in B or whether it is spread across all four.
+
   C  CROSS-GROUP INDIVIDUAL SIMILARITY. For each patient, is their odRSM more
      similar to other patients or to controls? Rosenke found a subset of blind
      subjects whose RSMs resembled sighted individuals more than other blind
@@ -186,6 +194,27 @@ def boot_sd(vals, n=N_BOOT):
                      for _ in range(n)])
 
 
+def per_category(mat):
+    """Per-category whole-OTC distinctiveness.
+
+    For each category, the mean of the 3 pair entries containing it. Same
+    construction as `liu_distinctiveness` in the sphere analyses, but computed
+    over the whole OTC parcel. Higher = more similar to the other categories =
+    LESS distinct.
+
+    mat is [n_subjects, 6] in PAIRS order; returns [n_subjects, 4] in
+    CATEGORIES order.
+    """
+    mat = np.asarray(mat, float)
+    out = np.full((len(mat), len(CATEGORIES)), np.nan)
+    for k, c in enumerate(CATEGORIES):
+        cols = [i for i, (a, b) in enumerate(PAIRS) if c in (a, b)]
+        if len(cols) != 3:
+            raise ValueError(f'{c}: expected 3 pairs, got {len(cols)}')
+        out[:, k] = np.nanmean(mat[:, cols], axis=1)
+    return out
+
+
 # ── main ─────────────────────────────────────────────────────────────────────
 
 def main():
@@ -303,6 +332,48 @@ def main():
                             ctrl=float(np.nanmean(bc)), pt=float(np.nanmean(bp)),
                             diff=float(np.nanmean(bp) - np.nanmean(bc)),
                             p=float(pspread), n_ctrl=len(ctl), n_pt=len(pt)))
+
+        # B2. per-category distinctiveness over the whole OTC parcel
+        print('\nB2. PER-CATEGORY WHOLE-OTC DISTINCTIVENESS')
+        print('    mean of the 3 pairs containing each category; '
+              'higher = LESS distinct')
+        pc_c = per_category(ctl[paircols].values)
+        pc_p = per_category(pt[paircols].values)
+        print(f'   {"category":9s} {"ctrl":>7s} {"pt":>7s} {"diff":>8s} '
+              f'{"p":>8s}  {"SDctrl":>7s} {"SDpt":>7s} {"ratio":>6s} '
+              f'{"p_sd":>7s}')
+        ps2 = []
+        for k, c in enumerate(CATEGORIES):
+            a, b = pc_c[:, k], pc_p[:, k]
+            diff, p = perm_diff(a, b)
+            sd_c = float(np.nanstd(a, ddof=1))
+            sd_p = float(np.nanstd(b, ddof=1))
+            bc2, bp2 = boot_sd(a), boot_sd(b)
+            p_sd = float((np.sum(bp2 <= bc2) + 1) / (len(bc2) + 1))
+            ratio = sd_p / sd_c if sd_c > 0 else np.nan
+            print(f'   {c:9s} {np.nanmean(a):7.3f} {np.nanmean(b):7.3f} '
+                  f'{diff:+8.3f} {p:8.4f}'
+                  + ('*' if p == p and p < .05 else ' ')
+                  + f' {sd_c:7.3f} {sd_p:7.3f} {ratio:6.2f} {p_sd:7.4f}'
+                  + ('*' if p_sd < .05 else ''))
+            ps2.append(p)
+            results.append(dict(hemi=hemi, analysis='per_category', level=c,
+                                ctrl=float(np.nanmean(a)),
+                                pt=float(np.nanmean(b)),
+                                diff=diff, p=p, sd_ctrl=sd_c, sd_pt=sd_p,
+                                sd_ratio=float(ratio), p_sd=p_sd,
+                                n_ctrl=len(ctl), n_pt=len(pt)))
+        ps2 = np.array(ps2, float)
+        o2 = np.argsort(ps2)
+        q2 = np.minimum.accumulate((ps2[o2] * len(ps2) /
+                                   (np.arange(len(ps2)) + 1))[::-1])[::-1]
+        qq2 = np.empty_like(q2); qq2[o2] = np.clip(q2, 0, 1)
+        print('   BH-FDR across the 4 categories: ' +
+              ', '.join(f'{c}={x:.3f}' for c, x in zip(CATEGORIES, qq2)))
+        print('   ratio > 1 = that category is more variable across patients '
+              'than across controls.')
+        print('   These 4 values are NOT independent: each pair enters two '
+              'categories.')
 
         # C. cross-group individual similarity
         print('\nC. CROSS-GROUP INDIVIDUAL SIMILARITY (Rosenke Fig 5)')

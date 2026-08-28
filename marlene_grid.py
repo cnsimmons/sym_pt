@@ -25,6 +25,13 @@ FIVE SPECIFICATIONS per comparison
   binC   binary  word+face+house    vs  object
   cont196  continuous, |LI| at z>1.96 as the category-level predictor
   cont233  continuous, |LI| at z>2.33
+  sign233  continuous, SIGNED LI oriented toward the hemisphere group B lost
+  signfree same, from the threshold-free bootstrap LI
+           The signed specs are the only ones that reverse by side of
+           resection: word ranks top for RH-intact patients and BOTTOM for
+           LH-intact patients, because word's normal share of the resected
+           hemisphere differs between them. beta < 0 = categories lateralized
+           to the LOST hemisphere are more affected in group B.
   rank     the same a priori order coded as ranks (word 4, face 3,
            object = house 1.5), so it differs from the |LI| rows only in
            whether the SPACING between categories is used
@@ -144,6 +151,51 @@ LI = {
 RANK_ROI = {'word_VWFA': 4.0, 'face_FFA': 3.0,
             'object_LOC': 1.5, 'house_PPA': 1.5, 'house_PPA_strict': 1.5}
 RANK_CAT = {'word': 4.0, 'face': 3.0, 'object': 1.5, 'house': 1.5}
+
+# SIGNED control LI. The |LI| specs above discard the direction of
+# lateralization, so word ranks top for BOTH patient groups and the prediction
+# cannot reverse by side of resection. Marlene's comment on the manuscript asks
+# for exactly that reversal: word is strongly LH while face is stronger RH but
+# still present in LH, so the prediction should interact with hemisphere.
+#
+# Retaining the sign gives the quantity that a resection actually removes: how
+# strongly a category was lateralized TO THE HEMISPHERE THAT WAS RESECTED. That
+# ordering is a mirror image between the two patient groups --
+#   RH-intact (left resected): word > object > house > face
+#   LH-intact (right resected): face > house > object > word
+# -- and it is still defined entirely from control data, never from the observed
+# effects.
+#
+# Implementation: modifier = LOST_SIDE[comparison] * signed_LI. LOST_SIDE is -1
+# where group B is missing (or represents) the RIGHT hemisphere and +1 where it
+# is missing the LEFT, so the modifier is always high for categories lateralized
+# to the side group B does not have.
+SIGNED_LI_CAT = {
+    # z > 2.33, mean of per-subject signed LI, n=36 age-capped controls
+    2.33: {'word': +0.380, 'face': -0.195, 'object': +0.117, 'house': -0.105},
+    # threshold-free (Wilke & Schmithorst bootstrap), whole OTC parcel, n=36
+    'free': {'word': +0.457, 'face': -0.265, 'object': +0.155, 'house': -0.143},
+}
+SIGNED_LI_ROI = {
+    k: {'word_VWFA': v['word'], 'face_FFA': v['face'],
+        'object_LOC': v['object'], 'house_PPA': v['house'],
+        'house_PPA_strict': v['house']}
+    for k, v in SIGNED_LI_CAT.items()
+}
+
+# which hemisphere group B lacks (patients) or represents (comparison 6)
+LOST_SIDE = {1: -1,   # B = LH-intact pt      -> right resected
+             2: +1,   # B = RH-intact pt      -> left resected
+             3: +1,   # B = RH-intact pt vs LH-intact pt
+             4: -1,   # B = LH-intact pt      -> right resected
+             5: +1,   # B = RH-intact pt      -> left resected
+             6: -1}   # B = RH controls       -> the right hemisphere
+
+
+def signed_spec(codes, comp):
+    """Orient signed LI toward the hemisphere group B does not have."""
+    s = LOST_SIDE[comp]
+    return {k: s * v for k, v in codes.items()}
 
 CATS = ['face', 'house', 'object', 'word']
 PAIRS = ['face-house', 'face-object', 'face-word',
@@ -380,6 +432,11 @@ def main():
     ap.add_argument('--comparisons', nargs='+', type=int,
                     default=sorted(COMPARISONS),
                     help='subset of 1-6; default all')
+    ap.add_argument('--drop-word', action='store_true',
+                    help='exclude the word ROI (and every pair containing '
+                         'word) so the gradient is tested across the remaining '
+                         'three categories only. If a signed/graded spec still '
+                         'fires, the ordering is not carried by word alone.')
     ap.add_argument('--csv', default=None, help='write the grid to this path')
     args = ap.parse_args()
 
@@ -392,29 +449,45 @@ def main():
           f'permutations: {args.n_perm}')
     print(f'comparisons: {comps}  (primary {list(PRIMARY)}, '
           f'rest supplemental)')
+    if args.drop_word:
+        print('*** --drop-word: word ROI and all word pairs EXCLUDED. A spec '
+              'that still fires\n    is ordered across face/house/object and '
+              'is not carried by word alone. ***')
     print('all measures oriented so HIGHER = MORE selective / MORE distinct')
     print('beta < 0  =  the first-named category set is relatively MORE '
           'affected in GROUP B')
     print('           (for continuous specs: more lateralized categories '
           'relatively more affected)')
 
-    roi_specs = list(SPLITS.items()) + [
-        ('cont  |LI| z>1.96', LI[1.96]),
-        ('cont  |LI| z>2.33', LI[2.33]),
-        ('rank  word>face>object=house', RANK_ROI),
-    ]
-    pair_specs = [(k, pair_modifier(v)) for k, v in CAT_SPLITS.items()] + [
-        ('cont  |LI| z>1.96', pair_modifier(LI_CAT[1.96])),
-        ('cont  |LI| z>2.33', pair_modifier(LI_CAT[2.33])),
-        ('rank  word>face>object=house', pair_modifier(RANK_CAT)),
-    ]
+    def build_specs(comp, pair_level):
+        """Spec list for one comparison. The signed specs depend on which
+        hemisphere group B lacks, so they are built per comparison; every other
+        spec is identical across comparisons, exactly as before."""
+        if not pair_level:
+            return list(SPLITS.items()) + [
+                ('cont  |LI| z>1.96', LI[1.96]),
+                ('cont  |LI| z>2.33', LI[2.33]),
+                ('rank  word>face>object=house', RANK_ROI),
+                ('sign  LI toward lost side z>2.33',
+                 signed_spec(SIGNED_LI_ROI[2.33], comp)),
+                ('sign  LI toward lost side, thr-free',
+                 signed_spec(SIGNED_LI_ROI['free'], comp)),
+            ]
+        return [(k, pair_modifier(v)) for k, v in CAT_SPLITS.items()] + [
+            ('cont  |LI| z>1.96', pair_modifier(LI_CAT[1.96])),
+            ('cont  |LI| z>2.33', pair_modifier(LI_CAT[2.33])),
+            ('rank  word>face>object=house', pair_modifier(RANK_CAT)),
+            ('sign  LI toward lost side z>2.33',
+             pair_modifier(signed_spec(SIGNED_LI_CAT[2.33], comp))),
+            ('sign  LI toward lost side, thr-free',
+             pair_modifier(signed_spec(SIGNED_LI_CAT['free'], comp))),
+        ]
 
     rows = []
     for measure in args.measures:
         ctl, pat = load_measure(measure, rois, cap)
         print(f'\n{"=" * 78}\nMEASURE: {measure}')
         pair_level = (measure == 'geometry')
-        specs = pair_specs if pair_level else roi_specs
         if pair_level:
             print('  unit = subject x ROI x pair (6 pairs); ROI and pair '
                   'dummies included')
@@ -423,6 +496,11 @@ def main():
             cname = COMPARISONS[comp]
             is_paired = comp in PAIRED
             df = build_frame(ctl, pat, comp, rois, pair_level)
+            if args.drop_word:
+                if pair_level:
+                    df = df[~df['pair'].str.contains('word')]
+                else:
+                    df = df[~df['roi'].str.contains('word')]
             tag = '' if comp in PRIMARY else '   [SUPPLEMENTAL]'
             print(f'\n  {comp}. {cname}{tag}')
             if comp == 3:
@@ -435,7 +513,7 @@ def main():
                       'under permutation)')
             print(f'     {"specification":32s} {"beta":>9s} {"p":>8s} '
                   f'{"nA":>3s} {"nB":>3s}')
-            for sname, mod in specs:
+            for sname, mod in build_specs(comp, pair_level):
                 b, p, n0, n1 = interaction(df, mod, args.n_perm,
                                            paired=is_paired)
                 star = ' *' if (p == p and p < .05) else ''
@@ -448,7 +526,8 @@ def main():
                                  role='primary' if comp in PRIMARY
                                       else 'supplemental',
                                  paired=is_paired,
-                                 age_cap=cap, roi_set=args.roi_set))
+                                 age_cap=cap, roi_set=args.roi_set,
+                                 drop_word=args.drop_word))
 
     print(f'\n{"=" * 78}')
     print('TFCE: no subject x category value exists, so it cannot take this '

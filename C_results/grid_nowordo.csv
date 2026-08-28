@@ -1,0 +1,17 @@
+measure,comparison,comparison_name,spec,beta,p,n_group_a,n_group_b,role,paired,age_cap,roi_set,drop_word
+geometry,2,A = RH ctrl        B = RH-intact pt,binA  word+face | house+object,-0.07062233504953008,0.6802639472105579,35,12,primary,False,23.0,primary_strict,True
+geometry,2,A = RH ctrl        B = RH-intact pt,binB  word | face+house+object,,,0,0,primary,False,23.0,primary_strict,True
+geometry,2,A = RH ctrl        B = RH-intact pt,binC  word+face+house | object,-0.05558594447718401,0.5788842231553689,35,12,primary,False,23.0,primary_strict,True
+geometry,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>1.96,-0.5923705493572984,0.6782643471305739,35,12,primary,False,23.0,primary_strict,True
+geometry,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>2.33,-0.5886163625639973,0.6834633073385323,35,12,primary,False,23.0,primary_strict,True
+geometry,2,A = RH ctrl        B = RH-intact pt,rank  word>face>object=house,-0.0470815566996895,0.6802639472105579,35,12,primary,False,23.0,primary_strict,True
+geometry,2,A = RH ctrl        B = RH-intact pt,sign  LI toward lost side z>2.33,0.24166395000767105,0.5852829434113177,35,12,primary,False,23.0,primary_strict,True
+geometry,2,A = RH ctrl        B = RH-intact pt,"sign  LI toward lost side, thr-free",0.1798044638131255,0.585882823435313,35,12,primary,False,23.0,primary_strict,True
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],binA  word+face | house+object,-0.10182470661182513,0.22335532893421317,35,35,supplemental,True,23.0,primary_strict,True
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],binB  word | face+house+object,,,0,0,supplemental,True,23.0,primary_strict,True
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],binC  word+face+house | object,-0.060678477686112064,0.24315136972605478,35,35,supplemental,True,23.0,primary_strict,True
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],cont  |LI| z>1.96,-0.35627668022225045,0.129374125174965,35,35,supplemental,True,23.0,primary_strict,True
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],cont  |LI| z>2.33,-0.3351861429615696,0.1261747650469906,35,35,supplemental,True,23.0,primary_strict,True
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],rank  word>face>object=house,-0.02760302351533328,0.1289742051589682,35,35,supplemental,True,23.0,primary_strict,True
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],sign  LI toward lost side z>2.33,-0.1704689593724599,0.6156768646270746,35,35,supplemental,True,23.0,primary_strict,True
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],"sign  LI toward lost side, thr-free",-0.13269993668322902,0.5944811037792441,35,35,supplemental,True,23.0,primary_strict,True
