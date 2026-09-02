@@ -397,6 +397,39 @@ def main():
         print(f'   {len(flipped)}/{len(pids)} patients resemble controls more '
               'than their own group.')
 
+
+        # D. subject x subject similarity matrix (is heterogeneity subgroups?)
+        print('\nD. SUBJECT x SUBJECT odRSM SIMILARITY')
+        for lab, MM, sids in (('patients', P, pids),
+                              ('controls', C, ctl['subject_id'].values)):
+            if len(MM) < 3:
+                continue
+            R = np.corrcoef(MM)
+            np.fill_diagonal(R, np.nan)
+            offd = R[np.triu_indices(len(R), 1)]
+            print(f'   [{lab}] n={len(R)}  mean r={np.nanmean(offd):+.3f}  '
+                  f'sd={np.nanstd(offd):.3f}  '
+                  f'range {np.nanmin(offd):+.2f} to {np.nanmax(offd):+.2f}  '
+                  f'| r>0.7: {int((offd > .7).sum())}/{len(offd)}  '
+                  f'r<0.2: {int((offd < .2).sum())}/{len(offd)}')
+            if lab != 'patients':
+                continue
+            short = [str(x)[-3:] for x in sids]
+            order = np.argsort(-np.nanmean(R, axis=1))
+            print('   rows ordered by mean similarity to the rest of the group')
+            print('         ' + ' '.join(f'{short[j]:>6}' for j in order))
+            for i in order:
+                cells = ' '.join('     -' if i == j else f'{R[i, j]:+6.2f}'
+                                 for j in order)
+                print(f'   {short[i]:>4} {cells}   mean {np.nanmean(R[i]):+.3f}')
+            results.append(dict(hemi=hemi, analysis='pairwise_matrix',
+                                level='sd_offdiag',
+                                ctrl=np.nan, pt=float(np.nanstd(offd)),
+                                diff=np.nan, p=np.nan,
+                                n_ctrl=len(ctl), n_pt=len(pt)))
+        print('   Blocks of mutually high r = discrete alternative solutions;')
+        print('   uniformly low = no shared organizing pattern.')
+
         # scanner balance
         if args.scanner_check and SCAN.exists():
             sc = pd.read_csv(SCAN)
