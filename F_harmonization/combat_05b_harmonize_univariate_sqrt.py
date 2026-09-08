@@ -46,7 +46,7 @@ WINSOR   = (5, 95)
 # SQRT: which measures get sqrt before ComBat. mean_act has no negatives and is
 # near-symmetric (min 2.20), so it is left alone. Add 'volume' here if you ever
 # report volume — it currently produces negative harmonized voxel counts.
-SQRT_MEASURES = ['sum_selec_norm']
+SQRT_MEASURES = ['sum_selec_norm', "volume"]
 
 sys.path.insert(0, str(GIT))
 spec = importlib.util.spec_from_file_location('verified_stats', str(STATS))

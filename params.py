@@ -38,7 +38,8 @@ mni_brain = '/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain.nii.gz'
 skip_subs = ['017']
 
 # Skipped by code (group + clean id), e.g. control083:
-skip_codes = {'control083', 'control085'}
+#skip_codes = {'control083', 'control085'}
+skip_codes = set()             # was {'control083','control085'} — no documented reason
 
 # Pre-surgical sessions to exclude from post-surgery analyses.
 # Keyed by full subject id; values are session NUMBERS (ints), not 'ses-XX'.
