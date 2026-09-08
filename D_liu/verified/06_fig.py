@@ -24,11 +24,11 @@ CATEGORIES = ['face', 'house', 'object', 'word']
 CAT_COLORS = {'face': '#378ADD', 'house': '#D85A30',
               'object': '#639922', 'word': '#EF9F27'}
 
-EXCLUDE     = ['sub-017']
+EXCLUDE = ['sub-017', 'sub-091', 'sub-095', 'sub-096', 'sub-027', 'sub-084']
 EXCLUDE_SES = [('sub-108', 2)]
 
 WTA_CSV   = '/user_data/csimmon2/sym_pt/group_results/wta_percentages.csv'
-STATS_CSV = '/user_data/csimmon2/git_repos/sym_pt/D_liu/stats_results.csv'
+STATS_CSV = '/user_data/csimmon2/git_repos/sym_pt/D_liu/stats_results_harmonized_corrected.csv'
 OUT_DIR   = Path('/user_data/csimmon2/git_repos/sym_pt/C_results/figures')
 
 # M1 = LH panel, M2 = RH panel

@@ -50,7 +50,7 @@ DOWNSAMPLE_FAC = ANAT_VOXEL_MM / FUNC_VOXEL_MM  # 0.5
 SEL_Z_THRESH = float(norm.ppf(0.99))            # ≈2.326, p<.01 one-tailed
 SEL_RESCALE  = 1000.0
 
-EXTRA_SKIP = {'sub-017', 'control083', 'control085'}  # beyond sym_pt_params.skip_subs
+EXTRA_SKIP = {'sub-017'}  # beyond sym_pt_params.skip_subs
 PRE_SURGERY_SESSIONS = {}
 #    'sub-021': {'01'}, 'sub-045': {'01'}, 'sub-047': {'01'}, 'sub-049': {'01'},
 #    'sub-070': {'01'}, 'sub-073': {'01'}, 'sub-081': {'01'}, 'sub-086': {'01'},

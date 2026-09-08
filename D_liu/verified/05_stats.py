@@ -65,7 +65,7 @@ OUT_LOO        = D_LIU / 'loo_robustness.csv'          # 24-cell summary = Table
 OUT_LOO_DETAIL = D_LIU / 'loo_robustness_detail.csv'   # 528-row per-drop long
 
 # ── Notebook constants ───────────────────────────────────────────────────────
-EXCLUDE     = ['sub-017']
+EXCLUDE = ['sub-017', 'sub-091', 'sub-095', 'sub-096', 'sub-027', 'sub-084']
 EXCLUDE_SES = [('sub-108', 2)]
 
 PRIMARY_ROIS = ['face_FFA', 'house_PPA', 'object_LOC', 'word_VWFA']

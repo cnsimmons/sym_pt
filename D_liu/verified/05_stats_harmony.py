@@ -43,17 +43,17 @@ from params import processed_dir
 
 # ── Paths ────────────────────────────────────────────────────────────────────
 D_LIU       = Path('/user_data/csimmon2/git_repos/sym_pt/D_liu')
-UNIVAR_CSV  = D_LIU / 'univariate_v1.csv'
-RSA_CSV     = D_LIU / 'rsa_v1.csv'
+UNIVAR_CSV  = D_LIU / 'univariate_v1_harmonized_sqrt.csv'
+RSA_CSV     = D_LIU / 'rsa_v1_harmonized.csv'
 WTA_CSV     = Path(processed_dir) / 'group_results' / 'wta_percentages.csv'
 PEAK_MNI    = Path(processed_dir) / 'group_results' / 'peak_coords' / 'peak_coords_mni.csv'
 TFCE_DIR    = Path(processed_dir) / 'group_results' / 'tfce_votc_fdr'
 
-OUT_RESULTS = D_LIU / 'stats_results.csv'
+OUT_RESULTS = D_LIU / 'stats_results_harmonized_corrected.csv'
 OUT_TFCE    = D_LIU / 'tfce_clusters.csv'
 
 # ── Notebook constants ───────────────────────────────────────────────────────
-EXCLUDE     = ['sub-017']
+EXCLUDE = ['sub-017', 'sub-091', 'sub-095', 'sub-096', 'sub-027', 'sub-084']
 EXCLUDE_SES = [('sub-108', 2)]
 
 PRIMARY_ROIS = ['face_FFA', 'house_PPA', 'object_LOC', 'word_VWFA']
