@@ -49,6 +49,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+import sys
+sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt/D_liu/verified')
+from grid_cohort import EXCLUDE   # cohort defined once; see grid_cohort.py
+
 GIT = Path('/user_data/csimmon2/git_repos/sym_pt')
 RSA = GIT / 'D_liu' / 'rsa_v1_harmonized.csv'
 UNI = GIT / 'D_liu' / 'univariate_v1_harmonized_sqrt.csv'
@@ -108,6 +112,11 @@ def load_measure(measure, cap=AGE_CAP, quiet=False):
         flip = True
     else:
         raise ValueError(measure)
+
+    # Cohort, applied before the control/patient split so both frames
+    # inherit it. Without this the grid runs on 38 controls while
+    # 05_stats_harmony.py runs on 36.
+    d = d[~d['subject_id'].isin(EXCLUDE)]
 
     def add_age(x):
         return x.merge(info[['sub', 'session', 'age']],

@@ -556,10 +556,10 @@ def main():
     ap.add_argument('--fdr', choices=['bh', 'by'], default=FDR_METHOD)
     ap.add_argument('--n-perm', type=int, default=N_PERM)
     ap.add_argument('--n-boot', type=int, default=N_BOOT)
-    ap.add_argument('--univar', default=str(UNIVAR_CSV))   # swap to univariate_v1_harmonized.csv for the harmonized run
-    ap.add_argument('--rsa', default=str(RSA_CSV))   # harmonized RSA input
-    ap.add_argument('--wta', default=str(WTA_CSV))   # harmonized WTA input
-    ap.add_argument('--tag', default='')                   # suffix appended to output filenames (e.g. _harmonized)
+    ap.add_argument('--univar', default=str(UNIVAR_CSV))
+    ap.add_argument('--rsa', default=str(RSA_CSV))
+    ap.add_argument('--wta', default=str(WTA_CSV))
+    ap.add_argument('--tag', default='')                   # suffix appended to output filenames
     args = ap.parse_args()
     RSA_CSV = args.rsa
     WTA_CSV = args.wta
@@ -567,12 +567,32 @@ def main():
 
     results = []
 
-    # ── peak (special MNI input) ──
+    # ── peak location (special MNI input) ──
     print('Peak distance...')
     peak_distance(results, args.fdr)
 
-    # ── sum-selectivity (univariate CSV, log10) ──
-    print(f'Sum-selectivity...  (univar: {args.univar})')
+    # ── peak selectivity (univariate CSV, per-ROI scalar) ──
+    print(f'Peak selectivity...  (univar: {args.univar})')
+    pk = apply_exclusions(pd.read_csv(args.univar))
+    pk = pk[pk['group'] != 'nonOTC']
+    pk = select_sessions(pk, pt_rule='last')
+    scalar_measure(pk, 'peak_z', 'peak_selectivity', PRIMARY_ROIS,
+                   results=results, fdr_method=args.fdr)
+
+    # ── number of category-selective voxels (univariate CSV, per-ROI scalar) ──
+    # sqrt scale: volume is sqrt-transformed before ComBat in combat_05b and
+    # left on that scale, so tests run on sqrt(count). ~40 cells remain
+    # negative after harmonization and are dropped.
+    print('Selective voxel count...')
+    vx = apply_exclusions(pd.read_csv(args.univar))
+    vx = vx[vx['group'] != 'nonOTC']
+    vx = select_sessions(vx, pt_rule='last')
+    vx = vx[vx['volume'] >= 0].copy()
+    scalar_measure(vx, 'volume', 'selective_voxels', PRIMARY_ROIS,
+                   results=results, fdr_method=args.fdr)
+
+    # ── sum-selectivity (retired; kept for comparison with earlier drafts) ──
+    print('Sum-selectivity...')
     uni = apply_exclusions(pd.read_csv(args.univar))
     uni = uni[uni['group'] != 'nonOTC']          # 01 includes nonOTC; drop here
     uni = select_sessions(uni, pt_rule='last')   # uniform last-session (Liu)
@@ -581,11 +601,11 @@ def main():
     scalar_measure(uni, 'log_sumsel', 'sum_selectivity', PRIMARY_ROIS,
                    results=results, fdr_method=args.fdr)
 
-    # ── distinctiveness (rsa CSV, per-ROI scalar) ──
-    print('Distinctiveness...')
+    # ── preferred-category similarity (rsa CSV, per-ROI scalar) ──
+    print('Preferred-category similarity...')
     rsa = apply_exclusions(pd.read_csv(RSA_CSV))
     rsa_summary = rsa.drop(columns=['pair', 'fisher_r']).drop_duplicates()
-    rsa_summary = select_sessions(rsa_summary, pt_rule='last')  # RSA = last session (matches notebook)
+    rsa_summary = select_sessions(rsa_summary, pt_rule='last')  # RSA = last session
     scalar_measure(rsa_summary, 'liu_distinctiveness', 'distinctiveness', PRIMARY_ROIS,
                    results=results, fdr_method=args.fdr)
 
@@ -593,8 +613,8 @@ def main():
     print('WTA composition...')
     wta_composition(results, args.fdr)
 
-    # ── geometry ──
-    print('Between-category geometry...')
+    # ── between-category similarity ──
+    print('Between-category similarity...')
     geometry(results, args.fdr)
 
     # ── write results ──
@@ -610,6 +630,7 @@ def main():
     tdf = tfce_clusters()
     tdf.to_csv(out_tfce, index=False)
     print(f'Saved: {out_tfce} ({len(tdf)} clusters)')
+
 
 if __name__ == '__main__':
     main()
