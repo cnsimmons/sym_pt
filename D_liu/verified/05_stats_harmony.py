@@ -56,7 +56,7 @@ OUT_TFCE    = D_LIU / 'tfce_clusters.csv'
 EXCLUDE = ['sub-017', 'sub-091', 'sub-095', 'sub-096', 'sub-027', 'sub-084']
 EXCLUDE_SES = [('sub-108', 2)]
 
-PRIMARY_ROIS = ['face_FFA', 'house_PPA', 'object_LOC', 'word_VWFA']
+PRIMARY_ROIS = ['face_FFA', 'house_PPA_strict', 'object_LOC', 'word_VWFA']
 CATEGORIES   = ['face', 'house', 'object', 'word']
 PAIRS        = ['face-house', 'face-object', 'face-word',
                 'house-object', 'house-word', 'object-word']
@@ -260,6 +260,32 @@ def scalar_measure(df_long, value_col, measure, rois, paired_log=False,
             r['q_fdr'] = qi
         results.extend(pc_rows)
 
+        # --- group main effect: mean over ROIs, per subject ---
+        # Weber et al. 2026 H1. Asks whether the group differs on average,
+        # which the category x group omnibus cannot see: a shift common to all
+        # four ROIs contributes nothing to an interaction. One test per
+        # comparison, so uncorrected.
+        mp = (df_long[(df_long['group'] == 'OTC') &
+                      (df_long['category'].isin(rois)) &
+                      (df_long['hemi'] == grp_hemi)]
+              .groupby('subject_id')[value_col].mean().dropna().values)
+        mc = (df_long[(df_long['status'] == 'control') &
+                      (df_long['category'].isin(rois)) &
+                      (df_long['hemi'] == grp_hemi)]
+              .groupby('subject_id')[value_col].mean().dropna().values)
+        if len(mp) >= 2 and len(mc) >= 3:
+            obs, p = perm_independent(mp, mc)
+            r = row(measure=measure, model=f'{hemi_label}_pt_vs_ctrl',
+                    comparison='group_main_effect', hemi=grp_hemi,
+                    level='MEAN_OVER_ROIS', gating='not_gating',
+                    diff=obs, cohens_d=cohens_d_independent(mp, mc),
+                    ci_lo=boot_ci_independent(mp, mc)[0],
+                    ci_hi=boot_ci_independent(mp, mc)[1],
+                    p_perm=p, n_a=len(mp), n_b=len(mc))
+            if measure == 'sum_selectivity':
+                r['delta_log10'] = obs
+            results.append(r)
+
         # --- reported-but-not-gating LMM omnibus (category==ROI) ---
         sub = df_long[(df_long['category'].isin(rois)) &
                       (((df_long['group'] == 'OTC') & (df_long['hemi'] == grp_hemi)) |
@@ -271,6 +297,51 @@ def scalar_measure(df_long, value_col, measure, rois, paired_log=False,
                            gating='not_gating', omnibus_chi2=chi, omnibus_df=dfree,
                            omnibus_p=pomni, mse=mse,
                            note='category==ROI: family-wise context, not a profile test'))
+
+    # --- patient vs patient per ROI (LH-intact vs RH-intact) ---
+    # Each group in its own intact hemisphere, so this is unpaired and carries
+    # the normative hemispheric difference within it. Own FDR family.
+    pp_rows, pvals = [], []
+    for roi in rois:
+        a = df_long[(df_long['group'] == 'OTC') & (df_long['category'] == roi) &
+                    (df_long['hemi'] == 'l')][value_col].dropna().values
+        b = df_long[(df_long['group'] == 'OTC') & (df_long['category'] == roi) &
+                    (df_long['hemi'] == 'r')][value_col].dropna().values
+        if len(a) < 2 or len(b) < 2:
+            continue
+        obs, p = perm_independent(a, b)
+        r = row(measure=measure, model='pt_LH_vs_RH',
+                comparison='patient_subgroup', hemi='lr', level=roi,
+                gating='not_gating', diff=obs,
+                cohens_d=cohens_d_independent(a, b),
+                ci_lo=boot_ci_independent(a, b)[0],
+                ci_hi=boot_ci_independent(a, b)[1],
+                p_perm=p, n_a=len(a), n_b=len(b))
+        if measure == 'sum_selectivity':
+            r['delta_log10'] = obs
+        pp_rows.append(r); pvals.append(p)
+    if pp_rows:
+        q, _ = fdr_bh_by(pvals, fdr_method)
+        for r, qi in zip(pp_rows, q):
+            r['q_fdr'] = qi
+        results.extend(pp_rows)
+
+        # patient-vs-patient group main effect, mean over ROIs
+        ma = (df_long[(df_long['group'] == 'OTC') &
+                      (df_long['category'].isin(rois)) & (df_long['hemi'] == 'l')]
+              .groupby('subject_id')[value_col].mean().dropna().values)
+        mb = (df_long[(df_long['group'] == 'OTC') &
+                      (df_long['category'].isin(rois)) & (df_long['hemi'] == 'r')]
+              .groupby('subject_id')[value_col].mean().dropna().values)
+        if len(ma) >= 2 and len(mb) >= 2:
+            obs, p = perm_independent(ma, mb)
+            results.append(row(measure=measure, model='pt_LH_vs_RH',
+                               comparison='group_main_effect', hemi='lr',
+                               level='MEAN_OVER_ROIS', gating='not_gating',
+                               diff=obs, cohens_d=cohens_d_independent(ma, mb),
+                               ci_lo=boot_ci_independent(ma, mb)[0],
+                               ci_hi=boot_ci_independent(ma, mb)[1],
+                               p_perm=p, n_a=len(ma), n_b=len(mb)))
 
     # --- control L vs R (paired), SEPARATE FDR family ---
     ca_rows, pvals = [], []
@@ -296,6 +367,23 @@ def scalar_measure(df_long, value_col, measure, rois, paired_log=False,
     for r, qi in zip(ca_rows, q):
         r['q_fdr'] = qi
     results.extend(ca_rows)
+
+    # control L vs R group main effect, mean over ROIs (paired)
+    wm = ctrl[ctrl['category'].isin(rois)].pivot_table(
+        index='subject_id', columns='hemi', values=value_col, aggfunc='mean')
+    if 'l' in wm and 'r' in wm:
+        dm = (wm['l'] - wm['r']).dropna().values
+        if len(dm) >= 3:
+            obs, p = perm_paired(dm)
+            r = row(measure=measure, model='ctrl_LvsR',
+                    comparison='group_main_effect', hemi='lr',
+                    level='MEAN_OVER_ROIS', gating='not_gating',
+                    diff=obs, cohens_d=cohens_d_paired(dm),
+                    ci_lo=boot_ci_paired(dm)[0], ci_hi=boot_ci_paired(dm)[1],
+                    p_perm=p, n_a=len(dm))
+            if measure == 'sum_selectivity':
+                r['delta_log10'] = obs
+            results.append(r)
 
     # control asymmetry omnibus (own context)
     co = ctrl[ctrl['category'].isin(rois)]
@@ -465,9 +553,52 @@ def geometry(results, fdr_method='bh'):
                            hemi='', level='ALL', gating='gates_posthoc',
                            omnibus_chi2=chi, omnibus_df=dfree, omnibus_p=pomni, mse=mse))
         gated_off = not (pomni < 0.05)
-        pc_rows, pvals = [], []
         levels = sorted(sub_roi[factor_col].unique())
         a_lev, b_lev = levels[0], levels[1]
+
+        # ── group main effect: mean over the six pairs, per subject ──────────
+        # Weber et al. 2026 H1. Averaging across all pair comparisons asks
+        # whether one group is uniformly more similar, which the pair x group
+        # interaction cannot see: a shift common to all six pairs contributes
+        # nothing to it. Reported alongside the interaction and not gated by
+        # it, since it is a different question rather than a decomposition.
+        #
+        # Computed by averaging then testing, matching Weber, rather than by
+        # reading the group term out of the LMM -- that term means
+        # "average over pairs" only under sum coding, and lmm_omnibus uses
+        # statsmodels' default treatment coding.
+        #
+        # Not done for WTA: its four proportions sum to 100%, so the mean over
+        # categories is 25% for every subject.
+        mean_sub = (sub_roi.groupby(['subject_id', factor_col])['fisher_r']
+                    .mean().reset_index())
+        me = None
+        if paired:
+            wide_m = mean_sub.pivot_table(index='subject_id', columns=factor_col,
+                                          values='fisher_r', aggfunc='first')
+            if a_lev in wide_m and b_lev in wide_m:
+                dm = (wide_m[a_lev] - wide_m[b_lev]).dropna().values
+                if len(dm) >= 3:
+                    obs_m, p_m = perm_paired(dm)
+                    me = (obs_m, cohens_d_paired(dm), *boot_ci_paired(dm),
+                          p_m, len(dm), len(dm))
+        else:
+            am = mean_sub[mean_sub[factor_col] == a_lev]['fisher_r'].dropna().values
+            bm = mean_sub[mean_sub[factor_col] == b_lev]['fisher_r'].dropna().values
+            if len(am) >= 2 and len(bm) >= 3:
+                obs_m, p_m = perm_independent(am, bm)
+                me = (obs_m, cohens_d_independent(am, bm),
+                      *boot_ci_independent(am, bm), p_m, len(am), len(bm))
+        if me is not None:
+            results.append(row(measure='geometry', model=model_name,
+                               comparison='group_main_effect',
+                               hemi='', level='MEAN_OVER_PAIRS',
+                               gating='not_gating',
+                               diff=me[0], cohens_d=me[1], ci_lo=me[2],
+                               ci_hi=me[3], p_perm=me[4],
+                               n_a=me[5], n_b=me[6]))
+
+        pc_rows, pvals = [], []
         for pair in PAIRS:
             if paired:
                 wide = sub_roi[sub_roi['pair'] == pair].pivot_table(
