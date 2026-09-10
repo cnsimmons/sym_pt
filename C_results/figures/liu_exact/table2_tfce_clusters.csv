@@ -1,0 +1,6 @@
+cluster,contrast,vox,mm3,pct_otc,peak_mni,peak_t,p_fwe,ho_label
+object_L,ctrl>pt,1295,10360,11.4,"[-54,-70,-4]",4.87,0.0001,"Lateral Occipital Cortex, inferior division"
+house_R,ctrl>pt,759,6072,6.6,"[30,-42,-6]",3.92,0.0085,Lingual Gyrus
+word_R,pt>ctrl,463,3704,4.0,"[48,-64,-8]",6.46,0.0044,"Lateral Occipital Cortex, inferior division"
+house_L,ctrl>pt,153,1224,1.3,"[-30,-46,-4]",4.07,0.0062,Lingual Gyrus
+object_R,ctrl>pt,54,432,0.5,"[34,-56,-10]",3.86,0.0256,Temporal Occipital Fusiform Cortex
