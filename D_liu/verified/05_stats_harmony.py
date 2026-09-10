@@ -75,11 +75,34 @@ RNG = np.random.RandomState(42)
 # =============================================================================
 # Shared helpers
 # =============================================================================
+_AGE_CACHE = None
+
+def _age_table():
+    """subject_id x ses_num -> age, from sub_info.csv.
+
+    The harmonized CSVs carry no age column, so it has to be merged in. Cached
+    because every loader calls apply_exclusions.
+    """
+    global _AGE_CACHE
+    if _AGE_CACHE is None:
+        si = pd.read_csv(D_LIU.parent / 'sub_info.csv')
+        si['subject_id'] = si['sub'].astype(str)
+        si['ses_num'] = pd.to_numeric(
+            si['ses'].astype(str).str.extract(r'(\d+)', expand=False),
+            errors='coerce').astype('Int64')
+        _AGE_CACHE = (si[['subject_id', 'ses_num', 'age']].dropna()
+                      .drop_duplicates(['subject_id', 'ses_num']))
+    return _AGE_CACHE
+
 def apply_exclusions(df):
     df = df[~df['subject_id'].isin(EXCLUDE)].copy()
     df['ses_num'] = pd.to_numeric(df['session'], errors='coerce').astype('Int64')
     for bad_sub, bad_ses in EXCLUDE_SES:
         df = df[~((df['subject_id'] == bad_sub) & (df['ses_num'] == bad_ses))]
+    # age as a covariate for the LMM omnibus. Merged here so all five callers
+    # of lmm_omnibus get it without individual edits.
+    df = df.drop(columns=[c for c in ('age',) if c in df.columns])
+    df = df.merge(_age_table(), on=['subject_id', 'ses_num'], how='left')
     return df
 
 def select_sessions(df, pt_rule='last'):
@@ -195,17 +218,37 @@ def boot_ci_paired(diff, n_boot=N_BOOT, rng=RNG):
         return np.nan, np.nan
     return float(np.percentile(ds, 2.5)), float(np.percentile(ds, 97.5))
 
-def lmm_omnibus(df, value_col, factor_col, group_col):
-    """Fit value ~ factor*group + (1|sid); joint Wald chi2 on the interaction.
-    Returns (chi2, df, p, mse). df must contain subject_id."""
-    d = df[['subject_id', value_col, factor_col, group_col]].dropna().copy()
+def lmm_omnibus(df, value_col, factor_col, group_col, with_age=True):
+    """Fit value ~ factor*group + age + (1|sid); joint Wald chi2 on the
+    interaction. Returns (chi2, df, p, mse). df must contain subject_id.
+
+    Age is included as a covariate to match marlene_lmm.py, which fits
+    `+ age`. Before Sept 2026 this function omitted it, so the per-ROI
+    omnibuses here and the pooled omnibuses from the grid came from different
+    models while being reported side by side. Falls back to the age-free model
+    if age is missing or constant.
+    """
+    cols = ['subject_id', value_col, factor_col, group_col]
+    use_age = with_age and 'age' in df.columns
+    if use_age:
+        cols = cols + ['age']
+    d = df[cols].dropna().copy()
     d = d.rename(columns={value_col: 'y', factor_col: 'f', group_col: 'g'})
     if d['g'].nunique() < 2 or d['f'].nunique() < 2:
         return np.nan, np.nan, np.nan, np.nan
+    if use_age and d['age'].nunique() < 2:
+        use_age = False
+    formula = 'y ~ C(f) * C(g) + age' if use_age else 'y ~ C(f) * C(g)'
     try:
-        m = smf.mixedlm('y ~ C(f) * C(g)', d, groups=d['subject_id']).fit(reml=True)
+        m = smf.mixedlm(formula, d, groups=d['subject_id']).fit(reml=True)
     except Exception:
-        return np.nan, np.nan, np.nan, np.nan
+        if not use_age:
+            return np.nan, np.nan, np.nan, np.nan
+        try:
+            m = smf.mixedlm('y ~ C(f) * C(g)', d,
+                            groups=d['subject_id']).fit(reml=True)
+        except Exception:
+            return np.nan, np.nan, np.nan, np.nan
     inter = [i for i, n in enumerate(m.params.index) if ':' in n]
     if not inter:
         return np.nan, np.nan, np.nan, float(m.scale)
