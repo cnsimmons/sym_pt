@@ -23,7 +23,7 @@ import pandas as pd
 from pathlib import Path
 
 GIT_DIR  = Path('/user_data/csimmon2/git_repos/sym_pt')
-VTFCE    = GIT_DIR / 'D_liu' / 'verified' / '02_tfce_analyses_not_as_verified.py'
+VTFCE    = GIT_DIR / 'D_liu' / 'verified' / '02_tfce_analyses_dontuse_useharmony.py'
 OUT_DIR  = GIT_DIR / 'F_harmonization' / 'combat_inputs'
 SCANNER  = GIT_DIR / 'F_harmonization' / 'sub_info_scanner.csv'
 MODE     = 'others'

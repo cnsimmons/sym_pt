@@ -25,7 +25,7 @@ import nibabel as nib
 from pathlib import Path
 
 GIT_DIR = Path('/user_data/csimmon2/git_repos/sym_pt')
-VTFCE   = GIT_DIR / 'D_liu' / 'verified' / '02_tfce_analyses_not_as_verified.py'
+VTFCE   = GIT_DIR / 'D_liu' / 'verified' / '02_tfce_analyses_dontuse_useharmony.py'
 HARM    = GIT_DIR / 'F_harmonization' / 'combat_harmonized'
 MODE    = 'others'
 

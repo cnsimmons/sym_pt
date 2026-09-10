@@ -11,7 +11,6 @@ sub-022,01,control,Verio,11.5,Male
 sub-023,01,control,Verio,7.46,Male
 sub-025,01,control,Verio,9.0,Male
 sub-026,01,control,Verio,8.54,Male
-sub-027,02,control,Verio,10.4,Male
 sub-028,01,control,Verio,8.93,Male
 sub-029,01,control,Verio,13.85,Female
 sub-031,01,control,Verio,13.49,Female
@@ -45,17 +44,15 @@ sub-077,01,OTC,Prisma,7.8,Female
 sub-078,01,OTC,Prisma,22.22,Female
 sub-079,01,OTC,Prisma,16.65,Male
 sub-082,01,OTC,Prisma,20.46,Male
-sub-084,01,control,Prisma,20.51,Male
+sub-083,01,control,Prisma,14.96,Male
+sub-085,01,control,Prisma,20.73,Male
 sub-087,01,control,Prisma,21.13,Male
 sub-088,01,control,Prisma,8.46,Female
 sub-089,01,OTC,Prisma,18.29,Male
 sub-090,01,OTC,Prisma,15.58,Female
-sub-091,01,OTC,Prisma,37.26,Male
 sub-092,01,OTC,Prisma,19.78,Female
 sub-093,01,control,Prisma,18.3,Female
 sub-094,01,control,Prisma,14.64,Female
-sub-095,01,control,Prisma,38.54,Male
-sub-096,01,control,Prisma,27.87,Female
 sub-097,01,control,Prisma,19.84,Female
 sub-098,01,OTC,Prisma,16.11,Female
 sub-099,01,OTC,Prisma,11.54,Male
