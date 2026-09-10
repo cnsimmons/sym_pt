@@ -11,7 +11,7 @@ from scipy.stats import wilcoxon
 
 # ── config ────────────────────────────────────────────────────────────────────
 CSV_PATH   = '/user_data/csimmon2/sym_pt/group_results/roi_betas/selective_voxel_counts.csv'
-EXCLUDE    = {'sub-027', 'sub-084'}   # current-cohort control exclusions
+EXCLUDE    = {'sub-027', 'sub-084', 'sub-095', 'sub-096'}   # current-cohort control exclusions
 MIN_TOTAL  = 10        # drop a subject×category×threshold cell if L+R < this (LI unstable)
 CATS       = ['face', 'house', 'object', 'word']
 
@@ -73,7 +73,7 @@ for thr in sorted(li_df['threshold'].unique()):
     # paired within-subject: face vs object, face vs house, word vs face
     wide = li_df[li_df['threshold']==thr].pivot_table(
         index='subject_id', columns='category', values='absLI')
-    for a, b in [('face','object'), ('face','house'), ('word','face')]:
+    for a, b in [('face','object'), ('face','house'), ('word','face'), ('word','object'), ('word','house'), ('object','house')]:
         pair = wide[[a, b]].dropna()
         if len(pair) < 2:
             print(f"   {a} vs {b}: too few pairs"); continue
