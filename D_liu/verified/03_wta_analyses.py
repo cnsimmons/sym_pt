@@ -41,7 +41,7 @@ CATEGORIES = ['face', 'house', 'object', 'word']
 COPES = {'face': 6, 'house': 7, 'object': 8, 'word': 9}
 WTA_THRESHOLD = 2.326
 
-TFCE_DIR = Path(processed_dir) / 'group_results' / 'tfce_votc_fdr'
+TFCE_DIR    = Path(processed_dir) / 'group_results' / 'tfce_votc_harmonized'
 OUTPUT_CSV = Path(processed_dir) / 'group_results' / 'wta_percentages.csv'
 
 # Surviving TFCE clusters: (category, hemi, tstat). tstat1=ctrl>pt, tstat2=pt>ctrl.

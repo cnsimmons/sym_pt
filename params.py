@@ -33,12 +33,13 @@ mni_brain = '/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain.nii.gz'
 # =============================================================================
 # 4. SUBJECT CONFIGURATION
 # =============================================================================
-# Skipped by clean sub id (no 'sub-' prefix):
-#   017 - polymicrogyria
-skip_subs = ['017']
 
-# Skipped by code (group + clean id), e.g. control083:
-#skip_codes = {'control083', 'control085'}
+# Single cohort definition for the whole pipeline. Scripts that load subjects
+# through should_skip() inherit this; scripts with their own EXCLUDE list must
+# match it.
+skip_subs = ['017',              # polymicrogyria
+             '027', '084',       # control exclusions
+             '091', '095', '096']  # age cap <= 23
 skip_codes = set()             # was {'control083','control085'} — no documented reason
 
 # Pre-surgical sessions to exclude from post-surgery analyses.

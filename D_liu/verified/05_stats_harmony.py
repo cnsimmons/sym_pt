@@ -47,7 +47,7 @@ UNIVAR_CSV  = D_LIU / 'univariate_v1_harmonized_sqrt.csv'
 RSA_CSV     = D_LIU / 'rsa_v1_harmonized.csv'
 WTA_CSV     = Path(processed_dir) / 'group_results' / 'wta_percentages.csv'
 PEAK_MNI    = Path(processed_dir) / 'group_results' / 'peak_coords' / 'peak_coords_mni.csv'
-TFCE_DIR    = Path(processed_dir) / 'group_results' / 'tfce_votc_fdr'
+TFCE_DIR    = Path(processed_dir) / 'group_results' / 'tfce_votc_harmonized'
 
 OUT_RESULTS = D_LIU / 'stats_results_harmonized_corrected.csv'
 OUT_TFCE    = D_LIU / 'tfce_clusters.csv'

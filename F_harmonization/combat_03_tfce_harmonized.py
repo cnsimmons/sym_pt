@@ -48,6 +48,12 @@ def main():
     v.OUT_DIR = OUT_DIR
     masks = v.build_votc_masks_and_save()
     subjects = v.load_subjects()
+    # belt and braces: params.py should already exclude these, but this script
+    # feeds the manuscript TFCE and must not drift from EXCLUDE in
+    # 05_stats_harmony.py.
+    EXCLUDE = {'sub-017', 'sub-027', 'sub-084',
+               'sub-091', 'sub-095', 'sub-096'}
+    subjects = {s: i for s, i in subjects.items() if s not in EXCLUDE}
     ctrl_sids = [s for s, i in subjects.items() if i['group'] == 'control']
     pt_sids   = [s for s, i in subjects.items() if i['group'] == 'OTC']
 
