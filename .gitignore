@@ -2,3 +2,47 @@ __pycache__/
 logs_*/
 slurm_out/
 patient_id_key.csv
+
+# ── ComBat model artifacts ───────────────────────────────────────────────────
+# saveHarmonizationModel writes directories, not files, and they are large.
+# Regenerate with combat_02_harmonize.py rather than versioning them.
+F_harmonization/combat_harmonized/model_*
+F_harmonization/combat_harmonized/*.npz
+F_harmonization/combat_inputs/*.npz
+
+# ── imaging volumes ─────────────────────────────────────────────────────────
+*.nii
+*.nii.gz
+
+# ── timestamped backups ─────────────────────────────────────────────────────
+# Useful on disk, not in history. Keep the *.BAK_* convention out of git and
+# note the reason for a rollback in the commit message instead.
+*.BAK_*
+*.bak
+*_backup_*
+D_liu/BAK_*/
+
+# ── large intermediate CSVs ─────────────────────────────────────────────────
+# These regenerate from the pipeline; see PIPELINE.md for the order.
+# Results files ARE tracked — stats_results_harmonized_corrected.csv,
+# grid_results.csv and tfce_clusters.csv are small and worth the history.
+D_liu/_grid_part_*.csv
+D_liu/rsa_v2_scramble*.csv
+
+# ── python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.egg-info/
+.pytest_cache/
+
+# ── SLURM and logs ──────────────────────────────────────────────────────────
+slurm_out/
+slurm-*.out
+*.log
+
+# ── editor and OS ───────────────────────────────────────────────────────────
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
