@@ -65,8 +65,13 @@ PAIRS        = ['face-house', 'face-object', 'face-word',
 OTC_VOXELS = {'l': 11340, 'r': 11540}
 
 # Surviving TFCE clusters (cat, hemi, tstat). tstat1=ctrl>pt, tstat2=pt>ctrl.
-TFCE_CLUSTERS = [('object', 'l', 1), ('house', 'r', 1), ('word', 'r', 2)]
-
+# Discovered from the files rather than hardcoded: a fixed list silently misses
+# any cluster that appears after it was written, which is what happened to
+# house_L and object_R when TFCE moved to the harmonized maps.
+TFCE_CLUSTERS = [(cat, hemi, tstat)
+                 for cat in ('face', 'house', 'object', 'word')
+                 for hemi in ('l', 'r')
+                 for tstat in (1, 2)]
 N_PERM = 10000
 N_BOOT = 5000
 FDR_METHOD = 'bh'
