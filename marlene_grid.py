@@ -120,10 +120,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-import sys
-sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt/D_liu/verified')
-from grid_cohort import EXCLUDE   # cohort defined once; see grid_cohort.py
-
 GIT = Path('/user_data/csimmon2/git_repos/sym_pt')
 RSA = GIT / 'D_liu' / 'rsa_v1_harmonized.csv'
 UNI = GIT / 'D_liu' / 'univariate_v1_harmonized_sqrt.csv'
@@ -255,7 +251,89 @@ def _add_age(df, info):
                     right_on=['sub', 'session'], how='left')
 
 
-def load_measure(measure, rois, cap, quiet=False):
+# ------------------------------------------------------- DV rescaling (optional)
+
+TRANSFORMS = ('none', 'log', 'within_subject', 'control_z')
+
+
+def _apply_transform(ctl, pat, measure, transform, pair_level, quiet=False):
+    """Rescale the dependent variable before the interaction is fitted.
+
+    WHY: a category x group interaction is not invariant under monotone
+    rescaling, and the four categories sit on very different baselines
+    (control peak selectivity runs ~5 at VWFA to ~12.5 at LO). Because that
+    baseline ordering is the reverse of the |LI| ordering, a purely
+    PROPORTIONAL group reduction can generate the |LI| gradient with no
+    category-specific effect. These transforms make that alternative testable
+    rather than assumed away. A gradient that holds under all of them is not
+    a baseline-scale artefact.
+
+      none            raw oriented value, as before
+      log             proportional group effects become additive and so load
+                      on the group main effect, dropping out of the
+                      interaction. peak_z only (strictly positive).
+      within_subject  each value divided by that subject's own mean across the
+                      ROIs, within hemisphere. Removes subject-level scale as
+                      well as level. peak_z only.
+      control_z       per ROI (per ROI x pair for geometry), standardised by
+                      the CONTROL mean and SD pooled over hemispheres. Removes
+                      the across-category baseline difference while preserving
+                      group and hemisphere effects, so it is defined for all
+                      six comparisons.
+
+    log and within_subject are refused for distinctiveness and geometry: those
+    are Fisher-z correlations on an interval scale with a meaningful zero
+    (control means run 0.07 at PPA to 1.23 at LO, and the stored values are
+    negated by the orientation flip), so ratios and logs are not interpretable.
+    """
+    if transform == 'none':
+        return ctl, pat
+    if transform not in TRANSFORMS:
+        raise ValueError(f'unknown --dv-transform {transform!r}')
+
+    ctl, pat = ctl.copy(), pat.copy()
+
+    if transform in ('log', 'within_subject') and measure != 'peak_z':
+        raise ValueError(
+            f'--dv-transform {transform} is only defined for peak_z; '
+            f'{measure} is a Fisher-z correlation on an interval scale, where '
+            f'ratios and logs are not interpretable. Use control_z.')
+
+    if transform == 'log':
+        for name, d in (('controls', ctl), ('patients', pat)):
+            if (d['val'] <= 0).any():
+                raise ValueError(f'--dv-transform log: non-positive values in '
+                                 f'{name}; log is undefined.')
+        ctl['val'] = np.log(ctl['val'])
+        pat['val'] = np.log(pat['val'])
+
+    elif transform == 'within_subject':
+        for d in (ctl, pat):
+            m = d.groupby(['subject_id', 'hemi'])['val'].transform('mean')
+            if (m == 0).any():
+                raise ValueError('--dv-transform within_subject: a subject '
+                                 'mean is zero; ratio undefined.')
+            d['val'] = d['val'] / m
+
+    elif transform == 'control_z':
+        keys = ['roi', 'pair'] if pair_level else ['roi']
+        ref = ctl.groupby(keys)['val'].agg(['mean', 'std'])
+        for d in (ctl, pat):
+            idx = pd.MultiIndex.from_frame(d[keys]) if len(keys) > 1 \
+                  else pd.Index(d[keys[0]])
+            mu = ref['mean'].reindex(idx).to_numpy()
+            sd = ref['std'].reindex(idx).to_numpy()
+            if np.nanmin(sd) == 0:
+                raise ValueError('--dv-transform control_z: zero control SD '
+                                 'in some cell.')
+            d['val'] = (d['val'].to_numpy() - mu) / sd
+
+    if not quiet:
+        print(f'  [{measure}] DV transform: {transform}')
+    return ctl, pat
+
+
+def load_measure(measure, rois, cap, quiet=False, transform='none'):
     """Return (ctl, pat) long frames with columns subject_id, hemi, roi, val.
 
     val is oriented so HIGHER = MORE selective / MORE distinct for every measure.
@@ -291,11 +369,6 @@ def load_measure(measure, rois, cap, quiet=False):
     else:
         raise ValueError(measure)
 
-    # Cohort, applied before the control/patient split so both frames
-    # inherit it. Without this the grid runs on 38 controls while
-    # 05_stats_harmony.py runs on 36.
-    d = d[~d['subject_id'].isin(EXCLUDE)]
-
     ctl = _add_age(_sessions(d, 'control', 'min'), info)
     pat = _sessions(d, 'OTC', 'max')
     pat['intact'] = pat['intact_hemi'].map({'left': 'l', 'right': 'r'})
@@ -317,6 +390,9 @@ def load_measure(measure, rois, cap, quiet=False):
     cols = ['subject_id', 'hemi', 'roi', 'val']
     if measure == 'geometry':
         cols = cols + ['pair']
+    ctl, pat = _apply_transform(ctl, pat, measure, transform,
+                                pair_level=(measure == 'geometry'),
+                                quiet=quiet)
     return ctl[cols], pat[cols + ['intact']]
 
 
@@ -446,6 +522,12 @@ def main():
                          'word) so the gradient is tested across the remaining '
                          'three categories only. If a signed/graded spec still '
                          'fires, the ordering is not carried by word alone.')
+    ap.add_argument('--dv-transform', choices=list(TRANSFORMS), default='none',
+                    help='rescale the DV before fitting, to test whether a '
+                         'gradient is carried by across-category baseline '
+                         'differences rather than by category. log and '
+                         'within_subject apply to peak_z only; control_z '
+                         'applies to any measure.')
     ap.add_argument('--csv', default=None, help='write the grid to this path')
     args = ap.parse_args()
 
@@ -462,6 +544,7 @@ def main():
         print('*** --drop-word: word ROI and all word pairs EXCLUDED. A spec '
               'that still fires\n    is ordered across face/house/object and '
               'is not carried by word alone. ***')
+    print(f'DV transform: {args.dv_transform}')
     print('all measures oriented so HIGHER = MORE selective / MORE distinct')
     print('beta < 0  =  the first-named category set is relatively MORE '
           'affected in GROUP B')
@@ -494,7 +577,8 @@ def main():
 
     rows = []
     for measure in args.measures:
-        ctl, pat = load_measure(measure, rois, cap)
+        ctl, pat = load_measure(measure, rois, cap,
+                                transform=args.dv_transform)
         print(f'\n{"=" * 78}\nMEASURE: {measure}')
         pair_level = (measure == 'geometry')
         if pair_level:
@@ -536,7 +620,8 @@ def main():
                                       else 'supplemental',
                                  paired=is_paired,
                                  age_cap=cap, roi_set=args.roi_set,
-                                 drop_word=args.drop_word))
+                                 drop_word=args.drop_word,
+                                 dv_transform=args.dv_transform))
 
     print(f'\n{"=" * 78}')
     print('TFCE: no subject x category value exists, so it cannot take this '
