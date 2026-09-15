@@ -687,6 +687,10 @@ def geometry(results, fdr_method='bh'):
         if cc['hemi'].nunique() == 2:
             per_roi(cc, 'hemi', f'{roi}_ctrl_LvsR', 'control_asymmetry', paired=True)
 
+        # patient vs patient for this ROI. Each patient contributes only their
+        # intact hemisphere, so labelling by hemi splits the two subgroups.
+        # Yields the MEAN_OVER_PAIRS row and the six per-pair rows, gated by
+        # the same omnibus as the other two comparisons.
         pp = rsa[(rsa['category'] == roi) & (rsa['group'] == 'OTC')].copy()
         pp['intact'] = np.where(pp['hemi'] == 'l', 'LH', 'RH')
         if pp['intact'].nunique() == 2:
@@ -818,3 +822,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
+    
