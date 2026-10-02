@@ -1,0 +1,305 @@
+measure,model,comparison,hemi,level,omnibus_chi2,omnibus_df,omnibus_p,mse,gating,diff,cohens_d,p_perm,q_fdr,ci_lo,ci_hi,n_a,n_b,note
+peak_location,ctrl_L_vs_R,control_lateralization,l-r,face_FFA,,,,,,3.341916304631918,0.8348405242698302,0.06369363063693631,0.25477452254774524,0.5498792774708323,1.897575056340141,6,6,
+peak_location,ctrl_L_vs_R,control_lateralization,l-r,house_PPA_strict,,,,,,0.14198843461169694,0.10351034947809272,0.8116188381161884,0.8116188381161884,-0.5997795299686935,2.866650936370994,6,6,
+peak_location,ctrl_L_vs_R,control_lateralization,l-r,object_LOC,,,,,,-4.8981446315876225,-0.5963351837347745,0.21957804219578042,0.2927707229277072,-2.010817832574591,0.14046208089837814,6,6,
+peak_location,ctrl_L_vs_R,control_lateralization,l-r,word_VWFA,,,,,,-8.21944506523198,-0.6744586819545805,0.1311868813118688,0.2623737626237376,-3.9164466592060694,0.008736852577831977,6,6,
+peak_location,LH-intact_pt_vs_ctrl,patient_vs_control,l,face_FFA,,,,,,0.7334990740253051,0.18680869812025988,0.8208179182081792,0.8208179182081792,-1.3508430672160217,2.00492108357639,3,6,
+peak_location,LH-intact_pt_vs_ctrl,patient_vs_control,l,house_PPA_strict,,,,,,1.4900807809178298,0.5984356350135829,0.42995700429957007,0.57327600573276,-1.7095631640945563,4.001663787980101,3,6,
+peak_location,LH-intact_pt_vs_ctrl,patient_vs_control,l,object_LOC,,,,,,11.78687977550058,1.4167845744589516,0.060193980601939805,0.15058494150584942,0.3923116111028076,7.654091229942482,3,6,
+peak_location,LH-intact_pt_vs_ctrl,patient_vs_control,l,word_VWFA,,,,,,11.825989289538128,1.378514326651722,0.07529247075292471,0.15058494150584942,-1.9095978782823324,9.638536709933668,3,6,
+peak_location,RH-intact_pt_vs_ctrl,patient_vs_control,r,face_FFA,,,,,,13.370770620130115,1.596191294978434,0.10998900109989002,0.21997800219978003,-0.8189143017257187,58.09314656199475,2,6,
+peak_location,RH-intact_pt_vs_ctrl,patient_vs_control,r,house_PPA_strict,,,,,,13.977357848153513,1.9109974872143705,0.07379262073792621,0.21997800219978003,0.280354127141116,46.5240345501259,2,6,
+peak_location,RH-intact_pt_vs_ctrl,patient_vs_control,r,object_LOC,,,,,,-0.7728720262908784,-0.09389172904565428,0.9303069693030697,0.9303069693030697,-1.6505308232708997,2.0295120409288567,2,6,
+peak_location,RH-intact_pt_vs_ctrl,patient_vs_control,r,word_VWFA,,,,,,-3.292463053003811,-0.2685926307431656,0.8018198180181981,0.9303069693030697,-3.320517599456321,2.3677123757961502,2,6,
+peak_location,LH_pt_vs_RH_pt,patient_vs_patient,intact,face_FFA,,,,,,-9.295355241472894,-0.7764567217660236,0.6943305669433056,0.6995300469953005,-15.408690356744529,3.4260327783471127,3,2,
+peak_location,LH_pt_vs_RH_pt,patient_vs_patient,intact,house_PPA_strict,,,,,,-12.345288632623987,-1.1955536070574404,0.1954804519548045,0.6995300469953005,-15.871377885578202,1.1531012381780494,3,2,
+peak_location,LH_pt_vs_RH_pt,patient_vs_patient,intact,object_LOC,,,,,,7.661607170203837,0.6107405286272319,0.6995300469953005,0.6995300469953005,-11.90533334183284,10.279434699140618,3,2,
+peak_location,LH_pt_vs_RH_pt,patient_vs_patient,intact,word_VWFA,,,,,,6.899007277309961,0.45881614922039954,0.43675632436756323,0.6995300469953005,-1.2901253480589185,7.555945776372802,3,2,
+peak_location,ctrl_L_vs_R,lateralization,,omnibus_ROI,7.6953937253548705,3.0,0.05274488524150985,31.00726019548307,,,,,,,,24,24,
+peak_location,ctrl_L_vs_R,lateralization,,gradient_absLI,,,,,,18.480162013790935,,0.280728636602816,,,,24,24,mixedlm interaction slope
+peak_location,ctrl_L_vs_R,lateralization,,rank_order,,,,,,1.311567388568021,,0.46409314091929965,,,,24,24,mixedlm interaction slope
+peak_location,ctrl_L_vs_R,lateralization,,sym_vs_asym,,,,,,0.06068628181207695,,0.9878179204174279,,,,24,24,mixedlm interaction slope
+peak_location,LH-intact_pt_vs_ctrl,lateralization,,omnibus_ROI,8.2221658240882,3.0,0.04163656238862297,27.891044378842707,,,,,,,,12,24,
+peak_location,LH-intact_pt_vs_ctrl,lateralization,,gradient_absLI,,,,,,-16.378906212181082,,0.4303379213097388,,,,12,24,mixedlm interaction slope
+peak_location,LH-intact_pt_vs_ctrl,lateralization,,rank_order,,,,,,-1.0730606477558828,,0.6202198505378279,,,,12,24,mixedlm interaction slope
+peak_location,LH-intact_pt_vs_ctrl,lateralization,,sym_vs_asym,,,,,,0.3587360964274903,,0.9401233952487531,,,,12,24,mixedlm interaction slope
+peak_location,RH-intact_pt_vs_ctrl,lateralization,,omnibus_ROI,7.656936056824646,3.0,0.05366028748423312,48.98687242420402,,,,,,,,8,24,
+peak_location,RH-intact_pt_vs_ctrl,lateralization,,gradient_absLI,,,,,,33.149560045797124,,0.27643161607157685,,,,8,24,mixedlm interaction slope
+peak_location,RH-intact_pt_vs_ctrl,lateralization,,rank_order,,,,,,2.546176686956295,,0.4268327135127258,,,,8,24,mixedlm interaction slope
+peak_location,RH-intact_pt_vs_ctrl,lateralization,,sym_vs_asym,,,,,,1.5630891273681682,,0.8269710526839285,,,,8,24,mixedlm interaction slope
+peak_location,LH_pt_vs_RH_pt,lateralization,,omnibus_ROI,8.05241893358955,3.0,0.04494069602154596,49.56144555866427,,,,,,,,12,8,
+peak_location,LH_pt_vs_RH_pt,lateralization,,gradient_absLI,,,,,,-31.04830424418713,,0.3792347033931165,,,,12,8,mixedlm interaction slope
+peak_location,LH_pt_vs_RH_pt,lateralization,,rank_order,,,,,,-2.307669946144147,,0.5310719778117421,,,,12,8,mixedlm interaction slope
+peak_location,LH_pt_vs_RH_pt,lateralization,,sym_vs_asym,,,,,,-1.1436667491286086,,0.8876371339916364,,,,12,8,mixedlm interaction slope
+peak_selectivity,ctrl_L_vs_R,control_lateralization,l-r,face_FFA,,,,,,-0.09556365013122543,-0.05038070482193924,1.0,1.0,-0.8845870552529456,1.3372999752790853,6,6,
+peak_selectivity,ctrl_L_vs_R,control_lateralization,l-r,house_PPA_strict,,,,,,0.08214179674784343,0.027886445249765506,0.9673032696730327,1.0,-1.7477920955337085,0.7662847491277043,6,6,
+peak_selectivity,ctrl_L_vs_R,control_lateralization,l-r,object_LOC,,,,,,0.24037178357442102,0.19545146644321496,0.7197280271972802,1.0,-1.1368479519037618,1.065490352191264,6,6,
+peak_selectivity,ctrl_L_vs_R,control_lateralization,l-r,word_VWFA,,,,,,-0.06948200861612963,-0.09449357414226382,0.8444155584441556,1.0,-1.193316013357905,0.8448694409521478,6,6,
+peak_selectivity,LH-intact_pt_vs_ctrl,patient_vs_control,l,face_FFA,,,,,,-2.3122847080230695,-0.5803163253411889,0.4480551944805519,0.8692130786921308,-5.294733851602391,2.9047127193361875,3,6,
+peak_selectivity,LH-intact_pt_vs_ctrl,patient_vs_control,l,house_PPA_strict,,,,,,-1.17000659306844,-0.5556775739130481,0.4667533246675332,0.8692130786921308,-3.493442872228261,1.6273419580505744,3,6,
+peak_selectivity,LH-intact_pt_vs_ctrl,patient_vs_control,l,object_LOC,,,,,,0.46714202562968,0.14396766680244488,0.8692130786921308,0.8692130786921308,-2.100958830005933,2.590665544258755,3,6,
+peak_selectivity,LH-intact_pt_vs_ctrl,patient_vs_control,l,word_VWFA,,,,,,0.4130645195643108,0.2956233667882887,0.6943305669433056,0.8692130786921308,-2.328802880141286,3.5032954380611674,3,6,
+peak_selectivity,RH-intact_pt_vs_ctrl,patient_vs_control,r,face_FFA,,,,,,-0.3052723805109654,-0.12322755982573837,0.9313068693130687,0.9313068693130687,-2.0380675209353543,0.8259915408362328,2,6,
+peak_selectivity,RH-intact_pt_vs_ctrl,patient_vs_control,r,house_PPA_strict,,,,,,-1.4289484024047852,-1.0081003495685736,0.32486751324867513,0.43315668433156684,-10.77022429281737,-0.1163325593348669,2,6,
+peak_selectivity,RH-intact_pt_vs_ctrl,patient_vs_control,r,object_LOC,,,,,,2.189043362935384,0.9200769269207292,0.2866713328667133,0.43315668433156684,-0.39825644266780036,3.1232829608443002,2,6,
+peak_selectivity,RH-intact_pt_vs_ctrl,patient_vs_control,r,word_VWFA,,,,,,1.7333722511927285,1.836793763925878,0.070992900709929,0.283971602839716,0.6010124117891797,5.975404113992729,2,6,
+peak_selectivity,LH_pt_vs_RH_pt,patient_vs_patient,intact,face_FFA,,,,,,-2.1025759776433297,-0.3838463352929534,0.6948305169483052,0.9046095390460954,-237.34041527808506,173.30247421026422,3,2,
+peak_selectivity,LH_pt_vs_RH_pt,patient_vs_patient,intact,house_PPA_strict,,,,,,0.3410836060841884,0.13235911353744162,0.6986301369863014,0.9046095390460954,-1.1417121842561762,11.6884996347409,3,2,
+peak_selectivity,LH_pt_vs_RH_pt,patient_vs_patient,intact,object_LOC,,,,,,-1.4815295537312827,-0.36247313335829506,0.9046095390460954,0.9046095390460954,-2.2152975365055134,2.1736642799446915,3,2,
+peak_selectivity,LH_pt_vs_RH_pt,patient_vs_patient,intact,word_VWFA,,,,,,-1.3897897402445474,-0.7113053515161284,0.397960203979602,0.9046095390460954,-4.144994583101168,0.8802422080453616,3,2,
+peak_selectivity,ctrl_L_vs_R,lateralization,,omnibus_ROI,0.07447194568284068,3.0,0.9947140177671542,2.9119821947188482,,,,,,,,24,24,
+peak_selectivity,ctrl_L_vs_R,lateralization,,gradient_absLI,,,,,,0.9457806557253206,,0.8664846598336094,,,,24,24,mixedlm interaction slope
+peak_selectivity,ctrl_L_vs_R,lateralization,,rank_order,,,,,,0.10544853740268302,,0.8536643771884672,,,,24,24,mixedlm interaction slope
+peak_selectivity,ctrl_L_vs_R,lateralization,,sym_vs_asym,,,,,,0.24377961953480987,,0.8401977059036448,,,,24,24,mixedlm interaction slope
+peak_selectivity,LH-intact_pt_vs_ctrl,lateralization,,omnibus_ROI,1.5049466968374277,3.0,0.6811291067956051,7.191894185178935,,,,,,,,12,24,
+peak_selectivity,LH-intact_pt_vs_ctrl,lateralization,,gradient_absLI,,,,,,-1.8819172706940976,,0.8373370197746144,,,,12,24,mixedlm interaction slope
+peak_selectivity,LH-intact_pt_vs_ctrl,lateralization,,rank_order,,,,,,-0.03695977617193185,,0.9683832725234554,,,,12,24,mixedlm interaction slope
+peak_selectivity,LH-intact_pt_vs_ctrl,lateralization,,sym_vs_asym,,,,,,0.5981778105099986,,0.7619272792429452,,,,12,24,mixedlm interaction slope
+peak_selectivity,RH-intact_pt_vs_ctrl,lateralization,,omnibus_ROI,7.318927560843491,3.0,0.06239813334288974,1.7901241148255735,,,,,,,,8,24,
+peak_selectivity,RH-intact_pt_vs_ctrl,lateralization,,gradient_absLI,,,,,,-4.75620305560916,,0.4909246730298631,,,,8,24,mixedlm interaction slope
+peak_selectivity,RH-intact_pt_vs_ctrl,lateralization,,rank_order,,,,,,-0.37496160577844717,,0.5930845784342018,,,,8,24,mixedlm interaction slope
+peak_selectivity,RH-intact_pt_vs_ctrl,lateralization,,sym_vs_asym,,,,,,-0.33400245507558046,,0.8220186732256529,,,,8,24,mixedlm interaction slope
+peak_selectivity,LH_pt_vs_RH_pt,lateralization,,omnibus_ROI,0.38377421263235095,3.0,0.9435735857534898,10.311916803593569,,,,,,,,12,8,
+peak_selectivity,LH_pt_vs_RH_pt,lateralization,,gradient_absLI,,,,,,3.8200664406403706,,0.7549949442672803,,,,12,8,mixedlm interaction slope
+peak_selectivity,LH_pt_vs_RH_pt,lateralization,,rank_order,,,,,,0.44345036700919815,,0.7219662995431313,,,,12,8,mixedlm interaction slope
+peak_selectivity,LH_pt_vs_RH_pt,lateralization,,sym_vs_asym,,,,,,1.1759598851203916,,0.6568626556753703,,,,12,8,mixedlm interaction slope
+voxel_count,ctrl_L_vs_R,control_lateralization,l-r,face_FFA,,,,,,-183.0,-0.38805515968834203,0.30956904309569044,0.41275872412758724,-1.500611795979839,0.49681019726053793,6,6,
+voxel_count,ctrl_L_vs_R,control_lateralization,l-r,house_PPA_strict,,,,,,79.33333333333333,0.20154778869599613,0.7501249875012499,0.7501249875012499,-1.4818918365640628,0.9989523943959941,6,6,
+voxel_count,ctrl_L_vs_R,control_lateralization,l-r,object_LOC,,,,,,1768.3333333333333,1.3157704375215145,0.0321967803219678,0.1287871212878712,0.9825999788276207,4.21919257312665,6,6,
+voxel_count,ctrl_L_vs_R,control_lateralization,l-r,word_VWFA,,,,,,419.6666666666667,0.6519636601156827,0.22147785221477853,0.41275872412758724,-0.015554461020882657,1.7372967408993454,6,6,
+voxel_count,LH-intact_pt_vs_ctrl,patient_vs_control,l,face_FFA,,,,,,-233.33333333333331,-0.2688797670357859,0.6004399560043996,0.6004399560043996,-7.508264585187733,5.780542872681255,3,6,
+voxel_count,LH-intact_pt_vs_ctrl,patient_vs_control,l,house_PPA_strict,,,,,,-222.0,-0.7239774427967745,0.33896610338966104,0.45195480451954806,-6.548646773396508,0.5629824191242747,3,6,
+voxel_count,LH-intact_pt_vs_ctrl,patient_vs_control,l,object_LOC,,,,,,7488.0,0.948014397580965,0.2742725727427257,0.45195480451954806,-0.31176614639193617,4.370104895149113,3,6,
+voxel_count,LH-intact_pt_vs_ctrl,patient_vs_control,l,word_VWFA,,,,,,-451.33333333333337,-0.7716881840379775,0.2910708929107089,0.45195480451954806,-2.7065278077570154,0.4616786794508554,3,6,
+voxel_count,RH-intact_pt_vs_ctrl,patient_vs_control,r,face_FFA,,,,,,-285.66666666666663,-0.7091606222346247,0.46695330466953305,0.6226044062260441,-1.8712376385533687,0.05751774861149053,2,6,
+voxel_count,RH-intact_pt_vs_ctrl,patient_vs_control,r,house_PPA_strict,,,,,,-170.66666666666669,-0.9286768094471867,0.3267673232676732,0.6226044062260441,-4.381727466913864,-0.1843122447038246,2,6,
+voxel_count,RH-intact_pt_vs_ctrl,patient_vs_control,r,object_LOC,,,,,,3830.666666666667,0.483370949355835,0.6432356764323568,0.6432356764323568,-0.8721264905298917,3.5508832103293737,2,6,
+voxel_count,RH-intact_pt_vs_ctrl,patient_vs_control,r,word_VWFA,,,,,,837.1666666666667,0.7576330344245178,0.3558644135586441,0.6226044062260441,-0.766808639965269,3.705793648337054,2,6,
+voxel_count,LH_pt_vs_RH_pt,patient_vs_patient,intact,face_FFA,,,,,,-130.66666666666666,-0.1022169871263942,0.6974302569743026,0.9299070092990701,-4.019233169496341,1.2138322821068197,3,2,
+voxel_count,LH_pt_vs_RH_pt,patient_vs_patient,intact,house_PPA_strict,,,,,,28.0,0.13144719032649502,1.0,1.0,-14.14213562373095,0.9793187311194098,3,2,
+voxel_count,LH_pt_vs_RH_pt,patient_vs_patient,intact,object_LOC,,,,,,5425.666666666666,0.6916896408638767,0.5098490150984901,0.9299070092990701,-0.7627453419737884,46.43797339279114,3,2,
+voxel_count,LH_pt_vs_RH_pt,patient_vs_patient,intact,word_VWFA,,,,,,-868.8333333333334,-1.0575203964569373,0.4072592740725927,0.9299070092990701,-29.219170817218615,0.8292034800498146,3,2,
+voxel_count,ctrl_L_vs_R,lateralization,,omnibus_ROI,0.48850531312139556,3.0,0.9214093891754709,13859384.401381522,,,,,,,,24,24,
+voxel_count,ctrl_L_vs_R,lateralization,,gradient_absLI,,,,,,2249.838661102261,,0.8466065069525638,,,,24,24,mixedlm interaction slope
+voxel_count,ctrl_L_vs_R,lateralization,,rank_order,,,,,,291.0370370370354,,0.7988412640674195,,,,24,24,mixedlm interaction slope
+voxel_count,ctrl_L_vs_R,lateralization,,sym_vs_asym,,,,,,805.4999999999995,,0.7383376129378898,,,,24,24,mixedlm interaction slope
+voxel_count,LH-intact_pt_vs_ctrl,lateralization,,omnibus_ROI,6.3095254033115395,3.0,0.09748474092200073,14438197.550390963,,,,,,,,12,24,
+voxel_count,LH-intact_pt_vs_ctrl,lateralization,,gradient_absLI,,,,,,16088.270303603917,,0.2188974156644019,,,,12,24,mixedlm interaction slope
+voxel_count,LH-intact_pt_vs_ctrl,lateralization,,rank_order,,,,,,1791.037037037036,,0.17684957588099348,,,,12,24,mixedlm interaction slope
+voxel_count,LH-intact_pt_vs_ctrl,lateralization,,sym_vs_asym,,,,,,3975.333333333331,,0.15739437961889657,,,,12,24,mixedlm interaction slope
+voxel_count,RH-intact_pt_vs_ctrl,lateralization,,omnibus_ROI,1.1135598363933386,3.0,0.7738017347709136,14886588.40427259,,,,,,,,8,24,
+voxel_count,RH-intact_pt_vs_ctrl,lateralization,,gradient_absLI,,,,,,4355.279008733841,,0.7977401290561759,,,,8,24,mixedlm interaction slope
+voxel_count,RH-intact_pt_vs_ctrl,lateralization,,rank_order,,,,,,566.0185185185194,,0.7404847211879635,,,,8,24,mixedlm interaction slope
+voxel_count,RH-intact_pt_vs_ctrl,lateralization,,sym_vs_asym,,,,,,1554.2499999999975,,0.6663119202595846,,,,8,24,mixedlm interaction slope
+voxel_count,LH_pt_vs_RH_pt,lateralization,,omnibus_ROI,2.1599602914217058,3.0,0.5398779412850863,14028417.75008852,,,,,,,,12,8,
+voxel_count,LH_pt_vs_RH_pt,lateralization,,gradient_absLI,,,,,,13982.829955972411,,0.3256802332926153,,,,12,8,mixedlm interaction slope
+voxel_count,LH_pt_vs_RH_pt,lateralization,,rank_order,,,,,,1516.0555555555552,,0.29216977336571737,,,,12,8,mixedlm interaction slope
+voxel_count,LH_pt_vs_RH_pt,lateralization,,sym_vs_asym,,,,,,3226.5833333333335,,0.2906377882191712,,,,12,8,mixedlm interaction slope
+sum_selectivity,ctrl_L_vs_R,control_lateralization,l-r,face_FFA,,,,,,-102.15499968172139,-0.4911099920492441,0.27717228277172284,0.3695630436956305,-2.161709333779735,0.3068147616266684,6,6,
+sum_selectivity,ctrl_L_vs_R,control_lateralization,l-r,house_PPA_strict,,,,,,61.29077960948027,0.21052387994012836,0.8066193380661933,0.8066193380661933,-1.7992853631481003,0.8134045398608163,6,6,
+sum_selectivity,ctrl_L_vs_R,control_lateralization,l-r,object_LOC,,,,,,179.7404879671615,1.8086123762054886,0.030096990300969902,0.0665933406659334,1.1555193426202102,4.810487386214335,6,6,
+sum_selectivity,ctrl_L_vs_R,control_lateralization,l-r,word_VWFA,,,,,,145.73113955088476,0.855028121457524,0.0332966703329667,0.0665933406659334,0.5160189610027661,2.2900164082701773,6,6,
+sum_selectivity,LH-intact_pt_vs_ctrl,patient_vs_control,l,face_FFA,,,,,,-270.5181758613862,-0.6334668327802988,0.46385361463853614,0.46385361463853614,-8.331938244083666,3.8000701879600265,3,6,
+sum_selectivity,LH-intact_pt_vs_ctrl,patient_vs_control,l,house_PPA_strict,,,,,,-204.07603879117931,-0.914451914311338,0.22667733226677333,0.33023364330233645,-3.185558140598765,0.31816655532184174,3,6,
+sum_selectivity,LH-intact_pt_vs_ctrl,patient_vs_control,l,object_LOC,,,,,,1017.865454435002,1.1682367541195802,0.19338066193380662,0.33023364330233645,-0.01989771613710006,6.248547519217279,3,6,
+sum_selectivity,LH-intact_pt_vs_ctrl,patient_vs_control,l,word_VWFA,,,,,,-201.88445599962455,-0.9001956987590456,0.24767523247675233,0.33023364330233645,-2.7429567550452547,0.19264475246914117,3,6,
+sum_selectivity,RH-intact_pt_vs_ctrl,patient_vs_control,r,face_FFA,,,,,,-202.602959222038,-0.9250883679082604,0.35156484351564843,0.35156484351564843,-2.2893576827411106,-0.27359269536808706,2,6,
+sum_selectivity,RH-intact_pt_vs_ctrl,patient_vs_control,r,house_PPA_strict,,,,,,-171.11807771779013,-0.96376906947662,0.2766723327667233,0.35156484351564843,-2.3337488374220685,-0.5744207945415064,2,6,
+sum_selectivity,RH-intact_pt_vs_ctrl,patient_vs_control,r,object_LOC,,,,,,840.0426361609696,0.9448072889047955,0.31396860313968605,0.35156484351564843,-0.2197691282666663,5.4752220605658515,2,6,
+sum_selectivity,RH-intact_pt_vs_ctrl,patient_vs_control,r,word_VWFA,,,,,,487.18182916639415,1.044969459628208,0.27607239276072393,0.35156484351564843,-0.9046815458707823,5.8854123948428025,2,6,
+sum_selectivity,LH_pt_vs_RH_pt,patient_vs_patient,intact,face_FFA,,,,,,-170.0702163210696,-0.2725306280589044,0.6934306569343066,0.9245742092457422,-4.821280280629551,1.0203098915237894,3,2,
+sum_selectivity,LH_pt_vs_RH_pt,patient_vs_patient,intact,house_PPA_strict,,,,,,28.332818536091025,0.20449907381176802,1.0,1.0,-11.024807772169527,1.2046692158198737,3,2,
+sum_selectivity,LH_pt_vs_RH_pt,patient_vs_patient,intact,object_LOC,,,,,,357.56330624119397,0.41676319714960436,0.6058394160583942,0.9245742092457422,-1.1692195599947008,20.620275666778063,3,2,
+sum_selectivity,LH_pt_vs_RH_pt,patient_vs_patient,intact,word_VWFA,,,,,,-543.3351456151339,-1.1498378551296846,0.19518048195180482,0.7807219278072193,-66.64826323339976,0.9621329844506721,3,2,
+sum_selectivity,ctrl_L_vs_R,lateralization,,omnibus_ROI,0.6015701969154246,3.0,0.8960728187178788,236810.60576877496,,,,,,,,24,24,
+sum_selectivity,ctrl_L_vs_R,lateralization,,gradient_absLI,,,,,,11.94092807274802,,0.9943740556879184,,,,24,24,mixedlm interaction slope
+sum_selectivity,ctrl_L_vs_R,lateralization,,rank_order,,,,,,16.336012909150313,,0.9236829264894285,,,,24,24,mixedlm interaction slope
+sum_selectivity,ctrl_L_vs_R,lateralization,,sym_vs_asym,,,,,,98.72756385373924,,0.7846642673085871,,,,24,24,mixedlm interaction slope
+sum_selectivity,LH-intact_pt_vs_ctrl,lateralization,,omnibus_ROI,9.326507423830062,3.0,0.025250490744519394,249289.09464668992,,,,,,,,12,24,
+sum_selectivity,LH-intact_pt_vs_ctrl,lateralization,,gradient_absLI,,,,,,2443.3333090227948,,0.2036537873495433,,,,12,24,mixedlm interaction slope
+sum_selectivity,LH-intact_pt_vs_ctrl,lateralization,,rank_order,,,,,,278.19448612754314,,0.15212624897669283,,,,12,24,mixedlm interaction slope
+sum_selectivity,LH-intact_pt_vs_ctrl,lateralization,,sym_vs_asym,,,,,,643.0960237524165,,0.1192206507589441,,,,12,24,mixedlm interaction slope
+sum_selectivity,RH-intact_pt_vs_ctrl,lateralization,,omnibus_ROI,4.28875956365769,3.0,0.23192425117414725,274923.8721096986,,,,,,,,8,24,
+sum_selectivity,RH-intact_pt_vs_ctrl,lateralization,,gradient_absLI,,,,,,-348.1724927551397,,0.884518395158099,,,,8,24,mixedlm interaction slope
+sum_selectivity,RH-intact_pt_vs_ctrl,lateralization,,rank_order,,,,,,8.767398734356995,,0.9710833127228318,,,,8,24,mixedlm interaction slope
+sum_selectivity,RH-intact_pt_vs_ctrl,lateralization,,sym_vs_asym,,,,,,192.17284424941127,,0.7081634912670101,,,,8,24,mixedlm interaction slope
+sum_selectivity,LH_pt_vs_RH_pt,lateralization,,omnibus_ROI,2.3082125545992054,3.0,0.5109494255554519,221457.4127819742,,,,,,,,12,8,
+sum_selectivity,LH_pt_vs_RH_pt,lateralization,,gradient_absLI,,,,,,2803.4467298506793,,0.13120024353301032,,,,12,8,mixedlm interaction slope
+sum_selectivity,LH_pt_vs_RH_pt,lateralization,,rank_order,,,,,,285.7631003023378,,0.13299711841501347,,,,12,8,mixedlm interaction slope
+sum_selectivity,LH_pt_vs_RH_pt,lateralization,,sym_vs_asym,,,,,,549.6507433567443,,0.1806905232957835,,,,12,8,mixedlm interaction slope
+pref_similarity,ctrl_L_vs_R,control_lateralization,l-r,face_FFA,,,,,,0.14152615126012516,0.28298901471803023,0.5385461453854614,0.8333833283338333,-0.4855994816253661,2.0667688309598224,6,6,
+pref_similarity,ctrl_L_vs_R,control_lateralization,l-r,house_PPA_strict,,,,,,-0.0572165765957739,-0.14545869698460806,0.625037496250375,0.8333833283338333,-1.360859750999212,0.6965819156034566,6,6,
+pref_similarity,ctrl_L_vs_R,control_lateralization,l-r,object_LOC,,,,,,0.032409575601311615,0.04893002413194374,0.905009499050095,0.905009499050095,-0.8739279094108809,1.514519418541657,6,6,
+pref_similarity,ctrl_L_vs_R,control_lateralization,l-r,word_VWFA,,,,,,0.588952634101076,1.2526150986136215,0.0613938606139386,0.2455754424557544,0.5154654720430858,4.7306446503428194,6,6,
+pref_similarity,LH-intact_pt_vs_ctrl,patient_vs_control,l,face_FFA,,,,,,-0.6197029051467646,-1.9631329604981758,0.07429257074292571,0.29717028297170284,-12.636970702463387,-0.8898836264960337,3,6,
+pref_similarity,LH-intact_pt_vs_ctrl,patient_vs_control,l,house_PPA_strict,,,,,,-0.058455708814035,-0.19087070096551897,0.7998200179982001,0.7998200179982001,-3.393361850806732,2.140004155606648,3,6,
+pref_similarity,LH-intact_pt_vs_ctrl,patient_vs_control,l,object_LOC,,,,,,-0.42996282304580524,-0.6853912759615733,0.4042595740425957,0.5390127653901277,-6.0159498324609295,0.8354280417266102,3,6,
+pref_similarity,LH-intact_pt_vs_ctrl,patient_vs_control,l,word_VWFA,,,,,,-0.4746283285115611,-0.9581787778028072,0.2196780321967803,0.4393560643935606,-2.5039817312626123,0.014517762693037685,3,6,
+pref_similarity,RH-intact_pt_vs_ctrl,patient_vs_control,r,face_FFA,,,,,,0.6163415884367676,1.7432462416242474,0.0670932906709329,0.2683731626837316,0.12801135851679074,8.480212011131858,2,6,
+pref_similarity,RH-intact_pt_vs_ctrl,patient_vs_control,r,house_PPA_strict,,,,,,0.23447920525698726,0.6450083966746275,0.4316568343165683,0.46555344465553444,-1.214509723653733,3.754620066595178,2,6,
+pref_similarity,RH-intact_pt_vs_ctrl,patient_vs_control,r,object_LOC,,,,,,0.36880719967539616,0.7124654776178305,0.46555344465553444,0.46555344465553444,-0.637067056869753,5.171785006533043,2,6,
+pref_similarity,RH-intact_pt_vs_ctrl,patient_vs_control,r,word_VWFA,,,,,,0.5084416184605971,1.181789055366017,0.3184681531846815,0.46555344465553444,0.34299107160367365,5.064731436794151,2,6,
+pref_similarity,LH_pt_vs_RH_pt,patient_vs_patient,intact,face_FFA,,,,,,-1.094518342323407,-2.792294223637003,0.09579042095790422,0.38316168383161686,-213.20775676490902,-2.760540039684267,3,2,
+pref_similarity,LH_pt_vs_RH_pt,patient_vs_patient,intact,house_PPA_strict,,,,,,-0.3501514906667962,-0.9044164719285428,0.39866013398660133,0.40235976402359763,-6.372632419956887,1.055758185515814,3,2,
+pref_similarity,LH_pt_vs_RH_pt,patient_vs_patient,intact,object_LOC,,,,,,-0.7663604471198897,-1.0629810591774052,0.40235976402359763,0.40235976402359763,-4.090979074316943,0.5401448818806452,3,2,
+pref_similarity,LH_pt_vs_RH_pt,patient_vs_patient,intact,word_VWFA,,,,,,-0.3941173128710822,-1.3612876943663343,0.30316968303169683,0.40235976402359763,-19.1692297022507,-0.9298079196037533,3,2,
+pref_similarity,ctrl_L_vs_R,lateralization,,omnibus_ROI,4.799913572434039,3.0,0.18704860195078243,0.1542064060510664,,,,,,,,24,24,
+pref_similarity,ctrl_L_vs_R,lateralization,,gradient_absLI,,,,,,-2.2423038102854136,,0.027991987034939277,,,,24,24,mixedlm interaction slope
+pref_similarity,ctrl_L_vs_R,lateralization,,rank_order,,,,,,-0.2175553395058085,,0.03690004946382917,,,,24,24,mixedlm interaction slope
+pref_similarity,ctrl_L_vs_R,lateralization,,sym_vs_asym,,,,,,-0.3776428931778315,,0.0931817357472591,,,,24,24,mixedlm interaction slope
+pref_similarity,LH-intact_pt_vs_ctrl,lateralization,,omnibus_ROI,1.7655652172938276,3.0,0.6224568424587449,0.19406208643837936,,,,,,,,12,24,
+pref_similarity,LH-intact_pt_vs_ctrl,lateralization,,gradient_absLI,,,,,,1.0375351395219448,,0.4515377656271209,,,,12,24,mixedlm interaction slope
+pref_similarity,LH-intact_pt_vs_ctrl,lateralization,,rank_order,,,,,,0.11852786966241897,,0.39881711039292556,,,,12,24,mixedlm interaction slope
+pref_similarity,LH-intact_pt_vs_ctrl,lateralization,,sym_vs_asym,,,,,,0.30295635089924267,,0.313268421723504,,,,12,24,mixedlm interaction slope
+pref_similarity,RH-intact_pt_vs_ctrl,lateralization,,omnibus_ROI,0.7004467673427103,3.0,0.8730988598335956,0.17738593269228944,,,,,,,,8,24,
+pref_similarity,RH-intact_pt_vs_ctrl,lateralization,,gradient_absLI,,,,,,-0.9072921380984423,,0.5451692202756664,,,,8,24,mixedlm interaction slope
+pref_similarity,RH-intact_pt_vs_ctrl,lateralization,,rank_order,,,,,,-0.1038992926615325,,0.496182137433426,,,,8,24,mixedlm interaction slope
+pref_similarity,RH-intact_pt_vs_ctrl,lateralization,,sym_vs_asym,,,,,,-0.26074840098249075,,0.42251817631814936,,,,8,24,mixedlm interaction slope
+pref_similarity,LH_pt_vs_RH_pt,lateralization,,omnibus_ROI,1.9365229889137283,3.0,0.5856855518627511,0.2271172195367126,,,,,,,,12,8,
+pref_similarity,LH_pt_vs_RH_pt,lateralization,,gradient_absLI,,,,,,-0.29747653266503915,,0.8743833764418011,,,,12,8,mixedlm interaction slope
+pref_similarity,LH_pt_vs_RH_pt,lateralization,,rank_order,,,,,,0.0048718228181423365,,0.979694866358295,,,,12,8,mixedlm interaction slope
+pref_similarity,LH_pt_vs_RH_pt,lateralization,,sym_vs_asym,,,,,,0.18606185870390177,,0.644687019827404,,,,12,8,mixedlm interaction slope
+geometry_preservation,ctrl_L_vs_R,control_lateralization,l-r,face_FFA,,,,,,-0.26263707751605003,-1.1745493531397613,0.0918908109189081,0.3675632436756324,-6.163225974286356,-0.4612054239072639,6,6,
+geometry_preservation,ctrl_L_vs_R,control_lateralization,l-r,house_PPA_strict,,,,,,0.07146917650631628,0.20534064651410017,0.9691030896910309,0.9691030896910309,-2.8880779855337972,0.7970803392089122,6,6,
+geometry_preservation,ctrl_L_vs_R,control_lateralization,l-r,object_LOC,,,,,,-0.010913631798352317,-0.038615402241289086,0.9047095290470953,0.9691030896910309,-0.9251238800513407,1.1055854931156077,6,6,
+geometry_preservation,ctrl_L_vs_R,control_lateralization,l-r,word_VWFA,,,,,,0.04289324145124129,0.10609154262421219,0.7834216578342166,0.9691030896910309,-0.7516440156645178,1.2927130130885636,6,6,
+geometry_preservation,LH-intact_pt_vs_ctrl,patient_vs_control,l,face_FFA,,,,,,-0.05107773185999753,-0.17290126775331782,0.817018298170183,0.817018298170183,-3.02224434529085,3.877635546146012,3,6,
+geometry_preservation,LH-intact_pt_vs_ctrl,patient_vs_control,l,house_PPA_strict,,,,,,-0.5482732210549072,-1.5200980105281148,0.034896510348965105,0.13958604139586042,-8.255869365765614,-0.5410695622499819,3,6,
+geometry_preservation,LH-intact_pt_vs_ctrl,patient_vs_control,l,object_LOC,,,,,,-0.7487887188869291,-1.2696106399292413,0.12488751124887511,0.1665166816651668,-7.414688902090345,0.03742027386452769,3,6,
+geometry_preservation,LH-intact_pt_vs_ctrl,patient_vs_control,l,word_VWFA,,,,,,-0.32457225484506236,-1.3100165977970637,0.0943905609439056,0.1665166816651668,-6.242359604991294,0.21931937307466084,3,6,
+geometry_preservation,RH-intact_pt_vs_ctrl,patient_vs_control,r,face_FFA,,,,,,-0.4785250109383835,-1.3643006096763788,0.1999800019998,0.3999600039996,-24.98380149538915,2.175861812289695,2,6,
+geometry_preservation,RH-intact_pt_vs_ctrl,patient_vs_control,r,house_PPA_strict,,,,,,-0.777021146624362,-2.1784139621415917,0.07139286071392861,0.28557144285571445,-11.267116797444643,-0.9360392134464117,2,6,
+geometry_preservation,RH-intact_pt_vs_ctrl,patient_vs_control,r,object_LOC,,,,,,-0.1724094017071235,-0.32387911376082346,0.7495250474952505,0.8606139386061394,-4.1777556742963435,0.48453585470724586,2,6,
+geometry_preservation,RH-intact_pt_vs_ctrl,patient_vs_control,r,word_VWFA,,,,,,-0.056393425090736526,-0.1936979465415181,0.8606139386061394,0.8606139386061394,-3.0621434112798487,1.5916253316227449,2,6,
+geometry_preservation,LH_pt_vs_RH_pt,patient_vs_patient,intact,face_FFA,,,,,,0.16481020156233583,0.2749951076685195,0.6963303669633036,0.6963303669633036,-4.28291944159367,23.107522902152045,3,2,
+geometry_preservation,LH_pt_vs_RH_pt,patient_vs_patient,intact,house_PPA_strict,,,,,,0.300217102075771,0.5191747920175621,0.597040295970403,0.6963303669633036,-1.4043650514495378,26.02608194920468,3,2,
+geometry_preservation,LH_pt_vs_RH_pt,patient_vs_patient,intact,object_LOC,,,,,,-0.587292948978158,-1.1704677574775824,0.38966103389661033,0.6963303669633036,-137.33786429432345,-0.3146676977452554,3,2,
+geometry_preservation,LH_pt_vs_RH_pt,patient_vs_patient,intact,word_VWFA,,,,,,-0.22528558830308454,-0.627661496414942,0.49705029497050296,0.6963303669633036,-6.802403938625825,1.240575026451604,3,2,
+geometry_preservation,ctrl_L_vs_R,lateralization,,omnibus_ROI,2.0596420742952266,3.0,0.5601204934054589,0.10153674957644722,,,,,,,,24,24,
+geometry_preservation,ctrl_L_vs_R,lateralization,,gradient_absLI,,,,,,0.10492205465478777,,0.9038743123898985,,,,24,24,mixedlm interaction slope
+geometry_preservation,ctrl_L_vs_R,lateralization,,rank_order,,,,,,0.028340938064250806,,0.7473204504339415,,,,24,24,mixedlm interaction slope
+geometry_preservation,ctrl_L_vs_R,lateralization,,sym_vs_asym,,,,,,0.14014969038638636,,0.4477028530725031,,,,24,24,mixedlm interaction slope
+geometry_preservation,LH-intact_pt_vs_ctrl,lateralization,,omnibus_ROI,5.752041304128625,3.0,0.12431727631550078,0.09379378280371858,,,,,,,,12,24,
+geometry_preservation,LH-intact_pt_vs_ctrl,lateralization,,gradient_absLI,,,,,,-1.4464781527572323,,0.19751538240988342,,,,12,24,mixedlm interaction slope
+geometry_preservation,LH-intact_pt_vs_ctrl,lateralization,,rank_order,,,,,,-0.17436993149872007,,0.11838798125464242,,,,12,24,mixedlm interaction slope
+geometry_preservation,LH-intact_pt_vs_ctrl,lateralization,,sym_vs_asym,,,,,,-0.46070597661838797,,0.04413959460536681,,,,12,24,mixedlm interaction slope
+geometry_preservation,RH-intact_pt_vs_ctrl,lateralization,,omnibus_ROI,3.6060692406875425,3.0,0.3072636120122843,0.13095850525697658,,,,,,,,8,24,
+geometry_preservation,RH-intact_pt_vs_ctrl,lateralization,,gradient_absLI,,,,,,-1.5399466524223906,,0.26568010019718813,,,,8,24,mixedlm interaction slope
+geometry_preservation,RH-intact_pt_vs_ctrl,lateralization,,rank_order,,,,,,-0.1390173122724854,,0.32053165758808755,,,,8,24,mixedlm interaction slope
+geometry_preservation,RH-intact_pt_vs_ctrl,lateralization,,sym_vs_asym,,,,,,-0.2072560561511826,,0.48098357911377077,,,,8,24,mixedlm interaction slope
+geometry_preservation,LH_pt_vs_RH_pt,lateralization,,omnibus_ROI,5.03683258460784,3.0,0.1691198642637994,0.11501546069437779,,,,,,,,12,8,
+geometry_preservation,LH_pt_vs_RH_pt,lateralization,,gradient_absLI,,,,,,0.19839055431993355,,0.9027674121164193,,,,12,8,mixedlm interaction slope
+geometry_preservation,LH_pt_vs_RH_pt,lateralization,,rank_order,,,,,,-0.007011681161983984,,0.964999573234314,,,,12,8,mixedlm interaction slope
+geometry_preservation,LH_pt_vs_RH_pt,lateralization,,sym_vs_asym,,,,,,-0.11330023008081912,,0.7267687148638892,,,,12,8,mixedlm interaction slope
+btw_similarity,ctrl_L_vs_R,pair_omnibus,,face_FFA,0.44053665689972826,5.0,0.9941391896853993,0.15684428791477306,,,,,,,,36,36,
+btw_similarity,ctrl_L_vs_R,per_pair,,face_FFA|face-house,,,,,,0.14567116364259844,0.5231244087180512,0.38966103389661033,0.979002099790021,-0.5899024559166164,2.429161127947726,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,face_FFA|face-object,,,,,,0.1636385258594265,0.6030814739342123,0.3200679932006799,0.979002099790021,-0.4677749783425023,2.924831114197622,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,face_FFA|face-word,,,,,,0.11526876427835055,0.19346295644577785,0.7452254774522548,0.979002099790021,-1.0511386795752964,1.5815465817506955,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,face_FFA|house-object,,,,,,-0.016546574647713017,-0.042791425627167465,0.979002099790021,0.979002099790021,-1.2435257823130406,1.4495101541812496,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,face_FFA|house-word,,,,,,0.07318312072244415,0.16264169994315325,0.7851214878512148,0.979002099790021,-1.3512045413987963,1.3316579593973659,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,face_FFA|object-word,,,,,,0.04222789176118903,0.0855197443387344,0.8874112588741125,0.979002099790021,-1.1626719868155146,1.4822669272276559,6,6,
+btw_similarity,LH-intact_pt_vs_ctrl,pair_omnibus,,face_FFA,10.146091740022317,5.0,0.07120006100695493,0.1547349687316421,,,,,,,,18,36,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,face_FFA|face-house,,,,,,-0.7979350684474757,-2.2559333875619045,0.025197480251974803,0.07559244075592442,-7.993415125017107,-1.0844062604638935,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,face_FFA|face-object,,,,,,-0.6890269601211435,-2.444500373713683,0.0117988201179882,0.0707929207079292,-11.50384173456155,-1.3529046836430434,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,face_FFA|face-word,,,,,,-0.3721466868716739,-0.6450605100922929,0.37636236376362364,0.5645435456454355,-4.33347884404816,0.750120603188573,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,face_FFA|house-object,,,,,,-0.550214196353491,-1.2739956287506453,0.1262873712628737,0.2525747425257474,-4.37643568708739,-0.0014449557665901784,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,face_FFA|house-word,,,,,,-0.052130022031775414,-0.10983210410566864,0.8662133786621338,0.8662133786621338,-1.6430573374996975,1.4945502602171747,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,face_FFA|object-word,,,,,,0.23543696140973477,0.5334296529513246,0.4734526547345265,0.5681431856814319,-0.8670305993427087,2.392439256623816,3,6,
+btw_similarity,RH-intact_pt_vs_ctrl,pair_omnibus,,face_FFA,3.7220222708356667,5.0,0.5900901584056989,0.12070828325159805,,,,,,,,12,36,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,face_FFA|face-house,,,,,,0.3870987297238908,1.3726089704479936,0.1391860813918608,0.300969903009699,0.015730965610612452,4.591291266748643,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,face_FFA|face-object,,,,,,0.544138047860143,1.8124376123640582,0.11018898110188981,0.300969903009699,0.3525708064440604,8.80152441663774,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,face_FFA|face-word,,,,,,0.9177879877262688,1.231666404028464,0.20367963203679632,0.3035696430356964,-0.38935615142773644,4.840003541258171,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,face_FFA|house-object,,,,,,0.7314768159853557,1.263956839335763,0.1504849515048495,0.300969903009699,-0.7910019845707325,9.339959934953116,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,face_FFA|house-word,,,,,,0.4610302963807734,1.057288477364901,0.252974702529747,0.3035696430356964,-0.43770599666956705,3.9559380828695896,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,face_FFA|object-word,,,,,,0.23871934166148717,0.4604439294134185,0.6407359264073592,0.6407359264073592,-0.8825734380643239,2.3012964671871265,2,6,
+btw_similarity,LH_pt_vs_RH_pt,pair_omnibus,,face_FFA,7.783291857567084,5.0,0.1685901919650784,0.20758765717121383,,,,,,,,18,12,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,face_FFA|face-house,,,,,,-1.039362634528768,-2.3688632176993374,0.1917808219178082,0.4550544945505449,-6.565741844498094,-1.4460356616676593,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,face_FFA|face-object,,,,,,-1.06952648212186,-3.084388969556154,0.10078992100789921,0.4550544945505449,-54.65912535790295,-2.997156689925121,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,face_FFA|face-word,,,,,,-1.1746659103195922,-1.400192631466872,0.3033696630336966,0.4550544945505449,-8639870050023103.0,0.1030376638995713,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,face_FFA|house-object,,,,,,-1.2982375869865597,-1.6668131173315248,0.29787021297870214,0.4550544945505449,-13.821350747683121,-0.5250580747627919,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,face_FFA|house-word,,,,,,-0.4399771976901047,-0.9153695110251859,0.395960403959604,0.47515248475152483,-13.546787771152433,0.6429271637879944,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,face_FFA|object-word,,,,,,0.03894551150943665,0.09194801582234331,1.0,1.0,-3.4224996464068,2.4089621483248753,3,2,
+btw_similarity,ctrl_L_vs_R,pair_omnibus,,house_PPA_strict,1.365483465863728,5.0,0.928051446738576,0.13155334930718326,,,,,,,,36,36,
+btw_similarity,ctrl_L_vs_R,per_pair,,house_PPA_strict|face-house,,,,,,0.05764314811058044,0.13302055731580623,0.7211278872112789,0.9496050394960504,-1.1148630869218423,1.2932239820165252,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,house_PPA_strict|face-object,,,,,,0.0569706578146299,0.10921286198768777,0.7925207479252074,0.9496050394960504,-1.0398341090050405,1.4774105064140002,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,house_PPA_strict|face-word,,,,,,-0.13055385653551335,-0.33331134237939614,0.5978402159784022,0.9496050394960504,-2.1896117568718196,0.8385059557370244,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,house_PPA_strict|house-object,,,,,,-0.2106408875572551,-0.5843197181633586,0.3320667933206679,0.9496050394960504,-2.2541429375354665,0.6308715606343508,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,house_PPA_strict|house-word,,,,,,-0.018651990340647198,-0.042405096780721706,0.9496050394960504,0.9496050394960504,-1.618039011865784,1.082998683664191,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,house_PPA_strict|object-word,,,,,,0.016457315349754142,0.03845374967859422,0.9388061193880612,0.9496050394960504,-1.2719097706561895,1.441505109787559,6,6,
+btw_similarity,LH-intact_pt_vs_ctrl,pair_omnibus,,house_PPA_strict,3.5463521873968995,5.0,0.6163858532725986,0.20538109924025744,,,,,,,,18,36,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,house_PPA_strict|face-house,,,,,,0.07827182276821636,0.14463726030224214,0.8509149085091491,0.8831116888311169,-4.124512235688624,2.813477148080256,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,house_PPA_strict|face-object,,,,,,0.0950983680900099,0.20519352884198183,0.8831116888311169,0.8831116888311169,-2.0067862586538463,1.0183253951953335,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,house_PPA_strict|face-word,,,,,,-0.44551871258163483,-0.8607974551836579,0.26217378262173785,0.7865213478652135,-3.402596142559328,0.7435172908145053,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,house_PPA_strict|house-object,,,,,,-0.3910683865146698,-1.991010680930333,0.023397660233976603,0.14038596140385962,-5.9977626283666075,-1.0253842187981534,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,house_PPA_strict|house-word,,,,,,0.1374294373043483,0.22621719189425604,0.7582241775822418,0.8831116888311169,-1.9272536517042642,2.951785872211411,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,house_PPA_strict|object-word,,,,,,-0.30711465966387047,-0.5610213232306271,0.4440555944405559,0.8831116888311169,-3.7725648245083048,1.101383325611102,3,6,
+btw_similarity,RH-intact_pt_vs_ctrl,pair_omnibus,,house_PPA_strict,6.326189959327277,5.0,0.2757603627363515,0.0961616790249643,,,,,,,,12,36,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,house_PPA_strict|face-house,,,,,,0.3426258910472578,0.8471443785103984,0.28377162283771623,0.6407359264073593,0.6337323374183393,2.5684062322300414,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,house_PPA_strict|face-object,,,,,,-0.2909713921303638,-0.6314547610608925,0.533946605339466,0.6407359264073593,-4.870247220295396,0.2394432964205654,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,house_PPA_strict|face-word,,,,,,0.17192158969152901,0.5993105435987548,0.46825317468253175,0.6407359264073593,-0.30815516187949316,3.6565544910474763,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,house_PPA_strict|house-object,,,,,,0.06948734879451693,0.12734587591658225,0.8551144885511449,0.8551144885511449,-2.176590503496541,2.963603064086464,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,house_PPA_strict|house-word,,,,,,0.2913243759291873,0.7450399596934636,0.45525447455254475,0.6407359264073593,-0.15178542908542136,2.0539031788680266,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,house_PPA_strict|object-word,,,,,,-0.31097416853696497,-0.8699774687660456,0.35966403359664034,0.6407359264073593,-4.940679889983753,0.3050490017410688,2,6,
+btw_similarity,LH_pt_vs_RH_pt,pair_omnibus,,house_PPA_strict,4.4662800528406015,5.0,0.48440768912401766,0.26387635879897536,,,,,,,,18,12,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,house_PPA_strict|face-house,,,,,,-0.20671092016846104,-0.3333458211078506,0.8984101589841016,1.0,-20.665483535538716,0.5271454070236252,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,house_PPA_strict|face-object,,,,,,0.4430404180350036,3.231913478887615,0.103989601039896,0.6155384461553844,2.8637838488978473,15.36238059871113,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,house_PPA_strict|face-word,,,,,,-0.7479941588086771,-1.4180768630046034,0.3077692230776922,0.6155384461553844,-20.073540251314213,-0.5638317032081078,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,house_PPA_strict|house-object,,,,,,-0.6711966228664419,-1.3361790822960922,0.2973702629737026,0.6155384461553844,-10.2173201453572,0.5968052321312929,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,house_PPA_strict|house-word,,,,,,-0.17254692896548618,-0.23880871084411756,0.7015298470152985,1.0,-3.278807524563894,1.0772237419351165,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,house_PPA_strict|object-word,,,,,,0.02031682422284864,0.03462865556978316,1.0,1.0,-3116636964443283.0,3.7423568301856336,3,2,
+btw_similarity,ctrl_L_vs_R,pair_omnibus,,object_LOC,0.8228671458999006,5.0,0.9755519335812801,0.24184509117723577,,,,,,,,36,36,
+btw_similarity,ctrl_L_vs_R,per_pair,,object_LOC|face-house,,,,,,-0.1930250910947382,-0.2814606576186686,0.8832116788321168,0.994000599940006,-1.165065727068387,1.591687147348433,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,object_LOC|face-object,,,,,,0.1418695694218208,0.2748292617056307,0.6464353564643536,0.994000599940006,-0.8162506768183622,2.3130497725550594,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,object_LOC|face-word,,,,,,-0.0020535112694411613,-0.004690819132584745,0.994000599940006,0.994000599940006,-1.1193232309537806,2.016946931251232,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,object_LOC|house-object,,,,,,-0.022174974900604327,-0.026681222427671344,0.9694030596940306,0.994000599940006,-1.0362559770645783,1.986652143247064,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,object_LOC|house-word,,,,,,0.08922740051257398,0.21740517552038993,0.7362263773622638,0.994000599940006,-0.864849133796418,2.4217275671116996,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,object_LOC|object-word,,,,,,-0.02246586771728233,-0.05394035927320708,0.9227077292270773,0.994000599940006,-1.3082376238917153,1.3933351131720904,6,6,
+btw_similarity,LH-intact_pt_vs_ctrl,pair_omnibus,,object_LOC,1.3509513472793726,5.0,0.9296025360615477,0.17022054183810845,,,,,,,,18,36,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,object_LOC|face-house,,,,,,-0.5206479966298435,-0.55333488216727,0.48055194480551944,0.7273272672732727,-6.676407303089918,0.7007274086856604,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,object_LOC|face-object,,,,,,-0.6534978080123262,-1.1665716716869308,0.1421857814218578,0.7273272672732727,-12.153018710180147,0.4617693918409949,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,object_LOC|face-word,,,,,,-0.29012733166095017,-0.42352484502630144,0.6120387961203879,0.7273272672732727,-2.6261416059842317,1.187226426921656,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,object_LOC|house-object,,,,,,-0.3395164870072177,-0.3393822368114103,0.7273272672732727,0.7273272672732727,-3.0034226438593996,1.1152973001923094,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,object_LOC|house-word,,,,,,-0.30101498814484534,-0.4830038926017534,0.5126487351264873,0.7273272672732727,-4.5732721882820995,1.2342250536409085,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,object_LOC|object-word,,,,,,-0.296874174117872,-0.6226896264419445,0.418958104189581,0.7273272672732727,-3.09411421940045,0.8712298534765306,3,6,
+btw_similarity,RH-intact_pt_vs_ctrl,pair_omnibus,,object_LOC,1.1842515101023086,5.0,0.9463792679102606,0.1578171916203254,,,,,,,,12,36,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,object_LOC|face-house,,,,,,0.17305644625400315,0.6549716492765743,0.45225477452254775,0.5616638336166384,-2.473493266039887,4.78711306644669,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,object_LOC|face-object,,,,,,0.2037263061673025,0.26950527340178027,0.8105189481051894,0.8105189481051894,-2.5618728017436965,4.7531647543388384,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,object_LOC|face-word,,,,,,0.290374322635409,0.6246641658531444,0.46805319468053197,0.5616638336166384,-6.045910427597807,11.026006308238237,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,object_LOC|house-object,,,,,,0.5133912752212823,0.7592867814217994,0.42945705429457054,0.5616638336166384,-0.1195230536210433,2.810117876010614,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,object_LOC|house-word,,,,,,0.5504083253538632,3.389702546707407,0.0352964703529647,0.2117788221177882,2.1442403933029217,11.075082620375337,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,object_LOC|object-word,,,,,,0.3893040176376047,0.9305363500779177,0.3164683531646835,0.5616638336166384,-0.0719102328735514,3.124341580183888,2,6,
+btw_similarity,LH_pt_vs_RH_pt,pair_omnibus,,object_LOC,0.25801055998490957,5.0,0.9983590750354918,0.30362533385000684,,,,,,,,18,12,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,object_LOC|face-house,,,,,,-0.8867295339785849,-1.1104094649799399,0.3006699330066993,0.5993400659934006,-7.845047414474971,0.08987703099413906,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,object_LOC|face-object,,,,,,-0.7153545447578079,-0.7201121182089777,0.501949805019498,0.5993400659934006,-53.077653382376354,1.1427480072711378,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,object_LOC|face-word,,,,,,-0.5825551655658003,-0.6180950548080603,0.5993400659934006,0.5993400659934006,-3.9627000788694664,3.1355470506166974,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,object_LOC|house-object,,,,,,-0.8750827371291043,-0.8992047301811021,0.49625037496250374,0.5993400659934006,-6.58972446804729,0.04276505442279094,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,object_LOC|house-word,,,,,,-0.7621959129861345,-1.2089082731172593,0.39616038396160386,0.5993400659934006,-132.34242541552052,-0.48959469967932673,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,object_LOC|object-word,,,,,,-0.708644059472759,-1.2890781273118639,0.3027697230276972,0.5993400659934006,-8.756771852854518,-0.842755335869169,3,2,
+btw_similarity,ctrl_L_vs_R,pair_omnibus,,word_VWFA,1.3509086383037388,5.0,0.9296070745006383,0.1751381833198981,,,,,,,,36,36,
+btw_similarity,ctrl_L_vs_R,per_pair,,word_VWFA|face-house,,,,,,0.30572033741702576,0.5629905468577157,0.34196580341965804,0.34196580341965804,-0.5743446576395337,2.703522722701971,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,word_VWFA|face-object,,,,,,0.45496004793554645,0.8845063800090687,0.15598440155984403,0.18718128187181282,-0.17440208815765873,3.190187112843889,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,word_VWFA|face-word,,,,,,0.5011727246493533,0.9956494937960211,0.12318768123187682,0.1847815218478152,-0.013691825099694693,2.38917265594775,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,word_VWFA|house-object,,,,,,0.564240198529701,1.158141919877867,0.032096790320967905,0.1847815218478152,0.6902236352526349,2.140750098567844,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,word_VWFA|house-word,,,,,,0.6096753681880532,1.059815981511287,0.09629037096290372,0.1847815218478152,0.04524076268369268,2.9663124771165705,6,6,
+btw_similarity,ctrl_L_vs_R,per_pair,,word_VWFA|object-word,,,,,,0.6560098094658221,1.01165613942344,0.10578942105789421,0.1847815218478152,0.04301537694329248,2.415843048078496,6,6,
+btw_similarity,LH-intact_pt_vs_ctrl,pair_omnibus,,word_VWFA,3.8083085856428234,5.0,0.5773316860717709,0.21257120834211718,,,,,,,,18,36,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,word_VWFA|face-house,,,,,,-0.3553714809785845,-0.5115017510692933,0.44725527447255276,0.5723427657234277,-2.7583473680050328,0.8513352282999316,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,word_VWFA|face-object,,,,,,-0.7260430760033048,-1.2371890330062454,0.1377862213778622,0.39856014398560147,-5.435328649219018,-0.013368658572440349,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,word_VWFA|face-word,,,,,,-0.5716422559757602,-1.232051998849275,0.13208679132086792,0.39856014398560147,-4.704630479451483,0.3133935490340803,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,word_VWFA|house-object,,,,,,-0.5382969226864307,-0.8177317889262472,0.47695230476952305,0.5723427657234277,-3.6054379068465505,2.7443548442004624,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,word_VWFA|house-word,,,,,,-0.02890800847378936,-0.057162136108537945,0.9342065793420657,0.9342065793420659,-1.5100882549463754,1.335079952772498,3,6,
+btw_similarity,LH-intact_pt_vs_ctrl,per_pair,,word_VWFA|object-word,,,,,,-0.8233347210851343,-1.0434552133929202,0.19928007199280073,0.39856014398560147,-3.2987887388740553,0.1741181451187696,3,6,
+btw_similarity,RH-intact_pt_vs_ctrl,pair_omnibus,,word_VWFA,11.913341813767133,5.0,0.03599468626392363,0.1220030261558206,,,,,,,,12,36,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,word_VWFA|face-house,,,,,,-0.07526345886403896,-0.18599379466643876,0.8144185581441856,0.9219078092190781,-2.353387857177593,1.688652801098049,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,word_VWFA|face-object,,,,,,-0.22588129016118985,-0.6077629101053298,0.528047195280472,0.7920707929207079,-2.263322229137199,0.5016415348583387,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,word_VWFA|face-word,,,,,,0.0874278567413787,0.13713969305647808,0.9219078092190781,0.9219078092190781,-2.351907760039106,1.9661837515336558,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,word_VWFA|house-object,,,,,,0.6834042389170913,1.6392050873680544,0.07179282071792821,0.30266973302669736,1.3384480715398999,5.561296674637266,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,word_VWFA|house-word,,,,,,0.7907457448181114,1.4790048100212656,0.18598140185981402,0.37196280371962803,0.5425740243152533,6.088311527413463,2,6,
+btw_similarity,RH-intact_pt_vs_ctrl,per_pair,,word_VWFA|object-word,,,,,,0.6471512538223008,1.5275222644414979,0.10088991100889912,0.30266973302669736,0.9297788702912803,3.8231412555548423,2,6,
+btw_similarity,LH_pt_vs_RH_pt,pair_omnibus,,word_VWFA,2.924926964772926,5.0,0.7115587863682591,0.24251622433060196,,,,,,,,18,12,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,word_VWFA|face-house,,,,,,0.025612315302480204,0.037326059639582236,1.0,1.0,-1.595732619148721,4.43105479045087,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,word_VWFA|face-object,,,,,,-0.045201737906568396,-0.10159999890874644,0.9006099390060994,1.0,-2800008978545308.0,1.176121031737943,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,word_VWFA|face-word,,,,,,-0.1578973880677857,-0.2301794740035873,0.7982201779822018,1.0,-6.657231471302422,1.9271070891764153,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,word_VWFA|house-object,,,,,,-0.6574609630738211,-0.8727076503078526,0.58994100589941,1.0,-11.963323685162367,-0.5672399696317675,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,word_VWFA|house-word,,,,,,-0.20997838510384756,-0.8213954677805981,0.5082491750824918,1.0,-7.2626056797974226,0.4230782746460375,3,2,
+btw_similarity,LH_pt_vs_RH_pt,per_pair,,word_VWFA|object-word,,,,,,-0.8144761654416129,-1.2718947030726144,0.39566043395660433,1.0,-21.62984031871598,1.3069133367188897,3,2,

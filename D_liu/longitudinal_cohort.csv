@@ -1,0 +1,12 @@
+subject_id,group,status,surgery_side,intact_hemi,n_ses,sessions,ages,age_first,age_last,interval_y
+sub-004,OTC,patient,right,left,5,"[1, 2, 3, 5, 6]","[7.81, 8.37, 8.83, 10.83, 13.08]",7.81,13.08,5.2700000000000005
+sub-008,OTC,patient,right,left,2,"[1, 2]","[14.78, 17.9]",14.78,17.9,3.119999999999999
+sub-010,OTC,patient,left,right,2,"[2, 3]","[12.8, 14.3]",12.8,14.3,1.5
+sub-021,OTC,patient,left,right,3,"[1, 2, 3]","[13.3, 13.9, 15.8]",13.3,15.8,2.5
+sub-079,OTC,patient,right,left,2,"[1, 2]","[16.65, 17.34]",16.65,17.34,0.6900000000000013
+sub-018,control,control,na,control,2,"[2, 3]","[12.9, 15.4]",12.9,15.4,2.5
+sub-022,control,control,na,control,2,"[1, 2]","[11.5, 15.0]",11.5,15.0,3.5
+sub-052,control,control,na,control,2,"[1, 2]","[14.4, 16.0]",14.4,16.0,1.5999999999999996
+sub-058,control,control,na,control,2,"[1, 2]","[10.2, 11.5]",10.2,11.5,1.3000000000000007
+sub-062,control,control,na,control,2,"[1, 2]","[14.9, 15.9]",14.9,15.9,1.0
+sub-068,control,control,na,control,2,"[2, 3]","[12.9, 13.4]",12.9,13.4,0.5
