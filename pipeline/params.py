@@ -34,12 +34,11 @@ mni_brain = '/opt/fsl/6.0.3/data/standard/MNI152_T1_2mm_brain.nii.gz'
 # 4. SUBJECT CONFIGURATION
 # =============================================================================
 
-# Single cohort definition for the whole pipeline. Scripts that load subjects
-# through should_skip() inherit this; scripts with their own EXCLUDE list must
-# match it.
-skip_subs = ['017',              # polymicrogyria
-             '027', '084',       # control exclusions
-             '091', '095', '096']  # age cap <= 23
+# Subjects never analysed. Extraction keeps 027, 084, 091, 095 and 096 so the
+# univariate and RSA ComBat fit matches the committed one (65 subjects); they are
+# excluded from TFCE and whole-OTC in 2_extraction/lib_tfce.py and from the stats
+# by each script's EXCLUDE list.
+skip_subs = ['017']              # polymicrogyria
 skip_codes = set()             # was {'control083','control085'} — no documented reason
 
 # Pre-surgical sessions to exclude from post-surgery analyses.

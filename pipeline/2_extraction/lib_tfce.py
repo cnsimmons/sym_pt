@@ -75,13 +75,17 @@ def build_votc_masks_and_save():
         masks[hemi] = path
     return masks
 
+# TFCE and whole-OTC cohort: the five subjects excluded from the analyses also stay
+# out of these, as in the committed runs (60 subjects). sub-017 is in params.skip_subs.
+TFCE_EXCLUDE = {'sub-027', 'sub-084', 'sub-091', 'sub-095', 'sub-096'}
+
 def load_subjects():
     df = _load_csv()
     subjects = {}
     for sc in sorted(df['sub_clean'].unique()):
         sid = f'sub-{sc}'
         
-        if should_skip(sid):
+        if should_skip(sid) or sid in TFCE_EXCLUDE:
             continue
             
         post = get_post_sessions(sc)
