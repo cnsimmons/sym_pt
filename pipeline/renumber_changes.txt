@@ -1,0 +1,387 @@
+1_preprocessing/04_submit_anatomy_new.sh:56
+  - python $REPO_DIR/A_preprocessing/register_mirror.py --sub $SUB_ID
+  + python $REPO_DIR/1_preprocessing/04_register_mirror.py --sub $SUB_ID
+1_preprocessing/05_create_fsf.sh:16
+  - templateFSF="${gitDir}/A_preprocessing/template_1stLevel.fsf"
+  + templateFSF="${gitDir}/1_preprocessing/05_template_1stLevel.fsf"
+1_preprocessing/08_submit_1stLevel_register.py:28
+  - SCRIPT_PATH = '/user_data/csimmon2/git_repos/sym_pt/pipeline/A_preprocessing/register_1stLevel.py'
+  + SCRIPT_PATH = '/user_data/csimmon2/git_repos/sym_pt/pipeline/1_preprocessing/08_register_1stLevel.py'
+1_preprocessing/09_submit_zstat_register.py:24
+  - SCRIPT_PATH = '/user_data/csimmon2/git_repos/sym_pt/pipeline/A_preprocessing/register_zstats.py'
+  + SCRIPT_PATH = '/user_data/csimmon2/git_repos/sym_pt/pipeline/1_preprocessing/09_register_zstats.py'
+1_preprocessing/10_create_highlevel_fsf.sh:14
+  - templateFSF="${gitDir}/A_preprocessing/template_HighLevel.fsf"
+  + templateFSF="${gitDir}/1_preprocessing/10_template_HighLevel.fsf"
+1_preprocessing/12_submit_highlevel_register.py:23
+  - SCRIPT_PATH = '/user_data/csimmon2/git_repos/sym_pt/pipeline/A_preprocessing/register_highlevel.py'
+  + SCRIPT_PATH = '/user_data/csimmon2/git_repos/sym_pt/pipeline/1_preprocessing/12_register_highlevel.py'
+2_extraction/01_univariate.py:43
+  - OUTPUT_DIR  = Path('/user_data/csimmon2/git_repos/sym_pt/pipeline/D_liu')
+  + OUTPUT_DIR  = Path('/user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/D_liu')
+2_extraction/02_multivariate.py:41
+  - OUTPUT_DIR  = Path('/user_data/csimmon2/git_repos/sym_pt/pipeline/D_liu')
+  + OUTPUT_DIR  = Path('/user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/D_liu')
+2_extraction/05_selective_voxel_counts.py:3
+  - extract_selective_voxel_counts.py
+  + 2_extraction/05_selective_voxel_counts.py
+2_extraction/05_selective_voxel_counts.py:34
+  - python extract_selective_voxel_counts.py
+  + python 2_extraction/05_selective_voxel_counts.py
+2_extraction/06_otc_rsm_rosenke.py:102
+  - SCAN = GIT / 'F_harmonization' / 'sub_info_scanner.csv'
+  + SCAN = GIT / 'outputs/F_harmonization' / 'sub_info_scanner.csv'
+2_extraction/06_otc_rsm_rosenke.py:104
+  - _VTFCE = [GIT / 'D_liu' / 'verified' / '02_tfce_analyses_dontuse_useharmony.py',
+  + _VTFCE = [GIT / '2_extraction' / 'lib_tfce.py',
+2_extraction/06_otc_rsm_rosenke.py:105
+  - GIT / 'D_liu' / 'verified' / '02_tfce_analyses_not_as_verified.py',
+  + GIT / '2_extraction' / '02_tfce_analyses_not_as_verified.py',
+2_extraction/06_otc_rsm_rosenke.py:106
+  - GIT / 'D_liu' / 'verified' / '02_tfce_analyses.py']
+  + GIT / '2_extraction' / '02_tfce_analyses.py']
+2_extraction/06_otc_rsm_rosenke.py:109
+  - found = sorted((GIT / 'D_liu' / 'verified').glob('02_tfce*.py'))
+  + found = sorted((GIT / '2_extraction').glob('02_tfce*.py'))
+3_harmonization/01_add_scanner.py:8
+  - csv_out  = '/user_data/csimmon2/git_repos/sym_pt/pipeline/sub_info_scanner.csv'
+  + csv_out  = '/user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/F_harmonization/sub_info_scanner.csv'
+3_harmonization/reference/combat_05b_harmonize_univariate_sqrt.py:39
+  - STATS    = GIT / 'D_liu' / 'verified' / '05_stats.py'
+  + STATS    = GIT / '3_harmonization' / 'lib_stats.py'
+3_harmonization/reference/combat_05b_harmonize_univariate_sqrt.py:40
+  - UNIVAR   = GIT / 'D_liu' / 'univariate_v1.csv'
+  + UNIVAR   = GIT / 'outputs/D_liu' / 'univariate_v1.csv'
+3_harmonization/reference/combat_05b_harmonize_univariate_sqrt.py:41
+  - SCANNER  = GIT / 'F_harmonization' / 'sub_info_scanner.csv'
+  + SCANNER  = GIT / 'outputs/F_harmonization' / 'sub_info_scanner.csv'
+3_harmonization/reference/combat_05b_harmonize_univariate_sqrt.py:42
+  - OUT      = GIT / 'D_liu' / 'univariate_v1_harmonized_sqrt.csv'   # SQRT: new output
+  + OUT      = GIT / 'outputs/D_liu' / 'univariate_v1_harmonized_sqrt.csv'   # SQRT: new output
+3_harmonization/reference/combat_06_harmonize_rsa.py:26
+  - STATS    = GIT / 'D_liu' / 'verified' / '05_stats.py'
+  + STATS    = GIT / '3_harmonization' / 'lib_stats.py'
+3_harmonization/reference/combat_06_harmonize_rsa.py:27
+  - RSA      = GIT / 'D_liu' / 'rsa_v1.csv'
+  + RSA      = GIT / 'outputs/D_liu' / 'rsa_v1.csv'
+3_harmonization/reference/combat_06_harmonize_rsa.py:28
+  - SCANNER  = GIT / 'F_harmonization' / 'sub_info_scanner.csv'
+  + SCANNER  = GIT / 'outputs/F_harmonization' / 'sub_info_scanner.csv'
+3_harmonization/reference/combat_06_harmonize_rsa.py:29
+  - OUT      = GIT / 'D_liu' / 'rsa_v1_harmonized.csv'
+  + OUT      = GIT / 'outputs/D_liu' / 'rsa_v1_harmonized.csv'
+3_harmonization/reference/combat_01_build_matrix.py:26
+  - VTFCE    = GIT_DIR / 'D_liu' / 'verified' / '02_tfce_analyses_dontuse_useharmony.py'
+  + VTFCE    = GIT_DIR / '2_extraction' / 'lib_tfce.py'
+3_harmonization/reference/combat_01_build_matrix.py:27
+  - OUT_DIR  = GIT_DIR / 'F_harmonization' / 'combat_inputs'
+  + OUT_DIR  = GIT_DIR / 'outputs/F_harmonization' / 'combat_inputs'
+3_harmonization/reference/combat_01_build_matrix.py:28
+  - SCANNER  = GIT_DIR / 'F_harmonization' / 'sub_info_scanner.csv'
+  + SCANNER  = GIT_DIR / 'outputs/F_harmonization' / 'sub_info_scanner.csv'
+3_harmonization/reference/combat_02_harmonize.py:29
+  - IN_DIR  = GIT_DIR / 'F_harmonization' / 'combat_inputs'
+  + IN_DIR  = GIT_DIR / 'outputs/F_harmonization' / 'combat_inputs'
+3_harmonization/reference/combat_02_harmonize.py:30
+  - OUT_DIR = GIT_DIR / 'F_harmonization' / 'combat_harmonized'
+  + OUT_DIR = GIT_DIR / 'outputs/F_harmonization' / 'combat_harmonized'
+3_harmonization/03_tfce.py:28
+  - VTFCE   = GIT_DIR / 'D_liu' / 'verified' / '02_tfce_analyses_dontuse_useharmony.py'
+  + VTFCE   = GIT_DIR / '2_extraction' / 'lib_tfce.py'
+3_harmonization/03_tfce.py:29
+  - HARM    = GIT_DIR / 'F_harmonization' / 'combat_harmonized'
+  + HARM    = GIT_DIR / 'outputs/F_harmonization' / 'combat_harmonized'
+3_harmonization/03_submit_tfce.sh:3
+  - #SBATCH --output=/user_data/csimmon2/git_repos/sym_pt/pipeline/logs_combat/combat_tfce_%j.out
+  + #SBATCH --output=/user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/logs_combat/combat_tfce_%j.out
+3_harmonization/03_submit_tfce.sh:4
+  - #SBATCH --error=/user_data/csimmon2/git_repos/sym_pt/pipeline/logs_combat/combat_tfce_%j.err
+  + #SBATCH --error=/user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/logs_combat/combat_tfce_%j.err
+3_harmonization/03_submit_tfce.sh:9
+  - mkdir -p /user_data/csimmon2/git_repos/sym_pt/pipeline/logs_combat
+  + mkdir -p /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/logs_combat
+3_harmonization/03_submit_tfce.sh:20
+  - python /user_data/csimmon2/git_repos/sym_pt/pipeline/F_harmonization/combat_03_tfce_harmonized.py
+  + python /user_data/csimmon2/git_repos/sym_pt/pipeline/3_harmonization/03_tfce.py
+3_harmonization/lib_stats.py:50
+  - D_LIU       = Path('/user_data/csimmon2/git_repos/sym_pt/pipeline/D_liu')
+  + D_LIU       = Path('/user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/D_liu')
+4_analyses/02_stats_harmony.py:45
+  - D_LIU       = Path('/user_data/csimmon2/git_repos/sym_pt/pipeline/D_liu')
+  + D_LIU       = Path('/user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/D_liu')
+4_analyses/02_stats_harmony.py:230
+  - Age is included as a covariate to match marlene_lmm.py, which fits
+  + Age is included as a covariate to match 4_analyses/05_marlene_lmm.py, which fits
+4_analyses/03_control_li.py:3
+  - control_li.py — Summed-count laterality index in controls, with across-threshold robustness.
+  + 4_analyses/03_control_li.py — Summed-count laterality index in controls, with across-threshold robustness.
+4_analyses/04_marlene_grid.py:3
+  - marlene_grid.py — the grid of category x group interactions, per measure.
+  + 4_analyses/04_marlene_grid.py — the grid of category x group interactions, per measure.
+4_analyses/04_marlene_grid.py:110
+  - python marlene_grid.py
+  + python 4_analyses/04_marlene_grid.py
+4_analyses/04_marlene_grid.py:111
+  - python marlene_grid.py --csv grid.csv              # WRITE requires --csv
+  + python 4_analyses/04_marlene_grid.py --csv grid.csv              # WRITE requires --csv
+4_analyses/04_marlene_grid.py:112
+  - python marlene_grid.py --comparisons 1 2 3         # primary only
+  + python 4_analyses/04_marlene_grid.py --comparisons 1 2 3         # primary only
+4_analyses/04_marlene_grid.py:113
+  - python marlene_grid.py --cap -1                    # no age cap
+  + python 4_analyses/04_marlene_grid.py --cap -1                    # no age cap
+4_analyses/04_marlene_grid.py:114
+  - python marlene_grid.py --roi-set primary           # house_PPA instead of strict
+  + python 4_analyses/04_marlene_grid.py --roi-set primary           # house_PPA instead of strict
+4_analyses/04_marlene_grid.py:115
+  - python marlene_grid.py --n-perm 20000
+  + python 4_analyses/04_marlene_grid.py --n-perm 20000
+4_analyses/04_marlene_grid.py:124
+  - RSA = GIT / 'D_liu' / 'rsa_v1_harmonized.csv'
+  + RSA = GIT / 'outputs/D_liu' / 'rsa_v1_harmonized.csv'
+4_analyses/04_marlene_grid.py:125
+  - UNI = GIT / 'D_liu' / 'univariate_v1_harmonized_sqrt.csv'
+  + UNI = GIT / 'outputs/D_liu' / 'univariate_v1_harmonized_sqrt.csv'
+4_analyses/05_marlene_lmm.py:3
+  - marlene_lmm.py — the three LMMs, per measure.
+  + 4_analyses/05_marlene_lmm.py — the three LMMs, per measure.
+4_analyses/05_marlene_lmm.py:5
+  - Companion to marlene_grid.py, NOT a replacement. The grid collapses category
+  + Companion to 4_analyses/04_marlene_grid.py, NOT a replacement. The grid collapses category
+4_analyses/05_marlene_lmm.py:44
+  - python marlene_lmm.py
+  + python 4_analyses/05_marlene_lmm.py
+4_analyses/05_marlene_lmm.py:45
+  - python marlene_lmm.py --csv lmm.csv
+  + python 4_analyses/05_marlene_lmm.py --csv lmm.csv
+4_analyses/05_marlene_lmm.py:46
+  - python marlene_lmm.py --surg-look
+  + python 4_analyses/05_marlene_lmm.py --surg-look
+4_analyses/05_marlene_lmm.py:58
+  - sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt/pipeline/D_liu/verified')
+  + sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt/pipeline/4_analyses')
+4_analyses/05_marlene_lmm.py:62
+  - RSA  = GIT / 'D_liu' / 'rsa_v1_harmonized.csv'
+  + RSA  = GIT / 'outputs/D_liu' / 'rsa_v1_harmonized.csv'
+4_analyses/05_marlene_lmm.py:63
+  - UNI  = GIT / 'D_liu' / 'univariate_v1_harmonized_sqrt.csv'
+  + UNI  = GIT / 'outputs/D_liu' / 'univariate_v1_harmonized_sqrt.csv'
+4_analyses/05_marlene_lmm.py:107
+  - Same source files, session rule, orientation and age cap as marlene_grid.py,
+  + Same source files, session rule, orientation and age cap as 4_analyses/04_marlene_grid.py,
+4_analyses/06_marlene_roi.py:6
+  - marlene_grid.py pools all four ROIs into a single category x group
+  + 4_analyses/04_marlene_grid.py pools all four ROIs into a single category x group
+4_analyses/06_marlene_roi.py:22
+  - Six comparisons, matching marlene_grid.py:
+  + Six comparisons, matching 4_analyses/04_marlene_grid.py:
+4_analyses/06_marlene_roi.py:32
+  - MORE separated, matching marlene_grid.py. diff = group B - group A.
+  + MORE separated, matching 4_analyses/04_marlene_grid.py. diff = group B - group A.
+4_analyses/06_marlene_roi.py:53
+  - sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt/pipeline/D_liu/verified')
+  + sys.path.insert(0, '/user_data/csimmon2/git_repos/sym_pt/pipeline/4_analyses')
+4_analyses/06_marlene_roi.py:57
+  - RSA = GIT / 'D_liu' / 'rsa_v1_harmonized.csv'
+  + RSA = GIT / 'outputs/D_liu' / 'rsa_v1_harmonized.csv'
+4_analyses/06_marlene_roi.py:58
+  - UNI = GIT / 'D_liu' / 'univariate_v1_harmonized_sqrt.csv'
+  + UNI = GIT / 'outputs/D_liu' / 'univariate_v1_harmonized_sqrt.csv'
+4_analyses/07_grid.py:6
+  - marlene_grid.py, marlene_lmm.py and marlene_roi.py are ~1270 lines of
+  + 4_analyses/04_marlene_grid.py, 4_analyses/05_marlene_lmm.py and marlene_roi.py are ~1270 lines of
+4_analyses/07_grid.py:13
+  - marlene_grid.py   the |LI| codings — continuous, rank, symmetric/lateralised
+  + 4_analyses/04_marlene_grid.py   the |LI| codings — continuous, rank, symmetric/lateralised
+4_analyses/07_grid.py:16
+  - marlene_lmm.py    the omnibus, as a joint Wald chi2 from a mixed model. One
+  + 4_analyses/05_marlene_lmm.py    the omnibus, as a joint Wald chi2 from a mixed model. One
+4_analyses/07_grid.py:83
+  - # (path, accepts --n-perm). marlene_lmm.py is a mixed model and has no
+  + # (path, accepts --n-perm). 4_analyses/05_marlene_lmm.py is a mixed model and has no
+4_analyses/07_grid.py:86
+  - 'grid': (GIT / 'marlene_grid.py', True),
+  + 'grid': (GIT / '4_analyses/04_marlene_grid.py', True),
+4_analyses/07_grid.py:87
+  - 'lmm':  (GIT / 'marlene_lmm.py', False),
+  + 'lmm':  (GIT / '4_analyses/05_marlene_lmm.py', False),
+4_analyses/07_grid.py:88
+  - 'roi':  (GIT / 'one_last_8.27' / 'marlene_roi.py', True),
+  + 'roi':  (GIT / '4_analyses' / '06_marlene_roi.py', True),
+4_analyses/07_grid.py:91
+  - OUT = GIT / 'D_liu' / 'grid_results.csv'
+  + OUT = GIT / 'outputs/D_liu' / 'grid_results.csv'
+4_analyses/07_grid.py:98
+  - # marlene_grid.py names its n columns differently
+  + # 4_analyses/04_marlene_grid.py names its n columns differently
+4_analyses/07_grid.py:140
+  - tmp = GIT / 'D_liu' / f'_grid_part_{stage}.csv'
+  + tmp = GIT / 'outputs/D_liu' / f'_grid_part_{stage}.csv'
+4_analyses/grid_cohort.py:5
+  - Imported by 07_grid.py and by the three grid scripts (marlene_grid.py,
+  + Imported by 07_grid.py and by the three grid scripts (4_analyses/04_marlene_grid.py,
+4_analyses/grid_cohort.py:6
+  - marlene_lmm.py, marlene_roi.py). It exists because those three each load the
+  + 4_analyses/05_marlene_lmm.py, marlene_roi.py). It exists because those three each load the
+4_analyses/grid_cohort.py:10
+  - Must match EXCLUDE in D_liu/verified/05_stats_harmony.py. When these two
+  + Must match EXCLUDE in 4_analyses/02_stats_harmony.py. When these two
+4_analyses/08_bf_patient_vs_control.py:13
+  - python bf_patient_vs_control.py
+  + python 4_analyses/08_bf_patient_vs_control.py
+4_analyses/08_bf_patient_vs_control.py:21
+  - RSA      = 'D_liu/rsa_v1_harmonized.csv'
+  + RSA      = 'outputs/D_liu/rsa_v1_harmonized.csv'
+4_analyses/08_bf_patient_vs_control.py:22
+  - UNIV     = 'D_liu/univariate_v1_harmonized_sqrt.csv'
+  + UNIV     = 'outputs/D_liu/univariate_v1_harmonized_sqrt.csv'
+4_analyses/09_longitudinal.ipynb:99
+  - "- `D_liu/verified/02_tfce_analyses_dontuse_useharmony.py` uses the walrus\n",
+  + "- `2_extraction/lib_tfce.py` uses the walrus\n",
+4_analyses/09_longitudinal.ipynb:117
+  - "| `final_figures.ipynb` cell 6 | the cross-sectional `panel_row` this ports |\n",
+  + "| `5_figures/01_final_figures.ipynb` cell 6 | the cross-sectional `panel_row` this ports |\n",
+4_analyses/09_longitudinal.ipynb:159
+  - "D_LIU= GIT/'D_liu'\n",
+  + "D_LIU= GIT/'outputs/D_liu'\n",
+4_analyses/09_longitudinal.ipynb:167
+  - "FIGDIR = GIT/'C_results'/'figures'/'longitudinal_final'; FIGDIR.mkdir(parents=True,exist_ok=True)\n",
+  + "FIGDIR = GIT/'outputs/C_results'/'figures'/'longitudinal_final'; FIGDIR.mkdir(parents=True,exist_ok=True)\n",
+4_analyses/09_longitudinal.ipynb:398
+  - "Follows `H_RosenkeRSM/otc_rsm_rosenke.py`: the four category-versus-all-others\n",
+  + "Follows `2_extraction/06_otc_rsm_rosenke.py`: the four category-versus-all-others\n",
+4_analyses/09_longitudinal.ipynb:436
+  - "#    D_liu/verified/02_tfce_analyses_dontuse_useharmony.py so the module is not\n",
+  + "#    2_extraction/lib_tfce.py so the module is not\n",
+4_analyses/09_longitudinal.ipynb:636
+  - "wrote /user_data/csimmon2/git_repos/sym_pt/pipeline/D_liu/longitudinal_q12_results.csv | 360 rows\n"
+  + "wrote /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/D_liu/longitudinal_q12_results.csv | 360 rows\n"
+4_analyses/09_longitudinal.ipynb:971
+  - "The renderer is `panel_row()` from `final_figures.ipynb` cell 6, ported here so\n",
+  + "The renderer is `panel_row()` from `5_figures/01_final_figures.ipynb` cell 6, ported here so\n",
+4_analyses/09_longitudinal.ipynb:1386
+  - "figures in /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/longitudinal_final\n"
+  + "figures in /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/longitudinal_final\n"
+5_figures/01_final_figures.ipynb:67
+  - "ok      /user_data/csimmon2/git_repos/sym_pt/pipeline/D_liu/stats_results_harmonized_corrected.csv\n",
+  + "ok      /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/D_liu/stats_results_harmonized_corrected.csv\n",
+5_figures/01_final_figures.ipynb:68
+  - "ok      /user_data/csimmon2/git_repos/sym_pt/pipeline/D_liu/univariate_v1_harmonized_sqrt.csv\n",
+  + "ok      /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/D_liu/univariate_v1_harmonized_sqrt.csv\n",
+5_figures/01_final_figures.ipynb:69
+  - "ok      /user_data/csimmon2/git_repos/sym_pt/pipeline/D_liu/rsa_v1_harmonized.csv\n",
+  + "ok      /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/D_liu/rsa_v1_harmonized.csv\n",
+5_figures/01_final_figures.ipynb:95
+  - "STATS_CSV   = REPO / 'D_liu' / 'stats_results_harmonized_corrected.csv'\n",
+  + "STATS_CSV   = REPO / 'outputs/D_liu' / 'stats_results_harmonized_corrected.csv'\n",
+5_figures/01_final_figures.ipynb:96
+  - "UNIVAR_SQRT = REPO / 'D_liu' / 'univariate_v1_harmonized_sqrt.csv'   # combat_05b: peak_z + volume\n",
+  + "UNIVAR_SQRT = REPO / 'outputs/D_liu' / 'univariate_v1_harmonized_sqrt.csv'   # combat_05b: peak_z + volume\n",
+5_figures/01_final_figures.ipynb:97
+  - "RSA_HARM    = REPO / 'D_liu' / 'rsa_v1_harmonized.csv'\n",
+  + "RSA_HARM    = REPO / 'outputs/D_liu' / 'rsa_v1_harmonized.csv'\n",
+5_figures/01_final_figures.ipynb:101
+  - "FIG_DIR     = REPO / 'C_results' / 'figures' / 'liu_exact'\n",
+  + "FIG_DIR     = REPO / 'outputs/C_results' / 'figures' / 'liu_exact'\n",
+5_figures/01_final_figures.ipynb:104
+  - "# Must match EXCLUDE in D_liu/verified/05_stats_harmony.py.\n",
+  + "# Must match EXCLUDE in 4_analyses/02_stats_harmony.py.\n",
+5_figures/01_final_figures.ipynb:1607
+  - "saved: /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/liu_exact/tfce_clusters_collapsed.csv\n",
+  + "saved: /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/liu_exact/tfce_clusters_collapsed.csv\n",
+5_figures/01_final_figures.ipynb:1642
+  - "CLUSTER_CSV = REPO / 'D_liu' / 'tfce_clusters.csv'\n",
+  + "CLUSTER_CSV = REPO / 'outputs/D_liu' / 'tfce_clusters.csv'\n",
+5_figures/01_final_figures.ipynb:1788
+  - "# Needs from final_figures.ipynb: peak_c, peak_p, vox_c, vox_p, rsa_c_long,\n",
+  + "# Needs from 5_figures/01_final_figures.ipynb: peak_c, peak_p, vox_c, vox_p, rsa_c_long,\n",
+5_figures/01_final_figures.ipynb:2830
+  - "RSM_CSV_CH = REPO / 'H_RosenkeRSM/otc_rsm_persubject.csv'\n",
+  + "RSM_CSV_CH = REPO / 'outputs/H_RosenkeRSM/otc_rsm_persubject.csv'\n",
+5_figures/01_final_figures.ipynb:2972
+  - "RSM_CSV_CH = REPO / 'H_RosenkeRSM' / 'otc_rsm_persubject.csv'\n",
+  + "RSM_CSV_CH = REPO / 'outputs/H_RosenkeRSM' / 'otc_rsm_persubject.csv'\n",
+5_figures/01_final_figures.ipynb:3125
+  - "RSM_CSV_CH = REPO / 'H_RosenkeRSM' / 'otc_rsm_persubject.csv'\n",
+  + "RSM_CSV_CH = REPO / 'outputs/H_RosenkeRSM' / 'otc_rsm_persubject.csv'\n",
+5_figures/01_final_figures.ipynb:3238
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/liu_exact/otc_rsm_side_typicality.png\n"
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/liu_exact/otc_rsm_side_typicality.png\n"
+5_figures/01_final_figures.ipynb:3429
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/liu_exact/otc_rsm_agreement_heatmap.png\n",
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/liu_exact/otc_rsm_agreement_heatmap.png\n",
+5_figures/01_final_figures.ipynb:3522
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/liu_exact/otc_rsm_consistency.png\n"
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/liu_exact/otc_rsm_consistency.png\n"
+5_figures/01_final_figures.ipynb:3547
+  - "RSM_CSV      = REPO / 'H_RosenkeRSM' / 'otc_rsm_persubject.csv'\n",
+  + "RSM_CSV      = REPO / 'outputs/H_RosenkeRSM' / 'otc_rsm_persubject.csv'\n",
+5_figures/01_final_figures.ipynb:3718
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/liu_exact/otc_rsm_two_group_variations.png\n"
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/liu_exact/otc_rsm_two_group_variations.png\n"
+5_figures/02_whole_otc_bayes.ipynb:9
+  - "Standalone. The setup cell loads the harmonized CSVs directly and ports `load_harmonized` from `final_figures.ipynb`, so nothing here depends on that notebook being run first.\n"
+  + "Standalone. The setup cell loads the harmonized CSVs directly and ports `load_harmonized` from `5_figures/01_final_figures.ipynb`, so nothing here depends on that notebook being run first.\n"
+5_figures/02_whole_otc_bayes.ipynb:44
+  - "# ─── Setup: loads from source, independent of final_figures.ipynb ─────────\n",
+  + "# ─── Setup: loads from source, independent of 5_figures/01_final_figures.ipynb ─────────\n",
+5_figures/02_whole_otc_bayes.ipynb:54
+  - "D_LIU = REPO / 'D_liu'\n",
+  + "D_LIU = REPO / 'outputs/D_liu'\n",
+5_figures/02_whole_otc_bayes.ipynb:59
+  - "FIG_DIR = REPO / 'C_results' / 'figures' / 'whole_otc_bayes'\n",
+  + "FIG_DIR = REPO / 'outputs/C_results' / 'figures' / 'whole_otc_bayes'\n",
+5_figures/02_whole_otc_bayes.ipynb:97
+  - "    Returns (controls, patients). Ported from final_figures.ipynb.\"\"\"\n",
+  + "    Returns (controls, patients). Ported from 5_figures/01_final_figures.ipynb.\"\"\"\n",
+5_figures/02_whole_otc_bayes.ipynb:233
+  - "RSM_CSV_CH = REPO / 'H_RosenkeRSM' / 'otc_rsm_persubject.csv'\n",
+  + "RSM_CSV_CH = REPO / 'outputs/H_RosenkeRSM' / 'otc_rsm_persubject.csv'\n",
+5_figures/02_whole_otc_bayes.ipynb:361
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/whole_otc_bayes/otc_rsm_two_comparisons.png\n"
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/whole_otc_bayes/otc_rsm_two_comparisons.png\n"
+5_figures/02_whole_otc_bayes.ipynb:495
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/whole_otc_bayes/otc_rsm_two_comparisons.png\n"
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/whole_otc_bayes/otc_rsm_two_comparisons.png\n"
+5_figures/02_whole_otc_bayes.ipynb:1446
+  - "# peak_c, vox_c, rsa_c_long from final_figures.ipynb.\n",
+  + "# peak_c, vox_c, rsa_c_long from 5_figures/01_final_figures.ipynb.\n",
+5_figures/02_whole_otc_bayes.ipynb:1612
+  - "# Needs rsa_c_long (controls, long by pair) from final_figures.ipynb, plus\n",
+  + "# Needs rsa_c_long (controls, long by pair) from 5_figures/01_final_figures.ipynb, plus\n",
+5_figures/02_whole_otc_bayes.ipynb:1779
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/whole_otc_bayes/per_roi_lines_z.png\n"
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/whole_otc_bayes/per_roi_lines_z.png\n"
+5_figures/02_whole_otc_bayes.ipynb:1796
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/whole_otc_bayes/per_roi_lines_z_bare.png\n"
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/whole_otc_bayes/per_roi_lines_z_bare.png\n"
+5_figures/02_whole_otc_bayes.ipynb:1813
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/whole_otc_bayes/per_roi_lines_minmax.png\n"
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/whole_otc_bayes/per_roi_lines_minmax.png\n"
+5_figures/02_whole_otc_bayes.ipynb:1830
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/whole_otc_bayes/per_roi_lines_minmax_bare.png\n"
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/whole_otc_bayes/per_roi_lines_minmax_bare.png\n"
+5_figures/02_whole_otc_bayes.ipynb:1836
+  - "# Needs from final_figures.ipynb: peak_c, peak_p, vox_c, vox_p, rsa_c_long,\n",
+  + "# Needs from 5_figures/01_final_figures.ipynb: peak_c, peak_p, vox_c, vox_p, rsa_c_long,\n",
+5_figures/02_whole_otc_bayes.ipynb:1949
+  - "OTC_CSV_23 = REPO / 'H_RosenkeRSM' / 'otc_rsm_persubject.csv'\n",
+  + "OTC_CSV_23 = REPO / 'outputs/H_RosenkeRSM' / 'otc_rsm_persubject.csv'\n",
+5_figures/02_whole_otc_bayes.ipynb:2210
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/whole_otc_bayes/per_roi_lines_z.png\n"
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/whole_otc_bayes/per_roi_lines_z.png\n"
+5_figures/02_whole_otc_bayes.ipynb:2227
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/whole_otc_bayes/per_roi_lines_z_bare.png\n"
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/whole_otc_bayes/per_roi_lines_z_bare.png\n"
+5_figures/02_whole_otc_bayes.ipynb:2244
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/whole_otc_bayes/per_roi_lines_minmax.png\n"
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/whole_otc_bayes/per_roi_lines_minmax.png\n"
+5_figures/02_whole_otc_bayes.ipynb:2261
+  - "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/C_results/figures/whole_otc_bayes/per_roi_lines_minmax_bare.png\n"
+  + "saved /user_data/csimmon2/git_repos/sym_pt/pipeline/outputs/C_results/figures/whole_otc_bayes/per_roi_lines_minmax_bare.png\n"
+5_figures/02_whole_otc_bayes.ipynb:2267
+  - "# Needs from final_figures.ipynb: peak_c, peak_p, vox_c, vox_p, rsa_c_long,\n",
+  + "# Needs from 5_figures/01_final_figures.ipynb: peak_c, peak_p, vox_c, vox_p, rsa_c_long,\n",
+5_figures/02_whole_otc_bayes.ipynb:2354
+  - "OTC_CSV_23 = REPO / 'H_RosenkeRSM' / 'otc_rsm_persubject.csv'\n",
+  + "OTC_CSV_23 = REPO / 'outputs/H_RosenkeRSM' / 'otc_rsm_persubject.csv'\n",
