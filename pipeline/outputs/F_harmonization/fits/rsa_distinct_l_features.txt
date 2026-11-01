@@ -1,0 +1,11 @@
+face_FFA
+face_STS
+house_PPA
+house_PPA_strict
+house_TOS
+object_LOC
+object_pF
+word_IFG
+word_STG
+word_VWFA
+word_pSTG_liu

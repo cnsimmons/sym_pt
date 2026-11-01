@@ -119,6 +119,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from grid_cohort import EXCLUDE   # cohort defined once; see grid_cohort.py
 
 GIT = Path('/user_data/csimmon2/git_repos/sym_pt/pipeline')
 RSA = GIT / 'outputs/D_liu' / 'rsa_v1_harmonized.csv'
@@ -368,6 +369,9 @@ def load_measure(measure, rois, cap, quiet=False, transform='none'):
         flip = True                       # stores similarity
     else:
         raise ValueError(measure)
+
+    # Cohort, applied before the control/patient split (as in 05_marlene_lmm.py).
+    d = d[~d['subject_id'].isin(EXCLUDE)]
 
     ctl = _add_age(_sessions(d, 'control', 'min'), info)
     pat = _sessions(d, 'OTC', 'max')

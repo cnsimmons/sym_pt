@@ -54,7 +54,7 @@ OUT_TFCE    = D_LIU / 'tfce_clusters.csv'
 
 # ── Notebook constants ───────────────────────────────────────────────────────
 EXCLUDE = ['sub-017', 'sub-091', 'sub-095', 'sub-096', 'sub-027', 'sub-084']
-EXCLUDE_SES = [('sub-108', 2)]
+EXCLUDE_SES = [('sub-108', 2), ('sub-092', 2)]
 
 PRIMARY_ROIS = ['face_FFA', 'house_PPA_strict', 'object_LOC', 'word_VWFA']
 CATEGORIES   = ['face', 'house', 'object', 'word']
@@ -90,7 +90,7 @@ def _age_table():
     """
     global _AGE_CACHE
     if _AGE_CACHE is None:
-        si = pd.read_csv(D_LIU.parent / 'sub_info.csv')
+        si = pd.read_csv(D_LIU.parent.parent / 'sub_info.csv')
         si['subject_id'] = si['sub'].astype(str)
         si['ses_num'] = pd.to_numeric(
             si['ses'].astype(str).str.extract(r'(\d+)', expand=False),
