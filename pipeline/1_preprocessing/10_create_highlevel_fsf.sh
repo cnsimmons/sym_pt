@@ -49,6 +49,7 @@ while IFS=',' read -r sub ses rest; do
     ses_clean=$(echo "$ses" | sed 's/ses-//')
 
     should_skip "$sub_clean" && continue
+if [ $# -gt 0 ]; then keep=0; for x in "$@"; do [ "$x" = "${sub_clean}-${ses_clean}" ] && keep=1; done; [ $keep -eq 1 ] || continue; fi
 
     first_ses="${FIRST_SES[$sub_clean]}"
     session_dir="$dataDir/sub-${sub_clean}/ses-${ses_clean}"

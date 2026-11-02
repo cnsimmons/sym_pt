@@ -1,146 +1,90 @@
 #!/usr/bin/env python3
 """
-Convert localizer .mat files to BIDS-compatible TSV events files
+00a_mat2tsv_timing.py - Convert localizer .mat files to BIDS events files
 
-Usage: python 00_mat2tsv_timing.py <input_mat_file> [output_tsv_file] [subject_id] [session]
+Changed 2026-11-01 (see deviation log):
+  - --sub and --ses are REQUIRED (the old version silently defaulted to
+    sub-108 ses-02 when they were omitted)
+  - run number is read from any name ending in <N>loc.mat (ebloc1loc.mat,
+    EC1loc.mat, FOloc1loc.mat, ...), or given with --run
+  - no silent fallback filename: if the run cannot be determined, it stops
+Conversion itself is unchanged: onsets = block_starts - block_starts[0] + 8,
+duration 16 s, codes 0 Face, 1 Word, 2 Scramble, 3 House, 4 Object.
 
-If output_tsv_file is not specified, it will be auto-generated using BIDS convention
-and saved to the session's func/ directory (not next to the .mat file).
+Usage:
+  python 00a_mat2tsv_timing.py <file.mat> --sub 092 --ses 02 [--run 1] [--out path.tsv]
+Default output: <session>/func/sub-XXX_ses-NN_task-loc_run-RR_events.tsv
+(the func/ folder next to the .mat file's covs/ folder)
 """
-
+import argparse
+import re
 import sys
-import scipy.io
-import pandas as pd
 from pathlib import Path
 
-def extract_run_from_filename(filename):
-    """Extract run number from filename like ebloc1loc.mat -> 1 or EC1loc.mat -> 1"""
-    import re
-    # Try ebloc pattern first, then fall back to EC pattern
-    match = re.search(r'ebloc(\d+)loc', str(filename))
-    if match:
-        return int(match.group(1))
-    match = re.search(r'EC(\d+)loc', str(filename))
-    if match:
-        return int(match.group(1))
-    return None
+import pandas as pd
+import scipy.io
 
-def convert_mat_to_tsv(mat_file, tsv_file=None, subject_id='108', session='02'):
-    """
-    Convert localizer .mat file to TSV events file with BIDS naming
+CONDITION_MAP = {0: 'Face', 1: 'Word', 2: 'Scramble', 3: 'House', 4: 'Object'}
 
-    Parameters:
-    -----------
-    mat_file : str or Path
-        Path to input .mat file
-    tsv_file : str or Path, optional
-        Path to output .tsv file. If None, auto-generated using BIDS convention
-        and saved to ../func/ relative to the .mat file's parent directory.
-    subject_id : str
-        Subject ID for BIDS naming (default: '108')
-    session : str
-        Session ID for BIDS naming (default: '02')
 
-    Returns:
-    --------
-    pd.DataFrame
-        Events dataframe
-    """
+def run_from_filename(name):
+    """'ebloc1loc.mat' / 'EC1loc.mat' / 'FOloc1loc.mat' -> 1; None if no match."""
+    m = re.search(r'(\d+)loc\.mat$', name)
+    return int(m.group(1)) if m else None
 
-    # Load .mat file
-    print(f"Loading {mat_file}...")
-    mat = scipy.io.loadmat(mat_file)
 
-    # Extract timing and condition data
-    block_starts = mat['block_starts'][0]  # get the array
-    stimOrd = mat['stimOrd'].flatten()     # flatten to 1D
+def convert(mat_file, sub, ses, run=None, out=None):
+    mat_path = Path(mat_file)
+    if run is None:
+        run = run_from_filename(mat_path.name)
+    if run is None:
+        sys.exit(f'ERROR: cannot read a run number from {mat_path.name}; pass --run')
 
-    # Convert to relative onsets with +8 offset (initial fixation period)
-    onsets = block_starts - block_starts[0] + 8
+    print(f'Loading {mat_path} ...')
+    mat = scipy.io.loadmat(mat_path)
+    block_starts = mat['block_starts'][0]
+    stim_ord = mat['stimOrd'].flatten()
+    if len(block_starts) != len(stim_ord):
+        sys.exit(f'ERROR: {len(block_starts)} block starts but {len(stim_ord)} codes')
 
-    # Map condition codes to labels (confirmed from experiment script)
-    condition_map = {
-        0: 'Face',
-        1: 'Word',
-        2: 'Scramble',
-        3: 'House',     # Places/Houses
-        4: 'Object'
-    }
+    onsets = block_starts - block_starts[0] + 8      # 8 s initial fixation
+    df = pd.DataFrame({'onset': onsets,
+                       'duration': [16.0] * len(onsets),
+                       'block_type': [CONDITION_MAP[int(c)] for c in stim_ord]})
 
-    # Convert stimOrd to block types
-    block_types = [condition_map[code] for code in stimOrd]
-
-    # Create dataframe
-    df = pd.DataFrame({
-        'onset': onsets,
-        'duration': [16.0] * len(onsets),  # all blocks are 16 seconds
-        'block_type': block_types
-    })
-
-    # Generate output filename if not provided
-    if tsv_file is None:
-        mat_path = Path(mat_file)
-
-        # Extract run number from filename
-        run_num = extract_run_from_filename(mat_path.name)
-
-        if run_num is not None:
-            # BIDS naming: sub-108_ses-02_task-loc_run-01_events.tsv
-            tsv_filename = f"sub-{subject_id}_ses-{session}_task-loc_run-{run_num:02d}_events.tsv"
-        else:
-            # Fallback if run number can't be extracted
-            tsv_filename = mat_path.stem + '_events.tsv'
-
-        # Route output to sibling func/ directory (covs/ -> func/)
+    if out is None:
+        fname = f'sub-{sub}_ses-{ses}_task-loc_run-{run:02d}_events.tsv'
         func_dir = mat_path.parent.parent / 'func'
-        if func_dir.exists():
-            tsv_file = func_dir / tsv_filename
-        else:
-            # Fallback: save next to the .mat file
-            tsv_file = mat_path.parent / tsv_filename
-            print(f"  Warning: {func_dir} does not exist, saving next to .mat file")
+        if not func_dir.exists():
+            sys.exit(f'ERROR: {func_dir} does not exist; pass --out')
+        out = func_dir / fname
+    out = Path(out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(out, sep='\t', index=False, float_format='%.3f')
 
-    # Ensure output directory exists
-    Path(tsv_file).parent.mkdir(parents=True, exist_ok=True)
-
-    # Save as TSV
-    print(f"Saving to {tsv_file}...")
-    df.to_csv(tsv_file, sep='\t', index=False, float_format='%.3f')
-
-    # Print summary
-    print(f"\nConversion complete!")
-    print(f"- Total blocks: {len(df)}")
-    print(f"- Duration: {onsets[-1] + 16:.1f} seconds")
-    print(f"- Conditions: {', '.join(sorted(set(block_types)))}")
-    print(f"\nFirst few rows:")
-    print(df.head())
-
+    print(f'Saved {out}')
+    print(f'  sub-{sub} ses-{ses} run-{run:02d}: {len(df)} blocks, '
+          f'last block ends {onsets[-1] + 16:.1f} s')
+    print(f'  order: {" ".join(df.block_type)}')
     return df
 
+
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python 00_mat2tsv_timing.py <input_mat_file> [output_tsv_file] [subject_id] [session]")
-        print("Examples:")
-        print("  python 00_mat2tsv_timing.py ebloc1loc.mat")
-        print("  python 00_mat2tsv_timing.py ebloc1loc.mat output.tsv")
-        print("  python 00_mat2tsv_timing.py ebloc1loc.mat '' 108 02")
-        sys.exit(1)
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument('mat_file')
+    ap.add_argument('--sub', required=True, help='subject number, e.g. 092')
+    ap.add_argument('--ses', required=True, help='session number, e.g. 02')
+    ap.add_argument('--run', type=int, default=None, help='run number (else read from filename)')
+    ap.add_argument('--out', default=None, help='output .tsv path (else BIDS name in func/)')
+    a = ap.parse_args()
 
-    mat_file = sys.argv[1]
-    tsv_file = sys.argv[2] if len(sys.argv) > 2 and sys.argv[2] else None
-    subject_id = sys.argv[3] if len(sys.argv) > 3 else '108'
-    session = sys.argv[4] if len(sys.argv) > 4 else '02'
+    if not Path(a.mat_file).exists():
+        sys.exit(f'ERROR: {a.mat_file} does not exist')
+    sub = a.sub.removeprefix('sub-')
+    ses = a.ses.removeprefix('ses-').zfill(2)
+    convert(a.mat_file, sub, ses, a.run, a.out)
 
-    # Check input file exists
-    if not Path(mat_file).exists():
-        print(f"Error: Input file {mat_file} does not exist!")
-        sys.exit(1)
 
-    try:
-        convert_mat_to_tsv(mat_file, tsv_file, subject_id, session)
-    except Exception as e:
-        print(f"Error: {e}")
-        sys.exit(1)
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

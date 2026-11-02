@@ -73,7 +73,7 @@ os.makedirs('slurm_out', exist_ok=True)
 # Get all subjects
 subject_dirs = glob(f'{processed_dir}/sub-*')
 #subjects = sorted([os.path.basename(d).replace('sub-', '') for d in subject_dirs if os.path.isdir(d)])
-subjects = ['098','101','109']
+import sys; subjects = sys.argv[1:] or sys.exit('Usage: python 12_submit_highlevel_register.py 092 108 ...')
 
 print(f"Found {len(subjects)} subjects")
 
