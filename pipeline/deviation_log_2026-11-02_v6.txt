@@ -1,0 +1,426 @@
+DEVIATION LOG - sym_pt longitudinal pipeline                       2026-11-02 (v6)
+================================================================================
+Replaces deviation_log_2026-11-02_v5.txt. Numbers are from command output in the
+2026-10-31 to 11-02 sessions unless marked [inferred].
+New in v6: section 13 (the cross-sectional study was restored to its pre-11-02
+state; the two studies are kept separate) and updated sections 9, 10, 11, 12.
+Sections 9 and 11 now describe LONGITUDINAL-ONLY work, archived in the
+.longitudinal copies and outputs/rereg_20261102 (section 13).
+Runbook: new_sessions_run_order_2026-11-02_v5.txt.
+
+
+0. RULES (decided 2026-11-02, C.S.)
+--------------------------------------------------------------------------------
+Registration, every later session:
+  1. FEAT's standard registration (each run -> first-session T1, BBR) by default.
+  2. If FEAT's runs disagree with each other by more than 5 mm, run step 07
+     (each run -> first-session run-02 functional -> first-session FEAT transform).
+  3. Keep step 07 only if its runs then agree within ~1 mm (validated range
+     0.06-0.30 mm on 092/108). Otherwise keep FEAT and flag the session as a
+     registration failure.
+  Why 5 mm: FEAT's failures were 12-86 mm; every other session with a FEAT value
+  was <= 2.2 mm (longitudinal_qc_compiled.csv, 39 sessions), so any threshold in
+  that gap selects the same sessions. A 1 mm threshold would also catch sessions
+  FEAT handled acceptably (sub-004 ses-02 1.5 mm, ses-03 2.2 mm; sub-018 ses-02
+  1.1 mm, a first session, which has no step-07 fallback).
+  First sessions have no fallback: a FEAT failure there is flagged.
+
+Every session FEAT failed, and the outcome:
+  session          FEAT runs disagree (max)   step 07 runs agree    outcome
+  sub-092 ses-02   85.8 mm                    0.06-0.30 mm (both)   step 07 (10-31)
+  sub-108 ses-02   38.6 mm                    0.06-0.30 mm (both)   step 07 (10-31)
+  sub-010 ses-03   12.1 mm                    0.09-0.31 mm          step 07 (11-02) *
+  sub-008 ses-02   22.4 mm                    0.33-0.84 mm          step 07 (11-02) *
+  sub-004 ses-05   28.0 mm                    up to 297 mm          FEAT kept, FLAGGED
+  * (v6) longitudinal copy only (.longitudinal); the canonical paths keep FEAT's
+    registration, because these two sessions are also in the cross-sectional
+    study (section 13).
+
+Acquisition (C.S., 2026-11-02): 27-slice sessions (27 x 2.5 mm, old Verio slab
+placed over the area of focus) are fine for ROI and OTC analyses and are excluded
+from whole-brain and connectivity analyses.
+
+Longitudinal tests (C.S., 2026-11-02): RDM slopes (Liu 2025) need >= 3 sessions;
+only sub-004 and sub-021 qualify, so they are dropped.
+
+
+1. WHAT CHANGED (as v3)
+--------------------------------------------------------------------------------
+Standard pipeline: FEAT aligns each later-session run directly to the
+first-session T1 (BBR, search 90).
+
+New route (step 1_preprocessing/07_register_to_first_session_func.sh, first
+written as 06b):
+  a. align each later-session run's example_func to the first-session run-02
+     example_func (FLIRT, 6 dof, full search);
+  b. concatenate with the first session's FEAT example_func2highres.mat;
+  c. rebuild highres2example_func, example_func2standard, standard2example_func
+     and the two aligned images in reg/.
+The final space is unchanged (first-session T1w_brain).
+Originals: reg.bak_20261031 (092/108 ses-02), reg.bak_20261101 (all other
+sessions touched; see section 10).
+
+
+2. WHY (as v3)
+--------------------------------------------------------------------------------
+FEAT's direct registration was inconsistent across runs of the same session
+(run-to-run rmsdiff, after accounting for measured head movement between runs):
+  sub-092 ses-02   13.8 - 85.8 mm
+  sub-108 ses-02   20.2 - 38.6 mm
+  good sessions    0.1 - 0.3 mm (sub-079 ses-02; ses-01 of 079/092/108: 0.15-0.33)
+sub-092 run-01 vs run-02 head movement was under 0.5 deg / 0.3 mm, yet FEAT
+placed run-01 about 60 deg and 68/89 mm away from runs 02 and 03.
+
+Ruled out as causes:
+  - pipeline setup: sub-diff (copy of sub-079) reproduced 079 exactly; 1stLevel
+    .fsf identical between ses-01 and ses-02 apart from the anatomy path
+  - anatomy FEAT used: reg/highres and highres_head identical (maxdiff 0)
+  - scan protocol: JSON identical except converter version (sub-092 ses-02:
+    dcm2niix v1.0.20260416 vs v1.0.20201102 elsewhere)
+  - headers and voxel values: same structure, ordinary session-to-session range
+  - head position between sessions: ses-02 vs ses-01 functional within ~2 deg,
+    <8 mm; functional-to-functional correlation 0.98-0.99
+  - T1 identity: ses-02 vs ses-01 T1 correlation 0.95-0.96 (079: 0.99)
+  - timing: events match the .mat stimulus order, run matching, labels and the
+    8.0 s start offset for both subjects; matches old timing files within 16 ms
+  - (v4) slice count: of the three later FEAT failures, only sub-004 ses-05 is
+    27-slice; sub-010 ses-03 is 69 x 2 mm in both sessions.
+Cause of the FEAT failure: not identified [inferred: fragile direct
+cross-session alignment].
+
+Precedent:
+  - SPM's multi-session realignment aligns each session's first scan to the
+    first session's first scan, then coregisters once to anatomy (SPM manual).
+    SPM "sessions" are usually runs within one visit.
+  - (v4) Bonelli et al. 2012, Epilepsia (doi 10.1111/j.1528-1167.2012.03433.x),
+    longitudinal fMRI before and ~4 months after anterior temporal lobe
+    resection in adults: postoperative scans realigned, coregistered to the
+    preoperative mean image, and normalized with the preoperative parameters.
+    Closest published precedent found. Differences: Bonelli aligned one mean
+    image per session; step 07 aligns each run's example_func. Adults, months
+    apart, not developing brains across years.
+  Citation choice for the methods: still to settle.
+
+
+3. VALIDATION (as v3, plus v4 items)
+--------------------------------------------------------------------------------
+  a. On a good session (sub-079 ses-02) the route reproduces FEAT within
+     0.81 - 1.06 mm.
+  b. After install, run-to-run agreement 0.06 - 0.30 mm (092 and 108).
+  c. HighLevel used the new transforms: run copes match new 0.90 - 1.00,
+     old -0.02 - 0.31.
+  d. HighLevel z ranges within +/-15 (sub-108 old ses-02 showed +/-48).
+  e. Object/Word maps vs ses-01, per run: new 0.21 - 0.54, old -0.01 - 0.31
+     (sub-079 baseline 0.74 - 0.80).
+  f. Cross-sectional outputs unchanged: check_outputs_v2.py, all extraction
+     stages max diff 0 with the two new sessions ignored.
+  g. Longitudinal notebook: fraction of tests outside the control range
+     sub-092 0.59, sub-108 0.73; other patients 0.44 - 0.84.
+  h. sub-108 ses-02 extraction changed (Sep 8 old maps -> today): peak_z
+     FFA 18.0 -> 6.4, PPA 19.3 -> 7.5, LO 41.9 -> 9.3 (old inflation gone);
+     word-ROI selective volumes smaller (VWFA 149 -> 32 voxels).
+  i. (v4) The step-07 script, run on sub-092 ses-02, reproduces the
+     hand-installed transforms (change ~1e-14 mm), QC 0.20-0.30 mm.
+  j. (v4) sub-010 ses-03 runs agree 0.09-0.31 mm; sub-008 ses-02 0.33-0.84 mm.
+     Map-level checks (c-e) for these two: after HighLevel (section 9).
+
+
+4. PROCEDURE USED FOR 092/108 SES-02 (differs from the runbook)
+--------------------------------------------------------------------------------
+  - (v4 wording) Old steps 07, 08, 09 (since removed) were skipped: 08/09 chain
+    anat2ses01 on top of a transform that already lands in first-session space
+    (see 6). Registration was installed by hand (= the current step 07).
+  - Step 10 run from a temporary copy restricted to the new sessions; the
+    script then deleted and rewrote HighLevel.fsf for every session (line 71).
+  - Step 11 previewed (only the new sessions pending), then run as is.
+  - Step 12 run directly per session (symlinks only); submit-script subject
+    list not edited.
+  - Step 13 run with --sub 092,108 (skips existing outputs).
+  - 4_analyses/09_longitudinal.ipynb: EXCLUDE_SES=[('sub-108',2)] -> [].
+    Backup: 09_longitudinal.bak_20261101.ipynb.
+  - Backups: sub_info.csv.bak_20261101; D_liu/*bak_20261101.csv (Oct 2 results).
+  - sub-diff removed from sub_info.csv, Raw and processed dirs.
+
+
+5. OPEN FOR 092/108 SES-02 (as v3)
+--------------------------------------------------------------------------------
+  - sub-108 ses-02 still moves opposite to the other patients on some measures.
+    Its ses-02 category maps are weak (ses-01 similarity 0.06 - 0.36; runs agree
+    0.33 - 0.53 on Object/Word) despite low motion (0.05 mm, 0-1 spikes).
+  - sub-092 ses-02: high motion in all runs (0.25 - 0.31 mm, 47-68 of 184
+    timepoints as spike regressors). Run-03 (likely the re-entry run) agrees
+    least with the others. No run dropped.
+  - sub-092 has no peak_location rows in the longitudinal results; cause not
+    checked.
+
+
+6. PARKED
+--------------------------------------------------------------------------------
+  - (v4) Existing sessions with the FEAT failure signature: now handled by the
+    rule in section 0 (004 ses-05 flagged; 008 ses-02, 010 ses-03 step 07).
+  - 08/09 double shift: applied to sub-004 ses-02/03/05, sub-007 ses-03/04,
+    sub-008 ses-02 (9.8 - 33.8 mm). HighLevel was not affected (built from
+    FEAT's transform). Shifted files are read only by rsa_nordt_crossrun.py,
+    rsa_nordt_primary.py, B_analyses/09_compute_split_half_reliability.py.
+    (v4) Those scripts have no inputs for any session registered by step 07.
+  - sub-079 / sub-076 searchmasks built on the old wrong-side mirror:
+    079 left masks overlap correct-mirror masks at 0.69 - 0.79 (VWFA 0.757,
+    FFA 0.757, PPA_strict 0.729, LO 0.792). Saved: ~/dice_079_vs_diff.txt.
+  - Later-session T1s stored in a different orientation from ses-01
+    (fslmaths warning).
+  - sub-021: one extra test in the new longitudinal table vs Oct 2.
+  - Methods citation for the new route (see section 2).
+  - (v4) Acquisition, from raw headers (~/coverage_raw.csv, 435 localizer runs):
+    84 runs 27 x 2.5 mm (all Verio); 351 runs 69 x 2 mm (187 Verio, 148
+    Prisma, 16 with no scanner field: sub-098, 099, 101, 108, 109).
+    Later sessions that change protocol from their first session (27 -> 69):
+    sub-004 ses-06, sub-008 ses-02, sub-018 ses-03; scanner (Verio -> Prisma):
+    sub-025 ses-03, sub-064 ses-02.
+  - (v4) Harmonization: ComBat SITE = scanner only (02_harmonize.py lines 17,
+    150, 214). Six harmonized sessions are 27 x 2.5 mm and share the Verio site
+    with 25 sessions at 69 x 2 mm: C24 (sub-001), C6 (sub-016), C15 (sub-018
+    ses-02), C29 (sub-035), C19 (sub-036), KU (sub-005). Not addressed.
+  - (v4) sub-004: ses-01/02/03/05 27 x 2.5 mm Verio; ses-06 69 x 2 mm Verio;
+    ses-07 69 x 2 mm Prisma, 3 raw runs, never processed. Liu 2025 describes
+    UD's last two sessions (our ses-05 and ses-06, by age) as full coverage;
+    ses-05's header is 27 slices. Unresolved.
+  - (v4) 32 sessions on disk are not in the compiled QC table, including later
+    sessions of existing subjects (e.g. sub-007 ses-05, sub-045 ses-04,
+    sub-064 ses-03, sub-068 ses-01, sub-074 ses-02).
+  - (v4) Runs not 184 volumes: sub-049 ses-02 (1 run); sub-086 ses-02 (1 run:
+    run-03, FEAT incomplete, no example_func).
+  - (v4) The committed step-07 script prints harmless bc errors on values in
+    scientific notation, and stops a session at a run with no example_func
+    (sub-086 ses-02 run-03). Not changed.
+  - (v4) Method behind the reg_run_disagreement column of
+    longitudinal_qc_compiled.csv (compile_longitudinal_qc.py) not re-checked;
+    the runbook's checkpoint B2 uses the same computation as step 07's QC.
+
+
+7. PIPELINE CODE CHANGES (2026-11-01, as v3)
+--------------------------------------------------------------------------------
+  - Registration step installed as 1_preprocessing/07_register_to_first_session_func.sh
+    (first written as 06b). Committed version md5 f8ff8c42dffa1328459b1aa345ec01d3.
+  - Removed with git rm (recoverable from history): 07_register_anat_to_ses01.sh,
+    08_register_1stLevel.py, 08_submit_1stLevel_register.py, 09_register_zstats.py,
+    09_submit_zstat_register.py. No pipeline script called them; their outputs
+    are read only by rsa_nordt_crossrun.py, rsa_nordt_primary.py and
+    B_analyses/09_compute_split_half_reliability.py (outside pipeline/).
+    build_pipeline.sh / setup_pipeline_folder.sh (repo root) would recreate them
+    if rerun.
+  - 10_create_highlevel_fsf.sh: optional session filter (bash ... XXX-NN, several
+    allowed; exact match, so a wrong name matches nothing - line 52); with no
+    arguments it still rewrites every session's HighLevel.fsf.
+  - 12_submit_highlevel_register.py: subjects from the command line (was
+    hard-coded ['098','101','109']).
+  - 00a_mat2tsv_timing.py: --sub/--ses required; run number from any <N>loc.mat
+    name or --run; conversion unchanged.
+  - Numbering: gap at 08-09 left on purpose so steps 10-15 keep their numbers.
+
+
+8. TESTED 2026-11-01/02 AND REVERTED (nothing kept)
+--------------------------------------------------------------------------------
+  - Step 07 on all 31 later sessions, to put every session on one method:
+    sub-004 ses-02 runs ended 8-307 mm apart.
+  - Variants written in chat, never committed: v2 (search +/-30 deg); v3/v5
+    (runs aligned within the session, then one cross-session alignment per
+    session, SPM/Bonelli-style); v4 (same on mean_func: worse); v6 (v5 plus
+    skipping incomplete runs).
+  - v5 on all 31 sessions: within-session agreement <= 0.37 mm except sub-004
+    ses-02/03/05 (1.7-2.5 mm), but 5 sessions where FEAT was fine (FEAT <= 0.74
+    mm) moved 2.0-4.1 mm from FEAT: sub-018 ses-03 4.1, sub-004 ses-06 3.5,
+    sub-007 ses-03 3.0, sub-081 ses-02 2.3, sub-021 ses-03 2.0. Largest where a
+    69-slice session was aligned to a 27-slice first session; the two
+    Verio -> Prisma sessions stayed within ~1.3 mm.
+  - Decision: no cohort-wide replacement of FEAT (rule in section 0 instead).
+  - Reverted: all 31 sessions' reg/ restored from reg.bak_20261101 (diff -rq
+    clean against the backups); step-07 script restored to the committed version
+    with git checkout (md5 f8ff8c42dffa1328459b1aa345ec01d3).
+  - Downstream outputs (HighLevel, extraction, CSVs, results) were never
+    touched by these tests.
+
+
+9. APPLIED 2026-11-02: sub-008 ses-02 AND sub-010 ses-03 (LONGITUDINAL ONLY)
+--------------------------------------------------------------------------------
+  (v6) Later the same day the cross-sectional study was restored (section 13).
+  Everything below now lives only in the .longitudinal copies of these two
+  sessions and in outputs/rereg_20261102; it is not the cross-sectional state.
+  - Committed step 07 run on both (QC in section 0).
+  - Old HighLevel moved aside, per session: HighLevel.gfeat ->
+    HighLevel.gfeat.bak_20261102; each run's reg_standard ->
+    reg_standard.bak_20261102; HighLevel.fsf copied to HighLevel.fsf.bak_20261102.
+  - Step 10 with filter (008-02 010-03): only these two HighLevel.fsf changed,
+    both identical to their backups.
+  - Step 11 preview listed only these two; submitted (SLURM hlvl_008, hlvl_010).
+  - Then steps 12-13, extraction, harmonization and cross-sectional stats:
+    results in section 11. Not yet rerun: grid (Tables 2, 4), LMM, longitudinal
+    notebook.
+  - Both are cross-sectional sessions (in univariate_v1_harmonized_sqrt.csv),
+    so cross-sectional numbers changed (section 11).
+
+
+10. BACKUPS AND COPIES ON DISK (end of 2026-11-02)
+--------------------------------------------------------------------------------
+  Session data:
+  reg.bak_20261031   6 folders, 367 MB   092/108 ses-02 FEAT originals
+  reg.bak_20261101   95 folders, 5.6 GB  the 31 later sessions: FEAT originals;
+                                         for 092/108 the validated transforms
+  reg.bak_20261102   sub-086 ses-02 runs 01-02 (in-between states, deletable);
+                     sub-004 ses-05, sub-008 ses-02, sub-010 ses-03 runs (FEAT
+                     originals) [inferred: made by the 11-02 test run]
+  sub-008 ses-02 and sub-010 ses-03, LONGITUDINAL versions (corrected, section 9):
+    HighLevel.gfeat.longitudinal   (includes its step-13 MNI copies)
+    run-*/1stLevel.feat/reg.longitudinal, run-*/1stLevel.feat/reg_standard.longitudinal
+    HighLevel.fsf.bak_20261102     (identical to HighLevel.fsf)
+  Outputs (pipeline/outputs/):
+  D_liu.bak_20261102 (1.1 MB), grid.csv.bak_20261102, lmm.csv.bak_20261102,
+    previous_20261102/: the pre-11-02 versions; used for the restore (section 13)
+  rereg_20261102/: everything the archived rerun produced (section 11): D_liu/,
+    grid.csv, lmm.csv, F_harmonization/{fits,combat_harmonized},
+    peak_coords_mni.csv, wta_percentages.csv, and its check logs
+    (check_reregistered.txt, check_stage4.txt, check_final_20261102.txt).
+    rereg_20261102/D_liu/univariate_v1.csv and rsa_v1.csv are the extraction
+    CSVs with the corrected 008/010 sessions (what the longitudinal notebook reads).
+  previous_20261101/: harmonization before the 11-01 run.
+  check_restored_20261102.txt: the cross-sectional state of record after the
+    restore (section 13); the reference for any later check.
+  Lists and logs in ~: coverage_raw.csv, coverage_by_session.csv, step07_targets.txt,
+  step07_all.txt, three.txt, two.txt, step07_run.log, step07_run_v5.log,
+  three_v1.log, two_v1.log.
+  Delete nothing until the separation (section 13) is built and validated.
+
+
+11. DOWNSTREAM RERUN AND RESULTS, 2026-11-02 (sub-008 ses-02, sub-010 ses-03)
+--------------------------------------------------------------------------------
+  (v6) ARCHIVED, NOT IN USE: this rerun wrote into the shared cross-sectional
+  outputs and was undone (section 13). Kept as a record of what the corrected
+  registration of these two sessions does to the cross-sectional numbers.
+HighLevel:
+  - Used the new transforms: run copes vs HighLevel inputs, new r 0.99-1.00;
+    old (FEAT) r: sub-008 -0.00-0.06, sub-010 0.14-0.43. (New ~1.0 by
+    construction; this shows which alignment HighLevel used, not accuracy.)
+  - Similarity to the subject's first session (zstat r), new vs old:
+      cope       1     2     3    13    17    18
+      008 new  .23   .21  -.09   .39   .36   .36    (vs ses-01)
+      008 old  .06   .05  -.08   .12   .00  -.08
+      010 new  .29   .27   .32   .25   .69   .60    (vs ses-02)
+      010 old  .10   .06   .09   .15   .30   .21
+    New above old in 11 of 12 (sub-008 cope3 unchanged at ~-0.09). Same check
+    that validated 092/108 (old -0.01-0.31 -> new 0.21-0.54).
+  - z ranges: sub-008 within +/-15. sub-010 new cope3 -21.2, cope17 25.7, cope18
+    26.2 (> 20); its first session peaks 17.5-19.1 and the old FEAT maps were
+    already 21.8-22.5 on cope17/18. Accepted (C.S.: this subject runs high).
+Step 12: 19 copes linked (sub-010 output seen; sub-008 ran first in an && chain).
+Step 13: dry run listed every cope; then 38 registered, 0 existed, 0 failed, each.
+Extraction (after backing up D_liu):
+  univariate_v1 1844 rows / 74 subjects (969 s); rsa_v1 8820 rows / 65 subjects
+  (2893 s); peak_coords_mni 10227 rows / 74 subjects.
+  check_outputs, ignoring 008:2 010:3 092:2 108:2: every extraction line max diff
+  0, same missing cells. The two sessions keep their row counts (24 univariate,
+  132 RSA, 134 peak rows) [inferred: arithmetic on the check counts]. A numpy
+  "invalid value encountered in divide" warning during RSA (a flat pattern gives a
+  blank correlation); missing cells unchanged outside the ignored sessions.
+Harmonization (old fits in outputs/previous_20261102):
+  Site gaps shrink and group gaps hold (TFCE LH 0.6545 -> 0.3137, RH 0.5794 ->
+  0.3200). Because the two sessions are in the cross-sectional cohort, ComBat is
+  refit and every subject's harmonized values move. Other subjects only:
+    univariate (1232 rows)  peak_z         median 0.042  max 1.085  (312 cells > 0.1)
+                            volume (sqrt)  median 0.202  max 7.157  (805 > 0.1)
+                            mean_act       median 0.009  max 0.334  (44/1100 > 0.1)
+                            sum_selec_norm (retired) median 0.109 max 9.193
+    rsa (6774 rows)         liu_distinctiveness  median 0.009  max 0.294  (42 > 0.1)
+                            fisher_r             median 0.010  max 0.424  (28 > 0.1)
+  TFCE maps unchanged (max diff 0, 60 subjects): TFCE uses each subject's FIRST
+  post-op session (02_harmonize.py line 25, lib_tfce.load_subjects), so these two
+  later sessions are not in it. See section 12, item 5.
+Stage 4 (01_wta.py, 02_stats_harmony.py):
+  stats_results_harmonized_corrected.csv 274 rows; tfce_clusters.csv 14 clusters
+  (unchanged). WTA unchanged outside the ignored sessions. Grid (Tables 2, 4) and
+  LMM unchanged because their scripts are not part of Stage 4 (not rerun).
+Stats, old (D_liu.bak_20261102) vs new: 274 rows matched, no duplicate keys.
+  Changed: omnibus_chi2 / omnibus_p / mse in 31 rows (mse max 79.35 is a model
+  error term, scale-dependent); diff 212 rows; cohens_d 204 (max 0.44); p_perm
+  200; q_fdr 168; CIs 208; n_a and n_b changed by 1 in one row.
+  Omnibus tests: none crossed p = .05.
+  p_perm crossed .05 in 9 rows (measure / model / comparison / hemi / level):
+    distinctiveness  LH-intact_pt_vs_ctrl  patient_vs_control  l  face_FFA         .019 -> .111
+    distinctiveness  pt_LH_vs_RH  group_main_effect  lr  MEAN_OVER_ROIS            .026 -> .112
+    distinctiveness  pt_LH_vs_RH  patient_subgroup  lr  face_FFA                   .045 -> .163
+    geometry  face_FFA_LH-intact_pt_vs_ctrl  patient_vs_control  face-object       .048 -> .128
+    peak_selectivity  LH-intact_pt_vs_ctrl  group_main_effect  l  MEAN_OVER_ROIS   .040 -> .071
+    selective_voxels  LH-intact_pt_vs_ctrl  patient_vs_control  l  house_PPA_strict .040 -> .053
+    sum_selectivity  LH-intact_pt_vs_ctrl  patient_vs_control  l  word_VWFA        .173 -> .045
+    sum_selectivity  ctrl_LvsR  group_main_effect  lr  MEAN_OVER_ROIS              .440 -> .038
+    wta  M1_LH_ctrl_vs_pt  patient_vs_control  object                              .033 -> .092
+  q_fdr crossed .05 in 12 rows:
+    geometry  face_FFA_LH-intact_pt_vs_ctrl  patient_vs_control  face-word         .023 -> .199
+    geometry  face_FFA_RH-intact_pt_vs_ctrl  patient_vs_control  object-word       .072 -> .040
+    geometry  face_FFA_pt_LH_vs_RH  patient_subgroup  face-word                    .012 -> .089
+    geometry  house_PPA_strict_RH-intact_pt_vs_ctrl  patient_vs_control  house-word .047 -> .055
+    geometry  house_PPA_strict_ctrl_LvsR  control_asymmetry  house-word            .042 -> .056
+    geometry  object_LOC_RH-intact_pt_vs_ctrl  patient_vs_control  face-house      .057 -> .038
+    geometry  word_VWFA_ctrl_LvsR  control_asymmetry  face-word                    .049 -> .055
+    peak_selectivity  ctrl_LvsR  control_asymmetry  lr  word_VWFA                  .050 -> .046
+    sum_selectivity  LH-intact_pt_vs_ctrl  patient_vs_control  l  house_PPA_strict .045 -> .060
+    sum_selectivity  RH-intact_pt_vs_ctrl  patient_vs_control  r  object_LOC       .036 -> .086
+    wta  M1_LH_ctrl_vs_pt  patient_vs_control  object                              .044 -> .108
+    wta  M2_RH_ctrl_vs_pt  patient_vs_control  house                               .040 -> .052
+  sub-008 is LH-intact and sub-010 RH-intact [from: handoff v5]. NOT YET REVIEWED;
+  nothing here is accepted for the manuscript.
+
+
+12. OPEN ITEMS (in order)
+--------------------------------------------------------------------------------
+  1. Separate the longitudinal study's outputs from the cross-sectional ones
+     (section 13): its own output folder; extraction that reads the .longitudinal
+     versions of shared sessions (now sub-008 ses-02, sub-010 ses-03); the
+     longitudinal notebook pointed there. Guard: after any longitudinal run,
+     check_outputs must match check_restored_20261102.txt exactly.
+  2. New session sub-101 ses-02 (collected 2026-11-02): runbook v5. Stages 0-1
+     (its own session folders) can run now; Stage 2 onward waits for item 1.
+     sub-101 ses-01 is 69 x 2 mm with no scanner field in its JSON.
+  3. Rerun the longitudinal notebook on the longitudinal outputs (after item 1).
+  4. For Marlene: the cross-sectional paper keeps FEAT's registration for sub-008
+     ses-02 and sub-010 ses-03, where FEAT's runs disagree by 22 and 12 mm
+     (section 0); section 11 shows what the corrected registration does to the
+     cross-sectional numbers. Raise; do not act without her.
+  5. Session selection (cross-sectional): TFCE uses each patient's first post-op
+     session (02_harmonize.py line 25); the ROI measures use the last session.
+     Intended?
+  6. Methods wording for the 5 mm threshold (set from the observed gap).
+  7. sub-004 ses-05 (flagged registration failure): decide its use in analyses.
+  8. WTA file ($S/group_results_pipeline/wta_percentages.csv [inferred]) now also
+     holds 17 rows for sub-092 ses-02 / sub-108 ses-02, added by the 11-02 rerun;
+     ignored by the check and excluded from the cross-sectional analysis.
+  9. 27-slice sessions sharing the Verio ComBat site (section 6): parked.
+ 10. Delete reg.bak_20261102 for sub-086 ses-02 runs 01-02 once everything is final.
+ 11. DONE 2026-11-02: sub-004 ses-02 unchanged after the accidental loop restart
+     (no reg.bak_20261102; every run's example_func2highres.mat identical to
+     reg.bak_20261101) [verified].
+
+
+13. CROSS-SECTIONAL STUDY RESTORED; STUDIES KEPT SEPARATE (2026-11-02, C.S.)
+--------------------------------------------------------------------------------
+Why: sub-008 ses-02 and sub-010 ses-03 are also the cross-sectional sessions of
+those patients (patients enter with their last session), and the pipeline's
+extraction, harmonization and stats write shared files. The section 9/11 rerun
+therefore changed the cross-sectional outputs. Decision (C.S.): the registration
+work is for the longitudinal study ALONE; the cross-sectional study stays as it was.
+Restore (all moves reversible; nothing deleted):
+  - Both sessions: HighLevel.gfeat -> HighLevel.gfeat.longitudinal;
+    HighLevel.gfeat.bak_20261102 -> HighLevel.gfeat; per run reg_standard ->
+    reg_standard.longitudinal, reg_standard.bak_20261102 -> reg_standard;
+    reg -> reg.longitudinal, then reg.bak_20261101 copied to reg (FEAT original).
+    Checked: every run's reg matrix identical to reg.bak_20261101.
+  - Outputs: today's versions moved to outputs/rereg_20261102/; D_liu, grid.csv,
+    lmm.csv restored from their .bak_20261102 copies and F_harmonization fits /
+    combat_harmonized from previous_20261102 (diff -rq / cmp identical).
+  - peak_coords_mni.csv regenerated (2_extraction/04_peak_coords_mni.py) and
+    wta_percentages.csv regenerated (4_analyses/01_wta.py) from the restored maps;
+    today's copies archived first.
+Verified: check_outputs (ignoring 092:2 and 108:2) matches the pre-11-02 check
+  line for line: extraction, harmonization, WTA, stats (vs main 6.07e-02, vs
+  _ptpt4 4.62e-14), TFCE, grid (1.07e-14), LMM (4.97e-14). Only difference: the
+  WTA line now notes 17 ignored rows (item 8). Saved as
+  outputs/check_restored_20261102.txt.
+Rule from here: no longitudinal step may write the cross-sectional outputs.

@@ -1,0 +1,102 @@
+HANDOFF - sym_pt longitudinal, 2026-11-02 (v8)
+================================================================================
+Replaces handoff_2026-11-02_v7.txt. Read with:
+  deviation_log_2026-11-02_v6.txt   rules (0), separation and restore (13), open items (12)
+  new_sessions_run_order_2026-11-02_v5.txt   step-by-step path for a new session
+Tags: [verified] = seen in command output; [from] = earlier notes; [inferred] = reasoning.
+
+
+THE ONE RULE (C.S., 2026-11-02)
+--------------------------------------------------------------------------------
+The longitudinal and cross-sectional studies are kept separate. The registration
+work is for the longitudinal study ALONE. No longitudinal step may write the
+cross-sectional outputs. Guard: check_outputs must match
+outputs/check_restored_20261102.txt exactly. [log v6 section 13]
+
+
+STATE OF THE DATA (end of 2026-11-02)
+--------------------------------------------------------------------------------
+Cross-sectional study: exactly as before 11-02. Restored and verified line for
+line against the previous check (extraction, harmonization, WTA, stats, TFCE,
+grid, LMM); saved as outputs/check_restored_20261102.txt. [verified]
+  Only difference: the WTA file also holds 17 rows for sub-092 ses-02 / sub-108
+  ses-02, ignored by the check and excluded from the analysis. [verified]
+Longitudinal work, all kept: [verified]
+  - Registration rule: FEAT first; step 07 only if FEAT's runs disagree by more
+    than 5 mm; keep step 07 only if its runs then agree within ~1 mm; otherwise
+    keep FEAT and flag. [log v6 section 0]
+  - sub-092 ses-02, sub-108 ses-02 (longitudinal-only sessions): step 07 at the
+    canonical paths (since 10-31).
+  - sub-008 ses-02, sub-010 ses-03 (in BOTH studies): canonical paths keep FEAT
+    (cross-sectional); the corrected versions are HighLevel.gfeat.longitudinal,
+    run-*/1stLevel.feat/reg.longitudinal and reg_standard.longitudinal.
+  - Flagged: sub-004 ses-05 (fails both methods; FEAT kept).
+  - Today's longitudinal-relevant outputs: outputs/rereg_20261102/ (the extraction
+    CSVs with the corrected 008/010 are rereg_20261102/D_liu/univariate_v1.csv and
+    rsa_v1.csv; harmonized/stats files there are the archived cross-sectional rerun,
+    not for use).
+- Step 07 script on the cluster = committed version (md5
+  f8ff8c42dffa1328459b1aa345ec01d3). [verified]
+
+
+NEXT CHAT, IN ORDER
+--------------------------------------------------------------------------------
+1. sub-101 ses-02 (collected 2026-11-02), Stages 0-1 of run order v5, with the
+   Stage 1 file guard. These can start right away (FEAT takes hours).
+2. Separate the longitudinal outputs (before any extraction for sub-101):
+   a. a longitudinal output folder;
+   b. extraction that writes there and, for sessions in both studies, reads the
+      .longitudinal versions (now sub-008 ses-02, sub-010 ses-03);
+   c. the longitudinal notebook pointed there;
+   d. validate: the guard matches check_restored_20261102.txt, and the longitudinal
+      extraction reproduces rereg_20261102/D_liu/univariate_v1.csv and rsa_v1.csv
+      for the existing sessions.
+   Read the extraction scripts first; no code changes without C.S.'s OK.
+3. sub-101 ses-02 Stage 2 (longitudinal extraction), then the longitudinal notebook.
+
+
+FOR MARLENE (raise; do not act without her)
+--------------------------------------------------------------------------------
+- The cross-sectional paper keeps FEAT's registration for sub-008 ses-02 and
+  sub-010 ses-03, where FEAT's runs disagree by 22 and 12 mm. Log v6 section 11
+  (archived) shows what the corrected registration would change: no omnibus test
+  crosses .05; 9 follow-ups cross p = .05 and 12 cross q = .05 (incl. the FFA
+  face-word pair); in the grid, the RH-intact |LI| gradient for preferred-category
+  similarity moves from p = .07 to .03.
+- TFCE uses first post-op sessions; ROI measures use last sessions. Intended?
+
+
+GIT (from pipeline/, end of 2026-11-02)
+--------------------------------------------------------------------------------
+Docs and the restored-state check are committed (see the commit message dated
+2026-11-02). Archives and backups (outputs/*.bak_*, outputs/previous_*,
+outputs/rereg_20261102/) are not in git. [inferred: per the commit commands]
+
+
+DECISIONS MADE 2026-11-01/02 (C.S.)
+--------------------------------------------------------------------------------
+- Studies kept separate (the rule above).
+- No cohort-wide replacement of FEAT; the registration rule instead.
+- 5 mm threshold (methods wording to settle: set from the observed gap).
+- 27-slice sessions: ROI/OTC analyses only; no whole-brain or connectivity.
+- RDM slopes dropped (only sub-004 and sub-021 have >= 3 sessions).
+- sub-010's |z| > 20 accepted (this subject runs high in every version).
+
+
+PARKED (details in log v6 sections 6 and 12)
+--------------------------------------------------------------------------------
+- Six 27-slice sessions share ComBat's Verio site with 69-slice sessions.
+- sub-004 ses-07 (Prisma, 3 raw runs) never processed; Liu 2025's coverage
+  description of UD's ses-05 does not match its header.
+- 32 sessions on disk are not in the compiled QC table.
+- sub-086 ses-02 run-03 incomplete (FEAT never finished it).
+- Earlier parked items: log v6 section 6.
+- Earlier goals not yet done: whether sub-108 ses-02 is usable (rule applied to
+  every session); which longitudinal measures to trust; patients as cases.
+
+
+SETUP (every new shell; check with: pwd; echo "S=$S")
+--------------------------------------------------------------------------------
+  cd /user_data/csimmon2/git_repos/sym_pt/pipeline && conda activate fmri
+  export FSLDIR=/opt/fsl/6.0.3; source $FSLDIR/etc/fslconf/fsl.sh; export PATH=$FSLDIR/bin:$PATH
+  P=$PWD; S=/user_data/csimmon2/sym_pt; RAW=/lab_data/behrmannlab/hemi/Raw
