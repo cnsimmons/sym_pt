@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 # =============================================================================
-# longitudinal/new_session.sh                                       2026-11-03
+# longitudinal/new_session.sh                     2026-11-03; step07 = v3, 2026-11-05
 # Processes ONE later session of an existing patient for the longitudinal study.
 # Every write lands in sub-XXX/ses-NN (Raw and processed); the subject's first
 # session is only read. The cross-sectional scripts are not changed or run.
 # Step logic is taken unchanged from 1_preprocessing/ (01-05, 10) and the run
-# order (checkpoints B, B2, C, file guard); see README_longitudinal.txt.
+# order (checkpoints B, B2, C, file guard); see 0_README_longitudinal.txt.
 #
 # Usage, from anywhere, fmri env, FSL loaded, inside screen:
 #   bash longitudinal/new_session.sh XXX NN <stage>
 #
 #   stage0     raw-data checks; .mat -> events.tsv                  seconds
 #   prep       dirs, spikes, timing, anat, 1stLevel.fsf, submit FEAT ~10 min, then FEAT ~hours
-#   qc         after FEAT: motion (B) and run-to-run agreement (B2)  ~1 min per run pair
-#   step07     only if qc says a pair is > 5 mm                      minutes
+#   qc         after FEAT: motion (B); run-to-run agreement (B2, information only)  ~1 min per pair
+#   step07     always: step 07 v3 gives each run FEAT or v2 by BBR cost; pictures where they differ
 #   highlevel  HighLevel.fsf, submit HighLevel FEAT                  seconds, then job
 #   finish     after HighLevel: 12, 13, z-range check (C), guard     minutes
 #   guard      file guard only (anything written outside the session?)
@@ -22,8 +22,8 @@
 # =============================================================================
 set -uo pipefail
 
-P=/user_data/csimmon2/git_repos/sym_pt/pipeline
-S=/user_data/csimmon2/sym_pt
+P=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)     # pipeline/, wherever it sits
+S=/user_data/csimmon2/sym_pt                          # imaging data (outside the repo)
 RAW=/lab_data/behrmannlab/hemi/Raw
 SUB_INFO=$P/sub_info.csv
 TASK=loc
@@ -48,12 +48,21 @@ FIRST=$(awk -F, -v s="sub-$sub" '$1 == s { x = $2; sub(/^ses-/, "", x); n = x + 
 FIRST=$(printf "%02d" "$FIRST")
 [ "$ses" != "$FIRST" ] || die "ses-$ses is sub-$sub's first session; this script is for later sessions"
 
+# Sessions in both studies keep their canonical files for the cross-sectional
+# study (deviation log v6, section 13); this driver writes none of them.
+SHARED="sub-008:02 sub-010:03"
+case " $SHARED " in *" sub-$sub:$ses "*)
+    case "$stage" in qc|guard|validate) ;;
+        *) die "sub-$sub ses-$ses is shared with the cross-sectional study; this driver does not write it (re-registration procedure)" ;;
+    esac ;;
+esac
+
 RAWSES=$RAW/sub-$sub/ses-$ses
 SES=$S/sub-$sub/ses-$ses
 LOC=$SES/derivatives/fsl/$TASK
-MARK=$HOME/stage1_start_sub-${sub}_ses-${ses}
+MARK=$P/longitudinal/qc/guard_marks/stage1_start_sub-${sub}_ses-${ses}
 
-if [ "$stage" != guard ]; then command -v flirt >/dev/null || die "FSL not loaded (see README setup lines)"; fi
+if [ "$stage" != guard ]; then command -v flirt >/dev/null || die "FSL not loaded (see 0_README_longitudinal.txt, SETUP)"; fi
 
 # -----------------------------------------------------------------------------
 # Step bodies copied from 1_preprocessing/ (per-session part only, unchanged)
@@ -201,7 +210,7 @@ create_highlevel_fsf() {
 
 stage0() {
     echo "== stage0: sub-$sub ses-$ses (first session ses-$FIRST)"
-    [ -d "$RAWSES/func" ] || die "no $RAWSES/func - download and rename first (README, Stage 0)"
+    [ -d "$RAWSES/func" ] || die "no $RAWSES/func - download and rename first (0_README_longitudinal.txt, STAGE 0)"
     ls "$RAWSES"/anat/*T1w.nii.gz >/dev/null 2>&1 || die "no T1w in $RAWSES/anat"
     local f n=0
     echo "-- raw runs (expect vols=184, TR=2, slices and dz as in ses-$FIRST)"
@@ -229,7 +238,7 @@ stage0() {
 prep() {
     echo "== prep: sub-$sub ses-$ses (first session ses-$FIRST)"
     ls "$RAWSES"/func/*_events.tsv >/dev/null 2>&1 || die "no events.tsv in $RAWSES/func - run stage0 first"
-    [ -e "$MARK" ] || touch "$MARK"
+    mkdir -p "$(dirname "$MARK")"; [ -e "$MARK" ] || touch "$MARK"
     echo "-- file-guard mark: $MARK ($(date -r "$MARK" '+%F %T'))"
     echo "-- 01 dirs";   $PY dirs   "$sub" "$ses" || die "dirs failed"
     echo "-- 02 spikes"; spikes
@@ -245,7 +254,7 @@ prep() {
         create_fsf "$sub" "$ses" "$run" "$FIRST"
     done
     echo "-- 06 submit first-level FEAT (this session's runs only)"
-    local L=/user_data/csimmon2/git_repos/sym_pt/logs_feat f r j
+    local L=$P/logs_feat f r j
     mkdir -p "$L"
     for f in "$LOC"/run-0?/1stLevel.fsf; do
         [ -f "$f" ] || continue
@@ -273,7 +282,7 @@ qc() {
         m=$(cat "$r/1stLevel.feat/mc/prefiltered_func_data_mcf_rel_mean.rms")
         if gt "$m" 0.5; then echo "  $(basename "$r"): $m mm   <-- over 0.5 mm"; else echo "  $(basename "$r"): $m mm"; fi
     done
-    echo "-- Checkpoint B2: do FEAT's runs agree? (rule: every pair <= 5 mm keep FEAT; any pair > 5 mm run step07)"
+    echo "-- Checkpoint B2: do FEAT's runs agree? (information only; step07 decides each run by BBR cost)"
     local regs=("$LOC"/run-0?/1stLevel.feat/reg) worst=0 i j mm
     for ((i=0; i<${#regs[@]}; i++)); do
         for ((j=i+1; j<${#regs[@]}; j++)); do
@@ -285,19 +294,18 @@ qc() {
         done
     done
     rm -f /tmp/b2_$$.mat /tmp/b2p_$$.mat
-    if gt "$worst" 5; then
-        echo "VERDICT: worst pair $worst mm > 5 mm. NEXT: bash longitudinal/new_session.sh $sub $ses step07"
-    else
-        echo "VERDICT: worst pair $worst mm <= 5 mm, keep FEAT. NEXT: bash longitudinal/new_session.sh $sub $ses highlevel"
-    fi
+    echo "  worst pair $worst mm (FEAT's runs; the 5 mm rule is retired, deviation log v7 section 15)"
+    echo "NEXT: bash longitudinal/new_session.sh $sub $ses step07"
 }
 
 step07() {
-    echo "== step07: sub-$sub ses-$ses (only because qc found a pair > 5 mm)"
+    echo "== step07: sub-$sub ses-$ses (v3: each run gets FEAT or v2, whichever has the lower BBR cost by > 0.01)"
+    [ ! -e "$LOC/HighLevel.gfeat" ] || die "$LOC/HighLevel.gfeat exists - step07 comes before highlevel (re-registration is a separate procedure)"
     bash "$P/1_preprocessing/07_register_to_first_session_func.sh" "sub-$sub" "$ses" || die "step 07 failed"
-    echo "RULE: keep step 07 only if every QC line above is <= ~1 mm (validated 0.06-0.30 mm)."
-    echo "  If not, restore FEAT's registration and log the session as a registration failure:"
-    echo "  for R in $LOC/run-0?/1stLevel.feat/reg; do B=\$(ls -d \$R.bak_* 2>/dev/null | head -1); [ -d \"\$B\" ] && rm -rf \$R && cp -a \$B \$R; done"
+    echo "BEFORE highlevel: if pictures were written above, rate each run (Greve & Fischl 2009):"
+    echo "  which red line follows the edge of the bright gray-matter patches more closely, A or B,"
+    echo "  and is it acceptable next to the reference pictures? Then open the key."
+    echo "  If your choice and the rule disagree for any run, stop and log it before highlevel."
     echo "NEXT: bash longitudinal/new_session.sh $sub $ses highlevel"
 }
 
@@ -314,22 +322,27 @@ highlevel() {
 finish() {
     echo "== finish: sub-$sub ses-$ses"
     [ -f "$LOC/HighLevel.gfeat/cope1.feat/stats/cope1.nii.gz" ] || die "HighLevel not complete (squeue -u $ME)"
-    local i r R m v c z1 z2
-    if ls -d "$LOC"/run-0?/1stLevel.feat/reg.bak_* >/dev/null 2>&1; then
-        echo "-- step 07 was used: did HighLevel use its transforms? (new ~0.9-1.0, old low)"
-        for i in 0 1 2 3 4 5; do
-            r=$(printf "%02d" $((i + 1))); R=$LOC/run-$r/1stLevel.feat
-            [ -d "$R" ] || continue
-            fslroi "$LOC/HighLevel.gfeat/cope1.feat/filtered_func_data" /tmp/hl_in_$$ $i 1
-            for v in new old; do
-                m=$R/reg/example_func2standard.mat
-                [ $v = old ] && m=$(ls -d $R/reg.bak_* | head -1)/example_func2standard.mat
-                flirt -in $R/stats/cope1 -ref /tmp/hl_in_$$ -applyxfm -init $m -out /tmp/rc_$$
-                echo "  run-$r $v r=$(fslcc --noabs -t -1 /tmp/rc_$$ /tmp/hl_in_$$ | awk '{print $3}')"
-            done
+    local i r R B m v c z1 z2 shown=0 hl=()
+    # HighLevel's inputs, in the order create_highlevel_fsf lists them
+    for R in "$LOC"/run-*/1stLevel.feat; do
+        [ -f "$R/stats/cope1.nii.gz" ] && hl+=("$R")
+    done
+    for i in "${!hl[@]}"; do
+        R=${hl[i]}
+        B=$( (ls -d "$R"/reg.bak_* 2>/dev/null || true) | sort | head -1)    # FEAT's original
+        [ -n "$B" ] || continue
+        cmp -s "$R/reg/example_func2highres.mat" "$B/example_func2highres.mat" && continue
+        [ $shown -eq 1 ] || { echo "-- step 07 changed these runs: did HighLevel use the new transforms? (new ~0.9-1.0, old low)"; shown=1; }
+        r=$(echo "$R" | grep -oP 'run-\K[0-9]+')
+        fslroi "$LOC/HighLevel.gfeat/cope1.feat/filtered_func_data" /tmp/hl_in_$$ $i 1
+        for v in new old; do
+            m=$R/reg/example_func2standard.mat
+            [ $v = old ] && m=$B/example_func2standard.mat
+            flirt -in $R/stats/cope1 -ref /tmp/hl_in_$$ -applyxfm -init $m -out /tmp/rc_$$
+            echo "  run-$r $v r=$(fslcc --noabs -t -1 /tmp/rc_$$ /tmp/hl_in_$$ | awk '{print $3}')"
         done
-        rm -f /tmp/hl_in_$$* /tmp/rc_$$*
-    fi
+    done
+    rm -f /tmp/hl_in_$$* /tmp/rc_$$*
     echo "-- 12 symlinks"
     python "$P/1_preprocessing/12_register_highlevel.py" "sub-$sub" "$ses" || die "12 failed"
     echo "-- 13 MNI copies (dry run, then run; expect 38 registered)"

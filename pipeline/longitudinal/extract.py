@@ -41,8 +41,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-PIPE = Path('/user_data/csimmon2/git_repos/sym_pt/pipeline')
-S = Path('/user_data/csimmon2/sym_pt')
+PIPE = Path(__file__).resolve().parents[1]      # pipeline/, wherever it sits
+S = Path('/user_data/csimmon2/sym_pt')          # imaging data (outside the repo)
 OUT = PIPE / 'outputs_longitudinal'
 sys.path.insert(0, str(PIPE))
 
