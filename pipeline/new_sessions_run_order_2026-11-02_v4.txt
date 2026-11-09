@@ -1,0 +1,187 @@
+NEW SESSIONS OF EXISTING PATIENTS - RUN ORDER (numbered pipeline)       2026-11-02 (v4)
+=====================================================================================
+Replaces new_sessions_run_order_2026-11-02_v3.txt. Use this for a new session of an
+existing patient (next: sub-101 ses-02) and, in the last section, for re-registering
+an existing session. Rules and history: deviation_log_2026-11-02_v5.txt.
+Changes in v4: step 13 details confirmed; D_liu backup before extraction; ignore list
+and expected check results after the 2026-11-02 changes; grid/LMM and the
+longitudinal notebook listed as separate steps; old-vs-new comparison (appendix).
+
+Run from pipeline/, in (fmri), in screen, with FSL loaded. Redo after every reconnect:
+  cd /user_data/csimmon2/git_repos/sym_pt/pipeline && conda activate fmri
+  export FSLDIR=/opt/fsl/6.0.3; source $FSLDIR/etc/fslconf/fsl.sh; export PATH=$FSLDIR/bin:$PATH
+  P=$PWD; S=/user_data/csimmon2/sym_pt; RAW=/lab_data/behrmannlab/hemi/Raw
+Below, XXX = subject number, NN = new session number, FF = the subject's first session.
+Do not edit sub_info.csv or run Stage 1 while extraction (Stage 2) is running.
+
+
+STAGE 0 - INPUTS (per new session)
+-------------------------------------------------------------------------------------
+[ ] Raw data in $RAW/sub-XXX/ses-NN (download as usual).
+[ ] Raw: 184 volumes at TR 2, slice count, T1w present:
+      for f in $RAW/sub-XXX/ses-NN/func/*task-loc*_bold.nii.gz; do echo "$(basename $f) vols=$(fslnvols $f) TR=$(fslval $f pixdim4) slices=$(fslval $f dim3) dz=$(fslval $f pixdim3)"; done
+    27-slice sessions: ROI/OTC analyses only (no whole-brain or connectivity).
+[ ] Timing from .mat files, one call per run file:
+      for m in $RAW/sub-XXX/ses-NN/covs/*loc.mat; do python 1_preprocessing/00a_mat2tsv_timing.py $m --sub XXX --ses NN; done
+    Check each run: events order = stimOrd, first block 8.0 s after time0.
+[ ] sub_info.csv row (file must end in a newline: tail -c1 $P/sub_info.csv | od -c).
+[ ] Keep the new session out of the cross-sectional analyses: add (sub, ses) to
+    EXCLUDE_SES in 3_harmonization/lib_stats.py, 4_analyses/02_stats_harmony.py,
+    4_analyses/08_bf_patient_vs_control.py, 5_figures/01_final_figures.ipynb,
+    5_figures/02_whole_otc_bayes.ipynb. NOT in 4_analyses/09_longitudinal.ipynb.
+
+
+STAGE 1 - PREPROCESSING
+-------------------------------------------------------------------------------------
+[ ] python 1_preprocessing/01_organize.py
+[ ] bash   1_preprocessing/02_extract_confounds.sh
+[ ] python 1_preprocessing/03_convert_timing.py
+[ ] python 1_preprocessing/04_register_mirror.py --sub XXX
+[ ] bash   1_preprocessing/05_create_fsf.sh
+[ ] First-level FEAT: submit the specific runs directly (06's submit script searches
+    all of $S and also sends any unfinished old runs):
+      L=/user_data/csimmon2/git_repos/sym_pt/logs_feat; for f in $S/sub-XXX/ses-NN/derivatives/fsl/loc/run-0?/1stLevel.fsf; do j="feat_XXX_NN_$(echo $f | grep -oP 'run-\K[^/]+')"; sbatch --job-name=$j --output=$L/${j}_%j.out --error=$L/${j}_%j.err --nodes=1 --ntasks=1 --cpus-per-task=1 --mem=16G --time=1-00:00:00 --wrap="export FSLDIR=/opt/fsl/6.0.3; . \$FSLDIR/etc/fslconf/fsl.sh; export PATH=\$FSLDIR/bin:\$PATH; feat $f"; done
+    Wait until squeue -u csimmon2 shows no feat_ jobs; count cope1 files (one per run).
+[ ] CHECKPOINT B - motion (flag > 0.5 mm):
+      for r in $S/sub-XXX/ses-NN/derivatives/fsl/loc/run-0?; do echo "$r $(cat $r/1stLevel.feat/mc/prefiltered_func_data_mcf_rel_mean.rms)"; done
+[ ] CHECKPOINT B2 - do FEAT's runs agree? (read-only; ~1 min per pair; same
+    computation as step 07's QC, applied to FEAT's own transforms)
+      d=$S/sub-XXX/ses-NN/derivatives/fsl/loc; r=($d/run-0?/1stLevel.feat/reg); for ((i=0;i<${#r[@]};i++)); do for ((j=i+1;j<${#r[@]};j++)); do flirt -in ${r[i]}/example_func -ref ${r[j]}/example_func -dof 6 -searchrx -180 180 -searchry -180 180 -searchrz -180 180 -omat /tmp/b2.mat; convert_xfm -omat /tmp/b2p.mat -concat ${r[j]}/example_func2highres.mat /tmp/b2.mat; echo "$(echo ${r[i]} | grep -oP 'run-[0-9]+') vs $(echo ${r[j]} | grep -oP 'run-[0-9]+'): $(rmsdiff ${r[i]}/example_func2highres.mat /tmp/b2p.mat ${r[i]}/example_func) mm"; done; done
+    Every pair <= 5 mm: keep FEAT. SKIP step 07; go to step 10.
+    Any pair > 5 mm: run step 07.
+[ ] Step 07 - ONLY if checkpoint B2 failed (a few minutes):
+      bash 1_preprocessing/07_register_to_first_session_func.sh sub-XXX NN
+    Keep it only if every QC line is <= ~1 mm (validated 0.06-0.30 mm).
+    Otherwise restore FEAT's registration and record the session as a registration
+    failure in the deviation log:
+      for R in $S/sub-XXX/ses-NN/derivatives/fsl/loc/run-0?/1stLevel.feat/reg; do B=$(ls -d $R.bak_* 2>/dev/null | head -1); [ -d "$B" ] && rm -rf $R && cp -a $B $R; done
+    (The earliest reg.bak_* is FEAT's original.) The committed script stops at a run
+    with no reg/example_func and may print harmless bc errors for values like 1e-07.
+[ ] Step 10, new session only (always pass the filter; several allowed):
+      bash 1_preprocessing/10_create_highlevel_fsf.sh XXX-NN
+      find $S/sub-*/ses-*/derivatives/fsl/loc -maxdepth 1 -name HighLevel.fsf -mmin -30   # expect only this session
+[ ] Step 11 - preview, then submit (SLURM; 2026-11-02 jobs ran on mind-0-15):
+      find $S -name HighLevel.fsf -path "*/derivatives/fsl/loc/*" | sort | while read f; do [ -f "$(dirname $f)/HighLevel.gfeat/cope1.feat/stats/cope1.nii.gz" ] || echo "$f"; done
+      bash 1_preprocessing/11_submit_highlevel_feat.sh   # only if the preview lists only the intended sessions
+    Wait until squeue -u csimmon2 shows no hlvl_ jobs.
+[ ] If step 07 was used: confirm HighLevel used its transforms (new ~0.9-1.0, old low):
+      d=$S/sub-XXX/ses-NN/derivatives/fsl/loc; for i in 0 1 2 3 4 5; do r=$(printf "%02d" $((i+1))); R=$d/run-$r/1stLevel.feat; [ -d $R ] || continue; fslroi $d/HighLevel.gfeat/cope1.feat/filtered_func_data /tmp/hl_in $i 1; for v in new old; do m=$R/reg/example_func2standard.mat; [ $v = old ] && m=$(ls -d $R/reg.bak_* | head -1)/example_func2standard.mat; flirt -in $R/stats/cope1 -ref /tmp/hl_in -applyxfm -init $m -out /tmp/rc; echo "run-$r $v r=$(fslcc --noabs -t -1 /tmp/rc /tmp/hl_in | awk '{print $3}')"; done; done
+    This only shows WHICH alignment HighLevel used (new ~1.0 by construction).
+[ ] Step 12 (symlinks only, seconds):
+      python 1_preprocessing/12_register_highlevel.py sub-XXX NN
+    Expect "cope1 ... cope19 zstat linked / cope linked".
+[ ] Step 13 (MNI copies, written inside HighLevel.gfeat/cope*/stats/*_mni.nii.gz;
+    skips files that already exist). Dry run first, then run:
+      python 1_preprocessing/13_register2mni.py sub-XXX NN --dry-run
+      python 1_preprocessing/13_register2mni.py sub-XXX NN
+    Expect "Done: 38 registered, 0 already existed, 0 failed" (19 copes x 2 files).
+[ ] CHECKPOINT C - z range (flag |z| > 20) and similarity to the first session:
+      for c in 1 2 3 13 17 18; do z1=$S/sub-XXX/ses-FF/derivatives/fsl/loc/HighLevel.gfeat/cope$c.feat/stats/zstat1; z2=$S/sub-XXX/ses-NN/derivatives/fsl/loc/HighLevel.gfeat/cope$c.feat/stats/zstat1; echo "cope$c range=$(fslstats $z2 -R) r=$(fslcc --noabs -t -1 $z1 $z2 | awk '{print $3}')"; done
+    If |z| > 20, compare with the first session's range; some subjects run high
+    (sub-010's first session peaks ~19).
+
+
+STAGE 2 - EXTRACTION, THEN CHECK THAT NOTHING ELSE MOVED
+-------------------------------------------------------------------------------------
+[ ] Back up the outputs extraction overwrites (1.1 MB on 2026-11-02):
+      cp -a outputs/D_liu outputs/D_liu.bak_$(date +%Y%m%d) && ls -d outputs/D_liu.bak_$(date +%Y%m%d)
+[ ] Extraction (2026-11-02: univariate 16 min, multivariate 48 min, peaks ~minutes):
+      python 2_extraction/01_univariate.py && python 2_extraction/02_multivariate.py && python 2_extraction/04_peak_coords_mni.py
+[ ] Check (ignore list = the four sessions changed by the registration work + this one):
+      python ../check_outputs_v2.py --ignore sub-008:2 sub-010:3 sub-092:2 sub-108:2 sub-XXX:NN | tee outputs/check_new_session.txt
+    Every EXTRACTION line must read max diff 0.
+    Until the check's reference is updated (pending review, see deviation log v5
+    section 12), the harmonization and analyses lines will NOT read 0; they must
+    match outputs/check_stage4.txt (the 2026-11-02 run). Compare:
+      diff outputs/check_stage4.txt outputs/check_new_session.txt
+    Only the "ignoring sessions" line and the "rows of ignored sessions left out"
+    counts on extraction lines should differ.
+
+
+STAGE 3 - HARMONIZATION (fit unchanged: the new session is excluded)
+-------------------------------------------------------------------------------------
+[ ] mkdir -p outputs/previous_$(date +%Y%m%d) && mv outputs/F_harmonization/fits outputs/F_harmonization/combat_harmonized outputs/previous_$(date +%Y%m%d)/
+    (If that folder already exists from an earlier run the same day, use a new name.)
+[ ] python 3_harmonization/02_harmonize.py
+[ ] python ../check_outputs_v2.py --ignore sub-008:2 sub-010:3 sub-092:2 sub-108:2 sub-XXX:NN
+    Harmonization lines must match outputs/check_stage4.txt (see Stage 2).
+
+
+STAGE 4 - ANALYSES
+-------------------------------------------------------------------------------------
+[ ] Cross-sectional (minutes):
+      python 4_analyses/01_wta.py && python 4_analyses/02_stats_harmony.py && python ../check_outputs_v2.py --ignore sub-008:2 sub-010:3 sub-092:2 sub-108:2 sub-XXX:NN
+    Analyses lines must match outputs/check_stage4.txt.
+[ ] Grid (Tables 2, 4) and LMM: NOT run by Stage 4. Script names to confirm; the
+    check compares them, so this shows their output files:
+      grep -n -i -E "grid|lmm" ../check_outputs_v2.py | head
+[ ] Longitudinal: 4_analyses/09_longitudinal.ipynb (brainiak_env kernel), Restart & Run All.
+    It reads the unharmonized univariate_v1.csv / rsa_v1.csv by design.
+    Outputs: pipeline/outputs/D_liu/ (longitudinal_q12_results.csv, otc_rsm_persession.csv).
+[ ] Update the deviation log and the handoff; commit (see handoff).
+
+
+RE-REGISTERING AN EXISTING SESSION (HighLevel already exists)
+-------------------------------------------------------------------------------------
+As done for sub-008 ses-02 and sub-010 ses-03 on 2026-11-02 (deviation log v5,
+sections 9 and 11). Set D once, in one shell, on one day: D=$(date +%Y%m%d)
+[ ] Checkpoint B2 and step 07 as in Stage 1 (keep step 07 only if QC <= ~1 mm).
+[ ] Move the old HighLevel aside and keep a copy of the fsf:
+      d=$S/sub-XXX/ses-NN/derivatives/fsl/loc; mv $d/HighLevel.gfeat $d/HighLevel.gfeat.bak_$D && cp -a $d/HighLevel.fsf $d/HighLevel.fsf.bak_$D && for r in $d/run-0?/1stLevel.feat/reg_standard; do mv $r $r.bak_$D; done
+      ls -d $d/HighLevel* $d/run-0?/1stLevel.feat/reg_standard*   # expect only .bak_$D names plus HighLevel.fsf
+    (Step 13's old MNI copies move with HighLevel.gfeat, so nothing else to move.)
+[ ] Step 10 with the filter, then: only this fsf changed, identical to the backup:
+      bash 1_preprocessing/10_create_highlevel_fsf.sh XXX-NN
+      find $S/sub-*/ses-*/derivatives/fsl/loc -maxdepth 1 -name HighLevel.fsf -mmin -30
+      diff $d/HighLevel.fsf.bak_$D $d/HighLevel.fsf && echo identical
+[ ] Step 11 preview (only the intended sessions), then submit.
+[ ] Confirm HighLevel used the new transforms (Stage 1 check).
+[ ] Did the maps improve? Similarity to the first session, old vs new (read-only):
+      b=$S/sub-XXX/ses-FF/derivatives/fsl/loc/HighLevel.gfeat; n=$d/HighLevel.gfeat; for c in 1 2 3 13 17 18; do z=cope$c.feat/stats/zstat1; echo "cope$c new r=$(fslcc --noabs -t -1 $b/$z $n/$z | awk '{print $3}') old r=$(fslcc --noabs -t -1 $b/$z $n.bak_$D/$z | awk '{print $3}') new range=$(fslstats $n/$z -R)"; done
+    Expect new r above old r for most copes (092/108: old -0.01-0.31 -> new 0.21-0.54).
+[ ] Steps 12 and 13 as in Stage 1 (dry run of 13 should list every cope).
+[ ] Stages 2-4. If the session is in the cross-sectional cohort, harmonization and
+    stats change for everyone (ComBat is refit). Then run the appendix comparisons
+    and review before using any number.
+
+
+APPENDIX - OLD vs NEW COMPARISONS (read-only, seconds; after Stages 3-4)
+-------------------------------------------------------------------------------------
+Replace YYYYMMDD with the D_liu backup date and the ignore set with the sessions
+being changed.
+[ ] Harmonized values, per measure, other subjects only:
+python - <<'EOF'
+import pandas as pd
+from pandas.api.types import is_numeric_dtype as isnum
+ign={('sub-008',2),('sub-010',3),('sub-092',2),('sub-108',2)}
+for f in ['univariate_v1_harmonized_sqrt.csv','rsa_v1_harmonized.csv']:
+    o=pd.read_csv('outputs/D_liu.bak_YYYYMMDD/'+f); n=pd.read_csv('outputs/D_liu/'+f)
+    for d in (o,n): d['ses_n']=d.session.astype(str).str.replace('ses-','').astype(float).astype(int)
+    keys=[c for c in o.columns if not isnum(o[c])]+['ses_n']
+    num=[c for c in o.columns if isnum(o[c]) and c not in ('session','ses_n') and c in n.columns]
+    m=o.merge(n,on=keys,suffixes=('_o','_n')); m=m[[(s,int(x)) not in ign for s,x in zip(m.subject_id,m.ses_n)]]
+    print('==',f,len(m),'rows compared')
+    for c in num:
+        x=(m[c+'_n']-m[c+'_o']).abs()
+        if x.max()>0: print(f'  {c:22s} max {x.max():.3f}  median {x.median():.4f}  changed>0.1: {(x>0.1).sum()}/{x.notna().sum()}')
+EOF
+[ ] Stats: which columns changed and which results crossed .05:
+python - <<'EOF'
+import pandas as pd
+from pandas.api.types import is_numeric_dtype as isnum
+f='stats_results_harmonized_corrected.csv'
+o=pd.read_csv('outputs/D_liu.bak_YYYYMMDD/'+f); n=pd.read_csv('outputs/D_liu/'+f)
+keys=[c for c in ['measure','model','comparison','hemi','level'] if c in o.columns]
+print('duplicate keys old/new:', o.duplicated(keys).sum(), n.duplicated(keys).sum())
+m=o.merge(n,on=keys,suffixes=('_o','_n'),how='outer',indicator=True); print(m['_merge'].value_counts().to_string())
+b=m[m['_merge']=='both']
+for c in [c for c in o.columns if isnum(o[c]) and c not in keys and c in n.columns]:
+    x=(b[c+'_n']-b[c+'_o']).abs()
+    if x.max()>1e-9: print(f'{c:14s} max {x.max():.4g}  rows changed: {(x>1e-9).sum()}')
+for p in ['p_perm','q_fdr','omnibus_p']:
+    if p+'_o' in b:
+        fl=b[(b[p+'_o']<.05)!=(b[p+'_n']<.05)]
+        print(f'\n{p}: {len(fl)} rows cross .05')
+        if len(fl): print(fl[keys+[p+'_o',p+'_n']].to_string(index=False))
+EOF
+    "duplicate keys" must read 0 0, or the comparison is not valid.

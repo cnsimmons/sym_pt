@@ -1,0 +1,123 @@
+NEW SESSIONS OF EXISTING PATIENTS - RUN ORDER (numbered pipeline)          2026-11-02 (v3)
+=====================================================================================
+Replaces new_sessions_run_order_2026-11-01_v2.txt. Changes in v3:
+  - step 07 is now CONDITIONAL: FEAT first; step 07 only if FEAT's runs disagree
+    by more than 5 mm (new checkpoint B2); keep step 07 only if its runs agree
+    within ~1 mm, otherwise restore FEAT's registration and flag the session
+  - new section at the end: re-registering an EXISTING session (HighLevel exists)
+  - HighLevel check now covers up to 6 runs
+Rules and why: deviation_log_2026-11-02_v4.txt, section 0.
+
+Run from pipeline/, in (fmri), in screen, with FSL loaded. Redo after every reconnect:
+  cd /user_data/csimmon2/git_repos/sym_pt/pipeline && conda activate fmri
+  export FSLDIR=/opt/fsl/6.0.3; source $FSLDIR/etc/fslconf/fsl.sh; export PATH=$FSLDIR/bin:$PATH
+  P=$PWD; S=/user_data/csimmon2/sym_pt; RAW=/lab_data/behrmannlab/hemi/Raw
+Below, XXX = subject number, NN = new session number.
+
+
+STAGE 0 - INPUTS (per new session)
+-------------------------------------------------------------------------------------
+[ ] Raw: 184 volumes at TR 2, block orders differ between runs, T1w present.
+      for f in $RAW/sub-XXX/ses-NN/func/*task-loc*_bold.nii.gz; do echo "$(basename $f) $(fslnvols $f) $(fslval $f pixdim4) $(fslval $f dim3) $(fslval $f pixdim3)"; done
+    Note the slice count: 27-slice sessions are for ROI/OTC analyses only (no
+    whole-brain or connectivity analyses).
+[ ] Timing from .mat files, one call per run file:
+      for m in $RAW/sub-XXX/ses-NN/covs/*loc.mat; do python 1_preprocessing/00a_mat2tsv_timing.py $m --sub XXX --ses NN; done
+      Check each run afterwards: events order = stimOrd, first block 8.0 s after time0.
+[ ] sub_info.csv row (file must end in a newline: tail -c1 $P/sub_info.csv | od -c).
+[ ] Keep the new session out of the cross-sectional analyses: add (sub, ses) to
+    EXCLUDE_SES in 3_harmonization/lib_stats.py, 4_analyses/02_stats_harmony.py,
+    4_analyses/08_bf_patient_vs_control.py, 5_figures/01_final_figures.ipynb,
+    5_figures/02_whole_otc_bayes.ipynb. NOT in 4_analyses/09_longitudinal.ipynb.
+
+
+STAGE 1 - PREPROCESSING
+-------------------------------------------------------------------------------------
+[ ] python 1_preprocessing/01_organize.py
+[ ] bash   1_preprocessing/02_extract_confounds.sh
+[ ] python 1_preprocessing/03_convert_timing.py
+[ ] python 1_preprocessing/04_register_mirror.py --sub XXX
+[ ] bash   1_preprocessing/05_create_fsf.sh
+[ ] First-level FEAT: submit the specific runs directly (06's submit script searches
+    all of $S and also sends any unfinished old runs):
+      L=/user_data/csimmon2/git_repos/sym_pt/logs_feat; for f in $S/sub-XXX/ses-NN/derivatives/fsl/loc/run-0?/1stLevel.fsf; do j="feat_XXX_NN_$(echo $f | grep -oP 'run-\K[^/]+')"; sbatch --job-name=$j --output=$L/${j}_%j.out --error=$L/${j}_%j.err --nodes=1 --ntasks=1 --cpus-per-task=1 --mem=16G --time=1-00:00:00 --wrap="export FSLDIR=/opt/fsl/6.0.3; . \$FSLDIR/etc/fslconf/fsl.sh; export PATH=\$FSLDIR/bin:\$PATH; feat $f"; done
+    Wait until squeue -u csimmon2 shows no feat_ jobs; count cope1 files (one per run).
+[ ] CHECKPOINT B - motion (flag > 0.5 mm):
+      for r in $S/sub-XXX/ses-NN/derivatives/fsl/loc/run-0?; do echo "$r $(cat $r/1stLevel.feat/mc/prefiltered_func_data_mcf_rel_mean.rms)"; done
+[ ] CHECKPOINT B2 - FEAT's registration: do the runs agree? (read-only; same
+    computation as step 07's QC, applied to FEAT's own transforms)
+      d=$S/sub-XXX/ses-NN/derivatives/fsl/loc; r=($d/run-0?/1stLevel.feat/reg); for ((i=0;i<${#r[@]};i++)); do for ((j=i+1;j<${#r[@]};j++)); do flirt -in ${r[i]}/example_func -ref ${r[j]}/example_func -dof 6 -searchrx -180 180 -searchry -180 180 -searchrz -180 180 -omat /tmp/b2.mat; convert_xfm -omat /tmp/b2p.mat -concat ${r[j]}/example_func2highres.mat /tmp/b2.mat; echo "$(echo ${r[i]} | grep -oP 'run-[0-9]+') vs $(echo ${r[j]} | grep -oP 'run-[0-9]+'): $(rmsdiff ${r[i]}/example_func2highres.mat /tmp/b2p.mat ${r[i]}/example_func) mm"; done; done
+    Every pair <= 5 mm: FEAT is kept. SKIP step 07 and go to step 10.
+    Any pair > 5 mm: run step 07.
+    A run whose FEAT never wrote reg/example_func prints errors; leave it out
+    (and see the note under step 07).
+[ ] Step 07 - ONLY if checkpoint B2 failed:
+      bash 1_preprocessing/07_register_to_first_session_func.sh sub-XXX NN
+    Keep it only if every QC line is <= ~1 mm (validated 0.06-0.30 mm).
+    Otherwise restore FEAT's registration and flag the session in the deviation
+    log as a registration failure:
+      for R in $S/sub-XXX/ses-NN/derivatives/fsl/loc/run-0?/1stLevel.feat/reg; do B=$(ls -d $R.bak_* 2>/dev/null | head -1); [ -d "$B" ] && rm -rf $R && cp -a $B $R; done
+    (the earliest reg.bak_* is FEAT's original.) The committed script stops at a
+    run with no reg/example_func, and may print harmless bc errors for values
+    like 1e-07.
+[ ] Step 10, new sessions only (always pass the filter; several allowed):
+      bash 1_preprocessing/10_create_highlevel_fsf.sh XXX-NN
+      find $S/sub-*/ses-*/derivatives/fsl/loc -maxdepth 1 -name HighLevel.fsf -mmin -30   # expect only the new sessions
+[ ] Step 11 - preview, then submit:
+      find $S -name HighLevel.fsf -path "*/derivatives/fsl/loc/*" | sort | while read f; do [ -f "$(dirname $f)/HighLevel.gfeat/cope1.feat/stats/cope1.nii.gz" ] || echo "$f"; done
+      bash 1_preprocessing/11_submit_highlevel_feat.sh   # only if the preview lists only the intended sessions
+[ ] If step 07 was used: confirm HighLevel used its transforms (new ~0.9-1.0, old low):
+      d=$S/sub-XXX/ses-NN/derivatives/fsl/loc; for i in 0 1 2 3 4 5; do r=$(printf "%02d" $((i+1))); R=$d/run-$r/1stLevel.feat; [ -d $R ] || continue; fslroi $d/HighLevel.gfeat/cope1.feat/filtered_func_data /tmp/hl_in $i 1; for v in new old; do m=$R/reg/example_func2standard.mat; [ $v = old ] && m=$(ls -d $R/reg.bak_* | head -1)/example_func2standard.mat; flirt -in $R/stats/cope1 -ref /tmp/hl_in -applyxfm -init $m -out /tmp/rc; echo "run-$r $v r=$(fslcc --noabs -t -1 /tmp/rc /tmp/hl_in | awk '{print $3}')"; done; done
+[ ] Step 12 (symlinks only), either directly per session:
+      python 1_preprocessing/12_register_highlevel.py sub-XXX NN
+    or via SLURM for all sessions of a subject:
+      python 1_preprocessing/12_submit_highlevel_register.py XXX
+[ ] Step 13: python 1_preprocessing/13_register2mni.py --sub XXX   # skips existing outputs
+[ ] CHECKPOINT C - z range (flag |z| > 20) and similarity to the first session:
+      for c in 1 2 3 13 17 18; do z1=$S/sub-XXX/ses-01/derivatives/fsl/loc/HighLevel.gfeat/cope$c.feat/stats/zstat1; z2=$S/sub-XXX/ses-NN/derivatives/fsl/loc/HighLevel.gfeat/cope$c.feat/stats/zstat1; echo "cope$c range=$(fslstats $z2 -R) r=$(fslcc --noabs -t -1 $z1 $z2 | awk '{print $3}')"; done
+    (use the subject's first session in place of ses-01 if different)
+
+
+STAGE 2 - EXTRACTION, THEN CHECK THAT NOTHING ELSE MOVED
+-------------------------------------------------------------------------------------
+[ ] python 2_extraction/01_univariate.py && python 2_extraction/02_multivariate.py && python 2_extraction/04_peak_coords_mni.py
+[ ] python ../check_outputs_v2.py --ignore sub-XXX:NN | tee outputs/check_new_sessions.txt
+    Every extraction comparison must read max diff 0.
+
+
+STAGE 3 - HARMONIZATION (fit unchanged: new sessions are excluded)
+-------------------------------------------------------------------------------------
+[ ] mkdir -p outputs/previous_$(date +%Y%m%d) && mv outputs/F_harmonization/fits outputs/F_harmonization/combat_harmonized outputs/previous_$(date +%Y%m%d)/
+[ ] python 3_harmonization/02_harmonize.py
+[ ] python ../check_outputs_v2.py --ignore sub-XXX:NN   # harmonization: max diff 0
+
+
+STAGE 4 - ANALYSES
+-------------------------------------------------------------------------------------
+[ ] Cross-sectional, must reproduce exactly:
+      python 4_analyses/01_wta.py && python 4_analyses/02_stats_harmony.py && python ../check_outputs_v2.py --ignore sub-XXX:NN
+[ ] Longitudinal: 4_analyses/09_longitudinal.ipynb (brainiak_env kernel), Restart & Run All.
+    It reads the unharmonized univariate_v1.csv / rsa_v1.csv by design.
+    Outputs: pipeline/outputs/D_liu/ (longitudinal_q12_results.csv, otc_rsm_persession.csv).
+
+
+RE-REGISTERING AN EXISTING SESSION (HighLevel already exists)
+-------------------------------------------------------------------------------------
+As done for sub-008 ses-02 and sub-010 ses-03 on 2026-11-02 (deviation log v4,
+section 9). Set D once, in one shell, on one day: D=$(date +%Y%m%d)
+[ ] Checkpoint B2 and step 07 as in Stage 1 (keep step 07 only if QC <= ~1 mm).
+[ ] Move the old HighLevel aside and keep a copy of the fsf:
+      d=$S/sub-XXX/ses-NN/derivatives/fsl/loc; mv $d/HighLevel.gfeat $d/HighLevel.gfeat.bak_$D && cp -a $d/HighLevel.fsf $d/HighLevel.fsf.bak_$D && for r in $d/run-0?/1stLevel.feat/reg_standard; do mv $r $r.bak_$D; done
+      ls -d $d/HighLevel* $d/run-0?/1stLevel.feat/reg_standard*   # expect only .bak_$D names plus HighLevel.fsf
+[ ] Step 10 with the filter, then: only this fsf changed, identical to the backup:
+      bash 1_preprocessing/10_create_highlevel_fsf.sh XXX-NN
+      find $S/sub-*/ses-*/derivatives/fsl/loc -maxdepth 1 -name HighLevel.fsf -mmin -30
+      diff $d/HighLevel.fsf.bak_$D $d/HighLevel.fsf && echo identical
+[ ] Step 11 preview (only the intended sessions), then submit.
+[ ] Confirm HighLevel used the new transforms (Stage 1 check).
+[ ] Step 12.
+[ ] Step 13 skips existing outputs: move this session's existing step-13 outputs
+    aside first. [Output paths to confirm before first use.]
+[ ] Stages 2-4. check_outputs: only this session should change. If it is a
+    cross-sectional session, the cross-sectional numbers change; compare old
+    and new before using them.

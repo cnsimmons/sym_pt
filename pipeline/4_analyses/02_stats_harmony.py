@@ -54,7 +54,7 @@ OUT_TFCE    = D_LIU / 'tfce_clusters.csv'
 
 # ── Notebook constants ───────────────────────────────────────────────────────
 EXCLUDE = ['sub-017', 'sub-091', 'sub-095', 'sub-096', 'sub-027', 'sub-084']
-EXCLUDE_SES = [('sub-108', 2), ('sub-092', 2), ('sub-101', 2)]
+EXCLUDE_SES = [('sub-108', 2), ('sub-092', 2), ('sub-101', 2), ('sub-098', 2)]
 
 PRIMARY_ROIS = ['face_FFA', 'house_PPA_strict', 'object_LOC', 'word_VWFA']
 CATEGORIES   = ['face', 'house', 'object', 'word']

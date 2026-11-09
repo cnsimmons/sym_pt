@@ -1,0 +1,268 @@
+#!/usr/bin/env bash
+# 07_register_to_first_session_func.sh   added 2026-11-01; v2 2026-11-03; v3 2026-11-05
+#
+# Registers each run of a LATER session to the first-session T1 two ways and
+# keeps the better one (deviation_log_2026-11-04_v7.txt, section 15.2):
+#   FEAT  FEAT's own registration (the run -> first-session T1, BBR)
+#   v2    1. start:  later-session example_func -> first-session example_func
+#                    (6 dof, full search), then the first session's FEAT
+#                    example_func2highres.mat (route of Bonelli et al. 2012)
+#         2. finish: FEAT's own BBR (FLIRT -cost bbr, bbr.sch, FEAT's white-matter
+#                    segmentation of the first-session T1), started from step 1
+#                    (Greve & Fischl 2009)
+# Both are scored with FEAT's BBR cost (measurecost1.sch; lower = better). A run
+# gets v2 only if its cost is lower than FEAT's by more than 0.01; otherwise it
+# keeps FEAT's original, which is restored if reg/ holds something else.
+# The final space is unchanged (first-session T1w_brain), so HighLevel outputs
+# stay in the space every downstream script expects.
+# v1 (2026-11-01) stopped after step 1; v2 (2026-11-03) installed v2 for every run.
+#
+# Printed per session (dry run and install alike):
+#   per run   mm BBR moved the start | cost of v2 (FEAT's) | mm from FEAT
+#   QC        run-to-run agreement of the v2 transforms (validated 0.06-0.30 mm;
+#             unreliable on 27-slice data)
+#   baseline  the first session's own FEAT costs: the comparable reference for
+#             judging a cost (Greve & Fischl 2009)
+#   rule      the registration each run gets
+# Pictures: wherever the two costs differ by more than 0.01, both registrations
+# are drawn (EPI in T1 space, white-matter boundary in red) and labelled A/B at
+# random, with the first session's own registrations as reference; the key is
+# written apart. Rate them before HighLevel. Pictures, keys and a log of every
+# run of this script go to ~/regcheck/, outside the pipeline.
+#
+# FEAT's original reg/ = the earliest reg.bak_*, or reg/ itself if none exists.
+# What install writes, per run, after keeping the current copy as *.bak_DATE:
+#   sessions in both studies (SHARED)    reg.longitudinal only; the canonical
+#                                        reg/ is never written (log v6, section 13)
+#   sessions that already have a         reg/, only if listed in LONG_ONLY
+#   HighLevel                            (existing sessions outside the
+#                                        cross-sectional study); others refused
+#   new sessions (no HighLevel yet)      reg/
+#
+# --dry-run  compute, print and draw only; nothing in reg/ is changed.
+#
+# Run AFTER first-level FEAT (step 06) and BEFORE the HighLevel steps (10-11).
+#
+# Usage (from pipeline/, fmri env, FSL loaded):
+#   bash 1_preprocessing/07_register_to_first_session_func.sh [--dry-run] sub-092 02 [sub-108 02 ...]
+set -euo pipefail
+
+S=/user_data/csimmon2/sym_pt
+SUB_INFO=/user_data/csimmon2/git_repos/sym_pt/pipeline/sub_info.csv
+SHARED="sub-008:02 sub-010:03"                  # in both studies: written to reg.longitudinal
+LONG_ONLY="sub-092:02 sub-108:02 sub-101:02"    # existing sessions outside the cross-sectional study
+REF_RUN=02                      # first-session run used as reference (validated choice)
+MARGIN=0.01                     # v2 only if its cost is lower than FEAT's by more than this
+PICS=$HOME/regcheck             # pictures, keys and logs, outside the pipeline
+STAMP=$(date +%Y%m%d)
+DRY=0
+if [ "${1:-}" = "--dry-run" ]; then DRY=1; shift; fi
+
+if [ $# -lt 2 ] || [ $(( $# % 2 )) -ne 0 ]; then
+    echo "Usage: $0 [--dry-run] sub-XXX NN [sub-YYY NN ...]"; exit 1
+fi
+command -v flirt >/dev/null || { echo "FSL not loaded"; exit 1; }
+if [ -z "${FSLDIR:-}" ] || [ ! -f "$FSLDIR/etc/flirtsch/bbr.sch" ]; then
+    echo "FSLDIR not set (needed for bbr.sch)"; exit 1
+fi
+mkdir -p "$PICS"
+exec > >(tee -a "$PICS/step07_$STAMP.log") 2>&1
+echo "##### $(date '+%F %T')  step 07 v3  $([ "$DRY" -eq 1 ] && echo '--dry-run ')$*"
+trap 'rm -rf /tmp/s07_$$_* /tmp/hd_$$* /tmp/f_$$.mat /tmp/p_$$.mat' EXIT
+
+in_list() {     # is $1 one of the words in $2?
+    case " $2 " in *" $1 "*) return 0 ;; *) return 1 ;; esac
+}
+gt() {          # $1 > $2, numerically (handles 1e-07)
+    awk -v a="$1" -v b="$2" 'BEGIN { exit !((a + 0) > (b + 0)) }'
+}
+first_ses() {   # lowest session number for this subject in sub_info.csv
+    awk -F, -v s="$1" '$1==s { sub(/^ses-/,"",$2); n=$2+0; if (m=="" || n<m) m=n }
+                       END   { if (m!="") print m }' "$SUB_INFO"
+}
+feat_orig() {   # FEAT's original reg/ = the earliest reg.bak_*, else reg/ itself
+    local O
+    O=$( (ls -d "$1".bak_* 2>/dev/null || true) | sort | awk 'NR==1')
+    echo "${O:-$1}"
+}
+bbr_cost() {    # FEAT's BBR cost of transform $2, for the run whose FEAT reg/ is $1
+    local out
+    out=$(flirt -ref "$1/highres_head" -in "$1/example_func" -init "$2" -cost bbr \
+                -wmseg "$1/example_func2highres_fast_wmseg" \
+                -schedule "$FSLDIR/etc/flirtsch/measurecost1.sch" -omat "$W/cost.mat")
+    echo "$out" | awk 'NR==1 {print $1}'
+}
+picture() {     # EPI of reg dir $1 through transform $2, white-matter boundary in red -> $3
+    local t=$W/pic
+    rm -rf "$t"; mkdir -p "$t"
+    flirt -in "$1/example_func" -ref "$T1REF" -applyxfm -init "$2" -out "$t/epi"
+    slicer "$t/epi" "$WMREF" -s 3 \
+        -y 0.25 "$t/c1.png" -y 0.35 "$t/c2.png" -y 0.45 "$t/c3.png" -y 0.55 "$t/c4.png" \
+        -z 0.30 "$t/a1.png" -z 0.40 "$t/a2.png" -z 0.50 "$t/a3.png" -z 0.60 "$t/a4.png"
+    pngappend "$t/c1.png" + "$t/c2.png" + "$t/c3.png" + "$t/c4.png" "$t/row1.png"
+    pngappend "$t/a1.png" + "$t/a2.png" + "$t/a3.png" + "$t/a4.png" "$t/row2.png"
+    pngappend "$t/row1.png" - "$t/row2.png" "$3"
+}
+
+while [ $# -gt 0 ]; do
+    sub=$1; ses=$(printf "%02d" $((10#$2))); shift 2
+    f=$(first_ses "$sub")
+    if [ -z "$f" ]; then echo "$sub: not in sub_info.csv - skipped"; continue; fi
+    f=$(printf "%02d" "$f")
+    if [ "$ses" = "$f" ]; then echo "$sub ses-$ses is the first session - nothing to do"; continue; fi
+
+    loc1=$S/$sub/ses-$f/derivatives/fsl/loc
+    loc2=$S/$sub/ses-$ses/derivatives/fsl/loc
+    shared=0; in_list "$sub:$ses" "$SHARED" && shared=1
+    if [ "$DRY" -eq 0 ] && [ "$shared" -eq 0 ] && [ -d "$loc2/HighLevel.gfeat" ] && ! in_list "$sub:$ses" "$LONG_ONLY"; then
+        echo "$sub ses-$ses already has a HighLevel and is not in LONG_ONLY - refused (it may be in the cross-sectional study; --dry-run still works)"
+        continue
+    fi
+    REF=$loc1/run-$REF_RUN/1stLevel.feat/reg
+    [ -d "$REF" ] || REF=$( (ls -d $loc1/run-0?/1stLevel.feat/reg 2>/dev/null || true) | head -1)
+    if [ -z "$REF" ] || [ ! -f "$REF/example_func2highres.mat" ]; then
+        echo "$sub: no first-session reference reg/ - skipped"; continue
+    fi
+    T1=$S/$sub/ses-$f/anat/T1w_brain.nii.gz
+    T1REF=$REF/highres; WMREF=$REF/example_func2highres_fast_wmseg
+    W=/tmp/s07_$$_${sub}_ses-$ses; mkdir -p "$W"
+    mode="install"; [ "$DRY" -eq 1 ] && mode="dry run, nothing installed"
+    [ "$DRY" -eq 0 ] && [ "$shared" -eq 1 ] && mode="install into reg.longitudinal; canonical reg/ untouched"
+    echo "=== $sub ses-$ses -> ses-$f  (reference: ${REF#$S/}; $mode)"
+
+    done_runs=()
+    unset CNEW CFEAT OREG PICK; declare -A CNEW CFEAT OREG PICK
+    for R in $loc2/run-0?/1stLevel.feat/reg; do
+        [ -d "$R" ] || continue
+        run=$(echo "$R" | grep -oP 'run-\K[0-9]+')
+        if [ ! -f "$R/example_func.nii.gz" ]; then
+            echo "  run-$run: no example_func - skipped"; continue
+        fi
+
+        # FEAT must have used the first-session T1, or the concatenation below is invalid
+        if ! fslmaths "$R/highres" -sub "$T1" -abs /tmp/hd_$$ 2>/dev/null; then
+            echo "  run-$run: FEAT highres and ses-$f T1 differ in size - skipped"; continue
+        fi
+        md=$(fslstats /tmp/hd_$$ -R | awk '{print $2}')
+        if [ "$(echo "$md > 0" | bc)" -eq 1 ]; then
+            echo "  run-$run: FEAT highres is not the ses-$f T1 (maxdiff $md) - skipped"; continue
+        fi
+        O=$(feat_orig "$R")
+        if [ ! -f "$O/highres_head.nii.gz" ] || [ ! -f "$O/example_func2highres_fast_wmseg.nii.gz" ]; then
+            echo "  run-$run: no FEAT BBR files (highres_head, wmseg) in ${O#$S/} - skipped"; continue
+        fi
+
+        w=$W/run-$run; mkdir -p "$w"
+        # step 1: start
+        flirt -in "$R/example_func" -ref "$REF/example_func" -dof 6 \
+              -searchrx -180 180 -searchry -180 180 -searchrz -180 180 \
+              -omat "$w/func2firstsesfunc.mat"
+        convert_xfm -omat "$w/start.mat" -concat "$REF/example_func2highres.mat" "$w/func2firstsesfunc.mat"
+        # step 2: FEAT's BBR, from that start
+        flirt -in "$O/example_func" -ref "$O/highres_head" -init "$w/start.mat" -dof 6 -cost bbr \
+              -wmseg "$O/example_func2highres_fast_wmseg" \
+              -schedule "$FSLDIR/etc/flirtsch/bbr.sch" -omat "$w/example_func2highres.mat" >/dev/null
+
+        moved=$(rmsdiff "$w/start.mat" "$w/example_func2highres.mat" "$O/example_func")
+        c_new=$(bbr_cost "$O" "$w/example_func2highres.mat")
+        c_feat=$(bbr_cost "$O" "$O/example_func2highres.mat")
+        d_feat=$(rmsdiff "$O/example_func2highres.mat" "$w/example_func2highres.mat" "$O/example_func")
+        awk -v r="$run" -v m="$moved" -v n="$c_new" -v o="$c_feat" -v d="$d_feat" 'BEGIN {
+            printf "  run-%s: BBR moved the start %.2f mm | cost %.3f (FEAT %.3f) | %.2f mm from FEAT%s\n",
+                   r, m, n, o, d, (n > o ? "   <-- worse fit than FEAT" : "") }'
+        if [ -z "$c_new" ] || [ -z "$c_feat" ]; then
+            echo "  run-$run: a cost could not be computed - skipped"; continue
+        fi
+        CNEW[$run]=$c_new; CFEAT[$run]=$c_feat; OREG[$run]=$O
+        done_runs+=("$run")
+    done
+    if [ ${#done_runs[@]} -eq 0 ]; then echo "  no runs registered"; continue; fi
+
+    # QC: run-to-run agreement of the new transforms (validated range 0.06-0.30 mm)
+    for ((i=0; i<${#done_runs[@]}; i++)); do
+        for ((j=i+1; j<${#done_runs[@]}; j++)); do
+            a=${done_runs[i]}; b=${done_runs[j]}
+            A=$loc2/run-$a/1stLevel.feat/reg; B=$loc2/run-$b/1stLevel.feat/reg
+            flirt -in "$A/example_func" -ref "$B/example_func" -dof 6 -omat /tmp/f_$$.mat \
+                  -searchrx -180 180 -searchry -180 180 -searchrz -180 180
+            convert_xfm -omat /tmp/p_$$.mat -concat "$W/run-$b/example_func2highres.mat" /tmp/f_$$.mat
+            mm=$(rmsdiff "$W/run-$a/example_func2highres.mat" /tmp/p_$$.mat "$A/example_func")
+            flag=""
+            if [ "$(echo "$mm > 1" | bc)" -eq 1 ]; then flag="   <-- over 1 mm, check"; fi
+            echo "  QC run-$a vs run-$b: $mm mm$flag"
+        done
+    done
+
+    # baseline: the first session's own FEAT costs
+    base=""
+    for B in $loc1/run-0?/1stLevel.feat/reg; do
+        [ -f "$B/example_func2highres.mat" ] || continue
+        BO=$(feat_orig "$B")
+        base="$base  run-$(echo "$B" | grep -oP 'run-\K[0-9]+') $(bbr_cost "$BO" "$BO/example_func2highres.mat")"
+    done
+    echo "  baseline, ses-$f's own FEAT cost:${base:-  none}"
+
+    # rule: v2 only if its cost is lower than FEAT's by more than MARGIN
+    line=""; dif=()
+    for run in "${done_runs[@]}"; do
+        d=$(awk -v a="${CFEAT[$run]}" -v b="${CNEW[$run]}" 'BEGIN { printf "%.6f", a - b }')
+        if gt "$d" "$MARGIN"; then PICK[$run]=v2; else PICK[$run]=FEAT; fi
+        if gt "${d#-}" "$MARGIN"; then dif+=("$run"); fi
+        line="$line  run-$run ${PICK[$run]}"
+    done
+    echo "  rule (v2 only if its cost is lower by more than $MARGIN):$line"
+
+    # pictures, labels hidden, wherever the two costs differ by more than MARGIN
+    if [ ${#dif[@]} -gt 0 ]; then
+        PD=$PICS/${sub}_ses-${ses}_$STAMP; K=$PICS/KEY_${sub}_ses-${ses}_$STAMP.txt
+        rm -rf "$PD" "$K"; mkdir -p "$PD"
+        for B in $loc1/run-0?/1stLevel.feat/reg; do
+            [ -f "$B/example_func2highres.mat" ] || continue
+            BO=$(feat_orig "$B")
+            picture "$BO" "$BO/example_func2highres.mat" "$PD/reference_ses-${f}_run-$(echo "$B" | grep -oP 'run-\K[0-9]+').png"
+        done
+        for run in "${dif[@]}"; do
+            O=${OREG[$run]}; w=$W/run-$run
+            picture "$O" "$O/example_func2highres.mat" "$w/FEAT.png"
+            picture "$O" "$w/example_func2highres.mat" "$w/v2.png"
+            if [ $((RANDOM % 2)) -eq 0 ]; then la=FEAT; lb=v2; else la=v2; lb=FEAT; fi
+            cp "$w/$la.png" "$PD/ses-${ses}_run-${run}_A.png"
+            cp "$w/$lb.png" "$PD/ses-${ses}_run-${run}_B.png"
+            echo "$sub ses-$ses run-$run: A=$la B=$lb" >> "$K"
+        done
+        echo "  pictures for ${#dif[@]} run(s): $PD   (key, open after rating: $K)"
+    fi
+
+    [ "$DRY" -eq 1 ] && continue
+
+    changed=0
+    for run in "${done_runs[@]}"; do
+        R=$loc2/run-$run/1stLevel.feat/reg; w=$W/run-$run; O=${OREG[$run]}; pick=${PICK[$run]}
+        T=$R; [ "$shared" -eq 1 ] && T=$R.longitudinal
+        if [ "$pick" = FEAT ] && { [ "$T" = "$O" ] || { [ -d "$T" ] && diff -rq "$T" "$O" >/dev/null 2>&1; }; }; then
+            echo "  run-$run: FEAT, unchanged (${T#$S/} is FEAT's original)"; continue
+        fi
+        kept=""
+        if [ -d "$T" ] && [ ! -e "$T.bak_$STAMP" ]; then cp -a "$T" "$T.bak_$STAMP"; kept="; previous copy ${T##*/}.bak_$STAMP"; fi
+        if [ "$O" != "$T" ]; then rm -rf "$T"; cp -a "$O" "$T"; fi     # start from FEAT's original files
+        changed=$((changed + 1))
+        if [ "$pick" = FEAT ]; then
+            echo "  run-$run: FEAT restored in ${T#$S/}$kept"; continue
+        fi
+        cp "$w/func2firstsesfunc.mat" "$w/example_func2highres.mat" "$T/"
+        cp "$w/start.mat" "$T/example_func2highres_start.mat"
+        convert_xfm -omat "$T/highres2example_func.mat"  -inverse "$T/example_func2highres.mat"
+        convert_xfm -omat "$T/example_func2standard.mat" -concat "$T/highres2standard.mat" "$T/example_func2highres.mat"
+        convert_xfm -omat "$T/standard2example_func.mat" -inverse "$T/example_func2standard.mat"
+        flirt -in "$T/example_func" -ref "$T/highres"  -applyxfm -init "$T/example_func2highres.mat"  -out "$T/example_func2highres"
+        flirt -in "$T/example_func" -ref "$T/standard" -applyxfm -init "$T/example_func2standard.mat" -out "$T/example_func2standard"
+        # FEAT's own reg/*.png still show the ORIGINAL registration; this one shows the new one
+        slicer "$T/example_func2highres" "$T/highres" -a "$T/example_func2highres_06b.png"
+        echo "  run-$run: v2 installed in ${T#$S/}$kept"
+    done
+    if [ "$changed" -gt 0 ] && [ "$shared" -eq 1 ]; then
+        echo "  rebuild this session's .longitudinal HighLevel from reg.longitudinal (re-registration procedure)"
+    elif [ "$changed" -gt 0 ] && [ -d "$loc2/HighLevel.gfeat" ]; then
+        echo "  HighLevel predates this registration - rebuild it (re-registration procedure, then steps 12-13)"
+    fi
+done

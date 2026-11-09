@@ -1,0 +1,84 @@
+HANDOFF - sym_pt longitudinal, 2026-11-02 (v7)
+================================================================================
+Replaces handoff_2026-11-02_v6.txt (only change: next-step 1 done). Read with:
+  deviation_log_2026-11-02_v5.txt   rules (section 0), results (11), open items (12)
+  new_sessions_run_order_2026-11-02_v4.txt   step-by-step path for any session
+Tags: [verified] = seen in command output; [from] = earlier notes; [inferred] = reasoning.
+
+
+STATE OF THE DATA (end of 2026-11-02)
+--------------------------------------------------------------------------------
+- Registration rule (decided): FEAT first; step 07 only if FEAT's runs disagree by
+  more than 5 mm; keep step 07 only if its runs then agree within ~1 mm;
+  otherwise keep FEAT and flag the session. [log v5 section 0]
+- On step 07: sub-092 ses-02, sub-108 ses-02 (10-31); sub-008 ses-02, sub-010
+  ses-03 (11-02). Flagged: sub-004 ses-05 (fails both methods; FEAT kept).
+  Every other session: FEAT. After the cohort-wide test, all 31 later sessions'
+  registrations were restored and checked against the backups (diff -rq clean).
+  [verified]
+- Step 07 script on the cluster = committed version (md5
+  f8ff8c42dffa1328459b1aa345ec01d3). [verified]
+- sub-008 ses-02 and sub-010 ses-03 were rerun through HighLevel, steps 12-13,
+  extraction, harmonization and cross-sectional stats. [verified]
+  Not yet rerun: grid (Tables 2, 4), LMM, longitudinal notebook.
+
+
+WHAT CHANGED IN THE RESULTS (NOT YET REVIEWED; NOTHING ACCEPTED)
+--------------------------------------------------------------------------------
+- Extraction: only the four re-registered sessions changed. [verified]
+- Maps of the two sessions now resemble each subject's first session more
+  (11 of 12 maps; e.g. sub-010 cope17 0.30 -> 0.69). [verified]
+- Harmonization: ComBat was refit, so every subject's harmonized values moved
+  slightly (volume most: median 0.20 on the sqrt scale). [verified]
+- Cross-sectional stats: no omnibus test crossed p = .05. 9 follow-up results
+  crossed p = .05 and 12 crossed q = .05; the full list, with model names as in
+  stats_results_harmonized_corrected.csv, is in log v5 section 11. It includes
+  the FFA face-word pair results (q .023 -> .199 and .012 -> .089). [verified]
+- Old versions of every output: pipeline/outputs/D_liu.bak_20261102. [verified]
+
+
+NEXT, IN ORDER
+--------------------------------------------------------------------------------
+1. DONE 2026-11-02: sub-004 ses-02 unchanged after the accidental loop restart
+   (no reg.bak_20261102; every run's example_func2highres.mat identical to
+   reg.bak_20261101) [verified]. Closes log v5 section 12, item 1.
+2. git (from pipeline/): first look, then tag the last commit, then commit.
+     git status --short | head -40
+     git tag pre_rereg_20261102
+   Commit the docs and any tracked outputs that changed; leave outputs/D_liu.bak_*
+   and outputs/previous_* out (they are backups) [inferred].
+3. Rerun grid (Tables 2, 4) and LMM; rerun the longitudinal notebook.
+4. Old vs new results table for Marlene; decide what enters the manuscript.
+   Update check_outputs' reference only after that.
+5. sub-101 ses-02 (collected 2026-11-02): run order v4 from Stage 0. Until the
+   reference is updated, its checks are judged against outputs/check_stage4.txt.
+
+
+DECISIONS MADE 2026-11-01/02 (C.S.)
+--------------------------------------------------------------------------------
+- No cohort-wide replacement of FEAT; the rule above instead.
+- 5 mm threshold (methods wording to settle: set from the observed gap).
+- 27-slice sessions: ROI/OTC analyses only; no whole-brain or connectivity.
+- RDM slopes dropped (only sub-004 and sub-021 have >= 3 sessions).
+- sub-010's |z| > 20 accepted (this subject runs high in every version).
+
+
+PARKED (details in log v5 sections 6 and 12)
+--------------------------------------------------------------------------------
+- TFCE uses first post-op sessions; ROI measures use last sessions. Intended?
+- Six 27-slice sessions share ComBat's Verio site with 69-slice sessions.
+- sub-004 ses-07 (Prisma, 3 raw runs) never processed; Liu 2025's coverage
+  description of UD's ses-05 does not match its header.
+- 32 sessions on disk are not in the compiled QC table.
+- sub-086 ses-02 run-03 incomplete (FEAT never finished it).
+- Earlier parked items (08/09 shifted files, sub-079/076 masks, T1 orientation,
+  sub-021 extra test, methods citation): log v5 section 6.
+- Earlier goals not yet done: whether sub-108 ses-02 is usable (rule applied to
+  every session); which longitudinal measures to trust; patients as cases.
+
+
+SETUP (every new shell)
+--------------------------------------------------------------------------------
+  cd /user_data/csimmon2/git_repos/sym_pt/pipeline && conda activate fmri
+  export FSLDIR=/opt/fsl/6.0.3; source $FSLDIR/etc/fslconf/fsl.sh; export PATH=$FSLDIR/bin:$PATH
+  P=$PWD; S=/user_data/csimmon2/sym_pt; RAW=/lab_data/behrmannlab/hemi/Raw

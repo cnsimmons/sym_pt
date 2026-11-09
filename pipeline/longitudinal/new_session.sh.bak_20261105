@@ -1,0 +1,406 @@
+#!/usr/bin/env bash
+# =============================================================================
+# longitudinal/new_session.sh                     2026-11-03; step07 = v3, 2026-11-05
+# Processes ONE later session of an existing patient for the longitudinal study.
+# Every write lands in sub-XXX/ses-NN (Raw and processed); the subject's first
+# session is only read. The cross-sectional scripts are not changed or run.
+# Step logic is taken unchanged from 1_preprocessing/ (01-05, 10) and the run
+# order (checkpoints B, B2, C, file guard); see README_longitudinal.txt.
+#
+# Usage, from anywhere, fmri env, FSL loaded, inside screen:
+#   bash longitudinal/new_session.sh XXX NN <stage>
+#
+#   stage0     raw-data checks; .mat -> events.tsv                  seconds
+#   prep       dirs, spikes, timing, anat, 1stLevel.fsf, submit FEAT ~10 min, then FEAT ~hours
+#   qc         after FEAT: motion (B); run-to-run agreement (B2, information only)  ~1 min per pair
+#   step07     always: step 07 v3 gives each run FEAT or v2 by BBR cost; pictures where they differ
+#   highlevel  HighLevel.fsf, submit HighLevel FEAT                  seconds, then job
+#   finish     after HighLevel: 12, 13, z-range check (C), guard     minutes
+#   guard      file guard only (anything written outside the session?)
+#   validate   read-only check on an EXISTING session: rebuild its 1stLevel.fsf,
+#              HighLevel.fsf and timing files in /tmp, diff against the originals
+# =============================================================================
+set -uo pipefail
+
+P=/user_data/csimmon2/git_repos/sym_pt/pipeline
+S=/user_data/csimmon2/sym_pt
+RAW=/lab_data/behrmannlab/hemi/Raw
+SUB_INFO=$P/sub_info.csv
+TASK=loc
+PY="python $P/longitudinal/session_steps.py"
+ME=${USER:-$(id -un)}
+
+die() { echo "STOP: $*" >&2; exit 1; }
+gt()  { awk -v a="$1" -v b="$2" 'BEGIN { exit !((a + 0) > (b + 0)) }'; }   # a > b, handles 1e-07
+
+STAGES="stage0 prep qc step07 highlevel finish guard validate"
+[ $# -eq 3 ] || die "usage: bash longitudinal/new_session.sh XXX NN <$(echo $STAGES | tr ' ' '|')>"
+sub=${1#sub-}
+ses=$(printf "%02d" $((10#${2#ses-})))
+stage=$3
+[[ " $STAGES " == *" $stage "* ]] || die "unknown stage '$stage' (one of: $STAGES)"
+
+# First session = lowest session for this subject in sub_info.csv (read only),
+# the same rule 05, 07 and 10 use.
+FIRST=$(awk -F, -v s="sub-$sub" '$1 == s { x = $2; sub(/^ses-/, "", x); n = x + 0; if (m == "" || n < m) m = n }
+                                 END { if (m != "") print m }' "$SUB_INFO")
+[ -n "$FIRST" ] || die "sub-$sub has no row in $SUB_INFO (its first session must be listed there)"
+FIRST=$(printf "%02d" "$FIRST")
+[ "$ses" != "$FIRST" ] || die "ses-$ses is sub-$sub's first session; this script is for later sessions"
+
+# Sessions in both studies keep their canonical files for the cross-sectional
+# study (deviation log v6, section 13); this driver writes none of them.
+SHARED="sub-008:02 sub-010:03"
+case " $SHARED " in *" sub-$sub:$ses "*)
+    case "$stage" in qc|guard|validate) ;;
+        *) die "sub-$sub ses-$ses is shared with the cross-sectional study; this driver does not write it (re-registration procedure)" ;;
+    esac ;;
+esac
+
+RAWSES=$RAW/sub-$sub/ses-$ses
+SES=$S/sub-$sub/ses-$ses
+LOC=$SES/derivatives/fsl/$TASK
+MARK=$HOME/stage1_start_sub-${sub}_ses-${ses}
+
+if [ "$stage" != guard ]; then command -v flirt >/dev/null || die "FSL not loaded (see README setup lines)"; fi
+
+# -----------------------------------------------------------------------------
+# Step bodies copied from 1_preprocessing/ (per-session part only, unchanged)
+# -----------------------------------------------------------------------------
+
+# 02_extract_confounds.sh, loop body, for this session
+spikes() {
+    local FD_THRESH=0.5 DUMMY=0
+    local func_dir=$RAWSES/func
+    [ -d "$func_dir" ] || die "no func directory: $func_dir"
+    for bold_file in "${func_dir}"/sub-${sub}_ses-${ses}_task-${TASK}_run-*_bold.nii.gz; do
+        [ ! -f "$bold_file" ] && continue
+        local run=$(basename "$bold_file" | sed -n 's/.*run-\([0-9]*\)_bold.nii.gz/\1/p')
+        local out_dir="${S}/sub-${sub}/ses-${ses}/derivatives/fsl/${TASK}/run-${run}"
+        local out_file="${out_dir}/sub-${sub}_ses-${ses}_task-${TASK}_run-${run}_bold_spikes.txt"
+        if [ -f "$out_file" ]; then
+            echo "EXISTS: sub-${sub} ses-${ses} run-${run}"
+            continue
+        fi
+        echo "Processing: sub-${sub} ses-${ses} run-${run}"
+        mkdir -p "$out_dir"
+        fsl_motion_outliers -i "$bold_file" -o "$out_file" --fd --thresh=${FD_THRESH} --dummy=${DUMMY} 2>&1
+        if [ -f "$out_file" ] && [ -s "$out_file" ]; then
+            local n_spikes=$(head -1 "$out_file" | awk '{print NF}')
+            local n_timepoints=$(fslnvols "$bold_file")
+            local pct=$(echo "scale=1; $n_spikes * 100 / $n_timepoints" | bc)
+            echo "  -> ${n_spikes} spikes / ${n_timepoints} timepoints (${pct}%)"
+            if [ "$n_spikes" -gt "$((n_timepoints / 2))" ]; then
+                echo "  WARNING: >50% timepoints flagged!"
+            fi
+        else
+            echo "  -> No spikes detected (clean run)"
+            touch "$out_file"
+        fi
+    done
+}
+
+# 05_create_fsf.sh, check_files_exist() and create_fsf(); create_fsf takes an
+# optional 5th argument, a destination file, used only by 'validate'
+templateFSF=$P/1_preprocessing/05_template_1stLevel.fsf
+templateSub="004"
+templateSes="01"
+templateRun="01"
+
+check_files_exist() {
+    local sub="$1" ses="$2" run="$3" first_ses="$4"
+    local funcData="$RAW/sub-${sub}/ses-${ses}/func/sub-${sub}_ses-${ses}_task-loc_run-${run}_bold.nii.gz"
+    if [ ! -f "$funcData" ]; then
+        echo "      Missing: functional data"
+        return 1
+    fi
+    local covsDir="$S/sub-${sub}/ses-${ses}/timing"
+    for condition in Face House Object Word Scramble; do
+        local timing_file="$covsDir/catloc_${sub}_run-${run}_${condition}.txt"
+        if [ ! -f "$timing_file" ]; then
+            echo "      Missing: timing file for ${condition}"
+            return 1
+        fi
+    done
+    local structImage="$S/sub-${sub}/ses-${first_ses}/anat/T1w_brain.nii.gz"
+    if [ ! -f "$structImage" ]; then
+        echo "      Missing: structural image (ses-${first_ses})"
+        return 1
+    fi
+    return 0
+}
+
+create_fsf() {
+    local sub="$1" ses="$2" run="$3" first_ses="$4"
+    local outputDir="$S/sub-${sub}/ses-${ses}/derivatives/fsl/loc/run-${run}"
+    local fsfFile="${5:-$outputDir/1stLevel.fsf}"
+    mkdir -p "$(dirname "$fsfFile")"
+    [ -f "$fsfFile" ] && rm "$fsfFile"
+    cp "$templateFSF" "$fsfFile"
+    sed -i "s/sub-${templateSub}/sub-${sub}/g" "$fsfFile"
+    sed -i "s/${templateSub}/${sub}/g" "$fsfFile"
+    sed -i "s/ses-${templateSes}/ses-${ses}/g" "$fsfFile"
+    sed -i "s/run-${templateRun}/run-${run}/g" "$fsfFile"
+    local funcData="$RAW/sub-${sub}/ses-${ses}/func/sub-${sub}_ses-${ses}_task-loc_run-${run}_bold.nii.gz"
+    sed -i "s|set feat_files(1) \".*\"|set feat_files(1) \"$funcData\"|g" "$fsfFile"
+    local covsDir="$S/sub-${sub}/ses-${ses}/timing"
+    sed -i "s|set fmri(custom1) \".*\"|set fmri(custom1) \"$covsDir/catloc_${sub}_run-${run}_Face.txt\"|g" "$fsfFile"
+    sed -i "s|set fmri(custom2) \".*\"|set fmri(custom2) \"$covsDir/catloc_${sub}_run-${run}_House.txt\"|g" "$fsfFile"
+    sed -i "s|set fmri(custom3) \".*\"|set fmri(custom3) \"$covsDir/catloc_${sub}_run-${run}_Object.txt\"|g" "$fsfFile"
+    sed -i "s|set fmri(custom4) \".*\"|set fmri(custom4) \"$covsDir/catloc_${sub}_run-${run}_Word.txt\"|g" "$fsfFile"
+    sed -i "s|set fmri(custom5) \".*\"|set fmri(custom5) \"$covsDir/catloc_${sub}_run-${run}_Scramble.txt\"|g" "$fsfFile"
+    local structImage="$S/sub-${sub}/ses-${first_ses}/anat/T1w_brain.nii.gz"
+    sed -i "s|set highres_files(1) \".*\"|set highres_files(1) \"$structImage\"|g" "$fsfFile"
+    sed -i "s|set fmri(regstandard) \".*\"|set fmri(regstandard) \"${structImage%.nii.gz}\"|g" "$fsfFile"
+    sed -i "s|set fmri(outputdir) \".*\"|set fmri(outputdir) \"$outputDir/1stLevel\"|g" "$fsfFile"
+    sed -i "s|/user_data/csimmon2/long_pt|$S|g" "$fsfFile"
+    sed -i "s|/lab_data/behrmannlab/vlad/hemispace|$S|g" "$fsfFile"
+    echo "      Created: $fsfFile"
+}
+
+# 10_create_highlevel_fsf.sh, main-loop body, for this session; optional
+# argument = destination file, used only by 'validate'
+templateHL=$P/1_preprocessing/10_template_HighLevel.fsf
+
+create_highlevel_fsf() {
+    local session_dir="$SES" first_ses="$FIRST"
+    local runs=() run feat_dir n i j
+    for feat_dir in "$session_dir"/derivatives/fsl/loc/run-*/1stLevel.feat; do
+        [ -d "$feat_dir" ] || continue
+        [ -f "$feat_dir/stats/cope1.nii.gz" ] || continue
+        run=$(basename "$(dirname "$feat_dir")" | sed 's/run-//')
+        runs+=("$run")
+    done
+    [ ${#runs[@]} -eq 0 ] && die "no completed first-level runs in $session_dir"
+    echo "=== sub-${sub} ses-${ses}: ${#runs[@]} runs ==="
+    local fsf_file="${1:-$session_dir/derivatives/fsl/loc/HighLevel.fsf}"
+    mkdir -p "$(dirname "$fsf_file")"
+    [ -f "$fsf_file" ] && rm "$fsf_file"
+    cp "$templateHL" "$fsf_file"
+    sed -i "s|set fmri(outputdir) \".*\"|set fmri(outputdir) \"$session_dir/derivatives/fsl/loc/HighLevel\"|g" "$fsf_file"
+    sed -i "s|set fmri(regstandard) \".*\"|set fmri(regstandard) \"$S/sub-${sub}/ses-${first_ses}/anat/T1w_brain\"|g" "$fsf_file"
+    sed -i "s/set fmri(multiple) [0-9]*/set fmri(multiple) ${#runs[@]}/g" "$fsf_file"
+    sed -i "s/set fmri(npts) [0-9]*/set fmri(npts) ${#runs[@]}/g" "$fsf_file"
+    for i in "${!runs[@]}"; do
+        n=$((i + 1))
+        feat_dir="$session_dir/derivatives/fsl/loc/run-${runs[i]}/1stLevel.feat"
+        if grep -q "set feat_files($n)" "$fsf_file"; then
+            sed -i "s|set feat_files($n) \".*\"|set feat_files($n) \"$feat_dir\"|g" "$fsf_file"
+        else
+            echo "set feat_files($n) \"$feat_dir\"" >> "$fsf_file"
+        fi
+        if ! grep -q "set fmri(groupmem.$n)" "$fsf_file"; then
+            echo "set fmri(groupmem.$n) 1" >> "$fsf_file"
+        fi
+        if ! grep -q "set fmri(evg${n}.1)" "$fsf_file"; then
+            echo "set fmri(evg${n}.1) 1" >> "$fsf_file"
+        fi
+    done
+    for ((j=${#runs[@]}+1; j<=20; j++)); do
+        sed -i "/set feat_files($j) /d" "$fsf_file"
+        sed -i "/set fmri(groupmem\.$j) /d" "$fsf_file"
+        sed -i "/set fmri(evg${j}\.1) /d" "$fsf_file"
+    done
+    echo "  Created: $fsf_file"
+}
+
+# -----------------------------------------------------------------------------
+# Stages
+# -----------------------------------------------------------------------------
+
+stage0() {
+    echo "== stage0: sub-$sub ses-$ses (first session ses-$FIRST)"
+    [ -d "$RAWSES/func" ] || die "no $RAWSES/func - download and rename first (README, Stage 0)"
+    ls "$RAWSES"/anat/*T1w.nii.gz >/dev/null 2>&1 || die "no T1w in $RAWSES/anat"
+    local f n=0
+    echo "-- raw runs (expect vols=184, TR=2, slices and dz as in ses-$FIRST)"
+    for f in "$RAWSES"/func/*task-${TASK}*_bold.nii.gz; do
+        [ -f "$f" ] || continue
+        n=$((n + 1))
+        echo "  $(basename "$f") vols=$(fslnvols "$f") TR=$(fslval "$f" pixdim4) slices=$(fslval "$f" dim3) dz=$(fslval "$f" pixdim3)"
+    done
+    [ $n -gt 0 ] || die "no task-$TASK runs in $RAWSES/func"
+    for f in "$RAW/sub-$sub/ses-$FIRST"/func/*task-${TASK}*_bold.nii.gz; do
+        [ -f "$f" ] && { echo "  ses-$FIRST for comparison: slices=$(fslval "$f" dim3) dz=$(fslval "$f" pixdim3)"; break; }
+    done
+    local nm=$(ls "$RAWSES"/covs/*loc.mat 2>/dev/null | wc -l)
+    [ "$nm" -gt 0 ] || die "no *loc.mat in $RAWSES/covs"
+    [ "$nm" -eq "$n" ] || echo "  WARNING: $nm .mat files for $n runs"
+    echo "-- timing .mat files"
+    $PY check_mat "$sub" "$ses" || die "check_mat failed"
+    echo "-- 00a: .mat -> events.tsv (written to $RAWSES/func)"
+    for f in "$RAWSES"/covs/*loc.mat; do
+        python "$P/1_preprocessing/00a_mat2tsv_timing.py" "$f" --sub "$sub" --ses "$ses" || die "00a failed on $f"
+    done
+    echo "NEXT: bash longitudinal/new_session.sh $sub $ses prep"
+}
+
+prep() {
+    echo "== prep: sub-$sub ses-$ses (first session ses-$FIRST)"
+    ls "$RAWSES"/func/*_events.tsv >/dev/null 2>&1 || die "no events.tsv in $RAWSES/func - run stage0 first"
+    [ -e "$MARK" ] || touch "$MARK"
+    echo "-- file-guard mark: $MARK ($(date -r "$MARK" '+%F %T'))"
+    echo "-- 01 dirs";   $PY dirs   "$sub" "$ses" || die "dirs failed"
+    echo "-- 02 spikes"; spikes
+    echo "-- 03 timing"; $PY timing "$sub" "$ses" || die "timing failed"
+    echo "-- 04 anat";   $PY anat   "$sub" "$ses" || die "anat failed"
+    echo "-- 05 1stLevel.fsf"
+    local bold_file run
+    for bold_file in "$RAWSES"/func/sub-${sub}_ses-${ses}_task-loc_run-*_bold.nii.gz; do
+        [ -f "$bold_file" ] || continue
+        run=$(basename "$bold_file" | sed -n 's/.*run-\([0-9]*\)_bold.nii.gz/\1/p')
+        echo "    Run ${run}:"
+        check_files_exist "$sub" "$ses" "$run" "$FIRST" || die "missing required files for run-$run"
+        create_fsf "$sub" "$ses" "$run" "$FIRST"
+    done
+    echo "-- 06 submit first-level FEAT (this session's runs only)"
+    local L=/user_data/csimmon2/git_repos/sym_pt/logs_feat f r j
+    mkdir -p "$L"
+    for f in "$LOC"/run-0?/1stLevel.fsf; do
+        [ -f "$f" ] || continue
+        r=$(echo "$f" | grep -oP 'run-\K[^/]+')
+        if [ -f "$(dirname "$f")/1stLevel.feat/stats/cope1.nii.gz" ]; then echo "  run-$r: FEAT already complete - not submitted"; continue; fi
+        if [ -d "$(dirname "$f")/1stLevel.feat" ]; then echo "  run-$r: an unfinished 1stLevel.feat exists - not submitted; check it"; continue; fi
+        j="feat_${sub}_${ses}_${r}"
+        sbatch --job-name=$j --output=$L/${j}_%j.out --error=$L/${j}_%j.err --nodes=1 --ntasks=1 --cpus-per-task=1 --mem=16G --time=1-00:00:00 --wrap="export FSLDIR=/opt/fsl/6.0.3; . \$FSLDIR/etc/fslconf/fsl.sh; export PATH=\$FSLDIR/bin:\$PATH; feat $f"
+    done
+    echo "NEXT: when 'squeue -u $ME' shows no feat_${sub}_${ses}_ jobs: bash longitudinal/new_session.sh $sub $ses qc"
+}
+
+qc() {
+    echo "== qc: sub-$sub ses-$ses"
+    local r missing=0
+    for r in "$LOC"/run-0?; do
+        [ -f "$r/1stLevel.fsf" ] || continue
+        [ -f "$r/1stLevel.feat/stats/cope1.nii.gz" ] || { echo "  $(basename "$r"): FEAT not complete"; missing=1; }
+    done
+    [ $missing -eq 0 ] || die "first-level FEAT not finished (squeue -u $ME)"
+    echo "-- Checkpoint B: motion (flag > 0.5 mm)"
+    local m
+    for r in "$LOC"/run-0?; do
+        [ -f "$r/1stLevel.feat/mc/prefiltered_func_data_mcf_rel_mean.rms" ] || continue
+        m=$(cat "$r/1stLevel.feat/mc/prefiltered_func_data_mcf_rel_mean.rms")
+        if gt "$m" 0.5; then echo "  $(basename "$r"): $m mm   <-- over 0.5 mm"; else echo "  $(basename "$r"): $m mm"; fi
+    done
+    echo "-- Checkpoint B2: do FEAT's runs agree? (information only; step07 decides each run by BBR cost)"
+    local regs=("$LOC"/run-0?/1stLevel.feat/reg) worst=0 i j mm
+    for ((i=0; i<${#regs[@]}; i++)); do
+        for ((j=i+1; j<${#regs[@]}; j++)); do
+            flirt -in ${regs[i]}/example_func -ref ${regs[j]}/example_func -dof 6 -searchrx -180 180 -searchry -180 180 -searchrz -180 180 -omat /tmp/b2_$$.mat
+            convert_xfm -omat /tmp/b2p_$$.mat -concat ${regs[j]}/example_func2highres.mat /tmp/b2_$$.mat
+            mm=$(rmsdiff ${regs[i]}/example_func2highres.mat /tmp/b2p_$$.mat ${regs[i]}/example_func)
+            echo "  $(echo ${regs[i]} | grep -oP 'run-[0-9]+') vs $(echo ${regs[j]} | grep -oP 'run-[0-9]+'): $mm mm"
+            gt "$mm" "$worst" && worst=$mm
+        done
+    done
+    rm -f /tmp/b2_$$.mat /tmp/b2p_$$.mat
+    echo "  worst pair $worst mm (FEAT's runs; the 5 mm rule is retired, deviation log v7 section 15)"
+    echo "NEXT: bash longitudinal/new_session.sh $sub $ses step07"
+}
+
+step07() {
+    echo "== step07: sub-$sub ses-$ses (v3: each run gets FEAT or v2, whichever has the lower BBR cost by > 0.01)"
+    [ ! -e "$LOC/HighLevel.gfeat" ] || die "$LOC/HighLevel.gfeat exists - step07 comes before highlevel (re-registration is a separate procedure)"
+    bash "$P/1_preprocessing/07_register_to_first_session_func.sh" "sub-$sub" "$ses" || die "step 07 failed"
+    echo "BEFORE highlevel: if pictures were written above, rate each run (Greve & Fischl 2009):"
+    echo "  which red line follows the edge of the bright gray-matter patches more closely, A or B,"
+    echo "  and is it acceptable next to the reference pictures? Then open the key."
+    echo "  If your choice and the rule disagree for any run, stop and log it before highlevel."
+    echo "NEXT: bash longitudinal/new_session.sh $sub $ses highlevel"
+}
+
+highlevel() {
+    echo "== highlevel: sub-$sub ses-$ses"
+    [ ! -e "$LOC/HighLevel.gfeat" ] || die "$LOC/HighLevel.gfeat exists - re-registering an existing session is a separate procedure (run order)"
+    create_highlevel_fsf
+    local L=$P/logs_highlevel j="hlvl_${sub}_${ses}"
+    mkdir -p "$L"
+    sbatch --job-name=$j --output=$L/${j}_%j.out --error=$L/${j}_%j.err --nodes=1 --ntasks=1 --cpus-per-task=1 --mem=16G --time=1-00:00:00 --wrap="export FSLDIR=/opt/fsl/6.0.3; . \$FSLDIR/etc/fslconf/fsl.sh; export PATH=\$FSLDIR/bin:\$PATH; feat $LOC/HighLevel.fsf"
+    echo "NEXT: when 'squeue -u $ME' shows no $j job: bash longitudinal/new_session.sh $sub $ses finish"
+}
+
+finish() {
+    echo "== finish: sub-$sub ses-$ses"
+    [ -f "$LOC/HighLevel.gfeat/cope1.feat/stats/cope1.nii.gz" ] || die "HighLevel not complete (squeue -u $ME)"
+    local i r R B m v c z1 z2 shown=0 hl=()
+    # HighLevel's inputs, in the order create_highlevel_fsf lists them
+    for R in "$LOC"/run-*/1stLevel.feat; do
+        [ -f "$R/stats/cope1.nii.gz" ] && hl+=("$R")
+    done
+    for i in "${!hl[@]}"; do
+        R=${hl[i]}
+        B=$( (ls -d "$R"/reg.bak_* 2>/dev/null || true) | sort | head -1)    # FEAT's original
+        [ -n "$B" ] || continue
+        cmp -s "$R/reg/example_func2highres.mat" "$B/example_func2highres.mat" && continue
+        [ $shown -eq 1 ] || { echo "-- step 07 changed these runs: did HighLevel use the new transforms? (new ~0.9-1.0, old low)"; shown=1; }
+        r=$(echo "$R" | grep -oP 'run-\K[0-9]+')
+        fslroi "$LOC/HighLevel.gfeat/cope1.feat/filtered_func_data" /tmp/hl_in_$$ $i 1
+        for v in new old; do
+            m=$R/reg/example_func2standard.mat
+            [ $v = old ] && m=$B/example_func2standard.mat
+            flirt -in $R/stats/cope1 -ref /tmp/hl_in_$$ -applyxfm -init $m -out /tmp/rc_$$
+            echo "  run-$r $v r=$(fslcc --noabs -t -1 /tmp/rc_$$ /tmp/hl_in_$$ | awk '{print $3}')"
+        done
+    done
+    rm -f /tmp/hl_in_$$* /tmp/rc_$$*
+    echo "-- 12 symlinks"
+    python "$P/1_preprocessing/12_register_highlevel.py" "sub-$sub" "$ses" || die "12 failed"
+    echo "-- 13 MNI copies (dry run, then run; expect 38 registered)"
+    echo "  dry run: $(python "$P/1_preprocessing/13_register2mni.py" "sub-$sub" "$ses" --dry-run | grep -c DRY) files to register"
+    local out13
+    out13=$(python "$P/1_preprocessing/13_register2mni.py" "sub-$sub" "$ses" 2>&1)
+    echo "$out13" | grep -v -e bottleneck -e 'from pandas.core' | tail -3
+    echo "$out13" | grep -q "^Done: .* 0 failed" || die "13 reported a failure (see above)"
+    echo "-- Checkpoint C: z range (flag |z| > 20) and similarity to ses-$FIRST"
+    for c in 1 2 3 13 17 18; do
+        z1=$S/sub-$sub/ses-$FIRST/derivatives/fsl/loc/HighLevel.gfeat/cope$c.feat/stats/zstat1
+        z2=$LOC/HighLevel.gfeat/cope$c.feat/stats/zstat1
+        echo "  cope$c range=$(fslstats $z2 -R) r=$(fslcc --noabs -t -1 $z1 $z2 | awk '{print $3}')"
+    done
+    echo "  If |z| > 20, compare with ses-$FIRST's range; some subjects run high."
+    guard
+}
+
+guard() {
+    [ -e "$MARK" ] || die "no file-guard mark $MARK (prep creates it)"
+    echo "-- file guard: files in \$S and outputs/ changed since $(date -r "$MARK" '+%F %T') outside sub-$sub/ses-$ses (expect none; may take a few minutes)"
+    local out
+    out=$(find "$S" "$P/outputs" -newer "$MARK" -type f -not -path "*/sub-$sub/ses-$ses/*" 2>/dev/null | head -20)
+    if [ -z "$out" ]; then
+        echo "  none - OK"
+    else
+        echo "$out"
+        die "files outside the session changed - review the list above"
+    fi
+}
+
+validate() {
+    echo "== validate (read-only): rebuild sub-$sub ses-$ses's files in /tmp, compare with what the original scripts wrote"
+    local T=/tmp/lval_${sub}_${ses}_$$ bad=0 f run
+    mkdir -p "$T"
+    for f in "$LOC"/run-0?/1stLevel.fsf; do
+        [ -f "$f" ] || continue
+        run=$(echo "$f" | grep -oP 'run-\K[0-9]+')
+        create_fsf "$sub" "$ses" "$run" "$FIRST" "$T/1stLevel_run-$run.fsf" >/dev/null
+        if cmp -s "$f" "$T/1stLevel_run-$run.fsf"; then echo "  run-$run 1stLevel.fsf: identical"
+        else echo "  run-$run 1stLevel.fsf: DIFFERS"; diff "$f" "$T/1stLevel_run-$run.fsf" | head -6; bad=1; fi
+    done
+    if [ -f "$LOC/HighLevel.fsf" ]; then
+        create_highlevel_fsf "$T/HighLevel.fsf" >/dev/null
+        if cmp -s "$LOC/HighLevel.fsf" "$T/HighLevel.fsf"; then echo "  HighLevel.fsf: identical"
+        else echo "  HighLevel.fsf: DIFFERS"; diff "$LOC/HighLevel.fsf" "$T/HighLevel.fsf" | head -6; bad=1; fi
+    fi
+    $PY timing "$sub" "$ses" --root "$T/root" >/dev/null 2>&1 || { echo "  timing: helper failed"; bad=1; }
+    local nt=0 nd=0
+    for f in "$SES"/timing/catloc_*.txt; do
+        [ -f "$f" ] || continue
+        nt=$((nt + 1))
+        cmp -s "$f" "$T/root/sub-$sub/ses-$ses/timing/$(basename "$f")" || { echo "  timing $(basename "$f"): DIFFERS"; nd=$((nd + 1)); }
+    done
+    echo "  timing files: $((nt - nd)) of $nt identical"
+    [ $nd -eq 0 ] && [ $nt -gt 0 ] || bad=1
+    rm -rf "$T"
+    if [ $bad -eq 0 ]; then echo "VALIDATED: the driver rebuilds this session's files exactly"; else echo "NOT VALIDATED - see differences above"; fi
+}
+
+"$stage"

@@ -23,7 +23,7 @@ UNIV     = 'outputs/D_liu/univariate_v1_harmonized_sqrt.csv'
 SUB_INFO = 'sub_info.csv'
 
 EXCLUDE = ['sub-017', 'sub-091', 'sub-095', 'sub-096', 'sub-027', 'sub-084']
-EXCLUDE_SES = [('sub-108', 2), ('sub-092', 2), ('sub-101', 2)]
+EXCLUDE_SES = [('sub-108', 2), ('sub-092', 2), ('sub-101', 2), ('sub-098', 2)]
 
 PPA_PREF = 'house_PPA_strict'      # falls back to house_PPA if absent
 DRAWS, TUNE, CHAINS, SEED = 2000, 2000, 4, 11

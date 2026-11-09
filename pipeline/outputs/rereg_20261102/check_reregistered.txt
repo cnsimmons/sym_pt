@@ -1,0 +1,21 @@
+ignoring sessions: sub-008 ses-02, sub-010 ses-03, sub-092 ses-02, sub-108 ses-02
+stage          output                                   result
+extraction     univariate_v1                            1796 rows matched | max diff 0.00e+00 | same missing cells: True | 84 rows of ignored sessions left out
+extraction     rsa_v1                                   8556 rows matched | max diff 0.00e+00 | same missing cells: True | 462 rows of ignored sessions left out
+extraction     liu_exact_replication                    10026 rows matched | max diff 0.00e+00 | same missing cells: True | 402 rows of ignored sessions left out
+extraction     peak_coords_mni                          10026 rows matched | max diff 0.00e+00 | same missing cells: True | 402 rows of ignored sessions left out
+extraction     selective_voxel_counts                   800 rows, compared in sorted order | max diff 0.00e+00
+extraction     otc_rsm                                  50 rows matched | max diff 0.00e+00 | same missing cells: True
+extraction     otc_rsm_persubject                       96 rows matched | max diff 0.00e+00 | same missing cells: True
+harmonization  univariate_harmonized                    1232 rows matched | max diff 0.00e+00 | same missing cells: True | 48 rows of ignored sessions left out
+harmonization  rsa_harmonized                           6774 rows matched | max diff 0.00e+00 | same missing cells: True | 264 rows of ignored sessions left out
+analyses       wta_percentages                          1792 rows matched | max diff 0.00e+00 | same missing cells: True | 133 rows only pipeline ['sub-027', 'sub-084', 'sub-091', 'sub-095', 'sub-096'] | 60 rows of ignored sessions left out | labels differ in ['subject_id', 'code'], e.g. [] vs ['sub-027']
+analyses       stats vs main file                       242 rows matched | max diff 6.07e-02 | same missing cells: True | 32 rows only pipeline  | labels differ in ['model'], e.g. [] vs ['face_FFA_pt_LH_vs_RH']
+analyses       stats vs _ptpt4                          274 rows matched | max diff 4.62e-14 | same missing cells: True
+analyses       tfce_clusters                            14 rows, compared in sorted order | max diff 0.00e+00
+analyses       tfce_clusters vs _harmonized_corrected   row counts differ: committed 13, pipeline 14
+analyses       grid (Tables 2, 4)                       144 rows matched | max diff 1.07e-14 | same missing cells: True | columns only committed [], only pipeline ['dv_transform'] (compared on shared columns)
+analyses       lmm                                      18 rows matched | max diff 4.97e-14 | same missing cells: True | labels differ in ['warn'], e.g. ['Gradient optimization failed, |grad| = 1; Maximum Likelihood optimization failed to converge; MixedLM optimization faile'] vs ['Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future; Gradient optimization failed, ']
+harmonization  TFCE maps l                              60 subjects | max diff 0.00e+00
+harmonization  TFCE maps r                              60 subjects | max diff 0.00e+00
+analyses       TFCE results                             442 images matched | max diff 0.00e+00 | 40 not produced, e.g. harmonized_subject_maps/sub-027_face_l_harm.nii.gz

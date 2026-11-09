@@ -1,0 +1,245 @@
+=== sub-004 ses-02 -> ses-01  (reference: sub-004/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 1.07 mm | cost 0.664 (FEAT 0.664) | 1.12 mm from FEAT
+  run-02: BBR moved the start 0.72 mm | cost 0.663 (FEAT 0.662) | 1.04 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 307.04 mm | cost 0.659 (FEAT 0.658) | 1.95 mm from FEAT   <-- worse fit than FEAT
+  run-04: BBR moved the start 298.54 mm | cost 0.688 (FEAT 0.687) | 1.30 mm from FEAT   <-- worse fit than FEAT
+  run-05: BBR moved the start 298.75 mm | cost 0.697 (FEAT 0.694) | 2.04 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 0.279056 mm
+  QC run-01 vs run-03: 3.56122 mm   <-- over 1 mm, check
+  QC run-01 vs run-04: 0.750587 mm
+  QC run-01 vs run-05: 296.972 mm   <-- over 1 mm, check
+  QC run-02 vs run-03: 2.17298 mm   <-- over 1 mm, check
+  QC run-02 vs run-04: 292.371 mm   <-- over 1 mm, check
+  QC run-02 vs run-05: 296.244 mm   <-- over 1 mm, check
+  QC run-03 vs run-04: 302.478 mm   <-- over 1 mm, check
+  QC run-03 vs run-05: 298.216 mm   <-- over 1 mm, check
+  QC run-04 vs run-05: 295.099 mm   <-- over 1 mm, check
+=== sub-004 ses-03 -> ses-01  (reference: sub-004/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 287.16 mm | cost 0.947 (FEAT 0.739) | 33.39 mm from FEAT   <-- worse fit than FEAT
+  run-02: BBR moved the start 283.27 mm | cost 0.947 (FEAT 0.740) | 33.39 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 277.48 mm | cost 0.964 (FEAT 0.749) | 41.47 mm from FEAT   <-- worse fit than FEAT
+  run-04: BBR moved the start 1.39 mm | cost 0.747 (FEAT 0.749) | 2.15 mm from FEAT
+  run-05: BBR moved the start 272.63 mm | cost 0.964 (FEAT 0.769) | 32.44 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 1.84957 mm   <-- over 1 mm, check
+  QC run-01 vs run-03: 262.604 mm   <-- over 1 mm, check
+  QC run-01 vs run-04: 33.3868 mm   <-- over 1 mm, check
+  QC run-01 vs run-05: 5.04128 mm   <-- over 1 mm, check
+  QC run-02 vs run-03: 11.0495 mm   <-- over 1 mm, check
+  QC run-02 vs run-04: 34.1335 mm   <-- over 1 mm, check
+  QC run-02 vs run-05: 4.18408 mm   <-- over 1 mm, check
+  QC run-03 vs run-04: 264.575 mm   <-- over 1 mm, check
+  QC run-03 vs run-05: 14.8274 mm   <-- over 1 mm, check
+  QC run-04 vs run-05: 32.497 mm   <-- over 1 mm, check
+=== sub-004 ses-05 -> ses-01  (reference: sub-004/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 5.32 mm | cost 0.958 (FEAT 0.939) | 291.18 mm from FEAT   <-- worse fit than FEAT
+  run-02: BBR moved the start 2.60 mm | cost 0.717 (FEAT 0.718) | 1.13 mm from FEAT
+  run-03: BBR moved the start 2.28 mm | cost 0.718 (FEAT 0.717) | 1.38 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 298.106 mm   <-- over 1 mm, check
+  QC run-01 vs run-03: 12.8237 mm   <-- over 1 mm, check
+  QC run-02 vs run-03: 0.940695 mm
+=== sub-004 ses-06 -> ses-01  (reference: sub-004/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 2.75 mm | cost 0.517 (FEAT 0.517) | 0.38 mm from FEAT
+  run-02: BBR moved the start 3.14 mm | cost 0.515 (FEAT 0.515) | 0.19 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 3.07 mm | cost 0.518 (FEAT 0.518) | 0.08 mm from FEAT
+  QC run-01 vs run-02: 0.24555 mm
+  QC run-01 vs run-03: 0.104332 mm
+  QC run-02 vs run-03: 0.229279 mm
+=== sub-007 ses-03 -> ses-01  (reference: sub-007/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 292.03 mm | cost 0.722 (FEAT 0.718) | 1.49 mm from FEAT   <-- worse fit than FEAT
+  run-02: BBR moved the start 281.87 mm | cost 0.721 (FEAT 0.719) | 0.75 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 1.06527 mm   <-- over 1 mm, check
+=== sub-007 ses-04 -> ses-01  (reference: sub-007/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 297.18 mm | cost 0.670 (FEAT 0.670) | 0.79 mm from FEAT
+  run-02: BBR moved the start 295.08 mm | cost 0.677 (FEAT 0.676) | 0.97 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 1.6488 mm   <-- over 1 mm, check
+=== sub-008 ses-02 -> ses-01  (reference: sub-008/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 4.47 mm | cost 0.611 (FEAT 1.004) | 24.49 mm from FEAT
+  run-02: BBR moved the start 3.86 mm | cost 0.622 (FEAT 0.996) | 21.89 mm from FEAT
+  run-03: BBR moved the start 4.64 mm | cost 0.623 (FEAT 1.027) | 31.12 mm from FEAT
+  run-04: BBR moved the start 3.93 mm | cost 0.631 (FEAT 0.992) | 28.59 mm from FEAT
+  QC run-01 vs run-02: 0.681208 mm
+  QC run-01 vs run-03: 0.552449 mm
+  QC run-01 vs run-04: 0.90604 mm
+  QC run-02 vs run-03: 0.355842 mm
+  QC run-02 vs run-04: 0.226961 mm
+  QC run-03 vs run-04: 0.459312 mm
+=== sub-010 ses-03 -> ses-02  (reference: sub-010/ses-02/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.62 mm | cost 0.818 (FEAT 0.904) | 22.47 mm from FEAT
+  run-02: BBR moved the start 0.93 mm | cost 0.802 (FEAT 0.930) | 14.42 mm from FEAT
+  run-03: BBR moved the start 0.60 mm | cost 0.818 (FEAT 0.884) | 9.60 mm from FEAT
+  QC run-01 vs run-02: 0.426525 mm
+  QC run-01 vs run-03: 0.438473 mm
+  QC run-02 vs run-03: 0.629015 mm
+=== sub-018 ses-03 -> ses-02  (reference: sub-018/ses-02/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 4.48 mm | cost 0.415 (FEAT 0.415) | 0.19 mm from FEAT
+  run-02: BBR moved the start 3.80 mm | cost 0.420 (FEAT 0.419) | 0.23 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 3.61 mm | cost 0.417 (FEAT 0.416) | 0.34 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 0.088173 mm
+  QC run-01 vs run-03: 0.130518 mm
+  QC run-02 vs run-03: 0.216951 mm
+=== sub-021 ses-02 -> ses-01  (reference: sub-021/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 1.00 mm | cost 0.599 (FEAT 0.600) | 0.07 mm from FEAT
+  run-02: BBR moved the start 1.17 mm | cost 0.599 (FEAT 0.599) | 0.19 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 0.98 mm | cost 0.608 (FEAT 0.607) | 0.28 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 0.184761 mm
+  QC run-01 vs run-03: 0.125311 mm
+  QC run-02 vs run-03: 0.232009 mm
+=== sub-021 ses-03 -> ses-01  (reference: sub-021/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 1.77 mm | cost 0.632 (FEAT 0.632) | 0.19 mm from FEAT
+  run-02: BBR moved the start 1.62 mm | cost 0.622 (FEAT 0.622) | 0.40 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 1.76 mm | cost 0.623 (FEAT 0.623) | 0.21 mm from FEAT
+  QC run-01 vs run-02: 0.273245 mm
+  QC run-01 vs run-03: 0.235199 mm
+  QC run-02 vs run-03: 0.259868 mm
+=== sub-022 ses-02 -> ses-01  (reference: sub-022/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.82 mm | cost 0.509 (FEAT 0.509) | 0.29 mm from FEAT
+  run-02: BBR moved the start 0.63 mm | cost 0.519 (FEAT 0.520) | 0.32 mm from FEAT
+  run-03: BBR moved the start 0.66 mm | cost 0.516 (FEAT 0.517) | 0.30 mm from FEAT
+  QC run-01 vs run-02: 0.251213 mm
+  QC run-01 vs run-03: 0.178731 mm
+  QC run-02 vs run-03: 0.272183 mm
+=== sub-025 ses-02 -> ses-01  (reference: sub-025/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.76 mm | cost 0.470 (FEAT 0.471) | 0.21 mm from FEAT
+  run-02: BBR moved the start 0.88 mm | cost 0.481 (FEAT 0.481) | 0.03 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 0.72 mm | cost 0.482 (FEAT 0.481) | 0.23 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 0.120335 mm
+  QC run-01 vs run-03: 0.269201 mm
+  QC run-02 vs run-03: 0.346061 mm
+=== sub-025 ses-03 -> ses-01  (reference: sub-025/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.46 mm | cost 0.467 (FEAT 0.467) | 0.14 mm from FEAT
+  run-02: BBR moved the start 0.38 mm | cost 0.472 (FEAT 0.472) | 0.02 mm from FEAT
+  run-03: BBR moved the start 0.37 mm | cost 0.473 (FEAT 0.473) | 0.03 mm from FEAT
+  QC run-01 vs run-02: 0.118596 mm
+  QC run-01 vs run-03: 0.346204 mm
+  QC run-02 vs run-03: 0.19465 mm
+=== sub-045 ses-02 -> ses-01  (reference: sub-045/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.64 mm | cost 0.462 (FEAT 0.462) | 0.12 mm from FEAT
+  run-02: BBR moved the start 0.37 mm | cost 0.463 (FEAT 0.463) | 0.25 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 0.44 mm | cost 0.461 (FEAT 0.461) | 0.29 mm from FEAT
+  QC run-01 vs run-02: 0.410692 mm
+  QC run-01 vs run-03: 0.228549 mm
+  QC run-02 vs run-03: 0.22474 mm
+=== sub-045 ses-03 -> ses-01  (reference: sub-045/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.65 mm | cost 0.467 (FEAT 0.467) | 0.08 mm from FEAT   <-- worse fit than FEAT
+  run-02: BBR moved the start 0.50 mm | cost 0.468 (FEAT 0.468) | 0.13 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 0.79 mm | cost 0.466 (FEAT 0.467) | 0.18 mm from FEAT
+  QC run-01 vs run-02: 0.133482 mm
+  QC run-01 vs run-03: 0.18401 mm
+  QC run-02 vs run-03: 0.175976 mm
+=== sub-047 ses-02 -> ses-01  (reference: sub-047/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.53 mm | cost 0.470 (FEAT 0.470) | 0.17 mm from FEAT   <-- worse fit than FEAT
+  run-02: BBR moved the start 0.48 mm | cost 0.486 (FEAT 0.486) | 0.16 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 0.41 mm | cost 0.472 (FEAT 0.472) | 0.11 mm from FEAT
+  QC run-01 vs run-02: 0.156231 mm
+  QC run-01 vs run-03: 0.149838 mm
+  QC run-02 vs run-03: 0.202722 mm
+=== sub-049 ses-02 -> ses-01  (reference: sub-049/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.45 mm | cost 0.448 (FEAT 0.449) | 0.28 mm from FEAT
+  run-02: BBR moved the start 0.37 mm | cost 0.457 (FEAT 0.458) | 0.15 mm from FEAT
+  QC run-01 vs run-02: 0.268307 mm
+=== sub-052 ses-02 -> ses-01  (reference: sub-052/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.45 mm | cost 0.427 (FEAT 0.427) | 0.08 mm from FEAT
+  run-02: BBR moved the start 0.65 mm | cost 0.431 (FEAT 0.431) | 0.07 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 0.58 mm | cost 0.433 (FEAT 0.433) | 0.15 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 0.241419 mm
+  QC run-01 vs run-03: 0.231875 mm
+  QC run-02 vs run-03: 0.0778001 mm
+=== sub-058 ses-02 -> ses-01  (reference: sub-058/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.26 mm | cost 0.415 (FEAT 0.415) | 0.01 mm from FEAT
+  run-02: BBR moved the start 0.24 mm | cost 0.405 (FEAT 0.405) | 0.07 mm from FEAT
+  run-03: BBR moved the start 0.22 mm | cost 0.409 (FEAT 0.409) | 0.05 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 0.205151 mm
+  QC run-01 vs run-03: 0.149101 mm
+  QC run-02 vs run-03: 0.100142 mm
+=== sub-062 ses-02 -> ses-01  (reference: sub-062/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.30 mm | cost 0.477 (FEAT 0.477) | 0.09 mm from FEAT
+  run-02: BBR moved the start 0.30 mm | cost 0.481 (FEAT 0.481) | 0.12 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 0.21 mm | cost 0.476 (FEAT 0.476) | 0.11 mm from FEAT
+  QC run-01 vs run-02: 0.0913802 mm
+  QC run-01 vs run-03: 0.10927 mm
+  QC run-02 vs run-03: 0.0971267 mm
+=== sub-064 ses-02 -> ses-01  (reference: sub-064/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.48 mm | cost 0.322 (FEAT 0.322) | 0.14 mm from FEAT   <-- worse fit than FEAT
+  run-02: BBR moved the start 0.48 mm | cost 0.322 (FEAT 0.322) | 0.07 mm from FEAT
+  run-03: BBR moved the start 0.36 mm | cost 0.320 (FEAT 0.320) | 0.04 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 0.116932 mm
+  QC run-01 vs run-03: 0.0905398 mm
+  QC run-02 vs run-03: 0.0469323 mm
+=== sub-068 ses-03 -> ses-02  (reference: sub-068/ses-02/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.52 mm | cost 0.382 (FEAT 0.382) | 0.29 mm from FEAT   <-- worse fit than FEAT
+  run-02: BBR moved the start 0.59 mm | cost 0.392 (FEAT 0.392) | 0.15 mm from FEAT
+  run-03: BBR moved the start 0.62 mm | cost 0.391 (FEAT 0.391) | 0.12 mm from FEAT
+  QC run-01 vs run-02: 0.32641 mm
+  QC run-01 vs run-03: 0.221243 mm
+  QC run-02 vs run-03: 0.116915 mm
+=== sub-070 ses-02 -> ses-01  (reference: sub-070/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.64 mm | cost 0.498 (FEAT 0.498) | 0.46 mm from FEAT
+  run-02: BBR moved the start 0.63 mm | cost 0.495 (FEAT 0.495) | 0.36 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 0.61 mm | cost 0.497 (FEAT 0.497) | 0.37 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 0.103002 mm
+  QC run-01 vs run-03: 0.145277 mm
+  QC run-02 vs run-03: 0.109895 mm
+=== sub-072 ses-02 -> ses-01  (reference: sub-072/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.52 mm | cost 0.568 (FEAT 0.569) | 0.70 mm from FEAT
+  run-02: BBR moved the start 0.41 mm | cost 0.567 (FEAT 0.567) | 0.60 mm from FEAT
+  run-03: BBR moved the start 0.32 mm | cost 0.574 (FEAT 0.574) | 0.54 mm from FEAT
+  QC run-01 vs run-02: 0.219489 mm
+  QC run-01 vs run-03: 0.315325 mm
+  QC run-02 vs run-03: 0.242711 mm
+=== sub-073 ses-02 -> ses-01  (reference: sub-073/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.57 mm | cost 0.472 (FEAT 0.472) | 0.14 mm from FEAT
+  run-02: BBR moved the start 0.55 mm | cost 0.480 (FEAT 0.480) | 0.16 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 0.65 mm | cost 0.481 (FEAT 0.481) | 0.22 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 0.0855202 mm
+  QC run-01 vs run-03: 0.19154 mm
+  QC run-02 vs run-03: 0.116927 mm
+=== sub-079 ses-02 -> ses-01  (reference: sub-079/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.79 mm | cost 0.468 (FEAT 0.468) | 0.38 mm from FEAT
+  run-02: BBR moved the start 0.68 mm | cost 0.467 (FEAT 0.467) | 0.40 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 0.73 mm | cost 0.476 (FEAT 0.476) | 0.12 mm from FEAT   <-- worse fit than FEAT
+  QC run-01 vs run-02: 0.146908 mm
+  QC run-01 vs run-03: 0.229901 mm
+  QC run-02 vs run-03: 0.271873 mm
+=== sub-081 ses-02 -> ses-01  (reference: sub-081/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 1.58 mm | cost 0.556 (FEAT 0.555) | 0.44 mm from FEAT   <-- worse fit than FEAT
+  run-02: BBR moved the start 1.49 mm | cost 0.553 (FEAT 0.553) | 0.44 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 1.55 mm | cost 0.554 (FEAT 0.555) | 0.55 mm from FEAT
+  QC run-01 vs run-02: 0.103608 mm
+  QC run-01 vs run-03: 0.210342 mm
+  QC run-02 vs run-03: 0.292948 mm
+=== sub-086 ses-02 -> ses-01  (reference: sub-086/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.97 mm | cost 0.494 (FEAT 0.494) | 0.06 mm from FEAT
+  run-02: BBR moved the start 1.13 mm | cost 0.492 (FEAT 0.492) | 0.11 mm from FEAT
+Image Exception : #63 :: No image files match: /user_data/csimmon2/sym_pt/sub-086/ses-02/derivatives/fsl/loc/run-03/1stLevel.feat/reg/example_func
+Image Exception : #22 :: Failed to read volume /user_data/csimmon2/sym_pt/sub-086/ses-02/derivatives/fsl/loc/run-03/1stLevel.feat/reg/example_func
+Error : No image files match: /user_data/csimmon2/sym_pt/sub-086/ses-02/derivatives/fsl/loc/run-03/1stLevel.feat/reg/example_func
+Failed to read volume /user_data/csimmon2/sym_pt/sub-086/ses-02/derivatives/fsl/loc/run-03/1stLevel.feat/reg/example_func
+Error : No image files match: /user_data/csimmon2/sym_pt/sub-086/ses-02/derivatives/fsl/loc/run-03/1stLevel.feat/reg/example_func
+Could not open matrix file /tmp/s07_2485900_sub-086_ses-02/run-03/func2firstsesfunc.mat
+Cannot read input-matrix
+sub-086 02: FAILED
+=== sub-092 ses-02 -> ses-01  (reference: sub-092/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.69 mm | cost 0.562 (FEAT 0.938) | 89.06 mm from FEAT
+  run-02: BBR moved the start 0.68 mm | cost 0.549 (FEAT 0.998) | 21.29 mm from FEAT
+  run-03: BBR moved the start 0.76 mm | cost 0.553 (FEAT 0.990) | 17.17 mm from FEAT
+  QC run-01 vs run-02: 0.476833 mm
+  QC run-01 vs run-03: 0.772616 mm
+  QC run-02 vs run-03: 0.403044 mm
+=== sub-101 ses-02 -> ses-01  (reference: sub-101/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.18 mm | cost 0.619 (FEAT 0.997) | 29.22 mm from FEAT
+  run-02: BBR moved the start 0.46 mm | cost 0.617 (FEAT 0.617) | 0.30 mm from FEAT   <-- worse fit than FEAT
+  run-03: BBR moved the start 0.30 mm | cost 0.616 (FEAT 0.615) | 0.68 mm from FEAT   <-- worse fit than FEAT
+  run-04: BBR moved the start 0.39 mm | cost 0.638 (FEAT 0.639) | 0.65 mm from FEAT
+  QC run-01 vs run-02: 0.304115 mm
+  QC run-01 vs run-03: 0.336907 mm
+  QC run-01 vs run-04: 0.36704 mm
+  QC run-02 vs run-03: 0.392689 mm
+  QC run-02 vs run-04: 0.513679 mm
+  QC run-03 vs run-04: 0.0856118 mm
+=== sub-108 ses-02 -> ses-01  (reference: sub-108/ses-01/derivatives/fsl/loc/run-02/1stLevel.feat/reg; dry run, nothing installed)
+  run-01: BBR moved the start 0.27 mm | cost 0.637 (FEAT 1.006) | 18.67 mm from FEAT
+  run-02: BBR moved the start 0.39 mm | cost 0.638 (FEAT 1.002) | 35.88 mm from FEAT
+  run-03: BBR moved the start 0.40 mm | cost 0.628 (FEAT 0.953) | 23.99 mm from FEAT
+  QC run-01 vs run-02: 0.276314 mm
+  QC run-01 vs run-03: 0.209579 mm
+  QC run-02 vs run-03: 0.167949 mm

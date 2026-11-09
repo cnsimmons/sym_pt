@@ -1,0 +1,145 @@
+measure,comparison,comparison_name,spec,beta,p,n_group_a,n_group_b,role,paired,age_cap,roi_set,drop_word,dv_transform
+peak_z,1,A = LH ctrl        B = LH-intact pt,binA  word+face | house+object,1.7402825188646631,0.010197960407918417,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,1,A = LH ctrl        B = LH-intact pt,binB  word | face+house+object,1.1232901463494636,0.14817036592681462,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,1,A = LH ctrl        B = LH-intact pt,binC  word+face+house | object,1.8835337194692658,0.01919616076784643,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,1,A = LH ctrl        B = LH-intact pt,cont  |LI| z>1.96,7.7401623279084015,0.009398120375924815,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,1,A = LH ctrl        B = LH-intact pt,cont  |LI| z>2.33,6.9572262369477675,0.01199760047990402,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,1,A = LH ctrl        B = LH-intact pt,rank  word>face>object=house,0.7673091973464633,0.006998600279944011,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,1,A = LH ctrl        B = LH-intact pt,sign  LI toward lost side z>2.33,-0.07184622226483528,0.972005598880224,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,1,A = LH ctrl        B = LH-intact pt,"sign  LI toward lost side, thr-free",0.07990777199820376,0.9556088782243551,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,2,A = RH ctrl        B = RH-intact pt,binA  word+face | house+object,0.9400405638016243,0.2549490101979604,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,2,A = RH ctrl        B = RH-intact pt,binB  word | face+house+object,0.9568105203605555,0.2403519296140772,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,2,A = RH ctrl        B = RH-intact pt,binC  word+face+house | object,0.41179465611290944,0.6432713457308539,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>1.96,4.970476704551263,0.16016796640671865,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>2.33,4.629939518702927,0.15596880623875226,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,2,A = RH ctrl        B = RH-intact pt,rank  word>face>object=house,0.47281527466061624,0.16696660667866425,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,2,A = RH ctrl        B = RH-intact pt,sign  LI toward lost side z>2.33,1.314127567033552,0.46290741851629674,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,2,A = RH ctrl        B = RH-intact pt,"sign  LI toward lost side, thr-free",0.9944046264663937,0.4911017796440712,36,12,primary,False,23.0,primary_strict,False,none
+peak_z,3,A = LH-intact pt   B = RH-intact pt,binA  word+face | house+object,-0.37083303765748,0.7146570685862828,12,12,primary,False,23.0,primary_strict,False,none
+peak_z,3,A = LH-intact pt   B = RH-intact pt,binB  word | face+house+object,-1.033729440857627,0.3101379724055189,12,12,primary,False,23.0,primary_strict,False,none
+peak_z,3,A = LH-intact pt   B = RH-intact pt,binC  word+face+house | object,-0.07637231441377068,0.9398120375924816,12,12,primary,False,23.0,primary_strict,False,none
+peak_z,3,A = LH-intact pt   B = RH-intact pt,cont  |LI| z>1.96,-3.4604957505373974,0.4339132173565287,12,12,primary,False,23.0,primary_strict,False,none
+peak_z,3,A = LH-intact pt   B = RH-intact pt,cont  |LI| z>2.33,-3.359503974407815,0.41131773645270947,12,12,primary,False,23.0,primary_strict,False,none
+peak_z,3,A = LH-intact pt   B = RH-intact pt,rank  word>face>object=house,-0.29589925269544537,0.49750049990002,12,12,primary,False,23.0,primary_strict,False,none
+peak_z,3,A = LH-intact pt   B = RH-intact pt,sign  LI toward lost side z>2.33,-2.024470407007774,0.34933013397320534,12,12,primary,False,23.0,primary_strict,False,none
+peak_z,3,A = LH-intact pt   B = RH-intact pt,"sign  LI toward lost side, thr-free",-1.588577936536307,0.3625274945010998,12,12,primary,False,23.0,primary_strict,False,none
+peak_z,4,A = RH ctrl        B = LH-intact pt  [crossed],binA  word+face | house+object,1.310873601459142,0.11757648470305938,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,4,A = RH ctrl        B = LH-intact pt  [crossed],binB  word | face+house+object,1.9905399612181311,0.007198560287942412,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,4,A = RH ctrl        B = LH-intact pt  [crossed],binC  word+face+house | object,0.4881669705267131,0.5906818636272746,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,4,A = RH ctrl        B = LH-intact pt  [crossed],cont  |LI| z>1.96,8.43097245508869,0.011197760447910418,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,4,A = RH ctrl        B = LH-intact pt  [crossed],cont  |LI| z>2.33,7.989443493110715,0.007398520295940812,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,4,A = RH ctrl        B = LH-intact pt  [crossed],rank  word>face>object=house,0.768714527356056,0.01779644071185763,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,4,A = RH ctrl        B = LH-intact pt  [crossed],sign  LI toward lost side z>2.33,-3.3385979740412663,0.07738452309538092,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,4,A = RH ctrl        B = LH-intact pt  [crossed],"sign  LI toward lost side, thr-free",-2.5829825630026755,0.09058188362327535,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,5,A = LH ctrl        B = RH-intact pt  [crossed],binA  word+face | house+object,1.369449481207135,0.047590481903619274,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,5,A = LH ctrl        B = RH-intact pt  [crossed],binB  word | face+house+object,0.08956070549184059,0.9138172365526894,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,5,A = LH ctrl        B = RH-intact pt  [crossed],binC  word+face+house | object,1.8071614050554512,0.027794441111777646,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,5,A = LH ctrl        B = RH-intact pt  [crossed],cont  |LI| z>1.96,4.279666577370982,0.1847630473905219,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,5,A = LH ctrl        B = RH-intact pt  [crossed],cont  |LI| z>2.33,3.5977222625399863,0.22915416916616677,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,5,A = LH ctrl        B = RH-intact pt  [crossed],rank  word>face>object=house,0.4714099446510369,0.11997600479904019,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,5,A = LH ctrl        B = RH-intact pt  [crossed],sign  LI toward lost side z>2.33,-1.9526241847428851,0.264747050589882,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,5,A = LH ctrl        B = RH-intact pt  [crossed],"sign  LI toward lost side, thr-free",-1.6684857085344706,0.235752849430114,36,12,supplemental,False,23.0,primary_strict,False,none
+peak_z,6,A = LH ctrl        B = RH ctrl       [paired],binA  word+face | house+object,0.37996176134312254,0.21435712857428516,36,36,supplemental,True,23.0,primary_strict,False,none
+peak_z,6,A = LH ctrl        B = RH ctrl       [paired],binB  word | face+house+object,-0.485180058511105,0.033193361327734455,36,36,supplemental,True,23.0,primary_strict,False,none
+peak_z,6,A = LH ctrl        B = RH ctrl       [paired],binC  word+face+house | object,0.5140989898760289,0.03939212157568486,36,36,supplemental,True,23.0,primary_strict,False,none
+peak_z,6,A = LH ctrl        B = RH ctrl       [paired],cont  |LI| z>1.96,0.5165064770059518,0.5002999400119976,36,36,supplemental,True,23.0,primary_strict,False,none
+peak_z,6,A = LH ctrl        B = RH ctrl       [paired],cont  |LI| z>2.33,0.4054019479959199,0.5572885422915417,36,36,supplemental,True,23.0,primary_strict,False,none
+peak_z,6,A = LH ctrl        B = RH ctrl       [paired],rank  word>face>object=house,0.055805052249509046,0.42071585682863427,36,36,supplemental,True,23.0,primary_strict,False,none
+peak_z,6,A = LH ctrl        B = RH ctrl       [paired],sign  LI toward lost side z>2.33,2.9565709997025653,0.0033993201359728054,36,36,supplemental,True,23.0,primary_strict,False,none
+peak_z,6,A = LH ctrl        B = RH ctrl       [paired],"sign  LI toward lost side, thr-free",2.4730662570155895,0.003799240151969606,36,36,supplemental,True,23.0,primary_strict,False,none
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,binA  word+face | house+object,0.23709102022523587,0.03939212157568486,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,binB  word | face+house+object,0.1164947108649195,0.41871625674865026,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,binC  word+face+house | object,0.1148814619763287,0.41551689662067587,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,cont  |LI| z>1.96,0.9682743039372756,0.10797840431913618,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,cont  |LI| z>2.33,0.8766612666560238,0.11797640471905618,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,rank  word>face>object=house,0.09844612521923297,0.08098380323935213,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,sign  LI toward lost side z>2.33,-0.04949630107448513,0.8676264747050589,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,1,A = LH ctrl        B = LH-intact pt,"sign  LI toward lost side, thr-free",-0.027082667124916165,0.9122175564887023,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,binA  word+face | house+object,-0.2245999712755905,0.0661867626474705,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,binB  word | face+house+object,-0.28649998700315193,0.03099380123975205,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,binC  word+face+house | object,-0.22697688397847415,0.14977004599080185,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>1.96,-1.3224037356995446,0.028394321135772844,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>2.33,-1.2282665564424478,0.027394521095780843,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,rank  word>face>object=house,-0.12261665492572153,0.033193361327734455,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,sign  LI toward lost side z>2.33,-0.3319922496591359,0.1767646470705859,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,2,A = RH ctrl        B = RH-intact pt,"sign  LI toward lost side, thr-free",-0.24592268380488014,0.21175764847030593,36,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,binA  word+face | house+object,-0.15845370091734434,0.2731453709258148,12,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,binB  word | face+house+object,-0.10697913403112369,0.5622875424915017,12,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,binC  word+face+house | object,-0.04944316254408343,0.7908418316336733,12,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,cont  |LI| z>1.96,-0.7132345855141271,0.35172965406918616,12,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,cont  |LI| z>2.33,-0.656200792817432,0.3623275344931014,12,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,rank  word>face>object=house,-0.0706477559776344,0.3217356528694261,12,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,sign  LI toward lost side z>2.33,-0.1197428133555174,0.7866426714657069,12,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,3,A = LH-intact pt   B = RH-intact pt,"sign  LI toward lost side, thr-free",-0.08797008001856188,0.8030393921215757,12,12,primary,False,23.0,primary_strict,False,none
+distinctiveness,4,A = RH ctrl        B = LH-intact pt  [crossed],binA  word+face | house+object,-0.06614627035825157,0.5816836632673466,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,4,A = RH ctrl        B = LH-intact pt  [crossed],binB  word | face+house+object,-0.1795208529720287,0.22795440911817635,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,4,A = RH ctrl        B = LH-intact pt  [crossed],binC  word+face+house | object,-0.17753372143439017,0.26814637072585484,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,4,A = RH ctrl        B = LH-intact pt  [crossed],cont  |LI| z>1.96,-0.6091691501854147,0.34073185362927416,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,4,A = RH ctrl        B = LH-intact pt  [crossed],cont  |LI| z>2.33,-0.5720657636250139,0.33893221355728853,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,4,A = RH ctrl        B = LH-intact pt  [crossed],rank  word>face>object=house,-0.05196889894808648,0.3903219356128774,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,4,A = RH ctrl        B = LH-intact pt  [crossed],sign  LI toward lost side z>2.33,0.21224943630361348,0.48270345930813835,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,4,A = RH ctrl        B = LH-intact pt  [crossed],"sign  LI toward lost side, thr-free",0.15795260378631176,0.5128974205158968,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,5,A = LH ctrl        B = RH-intact pt  [crossed],binA  word+face | house+object,0.07863731930789622,0.46790641871625677,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,5,A = LH ctrl        B = RH-intact pt  [crossed],binB  word | face+house+object,0.009515576833796308,0.944011197760448,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,5,A = LH ctrl        B = RH-intact pt  [crossed],binC  word+face+house | object,0.06543829943224194,0.6066786642671466,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,5,A = LH ctrl        B = RH-intact pt  [crossed],cont  |LI| z>1.96,0.2550397184231468,0.6444711057788443,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,5,A = LH ctrl        B = RH-intact pt  [crossed],cont  |LI| z>2.33,0.22046047383858677,0.6666666666666666,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,5,A = LH ctrl        B = RH-intact pt  [crossed],rank  word>face>object=house,0.027798369241598918,0.5946810637872425,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,5,A = LH ctrl        B = RH-intact pt  [crossed],sign  LI toward lost side z>2.33,-0.07024651228104087,0.7684463107378524,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,5,A = LH ctrl        B = RH-intact pt  [crossed],"sign  LI toward lost side, thr-free",-0.06088741289365196,0.7514497100579884,36,12,supplemental,False,23.0,primary_strict,False,none
+distinctiveness,6,A = LH ctrl        B = RH ctrl       [paired],binA  word+face | house+object,0.2143357540867783,0.0003999200159968006,36,36,supplemental,True,23.0,primary_strict,False,none
+distinctiveness,6,A = LH ctrl        B = RH ctrl       [paired],binB  word | face+house+object,0.28472878167274224,0.0011997600479904018,36,36,supplemental,True,23.0,primary_strict,False,none
+distinctiveness,6,A = LH ctrl        B = RH ctrl       [paired],binC  word+face+house | object,0.1358209046477128,0.002999400119976005,36,36,supplemental,True,23.0,primary_strict,False,none
+distinctiveness,6,A = LH ctrl        B = RH ctrl       [paired],cont  |LI| z>1.96,0.5519465610954393,0.002999400119976005,36,36,supplemental,True,23.0,primary_strict,False,none
+distinctiveness,6,A = LH ctrl        B = RH ctrl       [paired],cont  |LI| z>2.33,0.5050377935475207,0.003199360127974405,36,36,supplemental,True,23.0,primary_strict,False,none
+distinctiveness,6,A = LH ctrl        B = RH ctrl       [paired],rank  word>face>object=house,0.04420470158316192,0.003999200159968006,36,36,supplemental,True,23.0,primary_strict,False,none
+distinctiveness,6,A = LH ctrl        B = RH ctrl       [paired],sign  LI toward lost side z>2.33,-0.30913298870278655,0.08278344331133773,36,36,supplemental,True,23.0,primary_strict,False,none
+distinctiveness,6,A = LH ctrl        B = RH ctrl       [paired],"sign  LI toward lost side, thr-free",-0.21862899807265823,0.11997600479904019,36,36,supplemental,True,23.0,primary_strict,False,none
+geometry,1,A = LH ctrl        B = LH-intact pt,binA  word+face | house+object,0.10650522811057458,0.36112777444511096,36,12,primary,False,23.0,primary_strict,False,none
+geometry,1,A = LH ctrl        B = LH-intact pt,binB  word | face+house+object,-0.06887692878914714,0.5434913017396521,36,12,primary,False,23.0,primary_strict,False,none
+geometry,1,A = LH ctrl        B = LH-intact pt,binC  word+face+house | object,-0.04969241303485561,0.597880423915217,36,12,primary,False,23.0,primary_strict,False,none
+geometry,1,A = LH ctrl        B = LH-intact pt,cont  |LI| z>1.96,0.15580410044594295,0.7700459908018397,36,12,primary,False,23.0,primary_strict,False,none
+geometry,1,A = LH ctrl        B = LH-intact pt,cont  |LI| z>2.33,0.12201609411023043,0.8010397920415917,36,12,primary,False,23.0,primary_strict,False,none
+geometry,1,A = LH ctrl        B = LH-intact pt,rank  word>face>object=house,0.0240222545719991,0.6486702659468107,36,12,primary,False,23.0,primary_strict,False,none
+geometry,1,A = LH ctrl        B = LH-intact pt,sign  LI toward lost side z>2.33,0.1570875700697491,0.4911017796440712,36,12,primary,False,23.0,primary_strict,False,none
+geometry,1,A = LH ctrl        B = LH-intact pt,"sign  LI toward lost side, thr-free",0.12513169805432284,0.48670265946810637,36,12,primary,False,23.0,primary_strict,False,none
+geometry,2,A = RH ctrl        B = RH-intact pt,binA  word+face | house+object,-0.14335909695806104,0.14817036592681462,36,12,primary,False,23.0,primary_strict,False,none
+geometry,2,A = RH ctrl        B = RH-intact pt,binB  word | face+house+object,-0.5493284077312544,0.0005998800239952009,36,12,primary,False,23.0,primary_strict,False,none
+geometry,2,A = RH ctrl        B = RH-intact pt,binC  word+face+house | object,-0.04399648136517503,0.5016996600679864,36,12,primary,False,23.0,primary_strict,False,none
+geometry,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>1.96,-1.6805107253940736,0.0057988402319536095,36,12,primary,False,23.0,primary_strict,False,none
+geometry,2,A = RH ctrl        B = RH-intact pt,cont  |LI| z>2.33,-1.6451390655414027,0.003999200159968006,36,12,primary,False,23.0,primary_strict,False,none
+geometry,2,A = RH ctrl        B = RH-intact pt,rank  word>face>object=house,-0.1393411002745623,0.011197760447910418,36,12,primary,False,23.0,primary_strict,False,none
+geometry,2,A = RH ctrl        B = RH-intact pt,sign  LI toward lost side z>2.33,-1.0974154657660045,0.0003999200159968006,36,12,primary,False,23.0,primary_strict,False,none
+geometry,2,A = RH ctrl        B = RH-intact pt,"sign  LI toward lost side, thr-free",-0.8626648103507468,0.0003999200159968006,36,12,primary,False,23.0,primary_strict,False,none
+geometry,3,A = LH-intact pt   B = RH-intact pt,binA  word+face | house+object,-0.017402021323286387,0.8818236352729454,12,12,primary,False,23.0,primary_strict,False,none
+geometry,3,A = LH-intact pt   B = RH-intact pt,binB  word | face+house+object,-0.0020151655055249407,0.99000199960008,12,12,primary,False,23.0,primary_strict,False,none
+geometry,3,A = LH-intact pt   B = RH-intact pt,binC  word+face+house | object,0.16644314138933125,0.1843631273745251,12,12,primary,False,23.0,primary_strict,False,none
+geometry,3,A = LH-intact pt   B = RH-intact pt,cont  |LI| z>1.96,-0.05286681543704641,0.9294141171765646,12,12,primary,False,23.0,primary_strict,False,none
+geometry,3,A = LH-intact pt   B = RH-intact pt,cont  |LI| z>2.33,-0.06609036249546962,0.9110177964407119,12,12,primary,False,23.0,primary_strict,False,none
+geometry,3,A = LH-intact pt   B = RH-intact pt,rank  word>face>object=house,-0.006136534692016027,0.9080183963207359,12,12,primary,False,23.0,primary_strict,False,none
+geometry,3,A = LH-intact pt   B = RH-intact pt,sign  LI toward lost side z>2.33,-0.13683187778610384,0.7088582283543291,12,12,primary,False,23.0,primary_strict,False,none
+geometry,3,A = LH-intact pt   B = RH-intact pt,"sign  LI toward lost side, thr-free",-0.11550024148735444,0.6928614277144571,12,12,primary,False,23.0,primary_strict,False,none
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],binA  word+face | house+object,-0.12595707563477437,0.1791641671665667,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],binB  word | face+house+object,-0.547313242225728,0.0001999600079984003,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],binC  word+face+house | object,-0.210439622754505,0.015996800639872025,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],cont  |LI| z>1.96,-1.6276439099570383,0.003799240151969606,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],cont  |LI| z>2.33,-1.5790487030458913,0.003199360127974405,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],rank  word>face>object=house,-0.13320456558254795,0.01199760047990402,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],sign  LI toward lost side z>2.33,0.9605835879799016,0.0013997200559888023,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,4,A = RH ctrl        B = LH-intact pt  [crossed],"sign  LI toward lost side, thr-free",0.7471645688633908,0.0015996800639872025,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],binA  word+face | house+object,0.08910320678728612,0.4657068586282743,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],binB  word | face+house+object,-0.07089209429467258,0.5562887422515497,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],binC  word+face+house | object,0.11675072835447475,0.11437712457508498,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],cont  |LI| z>1.96,0.10293728500891092,0.8614277144571085,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],cont  |LI| z>2.33,0.055925731614716055,0.9186162767446511,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],rank  word>face>object=house,0.017885719879983317,0.7514497100579884,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],sign  LI toward lost side z>2.33,-0.2939194478558511,0.18236352729454108,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,5,A = LH ctrl        B = RH-intact pt  [crossed],"sign  LI toward lost side, thr-free",-0.2406319395416795,0.16516696660667868,36,12,supplemental,False,23.0,primary_strict,False,none
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],binA  word+face | house+object,0.12979508671018994,0.02299540091981604,36,36,supplemental,True,23.0,primary_strict,False,none
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],binB  word | face+house+object,0.3347908377500937,0.0005998800239952009,36,36,supplemental,True,23.0,primary_strict,False,none
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],binC  word+face+house | object,0.07341832959104727,0.09178164367126575,36,36,supplemental,True,23.0,primary_strict,False,none
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],cont  |LI| z>1.96,0.34789694604486454,0.04039192161567687,36,36,supplemental,True,23.0,primary_strict,False,none
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],cont  |LI| z>2.33,0.3235310401022158,0.03979204159168166,36,36,supplemental,True,23.0,primary_strict,False,none
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],rank  word>face>object=house,0.02693221265625778,0.05318936212757448,36,36,supplemental,True,23.0,primary_strict,False,none
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],sign  LI toward lost side z>2.33,-0.8249248804711696,0.0001999600079984003,36,36,supplemental,True,23.0,primary_strict,False,none
+geometry,6,A = LH ctrl        B = RH ctrl       [paired],"sign  LI toward lost side, thr-free",-0.6505799280174197,0.0001999600079984003,36,36,supplemental,True,23.0,primary_strict,False,none
