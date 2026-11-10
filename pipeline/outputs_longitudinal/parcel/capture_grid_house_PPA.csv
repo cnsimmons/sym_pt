@@ -1,0 +1,193 @@
+code,grp,hemi,roi,session,cell,cut
+UD,LH-intact,l,VWFA,first,cut 3.2>3.9 (21 mm),True
+UD,LH-intact,l,VWFA,last,cut 1.7>2.4 (41 mm),True
+UD,LH-intact,l,FFA,first,ok,False
+UD,LH-intact,l,FFA,last,ok,False
+UD,LH-intact,l,PPA,first,ok,False
+UD,LH-intact,l,PPA,last,ok,False
+UD,LH-intact,l,LO,first,ok,False
+UD,LH-intact,l,LO,last,ok,False
+008,LH-intact,l,VWFA,first,cut 3.1>5.6 (20 mm),True
+008,LH-intact,l,VWFA,last,cut 2.3>4.7 (38 mm),True
+008,LH-intact,l,FFA,first,cut 10.8>17.6 (11 mm),True
+008,LH-intact,l,FFA,last,cut 14.2>14.4 (1 mm),True
+008,LH-intact,l,PPA,first,ok,False
+008,LH-intact,l,PPA,last,ok,False
+008,LH-intact,l,LO,first,cut 8.8>15.1 (7 mm),True
+008,LH-intact,l,LO,last,cut 4.9>5.1 (16 mm),True
+C15,control,l,VWFA,first,cut 4.9>5.6 (5 mm),True
+C15,control,l,VWFA,last,ok,False
+C15,control,l,FFA,first,cut 10.1>17.0 (9 mm),True
+C15,control,l,FFA,last,cut 9.2>12.6 (3 mm),True
+C15,control,l,PPA,first,cut 14.2>17.5 (40 mm),True
+C15,control,l,PPA,last,cut 14.7>15.3 (45 mm),True
+C15,control,l,LO,first,ok,False
+C15,control,l,LO,last,ok,False
+C15,control,r,VWFA,first,ok,False
+C15,control,r,VWFA,last,cut 3.3>3.8 (11 mm),True
+C15,control,r,FFA,first,ok,False
+C15,control,r,FFA,last,ok,False
+C15,control,r,PPA,first,ok,False
+C15,control,r,PPA,last,cut 14.4>15.0 (2 mm),True
+C15,control,r,LO,first,ok,False
+C15,control,r,LO,last,ok,False
+TC,RH-intact,r,VWFA,first,ok,False
+TC,RH-intact,r,VWFA,last,ok,False
+TC,RH-intact,r,FFA,first,ok,False
+TC,RH-intact,r,FFA,last,ok,False
+TC,RH-intact,r,PPA,first,ok,False
+TC,RH-intact,r,PPA,last,ok,False
+TC,RH-intact,r,LO,first,cut 10.2>11.5 (6 mm),True
+TC,RH-intact,r,LO,last,cut 12.6>13.7 (5 mm),True
+C11,control,l,VWFA,first,cut 4.3>5.0 (17 mm),True
+C11,control,l,VWFA,last,ok,False
+C11,control,l,FFA,first,cut 7.2>9.8 (22 mm),True
+C11,control,l,FFA,last,cut 5.9>7.1 (25 mm),True
+C11,control,l,PPA,first,cut 10.5>11.2 (1 mm),True
+C11,control,l,PPA,last,cut 12.7>15.1 (47 mm),True
+C11,control,l,LO,first,ok,False
+C11,control,l,LO,last,cut 11.5>12.0 (24 mm),True
+C11,control,r,VWFA,first,cut 3.5>4.2 (31 mm),True
+C11,control,r,VWFA,last,cut 3.5>4.8 (9 mm),True
+C11,control,r,FFA,first,ok,False
+C11,control,r,FFA,last,ok,False
+C11,control,r,PPA,first,cut 9.3>11.0 (40 mm),True
+C11,control,r,PPA,last,cut 12.0>14.9 (12 mm),True
+C11,control,r,LO,first,ok,False
+C11,control,r,LO,last,ok,False
+C5,control,l,VWFA,first,ok,False
+C5,control,l,VWFA,last,cut 5.9>6.3 (30 mm),True
+C5,control,l,FFA,first,ok,False
+C5,control,l,FFA,last,ok,False
+C5,control,l,PPA,first,cut 13.4>15.9 (19 mm),True
+C5,control,l,PPA,last,ok,False
+C5,control,l,LO,first,ok,False
+C5,control,l,LO,last,ok,False
+C5,control,r,VWFA,first,cut 5.7>5.8 (22 mm),True
+C5,control,r,VWFA,last,ok,False
+C5,control,r,FFA,first,ok,False
+C5,control,r,FFA,last,cut 16.4>18.6 (18 mm),True
+C5,control,r,PPA,first,ok,False
+C5,control,r,PPA,last,cut 15.8>17.2 (4 mm),True
+C5,control,r,LO,first,ok,False
+C5,control,r,LO,last,ok,False
+C32,control,l,VWFA,first,ok,False
+C32,control,l,VWFA,last,ok,False
+C32,control,l,FFA,first,ok,False
+C32,control,l,FFA,last,ok,False
+C32,control,l,PPA,first,ok,False
+C32,control,l,PPA,last,ok,False
+C32,control,l,LO,first,ok,False
+C32,control,l,LO,last,ok,False
+C32,control,r,VWFA,first,ok,False
+C32,control,r,VWFA,last,cut 5.2>5.5 (9 mm),True
+C32,control,r,FFA,first,ok,False
+C32,control,r,FFA,last,ok,False
+C32,control,r,PPA,first,ok,False
+C32,control,r,PPA,last,cut 13.7>14.2 (2 mm),True
+C32,control,r,LO,first,ok,False
+C32,control,r,LO,last,ok,False
+C34,control,l,VWFA,first,cut 5.2>5.3 (1 mm),True
+C34,control,l,VWFA,last,cut 5.8>6.3 (5 mm),True
+C34,control,l,FFA,first,ok,False
+C34,control,l,FFA,last,ok,False
+C34,control,l,PPA,first,ok,False
+C34,control,l,PPA,last,cut 10.8>11.5 (10 mm),True
+C34,control,l,LO,first,ok,False
+C34,control,l,LO,last,ok,False
+C34,control,r,VWFA,first,cut 3.5>4.4 (12 mm),True
+C34,control,r,VWFA,last,cut 4.8>6.3 (15 mm),True
+C34,control,r,FFA,first,ok,False
+C34,control,r,FFA,last,ok,False
+C34,control,r,PPA,first,cut 6.5>9.2 (20 mm),True
+C34,control,r,PPA,last,cut 9.2>9.2 (46 mm),True
+C34,control,r,LO,first,ok,False
+C34,control,r,LO,last,ok,False
+C20,control,l,VWFA,first,ok,False
+C20,control,l,VWFA,last,cut 10.3>10.4 (1 mm),True
+C20,control,l,FFA,first,cut 6.2>6.5 (1 mm),True
+C20,control,l,FFA,last,cut 8.1>9.6 (1 mm),True
+C20,control,l,PPA,first,ok,False
+C20,control,l,PPA,last,ok,False
+C20,control,l,LO,first,ok,False
+C20,control,l,LO,last,cut 11.4>11.8 (22 mm),True
+C20,control,r,VWFA,first,ok,False
+C20,control,r,VWFA,last,cut 6.9>8.8 (19 mm),True
+C20,control,r,FFA,first,ok,False
+C20,control,r,FFA,last,ok,False
+C20,control,r,PPA,first,cut 13.3>13.9 (49 mm),True
+C20,control,r,PPA,last,cut 15.2>15.2 (1 mm),True
+C20,control,r,LO,first,ok,False
+C20,control,r,LO,last,ok,False
+C12,control,l,VWFA,first,ok,False
+C12,control,l,VWFA,last,ok,False
+C12,control,l,FFA,first,ok,False
+C12,control,l,FFA,last,ok,False
+C12,control,l,PPA,first,cut 9.8>13.3 (7 mm),True
+C12,control,l,PPA,last,cut 8.4>8.6 (47 mm),True
+C12,control,l,LO,first,ok,False
+C12,control,l,LO,last,cut 10.6>11.2 (1 mm),True
+C12,control,r,VWFA,first,ok,False
+C12,control,r,VWFA,last,cut 3.7>4.5 (12 mm),True
+C12,control,r,FFA,first,ok,False
+C12,control,r,FFA,last,ok,False
+C12,control,r,PPA,first,cut 11.9>15.0 (12 mm),True
+C12,control,r,PPA,last,cut 8.6>12.5 (9 mm),True
+C12,control,r,LO,first,ok,False
+C12,control,r,LO,last,ok,False
+C14,control,l,VWFA,first,ok,False
+C14,control,l,VWFA,last,ok,False
+C14,control,l,FFA,first,cut 13.0>13.6 (1 mm),True
+C14,control,l,FFA,last,ok,False
+C14,control,l,PPA,first,cut 10.9>15.4 (6 mm),True
+C14,control,l,PPA,last,cut 10.2>12.5 (6 mm),True
+C14,control,l,LO,first,cut 11.4>11.7 (2 mm),True
+C14,control,l,LO,last,cut 10.4>10.8 (3 mm),True
+C14,control,r,VWFA,first,ok,False
+C14,control,r,VWFA,last,cut 4.7>4.9 (8 mm),True
+C14,control,r,FFA,first,ok,False
+C14,control,r,FFA,last,ok,False
+C14,control,r,PPA,first,cut 8.0>14.6 (21 mm),True
+C14,control,r,PPA,last,cut 11.0>11.4 (53 mm),True
+C14,control,r,LO,first,cut 11.0>11.2 (27 mm),True
+C14,control,r,LO,last,ok,False
+X,LH-intact,l,VWFA,first,cut 4.0>4.4 (1 mm),True
+X,LH-intact,l,VWFA,last,cut 6.9>8.2 (1 mm),True
+X,LH-intact,l,FFA,first,cut 13.0>18.3 (21 mm),True
+X,LH-intact,l,FFA,last,ok,False
+X,LH-intact,l,PPA,first,ok,False
+X,LH-intact,l,PPA,last,cut 10.6>17.1 (43 mm),True
+X,LH-intact,l,LO,first,ok,False
+X,LH-intact,l,LO,last,ok,False
+FO,RH-intact,r,VWFA,first,ok,False
+FO,RH-intact,r,VWFA,last,ok,False
+FO,RH-intact,r,FFA,first,ok,False
+FO,RH-intact,r,FFA,last,ok,False
+FO,RH-intact,r,PPA,first,ok,False
+FO,RH-intact,r,PPA,last,ok,False
+FO,RH-intact,r,LO,first,ok,False
+FO,RH-intact,r,LO,last,ok,False
+BI,LH-intact,l,VWFA,first,cut 4.2>4.7 (9 mm),True
+BI,LH-intact,l,VWFA,last,cut 6.5>6.8 (1 mm),True
+BI,LH-intact,l,FFA,first,ok,False
+BI,LH-intact,l,FFA,last,ok,False
+BI,LH-intact,l,PPA,first,ok,False
+BI,LH-intact,l,PPA,last,ok,False
+BI,LH-intact,l,LO,first,ok,False
+BI,LH-intact,l,LO,last,ok,False
+BN,LH-intact,l,VWFA,first,cut 3.6>3.9 (3 mm),True
+BN,LH-intact,l,VWFA,last,cut 4.4>4.6 (26 mm),True
+BN,LH-intact,l,FFA,first,ok,False
+BN,LH-intact,l,FFA,last,ok,False
+BN,LH-intact,l,PPA,first,cut 5.0>5.8 (4 mm),True
+BN,LH-intact,l,PPA,last,ok,False
+BN,LH-intact,l,LO,first,cut 9.4>9.5 (1 mm),True
+BN,LH-intact,l,LO,last,ok,False
+108,RH-intact,r,VWFA,first,ok,False
+108,RH-intact,r,VWFA,last,ok,False
+108,RH-intact,r,FFA,first,ok,False
+108,RH-intact,r,FFA,last,ok,False
+108,RH-intact,r,PPA,first,ok,False
+108,RH-intact,r,PPA,last,ok,False
+108,RH-intact,r,LO,first,ok,False
+108,RH-intact,r,LO,last,ok,False
