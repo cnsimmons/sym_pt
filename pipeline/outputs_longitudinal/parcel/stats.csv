@@ -1,0 +1,61 @@
+variant,voxels,test,group,n,estimate,p
+without 010 and 108,mask,gap within group,control L,8,-0.6987931588722883,0.008399160083991601
+without 010 and 108,mask,gap within group,control R,8,-0.6727118205780819,0.008399160083991601
+without 010 and 108,mask,gap within group,LH-intact L,5,-0.23615506469348432,0.18688131186881313
+without 010 and 108,mask,gap within group,RH-intact R,2,-0.6577028548800757,0.4951504849515049
+without 010 and 108,mask,gap vs matched controls,LH-intact,8 vs 5,0.46263809417880397,0.0072992700729927005
+without 010 and 108,mask,gap vs matched controls,RH-intact,8 vs 2,0.015008965698006138,0.978002199780022
+without 010 and 108,mask,grid: uni/bi,LH ctrl vs LH-intact,8 vs 5,-0.46263809417881296,0.005598880223955209
+without 010 and 108,mask,grid: |LI| gradient,LH ctrl vs LH-intact,8 vs 5,-1.5948509241581856,0.04619076184763048
+without 010 and 108,mask,grid: rank order,LH ctrl vs LH-intact,8 vs 5,-0.18474239654337143,0.01899620075984803
+without 010 and 108,mask,grid: uni/bi,RH ctrl vs RH-intact,8 vs 2,-0.015008965698006471,0.9756048790241951
+without 010 and 108,mask,grid: |LI| gradient,RH ctrl vs RH-intact,8 vs 2,-0.7661447717552415,0.4003199360127974
+without 010 and 108,mask,grid: rank order,RH ctrl vs RH-intact,8 vs 2,-0.05675646239425447,0.5436912617476505
+without 010 and 108,mask,grid: uni/bi,LH ctrl vs RH ctrl,8 vs 8,-0.06127234772429557,0.20915816836632672
+without 010 and 108,mask,grid: |LI| gradient,LH ctrl vs RH ctrl,8 vs 8,-0.11897718337366409,0.5052989402119576
+without 010 and 108,mask,grid: rank order,LH ctrl vs RH ctrl,8 vs 8,-0.013594620561578674,0.4191161767646471
+without 010 and 108,top20_first,gap within group,control L,8,0.16794316729211575,0.18348165183481652
+without 010 and 108,top20_first,gap within group,control R,8,-0.002865809544724235,0.9925007499250075
+without 010 and 108,top20_first,gap within group,LH-intact L,5,0.020931190546950796,0.938906109389061
+without 010 and 108,top20_first,gap within group,RH-intact R,2,0.10598813752952566,1.0
+without 010 and 108,top20_first,gap vs matched controls,LH-intact,8 vs 5,-0.14701197674516495,0.44375562443755623
+without 010 and 108,top20_first,gap vs matched controls,RH-intact,8 vs 2,0.10885394707424989,0.7763223677632237
+without 010 and 108,top20_first,grid: uni/bi,LH ctrl vs LH-intact,8 vs 5,0.14701197674516012,0.4261147770445911
+without 010 and 108,top20_first,grid: |LI| gradient,LH ctrl vs LH-intact,8 vs 5,1.31390954570878,0.09298140371925614
+without 010 and 108,top20_first,grid: rank order,LH ctrl vs LH-intact,8 vs 5,0.11417039020324007,0.15736852629474105
+without 010 and 108,top20_first,grid: uni/bi,RH ctrl vs RH-intact,8 vs 2,-0.10885394707425067,0.7794441111777645
+without 010 and 108,top20_first,grid: |LI| gradient,RH ctrl vs RH-intact,8 vs 2,-0.5704328728060739,0.7998400319936013
+without 010 and 108,top20_first,grid: rank order,RH ctrl vs RH-intact,8 vs 2,-0.059611717158225774,0.7806438712257548
+without 010 and 108,top20_first,grid: uni/bi,LH ctrl vs RH ctrl,8 vs 8,-0.05663846895685343,0.635872825434913
+without 010 and 108,top20_first,grid: |LI| gradient,LH ctrl vs RH ctrl,8 vs 8,-0.3911566997553147,0.2571485702859428
+without 010 and 108,top20_first,grid: rank order,LH ctrl vs RH ctrl,8 vs 8,-0.03701891306070815,0.22755448910217957
+with 010 and 108,mask,gap within group,control L,8,-0.6987931588722883,0.008399160083991601
+with 010 and 108,mask,gap within group,control R,8,-0.6727118205780819,0.008399160083991601
+with 010 and 108,mask,gap within group,LH-intact L,5,-0.23615506469348432,0.18688131186881313
+with 010 and 108,mask,gap within group,RH-intact R,4,-0.4083561861957612,0.1227877212278772
+with 010 and 108,mask,gap vs matched controls,LH-intact,8 vs 5,0.46263809417880397,0.0072992700729927005
+with 010 and 108,mask,gap vs matched controls,RH-intact,8 vs 4,0.2643556343823207,0.15728427157284272
+with 010 and 108,mask,grid: uni/bi,LH ctrl vs LH-intact,8 vs 5,-0.46263809417881296,0.005598880223955209
+with 010 and 108,mask,grid: |LI| gradient,LH ctrl vs LH-intact,8 vs 5,-1.5948509241581856,0.04619076184763048
+with 010 and 108,mask,grid: rank order,LH ctrl vs LH-intact,8 vs 5,-0.18474239654337143,0.01899620075984803
+with 010 and 108,mask,grid: uni/bi,RH ctrl vs RH-intact,8 vs 4,-0.264355634382323,0.16216756648670266
+with 010 and 108,mask,grid: |LI| gradient,RH ctrl vs RH-intact,8 vs 4,-1.391251928083912,0.05718856228754249
+with 010 and 108,mask,grid: rank order,RH ctrl vs RH-intact,8 vs 4,-0.14075850487609554,0.08298340331933614
+with 010 and 108,mask,grid: uni/bi,LH ctrl vs RH ctrl,8 vs 8,-0.06127234772429557,0.20915816836632672
+with 010 and 108,mask,grid: |LI| gradient,LH ctrl vs RH ctrl,8 vs 8,-0.11897718337366409,0.5052989402119576
+with 010 and 108,mask,grid: rank order,LH ctrl vs RH ctrl,8 vs 8,-0.013594620561578674,0.4191161767646471
+with 010 and 108,top20_first,gap within group,control L,8,0.16794316729211575,0.18348165183481652
+with 010 and 108,top20_first,gap within group,control R,8,-0.002865809544724235,0.9925007499250075
+with 010 and 108,top20_first,gap within group,LH-intact L,5,0.020931190546950796,0.938906109389061
+with 010 and 108,top20_first,gap within group,RH-intact R,4,0.09287769211151171,0.49255074492550743
+with 010 and 108,top20_first,gap vs matched controls,LH-intact,8 vs 5,-0.14701197674516495,0.44375562443755623
+with 010 and 108,top20_first,gap vs matched controls,RH-intact,8 vs 4,0.09574350165623595,0.6682331766823317
+with 010 and 108,top20_first,grid: uni/bi,LH ctrl vs LH-intact,8 vs 5,0.14701197674516012,0.4261147770445911
+with 010 and 108,top20_first,grid: |LI| gradient,LH ctrl vs LH-intact,8 vs 5,1.31390954570878,0.09298140371925614
+with 010 and 108,top20_first,grid: rank order,LH ctrl vs LH-intact,8 vs 5,0.11417039020324007,0.15736852629474105
+with 010 and 108,top20_first,grid: uni/bi,RH ctrl vs RH-intact,8 vs 4,-0.0957435016562369,0.670865826834633
+with 010 and 108,top20_first,grid: |LI| gradient,RH ctrl vs RH-intact,8 vs 4,-0.303476420017568,0.7982403519296141
+with 010 and 108,top20_first,grid: rank order,RH ctrl vs RH-intact,8 vs 4,-0.03889018266380018,0.7300539892021596
+with 010 and 108,top20_first,grid: uni/bi,LH ctrl vs RH ctrl,8 vs 8,-0.05663846895685343,0.635872825434913
+with 010 and 108,top20_first,grid: |LI| gradient,LH ctrl vs RH ctrl,8 vs 8,-0.3911566997553147,0.2571485702859428
+with 010 and 108,top20_first,grid: rank order,LH ctrl vs RH ctrl,8 vs 8,-0.03701891306070815,0.22755448910217957
