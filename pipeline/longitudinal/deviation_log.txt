@@ -1,4 +1,4 @@
-DEVIATION LOG - sym_pt longitudinal pipeline                      2026-11-10 (v11)
+DEVIATION LOG - sym_pt longitudinal pipeline                      2026-11-11 (v12)
 ================================================================================
 Replaces deviation_log_2026-11-10_v10.txt (same day; v11 adds section 19, BI =
 sub-098 ses-02, and moves the parcel section to 20). Sections 0-18 are v9 unchanged.
@@ -941,3 +941,49 @@ Open:
   4. The checking cells used this session (capture grid, peak pictures, VWFA and
      PPA/LO checks) were pasted into the 10_parcel notebook by hand; fold them into
      the committed notebook if they are to be kept.
+
+
+21. HARMONIZATION OF THE LONGITUDINAL FILES (2026-11-11, C.S.)
+--------------------------------------------------------------------------------
+Script: longitudinal/harmonize.py (commit f263073, md5 455644cede4f8771ff2d6f8ab05a6ca5).
+Reads outputs_longitudinal/univariate_v1.csv, rsa_v1.csv. Writes only under
+outputs_longitudinal/: univariate_v1_harmonized_sqrt.csv, rsa_v1_harmonized.csv
+(every session) and harmonization/ (scanner table, fits, 02's fit-session output).
+Method:
+  - Fit: 3_harmonization/02_harmonize.py univariate() and rsa(), unchanged
+    (ComBat/neuroHarmonize; SITE = scanner; age, sex, group preserved; one fit
+    per hemisphere; 5/95 winsorizing within group; sqrt volume, sum_selec_norm).
+    Fit set as in 02: controls' first session, patients' last; sub-017 out;
+    lib_stats EXCLUDE_SES (108:2, 092:2, 101:2, 098:2). tfce() not called.
+  - Apply: each saved fit applied (harmonizationApply) to every session of the
+    fitted subjects, with that session's scanner, age and sex, the same sqrt and
+    the fit's own winsorizing limits. Outputs are written only if, on the fit
+    sessions, the applied values equal 02's own output.
+Decisions (C.S., 2026-11-11):
+  - Batch = scanner only, as in the cross-sectional study. The 27 -> 69-slice
+    changes (C15, UD, 008) are protocol changes, not batch changes (corrects the
+    handoff's wording). Sensitivity check without C15, UD, 008: later.
+  - Sessions missing from the cross-sectional scanner table: sub-092 ses-02,
+    sub-098 ses-02, sub-101 ses-02 = Prisma (SCANNER_ADDED in the script).
+Scanner table: outputs/F_harmonization/sub_info_scanner.csv, read only (105 rows:
+  Verio 55, Prisma 50; every row of the no-field subjects 098, 099, 101, 108,
+  109 is Prisma), plus those three rows. No blank age/sex in sub_info.csv.
+Results:
+  - Self-check PASS: univariate 1256 fit-session rows, max diff 1.4e-14; RSA
+    6906 rows, max diff 4.4e-16.
+  - Fits: LH 53 subjects, RH 52. Applied to 70 LH and 66 RH sessions, 17 and 14
+    of them beyond the fit.
+  - Outputs: 65 subjects, 87 sessions (univariate 1628 rows, RSA 8952 rows).
+  - Not fitted, left out of univariate: sub-007, 045, 047, 049, 070, 072, 073,
+    081, 086, all nonOTC (02's own rule). None left out of RSA.
+  - Scanner changes within subject: sub-025 (ses-03 Prisma), sub-064 (ses-02
+    Prisma). FO (sub-092) does not change.
+  - Cross-sectional guard: no output.
+Smoothing (checked 2026-11-11): every first-level FEAT design uses 4.0 mm
+  (348 runs, 111 sessions, new sessions included). Liu et al. 2025 used none.
+  Pipeline-wide setting, cross-sectional included. Methods: confirm they say 4 mm.
+New session, rerun: extract.py add XXX NN -> add to SCANNER_ADDED if the
+  session has no scanner-table row -> move outputs_longitudinal/harmonization/
+  aside -> run harmonize.py -> guard. A later session of an existing patient (in
+  EXCLUDE_SES) leaves the fit unchanged; a new patient changes it.
+Open: point 09_longitudinal.ipynb at the harmonized files.
