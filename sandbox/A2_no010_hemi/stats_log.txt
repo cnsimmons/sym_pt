@@ -1,0 +1,105 @@
+Peak distance...
+Peak selectivity...  (univar: /user_data/csimmon2/git_repos/sym_pt/D_liu/univariate_v1_harmonized_sqrt.csv)
+Selective voxel count...
+Sum-selectivity...
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2202: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+Preferred-category similarity...
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2202: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2202: ConvergenceWarning: Retrying MixedLM optimization with cg
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2206: ConvergenceWarning: MixedLM optimization failed, trying a different optimizer may help.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2218: ConvergenceWarning: Gradient optimization failed, |grad| = 1.127203
+  warnings.warn(msg, ConvergenceWarning)
+WTA composition...
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2202: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2202: ConvergenceWarning: Retrying MixedLM optimization with cg
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2206: ConvergenceWarning: MixedLM optimization failed, trying a different optimizer may help.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2218: ConvergenceWarning: Gradient optimization failed, |grad| = 0.258333
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2202: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2202: ConvergenceWarning: Retrying MixedLM optimization with cg
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2206: ConvergenceWarning: MixedLM optimization failed, trying a different optimizer may help.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2218: ConvergenceWarning: Gradient optimization failed, |grad| = 0.258333
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2202: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2202: ConvergenceWarning: Retrying MixedLM optimization with cg
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2206: ConvergenceWarning: MixedLM optimization failed, trying a different optimizer may help.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2218: ConvergenceWarning: Gradient optimization failed, |grad| = 1.376980
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2202: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2202: ConvergenceWarning: Retrying MixedLM optimization with cg
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/base/model.py:606: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2206: ConvergenceWarning: MixedLM optimization failed, trying a different optimizer may help.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2218: ConvergenceWarning: Gradient optimization failed, |grad| = 19.485350
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/brainiak_env/lib/python3.7/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+Between-category similarity...
+
+Saved: /user_data/csimmon2/git_repos/sym_pt/sandbox/A2_no010_hemi/stats_results.csv (274 rows)
+TFCE cluster table...
+Saved: /user_data/csimmon2/git_repos/sym_pt/sandbox/A2_no010_hemi/tfce_clusters.csv (14 clusters)

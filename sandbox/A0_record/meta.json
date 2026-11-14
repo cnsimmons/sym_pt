@@ -1,0 +1,19 @@
+{
+ "exclude": [
+  "sub-017",
+  "sub-027",
+  "sub-084",
+  "sub-091",
+  "sub-095",
+  "sub-096"
+ ],
+ "exclude_ses": [
+  [
+   "sub-108",
+   2
+  ]
+ ],
+ "script_md5": "dd4843b9257b15356dbcb3c9e6aed23f",
+ "univar_md5": "0f4549a78f91d9c69f030181f665a152",
+ "rsa_md5": "fd8f06410e5d172970f10960a23a88e6"
+}

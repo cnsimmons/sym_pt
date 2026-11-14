@@ -1,0 +1,17 @@
+cohort,,peak selectivity,selective voxels,between-category,own side
+A0_record,ctrl L vs R,"PPA, LO","VWFA, FFA, PPA, LO","VWFA, FFA, PPA",+0.098
+A0_record,LH-intact vs ctrl,LO,LO,FFA,+0.002
+A0_record,RH-intact vs ctrl,—,"PPA, LO","VWFA, FFA, PPA, LO",-0.008
+A0_record,pt vs pt,—,—,FFA,—
+A1_no010,ctrl L vs R,"VWFA, PPA, LO","VWFA, FFA, PPA, LO","VWFA, FFA, PPA",+0.098
+A1_no010,LH-intact vs ctrl,LO,LO,FFA,+0.002
+A1_no010,RH-intact vs ctrl,—,"PPA, LO","VWFA, FFA, PPA, LO",-0.021
+A1_no010,pt vs pt,—,—,FFA,—
+A2_no010_hemi,ctrl L vs R,"PPA, LO","VWFA, FFA, PPA, LO","VWFA, FFA, PPA",+0.098
+A2_no010_hemi,LH-intact vs ctrl,"PPA, LO","PPA, LO","VWFA, FFA, PPA",-0.001
+A2_no010_hemi,RH-intact vs ctrl,—,"PPA, LO","VWFA, FFA, PPA",-0.058
+A2_no010_hemi,pt vs pt,—,—,FFA,—
+A3_prisma,ctrl L vs R,—,—,—,+0.106
+A3_prisma,LH-intact vs ctrl,"PPA, LO","PPA, LO",FFA,-0.041
+A3_prisma,RH-intact vs ctrl,—,"PPA, LO","VWFA, FFA",+0.066
+A3_prisma,pt vs pt,—,—,—,—
