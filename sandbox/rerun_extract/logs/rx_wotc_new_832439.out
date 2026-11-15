@@ -1,0 +1,148 @@
+wotc_new: PROC /lab_data/behrmannlab/claire/sym_pt_rerun; masks and CSVs to /user_data/csimmon2/git_repos/sym_pt/sandbox/rerun_extract/wotc_new
+60 subjects (36 control, 24 OTC)
+
+SPLIT-HALF: 60/60 subjects have >=2 run-level cope maps (median 33).
+  Running WITHOUT a split. The RSM diagonal is therefore 1.0 by
+  construction and is not reported; only the 6 off-diagonal entries
+  are used. Group comparisons stay valid; absolute values are not
+  comparable to Rosenke's split-half numbers.
+
+96 subject x hemisphere odRSMs   (mean 11440 voxels)
+
+==========================================================================
+[LH]  36 controls  vs  12 LH-intact patients
+==========================================================================
+
+A. GROUP DIFFERENCE per category pair (Fisher-z pattern correlation across OTC)
+   pair              ctrl      pt     diff        p
+   face-house      -0.323  -0.336   -0.012   0.7884
+   face-object     -0.333  -0.197   +0.136   0.0535
+   face-word       -0.056  -0.149   -0.093   0.0799
+   house-object    -0.157  -0.124   +0.033   0.5718
+   house-word      -0.613  -0.548   +0.065   0.2350
+   object-word     -0.208  -0.309   -0.101   0.0643
+   BH-FDR across the 6 pairs: fh=0.788, fo=0.160, fw=0.160, ho=0.686, hw=0.352, ow=0.160
+
+B. WITHIN-GROUP HETEROGENEITY (Rosenke Fig 4)
+   controls: mean r to own group = +0.590 (SD 0.162)
+   patients: mean r to own group = +0.316 (SD 0.229)
+   difference in mean similarity: -0.274, p = 0.0001  *
+   bootstrapped SD: controls 0.153, patients 0.213, p = 0.1900
+   Higher patient SD = the group mean is hiding real between-patient variability.
+
+B2. PER-CATEGORY WHOLE-OTC DISTINCTIVENESS
+    mean of the 3 pairs containing each category; higher = LESS distinct
+   category     ctrl      pt     diff        p   SDctrl    SDpt  ratio    p_sd
+   face       -0.237  -0.227   +0.010   0.6686    0.075   0.057   0.76  0.8985
+   house      -0.365  -0.336   +0.029   0.1824    0.058   0.078   1.35  0.1043
+   object     -0.233  -0.210   +0.023   0.3192    0.064   0.076   1.19  0.2891
+   word       -0.292  -0.335   -0.043   0.0639    0.043   0.116   2.68  0.0216*
+   BH-FDR across the 4 categories: face=0.669, house=0.365, object=0.426, word=0.256
+   ratio > 1 = that category is more variable across patients than across controls.
+   These 4 values are NOT independent: each pair enters two categories.
+
+C. CROSS-GROUP INDIVIDUAL SIMILARITY (Rosenke Fig 5)
+   per patient: mean r to other patients vs mean r to controls
+     sub-004    own +0.491   ctrl +0.628  <- closer to CONTROLS
+     sub-005    own +0.367   ctrl +0.716  <- closer to CONTROLS
+     sub-008    own +0.368   ctrl +0.362
+     sub-039    own +0.404   ctrl +0.412  <- closer to CONTROLS
+     sub-074    own +0.281   ctrl +0.505  <- closer to CONTROLS
+     sub-075    own -0.111   ctrl -0.032  <- closer to CONTROLS
+     sub-077    own +0.460   ctrl +0.733  <- closer to CONTROLS
+     sub-079    own +0.521   ctrl +0.530  <- closer to CONTROLS
+     sub-089    own +0.411   ctrl +0.287
+     sub-098    own +0.207   ctrl -0.004
+     sub-101    own -0.146   ctrl +0.277  <- closer to CONTROLS
+     sub-109    own +0.544   ctrl +0.620  <- closer to CONTROLS
+   9/12 patients resemble controls more than their own group.
+
+D. SUBJECT x SUBJECT odRSM SIMILARITY
+   [patients] n=12  mean r=+0.316  sd=0.426  range -0.85 to +0.93  | r>0.7: 14/66  r<0.2: 23/66
+   rows ordered by mean similarity to the rest of the group
+            109    079    004    077    089    039    008    005    074    098    075    101
+    109      -  +0.90  +0.80  +0.76  +0.78  +0.68  +0.78  +0.65  +0.51  +0.49  -0.28  -0.08   mean +0.544
+    079  +0.90      -  +0.70  +0.68  +0.88  +0.90  +0.84  +0.44  +0.24  +0.58  -0.09  -0.34   mean +0.521
+    004  +0.80  +0.70      -  +0.82  +0.54  +0.61  +0.29  +0.70  +0.53  +0.40  -0.04  +0.05   mean +0.491
+    077  +0.76  +0.68  +0.82      -  +0.30  +0.64  +0.41  +0.93  +0.40  -0.06  -0.23  +0.42   mean +0.460
+    089  +0.78  +0.88  +0.54  +0.30      -  +0.71  +0.79  +0.06  +0.23  +0.87  +0.04  -0.68   mean +0.411
+    039  +0.68  +0.90  +0.61  +0.64  +0.71      -  +0.64  +0.32  -0.12  +0.47  -0.09  -0.32   mean +0.404
+    008  +0.78  +0.84  +0.29  +0.41  +0.79  +0.64      -  +0.28  +0.18  +0.44  -0.27  -0.31   mean +0.368
+    005  +0.65  +0.44  +0.70  +0.93  +0.06  +0.32  +0.28      -  +0.57  -0.28  -0.29  +0.67   mean +0.367
+    074  +0.51  +0.24  +0.53  +0.40  +0.23  -0.12  +0.18  +0.57      -  +0.09  +0.27  +0.20   mean +0.281
+    098  +0.49  +0.58  +0.40  -0.06  +0.87  +0.47  +0.44  -0.28  +0.09      -  +0.12  -0.85   mean +0.207
+    075  -0.28  -0.09  -0.04  -0.23  +0.04  -0.09  -0.27  -0.29  +0.27  +0.12      -  -0.37   mean -0.111
+    101  -0.08  -0.34  +0.05  +0.42  -0.68  -0.32  -0.31  +0.67  +0.20  -0.85  -0.37      -   mean -0.146
+   [controls] n=36  mean r=+0.590  sd=0.300  range -0.80 to +0.99  | r>0.7: 276/630  r<0.2: 62/630
+   Blocks of mutually high r = discrete alternative solutions;
+   uniformly low = no shared organizing pattern.
+
+==========================================================================
+[RH]  36 controls  vs  12 RH-intact patients
+==========================================================================
+
+A. GROUP DIFFERENCE per category pair (Fisher-z pattern correlation across OTC)
+   pair              ctrl      pt     diff        p
+   face-house      -0.301  -0.332   -0.031   0.4387
+   face-object     -0.154  -0.184   -0.030   0.5947
+   face-word       -0.160  -0.118   +0.041   0.3793
+   house-object    -0.090  -0.129   -0.038   0.5015
+   house-word      -0.637  -0.519   +0.118   0.0368 *
+   object-word     -0.356  -0.300   +0.057   0.4206
+   BH-FDR across the 6 pairs: fh=0.595, fo=0.595, fw=0.595, ho=0.595, hw=0.221, ow=0.595
+
+B. WITHIN-GROUP HETEROGENEITY (Rosenke Fig 4)
+   controls: mean r to own group = +0.574 (SD 0.158)
+   patients: mean r to own group = +0.380 (SD 0.159)
+   difference in mean similarity: -0.194, p = 0.0007  *
+   bootstrapped SD: controls 0.152, patients 0.149, p = 0.5197
+   Higher patient SD = the group mean is hiding real between-patient variability.
+
+B2. PER-CATEGORY WHOLE-OTC DISTINCTIVENESS
+    mean of the 3 pairs containing each category; higher = LESS distinct
+   category     ctrl      pt     diff        p   SDctrl    SDpt  ratio    p_sd
+   face       -0.205  -0.211   -0.007   0.7244    0.047   0.075   1.60  0.0303*
+   house      -0.343  -0.326   +0.016   0.4368    0.064   0.053   0.83  0.9057
+   object     -0.200  -0.204   -0.004   0.8474    0.054   0.075   1.37  0.1628
+   word       -0.384  -0.312   +0.072   0.0154*   0.070   0.120   1.72  0.0446*
+   BH-FDR across the 4 categories: face=0.847, house=0.847, object=0.847, word=0.062
+   ratio > 1 = that category is more variable across patients than across controls.
+   These 4 values are NOT independent: each pair enters two categories.
+
+C. CROSS-GROUP INDIVIDUAL SIMILARITY (Rosenke Fig 5)
+   per patient: mean r to other patients vs mean r to controls
+     sub-010    own +0.175   ctrl +0.340  <- closer to CONTROLS
+     sub-021    own +0.354   ctrl +0.402  <- closer to CONTROLS
+     sub-044    own +0.522   ctrl +0.580  <- closer to CONTROLS
+     sub-066    own +0.071   ctrl +0.053
+     sub-069    own +0.479   ctrl +0.478
+     sub-076    own +0.211   ctrl +0.332  <- closer to CONTROLS
+     sub-078    own +0.563   ctrl +0.719  <- closer to CONTROLS
+     sub-082    own +0.452   ctrl +0.623  <- closer to CONTROLS
+     sub-090    own +0.424   ctrl +0.623  <- closer to CONTROLS
+     sub-092    own +0.554   ctrl +0.656  <- closer to CONTROLS
+     sub-099    own +0.449   ctrl +0.658  <- closer to CONTROLS
+     sub-108    own +0.312   ctrl +0.259
+   9/12 patients resemble controls more than their own group.
+
+D. SUBJECT x SUBJECT odRSM SIMILARITY
+   [patients] n=12  mean r=+0.380  sd=0.331  range -0.44 to +0.95  | r>0.7: 11/66  r<0.2: 18/66
+   rows ordered by mean similarity to the rest of the group
+            078    092    044    069    082    099    090    021    108    076    010    066
+    078      -  +0.92  +0.67  +0.73  +0.95  +0.67  +0.74  +0.26  +0.36  +0.45  +0.53  -0.09   mean +0.563
+    092  +0.92      -  +0.84  +0.68  +0.88  +0.49  +0.54  +0.34  +0.53  +0.49  +0.24  +0.14   mean +0.554
+    044  +0.67  +0.84      -  +0.55  +0.51  +0.56  +0.34  +0.71  +0.74  +0.59  -0.15  +0.39   mean +0.522
+    069  +0.73  +0.68  +0.55      -  +0.61  +0.39  +0.49  +0.35  +0.65  +0.24  +0.50  +0.09   mean +0.479
+    082  +0.95  +0.88  +0.51  +0.61      -  +0.46  +0.64  -0.01  +0.21  +0.41  +0.54  -0.23   mean +0.452
+    099  +0.67  +0.49  +0.56  +0.39  +0.46      -  +0.79  +0.65  +0.16  +0.33  +0.39  +0.04   mean +0.449
+    090  +0.74  +0.54  +0.34  +0.49  +0.64  +0.79      -  +0.42  -0.14  -0.13  +0.80  +0.17   mean +0.424
+    021  +0.26  +0.34  +0.71  +0.35  -0.01  +0.65  +0.42      -  +0.45  +0.09  -0.07  +0.70   mean +0.354
+    108  +0.36  +0.53  +0.74  +0.65  +0.21  +0.16  -0.14  +0.45      -  +0.66  -0.33  +0.14   mean +0.312
+    076  +0.45  +0.49  +0.59  +0.24  +0.41  +0.33  -0.13  +0.09  +0.66      -  -0.37  -0.44   mean +0.211
+    010  +0.53  +0.24  -0.15  +0.50  +0.54  +0.39  +0.80  -0.07  -0.33  -0.37      -  -0.14   mean +0.175
+    066  -0.09  +0.14  +0.39  +0.09  -0.23  +0.04  +0.17  +0.70  +0.14  -0.44  -0.14      -   mean +0.071
+   [controls] n=36  mean r=+0.574  sd=0.305  range -0.66 to +0.99  | r>0.7: 271/630  r<0.2: 76/630
+   Blocks of mutually high r = discrete alternative solutions;
+   uniformly low = no shared organizing pattern.
+
+wrote /user_data/csimmon2/git_repos/sym_pt/sandbox/rerun_extract/wotc_new/otc_rsm.csv and *_persubject.csv

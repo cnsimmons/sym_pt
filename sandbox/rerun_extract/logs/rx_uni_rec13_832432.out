@@ -1,0 +1,23 @@
+uni_rec13: BASE_DIR /user_data/csimmon2/sym_pt; word ROIs (13, True); 70 sessions
+Patients: 35, Controls: 40, Total: 75
+Sum-selec: z>2.326; reporting sum_selec_norm, mean_act, volume
+Categories: ['face_FFA', 'face_STS', 'house_PPA', 'house_TOS', 'object_pF', 'object_LOC', 'word_VWFA', 'word_STG', 'word_pSTG_liu', 'word_IFG', 'evc', 'house_PPA_strict']
+
+[1/75] control001 (0s)[2/75] OTC004 (17s)[3/75] OTC005 (34s)[4/75] nonOTC007 (42s)[5/75] OTC008 (42s)[6/75] OTC010 (59s)[7/75] control016 (75s)[8/75] control018 (91s)[9/75] OTC021 (108s)[10/75] control022 (123s)[11/75] control023 (139s)[12/75] control025 (155s)[13/75] control026 (171s)[14/75] control027 (187s)[15/75] control028 (204s)[16/75] control029 (220s)[17/75] control031 (236s)[18/75] control034 (252s)[19/75] control035 (269s)[20/75] control036 (285s)[21/75] control037 (301s)[22/75] control038 (318s)[23/75] OTC039 (334s)[24/75] control040 (342s)[25/75] control041 (358s)[26/75] control043 (374s)[27/75] OTC044 (390s)[28/75] nonOTC045 (399s)[29/75] nonOTC047 (399s)[30/75] nonOTC049 (399s)[31/75] control052 (399s)[32/75] control054 (415s)[33/75] control057 (431s)[34/75] control058 (448s)[35/75] control059 (465s)[36/75] control062 (482s)[37/75] control064 (498s)[38/75] control065 (515s)[39/75] OTC066 (531s)[40/75] control067 (539s)[41/75] control068 (556s)[42/75] OTC069 (572s)[43/75] nonOTC070 (581s)[44/75] control071 (581s)[45/75] nonOTC072 (597s)[46/75] nonOTC073 (597s)[47/75] OTC074 (597s)[48/75] OTC075 (606s)[49/75] OTC076 (614s)[50/75] OTC077 (622s)[51/75] OTC078 (630s)[52/75] OTC079 (638s)[53/75] nonOTC080 (653s)[54/75] nonOTC081 (653s)[55/75] OTC082 (653s)[56/75] control083 (662s)[57/75] control084 (677s)[58/75] control085 (693s)[59/75] nonOTC086 (708s)[60/75] control087 (708s)[61/75] control088 (724s)[62/75] OTC089 (740s)[63/75] OTC090 (748s)[64/75] OTC091 (757s)[65/75] OTC092 (765s)[66/75] control093 (773s)[67/75] control094 (789s)[68/75] control095 (804s)[69/75] control096 (820s)[70/75] control097 (836s)[71/75] OTC098 (852s)[72/75] OTC099 (860s)[73/75] OTC101 (868s)[74/75] OTC108 (877s)[75/75] OTC109 (885s)
+Saved: /user_data/csimmon2/git_repos/sym_pt/sandbox/rerun_extract/uni_rec13/univariate_v1.csv (1316 rows, 65 subjects)
+
+ROI × hemi coverage:
+hemi               l   r
+category                
+evc               53  52
+face_FFA          53  52
+face_STS          53  52
+house_PPA         53  52
+house_PPA_strict  53  52
+house_TOS         53  52
+object_LOC        53  52
+object_pF         53  52
+word_IFG          51  50
+word_STG          53  52
+word_VWFA         53  52
+word_pSTG_liu     53  52

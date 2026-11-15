@@ -1,0 +1,4 @@
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]

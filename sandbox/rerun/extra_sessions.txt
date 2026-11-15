@@ -1,0 +1,5 @@
+/user_data/csimmon2/git_repos/sym_pt/sandbox/rerun/jobs/004_01_session.sh
+/user_data/csimmon2/git_repos/sym_pt/sandbox/rerun/jobs/008_01_session.sh
+/user_data/csimmon2/git_repos/sym_pt/sandbox/rerun/jobs/010_02_session.sh
+/user_data/csimmon2/git_repos/sym_pt/sandbox/rerun/jobs/021_02_session.sh
+/user_data/csimmon2/git_repos/sym_pt/sandbox/rerun/jobs/079_01_session.sh

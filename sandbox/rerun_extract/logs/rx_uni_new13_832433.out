@@ -1,0 +1,23 @@
+uni_new13: BASE_DIR /lab_data/behrmannlab/claire/sym_pt_rerun; word ROIs (13, True); 70 sessions
+Patients: 25, Controls: 40, Total: 65
+Sum-selec: z>2.326; reporting sum_selec_norm, mean_act, volume
+Categories: ['face_FFA', 'face_STS', 'house_PPA', 'house_TOS', 'object_pF', 'object_LOC', 'word_VWFA', 'word_STG', 'word_pSTG_liu', 'word_IFG', 'evc', 'house_PPA_strict']
+
+[1/65] control001 (0s)[2/65] OTC004 (18s)[3/65] OTC005 (37s)[4/65] OTC008 (47s)[5/65] OTC010 (63s)[6/65] control016 (81s)[7/65] control018 (98s)[8/65] OTC021 (115s)[9/65] control022 (131s)[10/65] control023 (148s)[11/65] control025 (165s)[12/65] control026 (181s)[13/65] control027 (197s)[14/65] control028 (213s)[15/65] control029 (230s)[16/65] control031 (246s)[17/65] control034 (262s)[18/65] control035 (278s)[19/65] control036 (295s)[20/65] control037 (311s)[21/65] control038 (327s)[22/65] OTC039 (343s)[23/65] control040 (351s)[24/65] control041 (367s)[25/65] control043 (384s)[26/65] OTC044 (400s)[27/65] control052 (409s)[28/65] control054 (426s)[29/65] control057 (443s)[30/65] control058 (460s)[31/65] control059 (476s)[32/65] control062 (492s)[33/65] control064 (509s)[34/65] control065 (525s)[35/65] OTC066 (542s)[36/65] control067 (551s)[37/65] control068 (567s)[38/65] OTC069 (584s)[39/65] control071 (593s)[40/65] OTC074 (609s)[41/65] OTC075 (618s)[42/65] OTC076 (626s)[43/65] OTC077 (634s)[44/65] OTC078 (643s)[45/65] OTC079 (652s)[46/65] OTC082 (668s)[47/65] control083 (678s)[48/65] control084 (693s)[49/65] control085 (710s)[50/65] control087 (726s)[51/65] control088 (743s)[52/65] OTC089 (759s)[53/65] OTC090 (768s)[54/65] OTC091 (777s)[55/65] OTC092 (787s)[56/65] control093 (796s)[57/65] control094 (812s)[58/65] control095 (828s)[59/65] control096 (844s)[60/65] control097 (861s)[61/65] OTC098 (877s)[62/65] OTC099 (885s)[63/65] OTC101 (894s)[64/65] OTC108 (903s)[65/65] OTC109 (911s)
+Saved: /user_data/csimmon2/git_repos/sym_pt/sandbox/rerun_extract/uni_new13/univariate_v1.csv (1316 rows, 65 subjects)
+
+ROI × hemi coverage:
+hemi               l   r
+category                
+evc               53  52
+face_FFA          53  52
+face_STS          53  52
+house_PPA         53  52
+house_PPA_strict  53  52
+house_TOS         53  52
+object_LOC        53  52
+object_pF         53  52
+word_IFG          51  50
+word_STG          53  52
+word_VWFA         53  52
+word_pSTG_liu     53  52
