@@ -1,0 +1,237 @@
+P1_nosmooth x A1_no010: exclusions ['sub-010', 'sub-017', 'sub-027', 'sub-084']
+ROIs: ['object_LOC', 'house_PPA_strict', 'face_FFA', 'word_VWFA']
+age cap: 23.0   permutations: 5000
+comparisons: [1, 2, 3, 4, 5, 6]  (primary [1, 2, 3], rest supplemental)
+DV transform: none
+all measures oriented so HIGHER = MORE selective / MORE distinct
+beta < 0  =  the first-named category set is relatively MORE affected in GROUP B
+           (for continuous specs: more lateralized categories relatively more affected)
+  [peak_z] age > 23 excluded — controls ['sub-095', 'sub-096'], patients ['sub-091']
+
+==============================================================================
+MEASURE: peak_z
+
+  1. A = LH ctrl        B = LH-intact pt
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      +1.651   0.0042  36  12 *
+     binB  word | face+house+object      +1.993   0.0004  36  12 *
+     binC  word+face+house | object      +2.279   0.0042  36  12 *
+     cont  |LI| z>1.96                   +9.474   0.0004  36  12 *
+     cont  |LI| z>2.33                   +8.707   0.0004  36  12 *
+     rank  word>face>object=house        +0.883   0.0004  36  12 *
+     sign  LI toward lost side z>2.33    -1.678   0.1586  36  12
+     sign  LI toward lost side, thr-free    -1.176   0.2274  36  12
+
+  2. A = RH ctrl        B = RH-intact pt
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      +0.481   0.4261  36  11
+     binB  word | face+house+object      +0.764   0.2342  36  11
+     binC  word+face+house | object      +0.089   0.9028  36  11
+     cont  |LI| z>1.96                   +3.169   0.2294  36  11
+     cont  |LI| z>2.33                   +3.019   0.2154  36  11
+     rank  word>face>object=house        +0.288   0.2633  36  11
+     sign  LI toward lost side z>2.33    +1.376   0.3477  36  11
+     sign  LI toward lost side, thr-free    +1.071   0.3641  36  11
+
+  3. A = LH-intact pt   B = RH-intact pt
+     (patient-group x category; no control reference)
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      -0.659   0.3639  12  11
+     binB  word | face+house+object      -1.303   0.0164  12  11 *
+     binC  word+face+house | object      -0.853   0.3565  12  11
+     cont  |LI| z>1.96                   -4.942   0.0932  12  11
+     cont  |LI| z>2.33                   -4.660   0.0758  12  11
+     rank  word>face>object=house        -0.437   0.1380  12  11
+     sign  LI toward lost side z>2.33    -1.826   0.1950  12  11
+     sign  LI toward lost side, thr-free    -1.387   0.2226  12  11
+
+  4. A = RH ctrl        B = LH-intact pt  [crossed]   [SUPPLEMENTAL]
+     (crossed hemispheres; confounded with normal asymmetry — read against comparison 6)
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      +1.140   0.0654  36  12
+     binB  word | face+house+object      +2.067   0.0008  36  12 *
+     binC  word+face+house | object      +0.941   0.1980  36  12
+     cont  |LI| z>1.96                   +8.111   0.0016  36  12 *
+     cont  |LI| z>2.33                   +7.679   0.0012  36  12 *
+     rank  word>face>object=house        +0.725   0.0040  36  12 *
+     sign  LI toward lost side z>2.33    -3.202   0.0210  36  12 *
+     sign  LI toward lost side, thr-free    -2.459   0.0270  36  12 *
+
+  5. A = LH ctrl        B = RH-intact pt  [crossed]   [SUPPLEMENTAL]
+     (crossed hemispheres; confounded with normal asymmetry — read against comparison 6)
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      +0.992   0.0848  36  11
+     binB  word | face+house+object      +0.690   0.2226  36  11
+     binC  word+face+house | object      +1.426   0.0648  36  11
+     cont  |LI| z>1.96                   +4.532   0.0682  36  11
+     cont  |LI| z>2.33                   +4.047   0.0742  36  11
+     rank  word>face>object=house        +0.446   0.0664  36  11
+     sign  LI toward lost side z>2.33    -0.148   0.9098  36  11
+     sign  LI toward lost side, thr-free    -0.211   0.8376  36  11
+
+  6. A = LH ctrl        B = RH ctrl       [paired]   [SUPPLEMENTAL]
+     (within subject; labels flipped within subject under permutation)
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      +0.376   0.0958  36  36
+     binB  word | face+house+object      +0.064   0.7540  36  36
+     binC  word+face+house | object      +0.454   0.0148  36  36 *
+     cont  |LI| z>1.96                   +0.736   0.2124  36  36
+     cont  |LI| z>2.33                   +0.634   0.2408  36  36
+     rank  word>face>object=house        +0.065   0.2068  36  36
+     sign  LI toward lost side z>2.33    +1.338   0.0666  36  36
+     sign  LI toward lost side, thr-free    +1.166   0.0562  36  36
+  [distinctiveness] age > 23 excluded — controls ['sub-095', 'sub-096'], patients ['sub-091']
+
+==============================================================================
+MEASURE: distinctiveness
+
+  1. A = LH ctrl        B = LH-intact pt
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      +0.045   0.7011  36  12
+     binB  word | face+house+object      -0.180   0.1430  36  12
+     binC  word+face+house | object      +0.031   0.8374  36  12
+     cont  |LI| z>1.96                   -0.279   0.6239  36  12
+     cont  |LI| z>2.33                   -0.305   0.5623  36  12
+     rank  word>face>object=house        -0.015   0.7842  36  12
+     sign  LI toward lost side z>2.33    +0.440   0.0588  36  12
+     sign  LI toward lost side, thr-free    +0.351   0.0616  36  12
+
+  2. A = RH ctrl        B = RH-intact pt
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      +0.029   0.7870  36  11
+     binB  word | face+house+object      -0.087   0.5099  36  11
+     binC  word+face+house | object      +0.080   0.5941  36  11
+     cont  |LI| z>1.96                   -0.110   0.8450  36  11
+     cont  |LI| z>2.33                   -0.133   0.7980  36  11
+     rank  word>face>object=house        -0.005   0.9278  36  11
+     sign  LI toward lost side z>2.33    -0.270   0.3235  36  11
+     sign  LI toward lost side, thr-free    -0.218   0.3207  36  11
+
+  3. A = LH-intact pt   B = RH-intact pt
+     (patient-group x category; no control reference)
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      +0.171   0.2553  12  11
+     binB  word | face+house+object      +0.255   0.1316  12  11
+     binC  word+face+house | object      +0.222   0.3333  12  11
+     cont  |LI| z>1.96                   +1.092   0.1646  12  11
+     cont  |LI| z>2.33                   +1.016   0.1626  12  11
+     rank  word>face>object=house        +0.100   0.1816  12  11
+     sign  LI toward lost side z>2.33    +0.291   0.3687  12  11
+     sign  LI toward lost side, thr-free    +0.215   0.4119  12  11
+
+  4. A = RH ctrl        B = LH-intact pt  [crossed]   [SUPPLEMENTAL]
+     (crossed hemispheres; confounded with normal asymmetry — read against comparison 6)
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      -0.142   0.2208  36  12
+     binB  word | face+house+object      -0.341   0.0142  36  12 *
+     binC  word+face+house | object      -0.142   0.3727  36  12
+     cont  |LI| z>1.96                   -1.202   0.0490  36  12 *
+     cont  |LI| z>2.33                   -1.149   0.0428  36  12 *
+     rank  word>face>object=house        -0.104   0.0718  36  12
+     sign  LI toward lost side z>2.33    +0.561   0.0430  36  12 *
+     sign  LI toward lost side, thr-free    +0.433   0.0492  36  12 *
+
+  5. A = LH ctrl        B = RH-intact pt  [crossed]   [SUPPLEMENTAL]
+     (crossed hemispheres; confounded with normal asymmetry — read against comparison 6)
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      +0.216   0.0284  36  11 *
+     binB  word | face+house+object      +0.074   0.4973  36  11
+     binC  word+face+house | object      +0.253   0.0756  36  11
+     cont  |LI| z>1.96                   +0.813   0.0912  36  11
+     cont  |LI| z>2.33                   +0.711   0.1070  36  11
+     rank  word>face>object=house        +0.084   0.0652  36  11
+     sign  LI toward lost side z>2.33    -0.149   0.5183  36  11
+     sign  LI toward lost side, thr-free    -0.136   0.4609  36  11
+
+  6. A = LH ctrl        B = RH ctrl       [paired]   [SUPPLEMENTAL]
+     (within subject; labels flipped within subject under permutation)
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      +0.138   0.0424  36  36 *
+     binB  word | face+house+object      +0.165   0.0878  36  36
+     binC  word+face+house | object      +0.088   0.1100  36  36
+     cont  |LI| z>1.96                   +0.354   0.1204  36  36
+     cont  |LI| z>2.33                   +0.323   0.1268  36  36
+     rank  word>face>object=house        +0.029   0.1312  36  36
+     sign  LI toward lost side z>2.33    -0.157   0.3991  36  36
+     sign  LI toward lost side, thr-free    -0.107   0.4581  36  36
+  [geometry] age > 23 excluded — controls ['sub-095', 'sub-096'], patients ['sub-091']
+
+==============================================================================
+MEASURE: geometry
+  unit = subject x ROI x pair (6 pairs); ROI and pair dummies included
+
+  1. A = LH ctrl        B = LH-intact pt
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      -0.010   0.9170  36  12
+     binB  word | face+house+object      -0.103   0.3209  36  12
+     binC  word+face+house | object      -0.066   0.4069  36  12
+     cont  |LI| z>1.96                   -0.268   0.5685  36  12
+     cont  |LI| z>2.33                   -0.260   0.5569  36  12
+     rank  word>face>object=house        -0.021   0.6433  36  12
+     sign  LI toward lost side z>2.33    +0.164   0.4267  36  12
+     sign  LI toward lost side, thr-free    +0.127   0.4395  36  12
+
+  2. A = RH ctrl        B = RH-intact pt
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      -0.300   0.0012  36  11 *
+     binB  word | face+house+object      -0.576   0.0004  36  11 *
+     binC  word+face+house | object      -0.109   0.1610  36  11
+     cont  |LI| z>1.96                   -2.204   0.0002  36  11 *
+     cont  |LI| z>2.33                   -2.108   0.0002  36  11 *
+     rank  word>face>object=house        -0.196   0.0004  36  11 *
+     sign  LI toward lost side z>2.33    -1.029   0.0004  36  11 *
+     sign  LI toward lost side, thr-free    -0.801   0.0004  36  11 *
+
+  3. A = LH-intact pt   B = RH-intact pt
+     (patient-group x category; no control reference)
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      -0.030   0.8010  12  11
+     binB  word | face+house+object      +0.018   0.9164  12  11
+     binC  word+face+house | object      +0.123   0.3225  12  11
+     cont  |LI| z>1.96                   -0.044   0.9532  12  11
+     cont  |LI| z>2.33                   -0.048   0.9444  12  11
+     rank  word>face>object=house        -0.007   0.9210  12  11
+     sign  LI toward lost side z>2.33    -0.051   0.8900  12  11
+     sign  LI toward lost side, thr-free    -0.045   0.8754  12  11
+
+  4. A = RH ctrl        B = LH-intact pt  [crossed]   [SUPPLEMENTAL]
+     (crossed hemispheres; confounded with normal asymmetry — read against comparison 6)
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      -0.270   0.0008  36  12 *
+     binB  word | face+house+object      -0.594   0.0002  36  12 *
+     binC  word+face+house | object      -0.232   0.0046  36  12 *
+     cont  |LI| z>1.96                   -2.160   0.0002  36  12 *
+     cont  |LI| z>2.33                   -2.060   0.0002  36  12 *
+     rank  word>face>object=house        -0.189   0.0004  36  12 *
+     sign  LI toward lost side z>2.33    +0.978   0.0006  36  12 *
+     sign  LI toward lost side, thr-free    +0.756   0.0006  36  12 *
+
+  5. A = LH ctrl        B = RH-intact pt  [crossed]   [SUPPLEMENTAL]
+     (crossed hemispheres; confounded with normal asymmetry — read against comparison 6)
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      -0.040   0.7181  36  11
+     binB  word | face+house+object      -0.085   0.5055  36  11
+     binC  word+face+house | object      +0.056   0.4435  36  11
+     cont  |LI| z>1.96                   -0.312   0.5791  36  11
+     cont  |LI| z>2.33                   -0.308   0.5609  36  11
+     rank  word>face>object=house        -0.028   0.5977  36  11
+     sign  LI toward lost side z>2.33    -0.215   0.3645  36  11
+     sign  LI toward lost side, thr-free    -0.172   0.3557  36  11
+
+  6. A = LH ctrl        B = RH ctrl       [paired]   [SUPPLEMENTAL]
+     (within subject; labels flipped within subject under permutation)
+     specification                         beta        p  nA  nB
+     binA  word+face | house+object      +0.101   0.0764  36  36
+     binB  word | face+house+object      +0.294   0.0016  36  36 *
+     binC  word+face+house | object      +0.046   0.3561  36  36
+     cont  |LI| z>1.96                   +0.250   0.1554  36  36
+     cont  |LI| z>2.33                   +0.233   0.1528  36  36
+     rank  word>face>object=house        +0.019   0.2098  36  36
+     sign  LI toward lost side z>2.33    -0.773   0.0002  36  36 *
+     sign  LI toward lost side, thr-free    -0.615   0.0002  36  36 *
+
+==============================================================================
+TFCE: no subject x category value exists, so it cannot take this form. Report the existing cluster table instead.
+
+Wrote /user_data/csimmon2/git_repos/sym_pt/sandbox/rerun_grid/grid_P1_nosmooth__A1_no010.csv  (144 cells)
+wrote /user_data/csimmon2/git_repos/sym_pt/sandbox/rerun_grid/grid_P1_nosmooth__A1_no010.csv

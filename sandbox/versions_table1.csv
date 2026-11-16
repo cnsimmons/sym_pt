@@ -1,0 +1,25 @@
+version | cohort,,peak selectivity,selective voxels,between-category,own side
+P0_record | A0_record,ctrl L vs R,"PPA, LO","VWFA, FFA, PPA, LO","VWFA, FFA, PPA",+0.098
+P0_record | A0_record,LH-intact vs ctrl,LO,LO,FFA,+0.002
+P0_record | A0_record,RH-intact vs ctrl,—,"PPA, LO","VWFA, FFA, PPA, LO",-0.008
+P0_record | A0_record,pt vs pt,—,—,FFA,—
+P0_record | A1_no010,ctrl L vs R,"VWFA, PPA, LO","VWFA, FFA, PPA, LO","VWFA, FFA, PPA",+0.098
+P0_record | A1_no010,LH-intact vs ctrl,LO,LO,FFA,+0.002
+P0_record | A1_no010,RH-intact vs ctrl,—,"PPA, LO","VWFA, FFA, PPA, LO",-0.021
+P0_record | A1_no010,pt vs pt,—,—,FFA,—
+P1_nosmooth | A0_record,ctrl L vs R,LO,"FFA, PPA, LO","VWFA, FFA, PPA, LO",+0.098
+P1_nosmooth | A0_record,LH-intact vs ctrl,LO,LO,FFA,-0.036
+P1_nosmooth | A0_record,RH-intact vs ctrl,—,"PPA, LO","VWFA, FFA, LO",+0.009
+P1_nosmooth | A0_record,pt vs pt,—,—,—,—
+P1_nosmooth | A1_no010,ctrl L vs R,—,"FFA, PPA, LO","VWFA, FFA, PPA, LO",+0.098
+P1_nosmooth | A1_no010,LH-intact vs ctrl,LO,LO,FFA,-0.036
+P1_nosmooth | A1_no010,RH-intact vs ctrl,—,PPA,"VWFA, FFA, LO",-0.015
+P1_nosmooth | A1_no010,pt vs pt,—,—,—,—
+P2_nosmooth_c20 | A0_record,ctrl L vs R,"VWFA, PPA, LO","VWFA, FFA, PPA, LO","VWFA, FFA, PPA, LO",+0.098
+P2_nosmooth_c20 | A0_record,LH-intact vs ctrl,LO,LO,FFA,-0.036
+P2_nosmooth_c20 | A0_record,RH-intact vs ctrl,—,"VWFA, PPA, LO","VWFA, FFA, LO",+0.009
+P2_nosmooth_c20 | A0_record,pt vs pt,—,—,—,—
+P2_nosmooth_c20 | A1_no010,ctrl L vs R,"VWFA, PPA, LO","VWFA, FFA, PPA, LO","VWFA, FFA, PPA, LO",+0.098
+P2_nosmooth_c20 | A1_no010,LH-intact vs ctrl,LO,LO,FFA,-0.036
+P2_nosmooth_c20 | A1_no010,RH-intact vs ctrl,VWFA,"VWFA, PPA, LO","VWFA, FFA, LO",-0.015
+P2_nosmooth_c20 | A1_no010,pt vs pt,—,—,—,—

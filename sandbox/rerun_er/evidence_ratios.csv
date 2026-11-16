@@ -1,0 +1,57 @@
+version,cohort,who,test,n_rows,ER
+P0_record,A0_record,patients,peak selectivity,96,0.1726806142062238
+P0_record,A0_record,patients,selective voxel count,96,0.0627373200574228
+P0_record,A0_record,patients,preferred-category similarity,96,0.0504530798279345
+P0_record,A0_record,patients,word_VWFA,144,0.130089086806599
+P0_record,A0_record,patients,face_FFA,144,42.71839937823884
+P0_record,A0_record,patients,house_PPA_strict,144,0.0126460018598829
+P0_record,A0_record,patients,object_LOC,144,0.0215902342966372
+P0_record,A0_record,controls,peak selectivity,288,16.18920300374398
+P0_record,A0_record,controls,selective voxel count,288,39.72351962534741
+P0_record,A0_record,controls,preferred-category similarity,288,217.99444114424165
+P0_record,A0_record,controls,word_VWFA,432,63.527148989142034
+P0_record,A0_record,controls,face_FFA,432,92.0615646759945
+P0_record,A0_record,controls,house_PPA_strict,432,44.84571568689394
+P0_record,A0_record,controls,object_LOC,432,0.5906940425864036
+P0_record,A1_no010,patients,peak selectivity,92,0.3682569881361004
+P0_record,A1_no010,patients,selective voxel count,92,0.0714372615407002
+P0_record,A1_no010,patients,preferred-category similarity,92,0.060839838323081
+P0_record,A1_no010,patients,word_VWFA,138,0.0795951015834422
+P0_record,A1_no010,patients,face_FFA,138,7.383232313437655
+P0_record,A1_no010,patients,house_PPA_strict,138,0.0095496323891582
+P0_record,A1_no010,patients,object_LOC,138,0.0179446951476518
+P0_record,A1_no010,controls,peak selectivity,288,16.18920300374398
+P0_record,A1_no010,controls,selective voxel count,288,39.72351962534741
+P0_record,A1_no010,controls,preferred-category similarity,288,217.99444114424165
+P0_record,A1_no010,controls,word_VWFA,432,63.527148989142034
+P0_record,A1_no010,controls,face_FFA,432,92.0615646759945
+P0_record,A1_no010,controls,house_PPA_strict,432,44.84571568689394
+P0_record,A1_no010,controls,object_LOC,432,0.5906940425864036
+P1_nosmooth,A1_no010,patients,peak selectivity,92,0.2437924562914078
+P1_nosmooth,A1_no010,patients,selective voxel count,92,0.0657202332895374
+P1_nosmooth,A1_no010,patients,preferred-category similarity,92,0.1796729431729714
+P1_nosmooth,A1_no010,patients,word_VWFA,138,0.0225816413948431
+P1_nosmooth,A1_no010,patients,face_FFA,138,0.0099631235103445
+P1_nosmooth,A1_no010,patients,house_PPA_strict,138,0.0069337117514643
+P1_nosmooth,A1_no010,patients,object_LOC,138,0.0067371356791962
+P1_nosmooth,A1_no010,controls,peak selectivity,288,5.684796012139864
+P1_nosmooth,A1_no010,controls,selective voxel count,288,18.74749132074653
+P1_nosmooth,A1_no010,controls,preferred-category similarity,288,1.3571099302901133
+P1_nosmooth,A1_no010,controls,word_VWFA,432,27.543808945661294
+P1_nosmooth,A1_no010,controls,face_FFA,432,2743.7692615517367
+P1_nosmooth,A1_no010,controls,house_PPA_strict,432,9.613234980512384
+P1_nosmooth,A1_no010,controls,object_LOC,432,250.84271386010383
+P2_nosmooth_c20,A1_no010,patients,peak selectivity,92,0.0311443812115883
+P2_nosmooth_c20,A1_no010,patients,selective voxel count,92,0.0456190707516665
+P2_nosmooth_c20,A1_no010,patients,preferred-category similarity,92,0.0344930265214547
+P2_nosmooth_c20,A1_no010,patients,word_VWFA,138,0.0236128649890745
+P2_nosmooth_c20,A1_no010,patients,face_FFA,138,0.0073428220215612
+P2_nosmooth_c20,A1_no010,patients,house_PPA_strict,138,0.0051464176819113
+P2_nosmooth_c20,A1_no010,patients,object_LOC,138,0.0073946804141567
+P2_nosmooth_c20,A1_no010,controls,peak selectivity,288,3911.023898157897
+P2_nosmooth_c20,A1_no010,controls,selective voxel count,288,1661.8411906557026
+P2_nosmooth_c20,A1_no010,controls,preferred-category similarity,288,8.896908377395315
+P2_nosmooth_c20,A1_no010,controls,word_VWFA,432,8142.474684711943
+P2_nosmooth_c20,A1_no010,controls,face_FFA,432,3069.252035000124
+P2_nosmooth_c20,A1_no010,controls,house_PPA_strict,432,9.469827989525538
+P2_nosmooth_c20,A1_no010,controls,object_LOC,432,268.8238343375832

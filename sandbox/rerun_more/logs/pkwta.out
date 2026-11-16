@@ -1,0 +1,52 @@
+== mni
+mni: made 80 files; still missing: 0
+== wta
+wta record check vs the record file: 1822 rows matched (1865 vs 1822); largest difference 0
+  -> PASS
+wta no smoothing vs record: 1453 rows matched (1453 vs 1822); largest difference 100
+  -> the rerun maps were read (values differ)
+== peaks
+peaks record check vs the record file: 4590 rows matched (765 vs 4590); largest difference 0
+  -> PASS
+peaks no smoothing vs record: 1316 rows matched (1316 vs 1832); largest difference 54.7
+== stats
+stats P0_record x A0_record: done
+stats P0_record x A1_no010: done
+stats P1_nosmooth x A1_no010: done
+stats P2_nosmooth_c20 x A1_no010: done
+4 of 4 stats runs present
+record check: 30 of 30 peak/WTA rows matched; largest difference 0 -> PASS
+version                                                                          P0_record | A0_record P0_record | A1_no010 P1_nosmooth | A1_no010 P2_nosmooth_c20 | A1_no010
+measure            model                comparison         hemi level                                                                                                        
+peak_distance      LH-intact_pt_vs_ctrl patient_vs_control l    face_FFA               d=-0.25 q=0.473      d=-0.25 q=0.473        d=-0.02 q=0.950            d=-0.02 q=0.950
+                                                                house_PPA_strict       d=+0.57 q=0.170      d=+0.57 q=0.170        d=+0.48 q=0.440            d=+0.48 q=0.617
+                                                                object_LOC             d=+0.80 q=0.085      d=+0.80 q=0.085        d=+0.24 q=0.630            d=+0.24 q=0.630
+                                                                word_VWFA              d=+0.46 q=0.240      d=+0.46 q=0.240        d=+0.41 q=0.440            d=+0.34 q=0.617
+                   RH-intact_pt_vs_ctrl patient_vs_control r    face_FFA               d=+0.19 q=0.582      d=+0.21 q=0.554        d=+0.14 q=0.846            d=+0.14 q=0.712
+                                                                house_PPA_strict       d=+1.01 q=0.017      d=+0.82 q=0.093        d=+1.06 q=0.012            d=+1.06 q=0.012
+                                                                object_LOC             d=+0.61 q=0.103      d=+0.53 q=0.168        d=+1.15 q=0.008            d=+1.15 q=0.008
+                                                                word_VWFA              d=+0.69 q=0.079      d=+0.61 q=0.153        d=+0.07 q=0.846            d=-0.13 q=0.712
+wta                M1_LH_ctrl_vs_pt     omnibus                 ALL                    omnibus p=0.000      omnibus p=0.000        omnibus p=0.106            omnibus p=0.106
+                                        patient_vs_control      face                   d=+0.25 q=0.454      d=+0.25 q=0.443        d=+0.14 q=0.904            d=+0.14 q=0.900
+                                                                house                  d=+0.66 q=0.060      d=+0.66 q=0.064        d=+0.46 q=0.287            d=+0.46 q=0.285
+                                                                object                 d=+0.73 q=0.044      d=+0.73 q=0.053        d=+0.07 q=0.949            d=+0.07 q=0.949
+                                                                word                   d=-1.59 q=0.001      d=-1.59 q=0.000        d=-0.87 q=0.045            d=-0.87 q=0.046
+                   M2_RH_ctrl_vs_pt     omnibus                 ALL                    omnibus p=0.000      omnibus p=0.000        omnibus p=0.000            omnibus p=0.000
+                                        patient_vs_control      face                   d=-0.91 q=0.018      d=-1.12 q=0.006        d=-0.73 q=0.068            d=-0.73 q=0.068
+                                                                house                  d=+0.77 q=0.040      d=+0.69 q=0.063        d=+0.02 q=0.956            d=+0.02 q=0.957
+                                                                object                 d=+0.97 q=0.016      d=+1.48 q=0.000        d=+1.32 q=0.002            d=+1.32 q=0.003
+                                                                word                   d=-1.10 q=0.011      d=-1.33 q=0.002        d=-0.84 q=0.051            d=-0.84 q=0.049
+                   M3_LH_vs_RH_pt       omnibus                 ALL                    omnibus p=0.449      omnibus p=0.496        omnibus p=0.621            omnibus p=0.621
+                                        patient_subgroup        face                   d=-0.41 q=0.623      d=-0.55 q=0.604        d=-0.22 q=0.708            d=-0.22 q=0.708
+                                                                house                  d=+0.50 q=0.623      d=+0.44 q=0.604        d=+0.16 q=0.708            d=+0.16 q=0.708
+                                                                object                 d=-0.30 q=0.623      d=-0.02 q=0.962        d=+0.40 q=0.708            d=+0.40 q=0.708
+                                                                word                   d=+0.20 q=0.623      d=+0.11 q=0.962        d=-0.31 q=0.708            d=-0.31 q=0.708
+                   M4_ctrl_LvsR         control_asymmetry       face                   d=+0.92 q=0.000      d=+0.92 q=0.000        d=+0.99 q=0.000            d=+0.99 q=0.000
+                                                                house                  d=+1.17 q=0.000      d=+1.17 q=0.000        d=+1.35 q=0.000            d=+1.35 q=0.000
+                                                                object                 d=-1.06 q=0.000      d=-1.06 q=0.000        d=-1.06 q=0.000            d=-1.06 q=0.000
+                                                                word                   d=-0.61 q=0.001      d=-0.61 q=0.000        d=-0.76 q=0.000            d=-0.76 q=0.000
+                                        omnibus                 ALL                    omnibus p=0.000      omnibus p=0.000        omnibus p=0.000            omnibus p=0.000
+wta_selective_prop LH_pt_vs_ctrl        patient_vs_control l    selective                      p=0.000              p=0.000                p=0.000                    p=0.000
+                   RH_pt_vs_ctrl        patient_vs_control r    selective                      p=0.000              p=0.001                p=0.001                    p=0.001
+
+saved: /user_data/csimmon2/git_repos/sym_pt/sandbox/rerun_more/peaks_wta_by_version.csv  (TFCE rows not rerun: record values)

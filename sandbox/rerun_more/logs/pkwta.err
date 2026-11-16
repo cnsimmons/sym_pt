@@ -1,0 +1,236 @@
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/pandas/core/arrays/masked.py:61: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with cg
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2206: ConvergenceWarning: MixedLM optimization failed, trying a different optimizer may help.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2218: ConvergenceWarning: Gradient optimization failed, |grad| = 1.127203
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with cg
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2206: ConvergenceWarning: MixedLM optimization failed, trying a different optimizer may help.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2218: ConvergenceWarning: Gradient optimization failed, |grad| = 0.209727
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with cg
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2206: ConvergenceWarning: MixedLM optimization failed, trying a different optimizer may help.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2218: ConvergenceWarning: Gradient optimization failed, |grad| = 19.485350
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with cg
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2206: ConvergenceWarning: MixedLM optimization failed, trying a different optimizer may help.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2218: ConvergenceWarning: Gradient optimization failed, |grad| = 1.127203
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with cg
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2206: ConvergenceWarning: MixedLM optimization failed, trying a different optimizer may help.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2218: ConvergenceWarning: Gradient optimization failed, |grad| = 0.217041
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with cg
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2206: ConvergenceWarning: MixedLM optimization failed, trying a different optimizer may help.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2218: ConvergenceWarning: Gradient optimization failed, |grad| = 19.485350
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with cg
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2206: ConvergenceWarning: MixedLM optimization failed, trying a different optimizer may help.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2218: ConvergenceWarning: Gradient optimization failed, |grad| = 5.458232
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/base/model.py:604: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+  warnings.warn("Maximum Likelihood optimization failed to "
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+  warnings.warn(
+/home/csimmon2/anaconda3/envs/fmri/lib/python3.9/site-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+  warnings.warn(msg, ConvergenceWarning)
