@@ -1,0 +1,8 @@
+#!/bin/bash
+set -uo pipefail
+if squeue -u "${USER:-$(whoami)}" -h -o %j | grep -qE "^vx_"; then echo "STOP: vx_ jobs already queued"; exit 1; fi
+sbatch --parsable --job-name=vx_uni_lo --nodes=1 --ntasks=1 --cpus-per-task=1 --mem=8G --time=04:00:00 --output=/user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/logs/vx_uni_lo_%j.out --error=/user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/logs/vx_uni_lo_%j.err /user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/jobs/uni_lo.sh || exit 1
+sbatch --parsable --job-name=vx_rsa_lo --nodes=1 --ntasks=1 --cpus-per-task=1 --mem=8G --time=06:00:00 --output=/user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/logs/vx_rsa_lo_%j.out --error=/user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/logs/vx_rsa_lo_%j.err /user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/jobs/rsa_lo.sh || exit 1
+sbatch --parsable --job-name=vx_wotc_ventral --nodes=1 --ntasks=1 --cpus-per-task=1 --mem=8G --time=03:00:00 --output=/user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/logs/vx_wotc_ventral_%j.out --error=/user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/logs/vx_wotc_ventral_%j.err /user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/jobs/wotc_ventral.sh || exit 1
+sbatch --parsable --job-name=vx_wotc_ventral_ito --nodes=1 --ntasks=1 --cpus-per-task=1 --mem=8G --time=03:00:00 --output=/user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/logs/vx_wotc_ventral_ito_%j.out --error=/user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/logs/vx_wotc_ventral_ito_%j.err /user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/jobs/wotc_ventral_ito.sh || exit 1
+echo "submitted 4 jobs; logs in /user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/logs"

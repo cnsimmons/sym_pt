@@ -1,0 +1,12 @@
+uni: 110 object_LOC rows swapped (483 values changed); 1206 other rows identical to new20
+rsa: 660 object_LOC rows swapped (444 values changed); 6576 other rows identical to new20
+lo_inf uni: 65 subjects (record fit set 65; missing none)
+lo_inf rsa: 65 subjects (record fit set 65; missing none)
+uni: 1256 rows matched, 0 unmatched
+   non-LO peak_z                 max 0.04225  median 0.0122
+   non-LO sum_selec_norm         max 0.1301  median 0.0301
+   non-LO mean_act               max 0.01006  median 0.00234
+   non-LO volume                 max 0.1759  median 0.0436
+rsa: 6906 rows matched, 0 unmatched
+   non-LO liu_distinctiveness    max 0.01415  median 0.00146
+   non-LO fisher_r               max 0.008763  median 0.00118

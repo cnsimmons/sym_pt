@@ -1,0 +1,19 @@
+rsa_lo: BASE_DIR /user_data/csimmon2/sym_pt_rerun; ROIs {'object_LOC': (3, False), 'object_LOC_inf': (3, False)}
+Patients: 25, Controls: 40, Total: 65
+Sphere: 7mm @ 1mm anat → 2mm RSA
+ROIs: ['object_LOC', 'object_LOC_inf']
+
+[1/65] control001 (0s)[2/65] OTC004 (22s)[3/65] OTC005 (46s)[4/65] OTC008 (57s)[5/65] OTC010 (79s)[6/65] control016 (102s)[7/65] control018 (124s)[8/65] OTC021 (146s)[9/65] control022 (169s)[10/65] control023 (191s)[11/65] control025 (213s)[12/65] control026 (235s)[13/65] control027 (256s)[14/65] control028 (278s)[15/65] control029 (301s)[16/65] control031 (325s)[17/65] control034 (347s)[18/65] control035 (369s)[19/65] control036 (391s)[20/65] control037 (411s)[21/65] control038 (432s)[22/65] OTC039 (452s)[23/65] control040 (463s)[24/65] control041 (483s)[25/65] control043 (504s)[26/65] OTC044 (524s)[27/65] control052 (535s)[28/65] control054 (556s)[29/65] control057 (577s)[30/65] control058 (600s)[31/65] control059 (628s)[32/65] control062 (657s)[33/65] control064 (686s)[34/65] control065 (714s)[35/65] OTC066 (741s)[36/65] control067 (756s)[37/65] control068 (784s)[38/65] OTC069 (812s)[39/65] control071 (827s)[40/65] OTC074 (855s)[41/65] OTC075 (870s)[42/65] OTC076 (885s)[43/65] OTC077 (899s)[44/65] OTC078 (914s)[45/65] OTC079 (929s)[46/65] OTC082 (959s)[47/65] control083 (974s)[48/65] control084 (1003s)[49/65] control085 (1032s)[50/65] control087 (1060s)[51/65] control088 (1089s)[52/65] OTC089 (1117s)[53/65] OTC090 (1132s)[54/65] OTC091 (1147s)[55/65] OTC092 (1162s)[56/65] control093 (1177s)[57/65] control094 (1205s)[58/65] control095 (1234s)[59/65] control096 (1263s)[60/65] control097 (1292s)[61/65] OTC098 (1319s)[62/65] OTC099 (1334s)[63/65] OTC101 (1348s)[64/65] OTC108 (1363s)[65/65] OTC109 (1377s)
+Saved: /user_data/csimmon2/git_repos/sym_pt/sandbox/ventral_otc/rsa_lo/rsa_lo.csv (1320 rows, 65 subjects)
+
+ROI × hemi coverage (subjects):
+hemi             l   r
+category              
+object_LOC      53  52
+object_LOC_inf  53  52
+
+Sphere voxel counts (2mm, expect ~175):
+                 mean   std
+category                   
+object_LOC      171.1  11.9
+object_LOC_inf  170.9  12.7
