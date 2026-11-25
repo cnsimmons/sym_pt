@@ -1,0 +1,5 @@
+test,group,er_first_run,er_recheck,n_obs,div_full,k07_full,div_null,k07_null,dse
+category x hemisphere | peak selectivity,patients,0.0211749449816041,0.01679700910920376,76,0,2,0,0,0.590823450658549
+category x hemisphere | selective voxel count,patients,0.028781038425180955,0.030554089423691946,76,0,1,0,1,0.8106977787530752
+category x hemisphere | preferred-category similarity,patients,0.026165330506396568,0.050463235526128324,76,0,1,0,1,1.111317420523153
+pair x hemisphere | LO,patients,0.042932746042830164,0.048116735031700504,114,0,0,0,0,2.5714979120363344

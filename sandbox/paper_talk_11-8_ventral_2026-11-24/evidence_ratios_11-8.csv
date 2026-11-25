@@ -1,0 +1,15 @@
+test,group,n_subjects,evidence_ratio
+category x hemisphere | peak selectivity,controls,36,3911.0238981578973
+category x hemisphere | peak selectivity,patients,19,0.0211749449816041
+category x hemisphere | selective voxel count,controls,36,1661.8411906557026
+category x hemisphere | selective voxel count,patients,19,0.028781038425180955
+category x hemisphere | preferred-category similarity,controls,36,8.896908377395315
+category x hemisphere | preferred-category similarity,patients,19,0.026165330506396568
+pair x hemisphere | VWFA,controls,36,8142.474684711943
+pair x hemisphere | VWFA,patients,19,0.1908709260012132
+pair x hemisphere | FFA,controls,36,3069.2520350001237
+pair x hemisphere | FFA,patients,19,0.032815519188450354
+pair x hemisphere | PPA,controls,36,9.469827989525538
+pair x hemisphere | PPA,patients,19,0.0027728473229245783
+pair x hemisphere | LO,controls,36,268.8238343375832
+pair x hemisphere | LO,patients,19,0.042932746042830164

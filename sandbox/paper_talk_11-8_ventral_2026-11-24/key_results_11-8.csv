@@ -1,0 +1,198 @@
+measure,comparison,model,test,level,d,value,kind,significant
+peak_selectivity,"controls, left vs right",ctrl_LvsR,control_asymmetry,face_FFA,-0.2629896200911586,0.123987601239876,q,False
+peak_selectivity,"controls, left vs right",ctrl_LvsR,control_asymmetry,house_PPA_strict,-0.365804595701861,0.0442622404426224,q,True
+peak_selectivity,"controls, left vs right",ctrl_LvsR,control_asymmetry,object_LOC,0.4210183320773323,0.0391960803919608,q,True
+peak_selectivity,"controls, left vs right",ctrl_LvsR,control_asymmetry,word_VWFA,0.7551975507861682,0.0003999600039996,q,True
+peak_selectivity,"controls, left vs right",ctrl_LvsR,group_main_effect,MEAN_OVER_ROIS,0.3821602921591868,0.0270972902709729,p,True
+peak_selectivity,"controls, left vs right",ctrl_LvsR,omnibus,ALL,,7.556687427438459e-05,omnibus p,True
+peak_selectivity,LH-intact vs left controls,LH-intact_pt_vs_ctrl,patient_vs_control,face_FFA,-0.3353545772022201,0.3391660833916608,q,False
+peak_selectivity,LH-intact vs left controls,LH-intact_pt_vs_ctrl,patient_vs_control,house_PPA_strict,-0.6290013933432838,0.1405859414058594,q,False
+peak_selectivity,LH-intact vs left controls,LH-intact_pt_vs_ctrl,patient_vs_control,object_LOC,-1.0204672100541377,0.0203979602039796,q,True
+peak_selectivity,LH-intact vs left controls,LH-intact_pt_vs_ctrl,patient_vs_control,word_VWFA,-0.5104544580616057,0.1865146818651468,q,False
+peak_selectivity,LH-intact vs left controls,LH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_ROIS,-0.8520586807224415,0.0177982201779822,p,True
+peak_selectivity,LH-intact vs left controls,LH-intact_pt_vs_ctrl,omnibus,ALL,,0.1628473646852204,omnibus p,False
+peak_selectivity,RH-intact vs right controls,RH-intact_pt_vs_ctrl,patient_vs_control,face_FFA,-0.3127436507769008,0.4283571642835716,q,False
+peak_selectivity,RH-intact vs right controls,RH-intact_pt_vs_ctrl,patient_vs_control,house_PPA_strict,-0.5793788020835768,0.2987701229877012,q,False
+peak_selectivity,RH-intact vs right controls,RH-intact_pt_vs_ctrl,patient_vs_control,object_LOC,-0.3742582771136238,0.4283571642835716,q,False
+peak_selectivity,RH-intact vs right controls,RH-intact_pt_vs_ctrl,patient_vs_control,word_VWFA,0.8016759277980046,0.18998100189981,q,False
+peak_selectivity,RH-intact vs right controls,RH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_ROIS,-0.2990573244671754,0.4498550144985501,p,False
+peak_selectivity,RH-intact vs right controls,RH-intact_pt_vs_ctrl,omnibus,ALL,,0.0739422756786878,omnibus p,False
+peak_selectivity,LH-intact vs RH-intact,pt_LH_vs_RH,patient_subgroup,face_FFA,-0.3321421415337393,0.6155384461553844,q,False
+peak_selectivity,LH-intact vs RH-intact,pt_LH_vs_RH,patient_subgroup,house_PPA_strict,-0.2388847339420638,0.6155384461553844,q,False
+peak_selectivity,LH-intact vs RH-intact,pt_LH_vs_RH,patient_subgroup,object_LOC,-0.3281831624012431,0.6155384461553844,q,False
+peak_selectivity,LH-intact vs RH-intact,pt_LH_vs_RH,patient_subgroup,word_VWFA,-0.2956314013974589,0.6155384461553844,q,False
+peak_selectivity,LH-intact vs RH-intact,pt_LH_vs_RH,group_main_effect,MEAN_OVER_ROIS,-0.3961631342619215,0.3976602339766023,p,False
+selective_voxels,"controls, left vs right",ctrl_LvsR,control_asymmetry,face_FFA,-0.6394893211821138,0.0003999600039996,q,True
+selective_voxels,"controls, left vs right",ctrl_LvsR,control_asymmetry,house_PPA_strict,-0.4374640538595254,0.0126987301269873,q,True
+selective_voxels,"controls, left vs right",ctrl_LvsR,control_asymmetry,object_LOC,0.5593398490687851,0.0022664400226644,q,True
+selective_voxels,"controls, left vs right",ctrl_LvsR,control_asymmetry,word_VWFA,0.999911060959508,0.0003999600039996,q,True
+selective_voxels,"controls, left vs right",ctrl_LvsR,group_main_effect,MEAN_OVER_ROIS,0.5131288928381362,0.0031996800319968,p,True
+selective_voxels,"controls, left vs right",ctrl_LvsR,omnibus,ALL,,0.0001588750450034,omnibus p,True
+selective_voxels,LH-intact vs left controls,LH-intact_pt_vs_ctrl,patient_vs_control,face_FFA,0.0179534327452267,0.9606039396060394,q,False
+selective_voxels,LH-intact vs left controls,LH-intact_pt_vs_ctrl,patient_vs_control,house_PPA_strict,-0.6251560395690585,0.0981235209812352,q,False
+selective_voxels,LH-intact vs left controls,LH-intact_pt_vs_ctrl,patient_vs_control,object_LOC,-1.2865163004157625,0.0043995600439956,q,True
+selective_voxels,LH-intact vs left controls,LH-intact_pt_vs_ctrl,patient_vs_control,word_VWFA,-0.706906621322992,0.0937906209379062,q,False
+selective_voxels,LH-intact vs left controls,LH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_ROIS,-1.1902484316349535,0.0012998700129987,p,True
+selective_voxels,LH-intact vs left controls,LH-intact_pt_vs_ctrl,omnibus,ALL,,3.304978037221995e-07,omnibus p,True
+selective_voxels,RH-intact vs right controls,RH-intact_pt_vs_ctrl,patient_vs_control,face_FFA,-0.01034892682364,0.9787021297870212,q,False
+selective_voxels,RH-intact vs right controls,RH-intact_pt_vs_ctrl,patient_vs_control,house_PPA_strict,-1.306307328037725,0.0035996400359964,q,True
+selective_voxels,RH-intact vs right controls,RH-intact_pt_vs_ctrl,patient_vs_control,object_LOC,-0.8662429434936335,0.0414625204146252,q,True
+selective_voxels,RH-intact vs right controls,RH-intact_pt_vs_ctrl,patient_vs_control,word_VWFA,1.4179871059522446,0.0035996400359964,q,True
+selective_voxels,RH-intact vs right controls,RH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_ROIS,-0.6324820639442895,0.1154884511548845,p,False
+selective_voxels,RH-intact vs right controls,RH-intact_pt_vs_ctrl,omnibus,ALL,,0.0004456708602307,omnibus p,True
+selective_voxels,LH-intact vs RH-intact,pt_LH_vs_RH,patient_subgroup,face_FFA,-0.5871199664994688,0.4483551644835516,q,False
+selective_voxels,LH-intact vs RH-intact,pt_LH_vs_RH,patient_subgroup,house_PPA_strict,0.2818716080554385,0.7371262873712628,q,False
+selective_voxels,LH-intact vs RH-intact,pt_LH_vs_RH,patient_subgroup,object_LOC,-0.0142037824121926,0.9748025197480252,q,False
+selective_voxels,LH-intact vs RH-intact,pt_LH_vs_RH,patient_subgroup,word_VWFA,-0.6119490674745487,0.4483551644835516,q,False
+selective_voxels,LH-intact vs RH-intact,pt_LH_vs_RH,group_main_effect,MEAN_OVER_ROIS,-0.2357067541543259,0.618938106189381,p,False
+distinctiveness,"controls, left vs right",ctrl_LvsR,control_asymmetry,face_FFA,0.2900110646212963,0.1747825217478252,q,False
+distinctiveness,"controls, left vs right",ctrl_LvsR,control_asymmetry,house_PPA_strict,-0.0355916583459522,0.8292170782921707,q,False
+distinctiveness,"controls, left vs right",ctrl_LvsR,control_asymmetry,object_LOC,-0.1834503019985231,0.3783621637836216,q,False
+distinctiveness,"controls, left vs right",ctrl_LvsR,control_asymmetry,word_VWFA,0.5051760528949145,0.0183981601839816,q,True
+distinctiveness,"controls, left vs right",ctrl_LvsR,group_main_effect,MEAN_OVER_ROIS,0.2662223102522347,0.117988201179882,p,False
+distinctiveness,"controls, left vs right",ctrl_LvsR,omnibus,ALL,,0.0219147932483444,omnibus p,True
+distinctiveness,LH-intact vs left controls,LH-intact_pt_vs_ctrl,patient_vs_control,face_FFA,-0.4237234212149694,0.517948205179482,q,False
+distinctiveness,LH-intact vs left controls,LH-intact_pt_vs_ctrl,patient_vs_control,house_PPA_strict,0.2950494289168965,0.517948205179482,q,False
+distinctiveness,LH-intact vs left controls,LH-intact_pt_vs_ctrl,patient_vs_control,object_LOC,0.365574691146502,0.517948205179482,q,False
+distinctiveness,LH-intact vs left controls,LH-intact_pt_vs_ctrl,patient_vs_control,word_VWFA,0.0027391079023412,0.993000699930007,q,False
+distinctiveness,LH-intact vs left controls,LH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_ROIS,0.163206549649414,0.6379362063793621,p,False
+distinctiveness,LH-intact vs left controls,LH-intact_pt_vs_ctrl,omnibus,ALL,,0.3438513250039814,omnibus p,False
+distinctiveness,RH-intact vs right controls,RH-intact_pt_vs_ctrl,patient_vs_control,face_FFA,-0.2636190985289581,0.503949605039496,q,False
+distinctiveness,RH-intact vs right controls,RH-intact_pt_vs_ctrl,patient_vs_control,house_PPA_strict,0.334429318251739,0.503949605039496,q,False
+distinctiveness,RH-intact vs right controls,RH-intact_pt_vs_ctrl,patient_vs_control,object_LOC,0.4173421613653024,0.503949605039496,q,False
+distinctiveness,RH-intact vs right controls,RH-intact_pt_vs_ctrl,patient_vs_control,word_VWFA,0.7010201476410985,0.3255674432556744,q,False
+distinctiveness,RH-intact vs right controls,RH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_ROIS,0.5402106701340821,0.1826817318268173,p,False
+distinctiveness,RH-intact vs right controls,RH-intact_pt_vs_ctrl,omnibus,ALL,,0.28840396642412,omnibus p,False
+distinctiveness,LH-intact vs RH-intact,pt_LH_vs_RH,patient_subgroup,face_FFA,0.3188948611553155,0.9866013398660134,q,False
+distinctiveness,LH-intact vs RH-intact,pt_LH_vs_RH,patient_subgroup,house_PPA_strict,-0.0077211185828266,0.9866013398660134,q,False
+distinctiveness,LH-intact vs RH-intact,pt_LH_vs_RH,patient_subgroup,object_LOC,-0.212366919028411,0.9866013398660134,q,False
+distinctiveness,LH-intact vs RH-intact,pt_LH_vs_RH,patient_subgroup,word_VWFA,-0.0695623054758777,0.9866013398660134,q,False
+distinctiveness,LH-intact vs RH-intact,pt_LH_vs_RH,group_main_effect,MEAN_OVER_ROIS,-0.0593135027648968,0.8999100089991001,p,False
+geometry,"controls, left vs right",face_FFA_ctrl_LvsR,omnibus,ALL,,0.0001338026899234,omnibus p,True
+geometry,"controls, left vs right",face_FFA_ctrl_LvsR,group_main_effect,MEAN_OVER_PAIRS,0.1908575170513798,0.2658734126587341,p,False
+geometry,"controls, left vs right",face_FFA_ctrl_LvsR,control_asymmetry,face-house,-0.0020807148599887,0.9907009299070092,q,False
+geometry,"controls, left vs right",face_FFA_ctrl_LvsR,control_asymmetry,face-object,0.0135897218555721,0.9907009299070092,q,False
+geometry,"controls, left vs right",face_FFA_ctrl_LvsR,control_asymmetry,face-word,0.8181059411648793,0.0017998200179982,q,True
+geometry,"controls, left vs right",face_FFA_ctrl_LvsR,control_asymmetry,house-object,-0.3453597347408751,0.0875912408759124,q,False
+geometry,"controls, left vs right",face_FFA_ctrl_LvsR,control_asymmetry,house-word,0.1613572881783483,0.5106989301069893,q,False
+geometry,"controls, left vs right",face_FFA_ctrl_LvsR,control_asymmetry,object-word,0.3742226358286546,0.0875912408759124,q,False
+geometry,"controls, left vs right",house_PPA_strict_ctrl_LvsR,omnibus,ALL,,0.012135675684727,omnibus p,True
+geometry,"controls, left vs right",house_PPA_strict_ctrl_LvsR,group_main_effect,MEAN_OVER_PAIRS,0.2699238293782133,0.1110888911108889,p,False
+geometry,"controls, left vs right",house_PPA_strict_ctrl_LvsR,control_asymmetry,face-house,-0.1681696492557373,0.3803619638036196,q,False
+geometry,"controls, left vs right",house_PPA_strict_ctrl_LvsR,control_asymmetry,face-object,-0.014756765606361,0.9327067293270672,q,False
+geometry,"controls, left vs right",house_PPA_strict_ctrl_LvsR,control_asymmetry,face-word,0.3673982932945839,0.1055894410558944,q,False
+geometry,"controls, left vs right",house_PPA_strict_ctrl_LvsR,control_asymmetry,house-object,-0.1752383414548905,0.3803619638036196,q,False
+geometry,"controls, left vs right",house_PPA_strict_ctrl_LvsR,control_asymmetry,house-word,0.3022090799817927,0.1481851814818518,q,False
+geometry,"controls, left vs right",house_PPA_strict_ctrl_LvsR,control_asymmetry,object-word,0.5631863913354341,0.0131986801319868,q,True
+geometry,"controls, left vs right",object_LOC_ctrl_LvsR,omnibus,ALL,,0.0010003394263413,omnibus p,True
+geometry,"controls, left vs right",object_LOC_ctrl_LvsR,group_main_effect,MEAN_OVER_PAIRS,-0.1323424308936779,0.441955804419558,p,False
+geometry,"controls, left vs right",object_LOC_ctrl_LvsR,control_asymmetry,face-house,-0.1562648453839365,0.5213478652134786,q,False
+geometry,"controls, left vs right",object_LOC_ctrl_LvsR,control_asymmetry,face-object,-0.4595681214406003,0.050994900509949,q,False
+geometry,"controls, left vs right",object_LOC_ctrl_LvsR,control_asymmetry,face-word,0.0040414236475937,0.9817018298170184,q,False
+geometry,"controls, left vs right",object_LOC_ctrl_LvsR,control_asymmetry,house-object,-0.3979671422020223,0.0740925907409259,q,False
+geometry,"controls, left vs right",object_LOC_ctrl_LvsR,control_asymmetry,house-word,0.1304933819459358,0.5213478652134786,q,False
+geometry,"controls, left vs right",object_LOC_ctrl_LvsR,control_asymmetry,object-word,0.3042184574894461,0.154984501549845,q,False
+geometry,"controls, left vs right",word_VWFA_ctrl_LvsR,omnibus,ALL,,5.195567781052503e-05,omnibus p,True
+geometry,"controls, left vs right",word_VWFA_ctrl_LvsR,group_main_effect,MEAN_OVER_PAIRS,0.1651337273112925,0.345965403459654,p,False
+geometry,"controls, left vs right",word_VWFA_ctrl_LvsR,control_asymmetry,face-house,0.0563580776091797,0.7279272072792721,q,False
+geometry,"controls, left vs right",word_VWFA_ctrl_LvsR,control_asymmetry,face-object,-0.1599864769585775,0.421997800219978,q,False
+geometry,"controls, left vs right",word_VWFA_ctrl_LvsR,control_asymmetry,face-word,0.4220673126563578,0.0551944805519448,q,False
+geometry,"controls, left vs right",word_VWFA_ctrl_LvsR,control_asymmetry,house-object,-0.3574134712163491,0.0791920807919208,q,False
+geometry,"controls, left vs right",word_VWFA_ctrl_LvsR,control_asymmetry,house-word,0.2590847215348673,0.200979902009799,q,False
+geometry,"controls, left vs right",word_VWFA_ctrl_LvsR,control_asymmetry,object-word,0.6282688003659781,0.0035996400359964,q,True
+geometry,LH-intact vs left controls,face_FFA_LH-intact_pt_vs_ctrl,omnibus,ALL,,0.0990524982058866,omnibus p,False
+geometry,LH-intact vs left controls,face_FFA_LH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_PAIRS,0.2210923250775112,0.5266473352664733,p,False
+geometry,LH-intact vs left controls,face_FFA_LH-intact_pt_vs_ctrl,patient_vs_control,face-house,0.2108470221983636,0.6528547145285472,q,False
+geometry,LH-intact vs left controls,face_FFA_LH-intact_pt_vs_ctrl,patient_vs_control,face-object,0.4935651546596346,0.3791620837916209,q,False
+geometry,LH-intact vs left controls,face_FFA_LH-intact_pt_vs_ctrl,patient_vs_control,face-word,0.4599731771251538,0.3791620837916209,q,False
+geometry,LH-intact vs left controls,face_FFA_LH-intact_pt_vs_ctrl,patient_vs_control,house-object,0.250415017692868,0.6528547145285472,q,False
+geometry,LH-intact vs left controls,face_FFA_LH-intact_pt_vs_ctrl,patient_vs_control,house-word,-0.4657102884835998,0.3791620837916209,q,False
+geometry,LH-intact vs left controls,face_FFA_LH-intact_pt_vs_ctrl,patient_vs_control,object-word,0.0703988337667306,0.835916408359164,q,False
+geometry,LH-intact vs left controls,house_PPA_strict_LH-intact_pt_vs_ctrl,omnibus,ALL,,0.5233705536159522,omnibus p,False
+geometry,LH-intact vs left controls,house_PPA_strict_LH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_PAIRS,-0.2225759024208936,0.5262473752624738,p,False
+geometry,LH-intact vs left controls,house_PPA_strict_LH-intact_pt_vs_ctrl,patient_vs_control,face-house,-0.3412446701333188,0.6559344065593441,q,False
+geometry,LH-intact vs left controls,house_PPA_strict_LH-intact_pt_vs_ctrl,patient_vs_control,face-object,0.3404684760373722,0.6559344065593441,q,False
+geometry,LH-intact vs left controls,house_PPA_strict_LH-intact_pt_vs_ctrl,patient_vs_control,face-word,0.0003640478479016,0.9994000599940006,q,False
+geometry,LH-intact vs left controls,house_PPA_strict_LH-intact_pt_vs_ctrl,patient_vs_control,house-object,-0.1751735369389641,0.9219578042195782,q,False
+geometry,LH-intact vs left controls,house_PPA_strict_LH-intact_pt_vs_ctrl,patient_vs_control,house-word,-0.3900419669252542,0.6559344065593441,q,False
+geometry,LH-intact vs left controls,house_PPA_strict_LH-intact_pt_vs_ctrl,patient_vs_control,object-word,-0.0764135987851075,0.9907409259074094,q,False
+geometry,LH-intact vs left controls,object_LOC_LH-intact_pt_vs_ctrl,omnibus,ALL,,0.1547266892403221,omnibus p,False
+geometry,LH-intact vs left controls,object_LOC_LH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_PAIRS,-0.2131114606262618,0.532046795320468,p,False
+geometry,LH-intact vs left controls,object_LOC_LH-intact_pt_vs_ctrl,patient_vs_control,face-house,0.2746562018305436,0.5311868813118689,q,False
+geometry,LH-intact vs left controls,object_LOC_LH-intact_pt_vs_ctrl,patient_vs_control,face-object,-0.3014171664862115,0.5311868813118689,q,False
+geometry,LH-intact vs left controls,object_LOC_LH-intact_pt_vs_ctrl,patient_vs_control,face-word,-0.2923096412002251,0.5311868813118689,q,False
+geometry,LH-intact vs left controls,object_LOC_LH-intact_pt_vs_ctrl,patient_vs_control,house-object,-0.3038965548147481,0.5311868813118689,q,False
+geometry,LH-intact vs left controls,object_LOC_LH-intact_pt_vs_ctrl,patient_vs_control,house-word,-0.1094959831818098,0.7552244775522446,q,False
+geometry,LH-intact vs left controls,object_LOC_LH-intact_pt_vs_ctrl,patient_vs_control,object-word,-0.3451546648244753,0.5311868813118689,q,False
+geometry,LH-intact vs left controls,word_VWFA_LH-intact_pt_vs_ctrl,omnibus,ALL,,0.1356419313045194,omnibus p,False
+geometry,LH-intact vs left controls,word_VWFA_LH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_PAIRS,-0.1189388596638255,0.734026597340266,p,False
+geometry,LH-intact vs left controls,word_VWFA_LH-intact_pt_vs_ctrl,patient_vs_control,face-house,-0.1041731612257608,0.7669233076692331,q,False
+geometry,LH-intact vs left controls,word_VWFA_LH-intact_pt_vs_ctrl,patient_vs_control,face-object,-0.2787138135932176,0.7559244075592442,q,False
+geometry,LH-intact vs left controls,word_VWFA_LH-intact_pt_vs_ctrl,patient_vs_control,face-word,0.1681534000114481,0.7559244075592442,q,False
+geometry,LH-intact vs left controls,word_VWFA_LH-intact_pt_vs_ctrl,patient_vs_control,house-object,-0.1877765677072821,0.7559244075592442,q,False
+geometry,LH-intact vs left controls,word_VWFA_LH-intact_pt_vs_ctrl,patient_vs_control,house-word,-0.4644881734735554,0.7559244075592442,q,False
+geometry,LH-intact vs left controls,word_VWFA_LH-intact_pt_vs_ctrl,patient_vs_control,object-word,0.2733155667059617,0.7559244075592442,q,False
+geometry,RH-intact vs right controls,face_FFA_RH-intact_pt_vs_ctrl,omnibus,ALL,,3.604373513211007e-05,omnibus p,True
+geometry,RH-intact vs right controls,face_FFA_RH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_PAIRS,0.3684933752142058,0.3560643935606439,p,False
+geometry,RH-intact vs right controls,face_FFA_RH-intact_pt_vs_ctrl,patient_vs_control,face-house,0.684672527182666,0.1911808819118088,q,False
+geometry,RH-intact vs right controls,face_FFA_RH-intact_pt_vs_ctrl,patient_vs_control,face-object,0.4819020677214843,0.343015698430157,q,False
+geometry,RH-intact vs right controls,face_FFA_RH-intact_pt_vs_ctrl,patient_vs_control,face-word,-0.6675816908652308,0.1911808819118088,q,False
+geometry,RH-intact vs right controls,face_FFA_RH-intact_pt_vs_ctrl,patient_vs_control,house-object,1.161955082814446,0.0335966403359664,q,True
+geometry,RH-intact vs right controls,face_FFA_RH-intact_pt_vs_ctrl,patient_vs_control,house-word,-0.0286436362541866,0.9422057794220576,q,False
+geometry,RH-intact vs right controls,face_FFA_RH-intact_pt_vs_ctrl,patient_vs_control,object-word,-0.2343816510703394,0.6557344265573443,q,False
+geometry,RH-intact vs right controls,house_PPA_strict_RH-intact_pt_vs_ctrl,omnibus,ALL,,0.1892291137869407,omnibus p,False
+geometry,RH-intact vs right controls,house_PPA_strict_RH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_PAIRS,-0.4761190372374883,0.2321767823217678,p,False
+geometry,RH-intact vs right controls,house_PPA_strict_RH-intact_pt_vs_ctrl,patient_vs_control,face-house,-0.1425669754561441,0.8759124087591241,q,False
+geometry,RH-intact vs right controls,house_PPA_strict_RH-intact_pt_vs_ctrl,patient_vs_control,face-object,0.135078905044941,0.8759124087591241,q,False
+geometry,RH-intact vs right controls,house_PPA_strict_RH-intact_pt_vs_ctrl,patient_vs_control,face-word,-0.2509934032938589,0.8759124087591241,q,False
+geometry,RH-intact vs right controls,house_PPA_strict_RH-intact_pt_vs_ctrl,patient_vs_control,house-object,0.0145515726366955,0.9726027397260274,q,False
+geometry,RH-intact vs right controls,house_PPA_strict_RH-intact_pt_vs_ctrl,patient_vs_control,house-word,-0.6935801178714355,0.2558744125587441,q,False
+geometry,RH-intact vs right controls,house_PPA_strict_RH-intact_pt_vs_ctrl,patient_vs_control,object-word,-0.9461550310918602,0.1223877612238776,q,False
+geometry,RH-intact vs right controls,object_LOC_RH-intact_pt_vs_ctrl,omnibus,ALL,,1.2732635377725331e-06,omnibus p,True
+geometry,RH-intact vs right controls,object_LOC_RH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_PAIRS,-0.2436754428855494,0.5344465553444655,p,False
+geometry,RH-intact vs right controls,object_LOC_RH-intact_pt_vs_ctrl,patient_vs_control,face-house,0.5403961758530725,0.5121987801219878,q,False
+geometry,RH-intact vs right controls,object_LOC_RH-intact_pt_vs_ctrl,patient_vs_control,face-object,-0.0271957193868458,0.943005699430057,q,False
+geometry,RH-intact vs right controls,object_LOC_RH-intact_pt_vs_ctrl,patient_vs_control,face-word,-0.2472054250821594,0.6371362863713629,q,False
+geometry,RH-intact vs right controls,object_LOC_RH-intact_pt_vs_ctrl,patient_vs_control,house-object,0.3738034787539652,0.5121987801219878,q,False
+geometry,RH-intact vs right controls,object_LOC_RH-intact_pt_vs_ctrl,patient_vs_control,house-word,-0.4271099593769677,0.5121987801219878,q,False
+geometry,RH-intact vs right controls,object_LOC_RH-intact_pt_vs_ctrl,patient_vs_control,object-word,-1.2438904873778251,0.0203979602039796,q,True
+geometry,RH-intact vs right controls,word_VWFA_RH-intact_pt_vs_ctrl,omnibus,ALL,,0.0024243021993119,omnibus p,True
+geometry,RH-intact vs right controls,word_VWFA_RH-intact_pt_vs_ctrl,group_main_effect,MEAN_OVER_PAIRS,-0.1927523081977237,0.6178382161783822,p,False
+geometry,RH-intact vs right controls,word_VWFA_RH-intact_pt_vs_ctrl,patient_vs_control,face-house,-0.0704368416196477,0.9997000299970004,q,False
+geometry,RH-intact vs right controls,word_VWFA_RH-intact_pt_vs_ctrl,patient_vs_control,face-object,0.2834885433970681,0.6981801819818018,q,False
+geometry,RH-intact vs right controls,word_VWFA_RH-intact_pt_vs_ctrl,patient_vs_control,face-word,0.0003424963004621,0.9997000299970004,q,False
+geometry,RH-intact vs right controls,word_VWFA_RH-intact_pt_vs_ctrl,patient_vs_control,house-object,0.4755972425049554,0.4627537246275372,q,False
+geometry,RH-intact vs right controls,word_VWFA_RH-intact_pt_vs_ctrl,patient_vs_control,house-word,-0.7075176127439758,0.2201779822017798,q,False
+geometry,RH-intact vs right controls,word_VWFA_RH-intact_pt_vs_ctrl,patient_vs_control,object-word,-0.9508374266743912,0.1253874612538746,q,False
+geometry,LH-intact vs RH-intact,face_FFA_pt_LH_vs_RH,omnibus,ALL,,0.4148798792117365,omnibus p,False
+geometry,LH-intact vs RH-intact,face_FFA_pt_LH_vs_RH,group_main_effect,MEAN_OVER_PAIRS,0.3839524397406635,0.4118588141185881,p,False
+geometry,LH-intact vs RH-intact,face_FFA_pt_LH_vs_RH,patient_subgroup,face-house,0.5744796331921027,0.5097490250974902,q,False
+geometry,LH-intact vs RH-intact,face_FFA_pt_LH_vs_RH,patient_subgroup,face-object,0.0193773144278627,0.9678032196780322,q,False
+geometry,LH-intact vs RH-intact,face_FFA_pt_LH_vs_RH,patient_subgroup,face-word,-0.1931904100816527,0.9678032196780322,q,False
+geometry,LH-intact vs RH-intact,face_FFA_pt_LH_vs_RH,patient_subgroup,house-object,0.54339611234701,0.5097490250974902,q,False
+geometry,LH-intact vs RH-intact,face_FFA_pt_LH_vs_RH,patient_subgroup,house-word,0.6067989555108079,0.5097490250974902,q,False
+geometry,LH-intact vs RH-intact,face_FFA_pt_LH_vs_RH,patient_subgroup,object-word,0.1013352956320097,0.9678032196780322,q,False
+geometry,LH-intact vs RH-intact,house_PPA_strict_pt_LH_vs_RH,omnibus,ALL,,0.961581341633698,omnibus p,False
+geometry,LH-intact vs RH-intact,house_PPA_strict_pt_LH_vs_RH,group_main_effect,MEAN_OVER_PAIRS,-0.023771164333414,0.9628037196280372,p,False
+geometry,LH-intact vs RH-intact,house_PPA_strict_pt_LH_vs_RH,patient_subgroup,face-house,0.0086552920619364,0.9843015698430156,q,False
+geometry,LH-intact vs RH-intact,house_PPA_strict_pt_LH_vs_RH,patient_subgroup,face-object,-0.1150124973354076,0.9843015698430156,q,False
+geometry,LH-intact vs RH-intact,house_PPA_strict_pt_LH_vs_RH,patient_subgroup,face-word,0.1911827916880511,0.9843015698430156,q,False
+geometry,LH-intact vs RH-intact,house_PPA_strict_pt_LH_vs_RH,patient_subgroup,house-object,-0.0262725001706207,0.9843015698430156,q,False
+geometry,LH-intact vs RH-intact,house_PPA_strict_pt_LH_vs_RH,patient_subgroup,house-word,0.1018600387417878,0.9843015698430156,q,False
+geometry,LH-intact vs RH-intact,house_PPA_strict_pt_LH_vs_RH,patient_subgroup,object-word,-0.3254972161629084,0.9843015698430156,q,False
+geometry,LH-intact vs RH-intact,object_LOC_pt_LH_vs_RH,omnibus,ALL,,0.3530492924696729,omnibus p,False
+geometry,LH-intact vs RH-intact,object_LOC_pt_LH_vs_RH,group_main_effect,MEAN_OVER_PAIRS,-0.1207089631144959,0.7971202879712029,p,False
+geometry,LH-intact vs RH-intact,object_LOC_pt_LH_vs_RH,patient_subgroup,face-house,0.0544186034891181,0.9751024897510248,q,False
+geometry,LH-intact vs RH-intact,object_LOC_pt_LH_vs_RH,patient_subgroup,face-object,-0.1512604931509571,0.9751024897510248,q,False
+geometry,LH-intact vs RH-intact,object_LOC_pt_LH_vs_RH,patient_subgroup,face-word,0.0127000866588188,0.9751024897510248,q,False
+geometry,LH-intact vs RH-intact,object_LOC_pt_LH_vs_RH,patient_subgroup,house-object,0.1497543919500659,0.9751024897510248,q,False
+geometry,LH-intact vs RH-intact,object_LOC_pt_LH_vs_RH,patient_subgroup,house-word,-0.2030537153541042,0.9751024897510248,q,False
+geometry,LH-intact vs RH-intact,object_LOC_pt_LH_vs_RH,patient_subgroup,object-word,-0.4207690067604796,0.9751024897510248,q,False
+geometry,LH-intact vs RH-intact,word_VWFA_pt_LH_vs_RH,omnibus,ALL,,0.2089292701734768,omnibus p,False
+geometry,LH-intact vs RH-intact,word_VWFA_pt_LH_vs_RH,group_main_effect,MEAN_OVER_PAIRS,0.143456603651588,0.7614238576142386,p,False
+geometry,LH-intact vs RH-intact,word_VWFA_pt_LH_vs_RH,patient_subgroup,face-house,0.1010312654176656,0.8380161983801621,q,False
+geometry,LH-intact vs RH-intact,word_VWFA_pt_LH_vs_RH,patient_subgroup,face-object,0.440249964363111,0.7929707029297071,q,False
+geometry,LH-intact vs RH-intact,word_VWFA_pt_LH_vs_RH,patient_subgroup,face-word,0.4358216789723031,0.7929707029297071,q,False
+geometry,LH-intact vs RH-intact,word_VWFA_pt_LH_vs_RH,patient_subgroup,house-object,0.2960790807903858,0.7929707029297071,q,False
+geometry,LH-intact vs RH-intact,word_VWFA_pt_LH_vs_RH,patient_subgroup,house-word,0.096911746029179,0.8380161983801621,q,False
+geometry,LH-intact vs RH-intact,word_VWFA_pt_LH_vs_RH,patient_subgroup,object-word,-0.3570377445580353,0.7929707029297071,q,False
